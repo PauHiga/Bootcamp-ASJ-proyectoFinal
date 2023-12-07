@@ -69,19 +69,19 @@ function fillTablaProveedores() {
             botonEliminar.classList.add("btn-secondary");
             botonEliminar.addEventListener("click", ()=> eliminar(codigo));
             
-            const botonEditar = document.createElement("a");
-            botonEditar.innerText = "Editar";
-            botonEditar.classList.add("btn");
-            botonEditar.classList.add("btn-primary");
-            botonEditar.setAttribute("data-toggle", "modal");
-            botonEditar.setAttribute("data-target", "#editarProveedorModal");
-            botonEditar.addEventListener("click", ()=> editarProveedor(codigo));
+            // const botonEditar = document.createElement("a");
+            // botonEditar.innerText = "Editar";
+            // botonEditar.classList.add("btn");
+            // botonEditar.classList.add("btn-primary");
+            // botonEditar.setAttribute("data-toggle", "modal");
+            // botonEditar.setAttribute("data-target", "#editarProveedorModal");
+            // botonEditar.addEventListener("click", ()=> editarProveedor(codigo));
             
             tdCodigo.innerText = proveedor.codigo;
             tdRazon.innerText = proveedor.razonSocial;
             tdRubro.innerText = proveedor.rubro;
             tdOpciones.appendChild(botonEliminar);
-            tdOpciones.appendChild(botonEditar);
+            // tdOpciones.appendChild(botonEditar);
             
             tr.appendChild(tdCodigo);
             tr.appendChild(tdRazon);

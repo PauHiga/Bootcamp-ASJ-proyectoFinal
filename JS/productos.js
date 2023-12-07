@@ -46,13 +46,13 @@ function filltablaProductos() {
             botonEliminar.classList.add("btn-secondary");
             botonEliminar.addEventListener("click", ()=> eliminar(codigo));
             
-            const botonEditar = document.createElement("a");
-            botonEditar.innerText = "Editar";
-            botonEditar.classList.add("btn");
-            botonEditar.classList.add("btn-primary");
-            botonEditar.setAttribute("data-toggle", "modal");
-            botonEditar.setAttribute("data-target", "#editarproductoModal");
-            botonEditar.addEventListener("click", ()=> editarproducto(codigo));
+            // const botonEditar = document.createElement("a");
+            // botonEditar.innerText = "Editar";
+            // botonEditar.classList.add("btn");
+            // botonEditar.classList.add("btn-primary");
+            // botonEditar.setAttribute("data-toggle", "modal");
+            // botonEditar.setAttribute("data-target", "#editarproductoModal");
+            // botonEditar.addEventListener("click", ()=> editarproducto(codigo));
             
             tdCodigo.innerText = producto.codigo;
             tdProveedor.innerText = producto.proveedor;
@@ -60,7 +60,7 @@ function filltablaProductos() {
             tdNombreProducto.innerText = producto.nombreProducto;
             tdPrecio.innerText = producto.precio;
             tdOpciones.appendChild(botonEliminar);
-            tdOpciones.appendChild(botonEditar);
+            // tdOpciones.appendChild(botonEditar);
             
             tr.appendChild(tdCodigo);
             tr.appendChild(tdProveedor);
