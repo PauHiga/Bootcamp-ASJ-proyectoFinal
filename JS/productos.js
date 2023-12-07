@@ -32,6 +32,7 @@ function filltablaProductos() {
             console.log(producto);
             const tr = document.createElement("tr");
             const tdCodigo = document.createElement("td");
+            const tdSKU = document.createElement("td");
             const tdProveedor = document.createElement("td");
             const tdCategoria = document.createElement("td");
             const tdNombreProducto = document.createElement("td");
@@ -55,6 +56,7 @@ function filltablaProductos() {
             // botonEditar.addEventListener("click", ()=> editarproducto(codigo));
             
             tdCodigo.innerText = producto.codigo;
+            tdSKU.innerText = producto.SKU;
             tdProveedor.innerText = producto.proveedor;
             tdCategoria.innerText = producto.categoria;
             tdNombreProducto.innerText = producto.nombreProducto;
@@ -63,6 +65,7 @@ function filltablaProductos() {
             // tdOpciones.appendChild(botonEditar);
             
             tr.appendChild(tdCodigo);
+            tr.appendChild(tdSKU);
             tr.appendChild(tdProveedor);
             tr.appendChild(tdCategoria);
             tr.appendChild(tdNombreProducto);
@@ -123,12 +126,14 @@ function addproducto(codigoParaEditar){
     //--- Obtengo los datos del formulario
     const proveedor = document.getElementById("inputProveedor").value
     const categoria = document.getElementById("inputCategoria").value
+    const SKU = document.getElementById("inputSKU").value
     const nombreProducto = document.getElementById("inputNombreProducto").value
     const descripcion = document.getElementById("inputDescripcion").value
     const precio = document.getElementById("inputPrecio").value
 
     const datosproducto = {
         codigo: codigo,
+        SKU: SKU,
         proveedor: proveedor,
         categoria: categoria,
         nombreProducto: nombreProducto,

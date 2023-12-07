@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Productos</title>
+    <title>OrdenesDeCompra</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -57,7 +57,6 @@
             <div class="sidebar-heading">
                 Menu
             </div>
-
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
                 <a class="nav-link" href="proveedores.html">
@@ -87,13 +86,11 @@
         <!-- End of Sidebar -->
 
 
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
             <div id="content">
-
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -301,42 +298,40 @@
                 </nav>
                 <!-- End of Topbar -->
 
-
-
-
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Productos</h1>
-                    <p class="mb-4">En esta sección es posible añadir productos</p>
+                    <h1 class="h3 mb-2 text-gray-800">Ordenes de Compra</h1>
+                    <p class="mb-4">En esta sección es posible añadir, eliminar o editar órdenes de compra</p>
                     
-                    <!-- Boton proveedor nuevo -->
-                    <a class="btn btn-primary mb-4" href="#" data-toggle="modal" data-target="#proveedorModal">
-                        Agregar Productos
+                    <!-- Boton Orden de Compra nueva -->
+                    <a class="btn btn-primary mb-4" href="#" data-toggle="modal" data-target="#ordenesCompraModal">
+                        Agregar Orden de Compra
                     </a>
 
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Productos / Servicios</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Ordenes de Compra</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Código</th>
-                                            <th>SKU</th>
+                                            <th>Número Orden</th>
                                             <th>Proveedor</th>
-                                            <th>Categoria</th>
                                             <th>Producto</th>
-                                            <th>Precio</th>
+                                            <th>Cantidad</th>
+                                            <th>Fecha entrega</th>
+                                            <th>Total</th>
+                                            <th>Estado</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="tabla-productos">
+                                    <tbody id="tabla-ordenesCompra">
                                     </tbody>
                                 </table>
                             </div>
@@ -391,7 +386,7 @@
     </div>
 
     <!-- Modal Agregar Proveedor-->
-    <div class="modal fade" id="proveedorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="ordenesCompraModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -401,7 +396,6 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                
                 <div class="modal-body">
                     <form class="row g-3">
                         <div class="col-md-3">
@@ -409,34 +403,43 @@
                             <input type="text" class="form-control" id="inputCodigo" disabled>
                         </div>
                         <div class="col-md-9">
+                            <label for="inputFechaEmision" class="form-label mb-1 mt-2">Fecha Emision</label>
+                            <input type="text" class="form-control" id="inputFechaEmision">
+                        </div>
+                        <div class="col-6">
+                            <label for="inputFechaEntrega" class="form-label mb-1 mt-2">Entrega Estimada</label>
+                            <input type="text" class="form-control" id="inputFechaEntrega">
+                        </div>
+                        <div class="col-6">
+                            <label for="inputDireccionRecepcion" class="form-label mb-1 mt-2">Recepcion</label>
+                            <input type="text" class="form-control" id="inputDireccionRecepcion">
+                        </div>
+                        <div class="col-6">
                             <label for="inputProveedor" class="form-label mb-1 mt-2">Proveedor</label>
                             <input type="text" class="form-control" id="inputProveedor">
                         </div>
                         <div class="col-6">
-                            <label for="inputSKU" class="form-label mb-1 mt-2">SKU</label>
-                            <input type="text" class="form-control" id="inputSKU">
+                            <label for="inputProducto" class="form-label mb-1 mt-2">Producto</label>
+                            <input type="text" class="form-control" id="inputProducto">
                         </div>
-                        <div class="col-6">
-                            <label for="inputCategoria" class="form-label mb-1 mt-2">Categoria</label>
-                            <input type="text" class="form-control" id="inputCategoria">
+                        <div class="col-md-6">
+                            <label for="inputCantidad" class="form-label mb-1 mt-2">Cantidad</label>
+                            <input type="text" class="form-control" id="inputCantidad">
                         </div>
-                        <div class="col-6">
-                            <label for="inputNombreProducto" class="form-label mb-1 mt-2">Producto/Servicio</label>
-                            <input type="text" class="form-control" id="inputNombreProducto">
+                        <div class="col-md-3">
+                            <label for="inputTotal" class="form-label mb-1 mt-2">Total</label>
+                            <input type="text" class="form-control" id="inputTotal" disabled>
                         </div>
-                        <div class="col-6">
-                            <label for="inputPrecio" class="form-label mb-1 mt-2">Precio</label>
-                            <input type="text" class="form-control" id="inputPrecio">
-                        </div>
-                        <div class="col-12">
-                            <label for="inputDescripcion" class="form-label mb-1 mt-2">Descripcion</label>
-                            <input type="text" class="form-control" id="inputDescripcion">
+                        <div class="col-md-3">
+                            <label for="inputEstado" class="form-label mb-1 mt-2">CP</label>
+                            <input type="text" class="form-control" id="inputEstado">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary close-modal" type="button" data-dismiss="modal">Cancelar</button>
-                    <button id="add-producto" class="btn btn-primary close-modal" type="button" data-dismiss="modal">Aceptar Producto</button>
+                    <button id="add-OrdenCompra" class="btn btn-primary close-modal" type="button" data-dismiss="modal">Aceptar Proveedor</button>
+                    <!-- <a class="btn btn-primary" href="login.html">Logout</a> -->
                 </div>
             </div>
         </div>
@@ -573,9 +576,9 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+    <!-- <script src="js/demo/datatables-demo.js"></script> -->
     
-    <script src="./JS/productos.js"></script>
+    <script src="./JS/ordenesCompra.js"></script>
 
 
 </body>

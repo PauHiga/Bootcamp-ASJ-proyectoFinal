@@ -62,26 +62,26 @@ function fillTablaProveedores() {
             const tdOpciones = document.createElement("td");
             
             const codigo = proveedor.codigo
-            
+
             const botonEliminar = document.createElement("button");
             botonEliminar.innerText = "Eliminar";
             botonEliminar.classList.add("btn");
             botonEliminar.classList.add("btn-secondary");
             botonEliminar.addEventListener("click", ()=> eliminar(codigo));
             
-            // const botonEditar = document.createElement("a");
-            // botonEditar.innerText = "Editar";
-            // botonEditar.classList.add("btn");
-            // botonEditar.classList.add("btn-primary");
-            // botonEditar.setAttribute("data-toggle", "modal");
-            // botonEditar.setAttribute("data-target", "#editarProveedorModal");
-            // botonEditar.addEventListener("click", ()=> editarProveedor(codigo));
+            const botonEditar = document.createElement("a");
+            botonEditar.innerText = "Editar";
+            botonEditar.classList.add("btn");
+            botonEditar.classList.add("btn-primary");
+            botonEditar.setAttribute("data-toggle", "modal");
+            botonEditar.setAttribute("data-target", "#editarProveedorModal");
+            botonEditar.addEventListener("click", ()=> editarProveedor(codigo));
             
             tdCodigo.innerText = proveedor.codigo;
             tdRazon.innerText = proveedor.razonSocial;
             tdRubro.innerText = proveedor.rubro;
             tdOpciones.appendChild(botonEliminar);
-            // tdOpciones.appendChild(botonEditar);
+            tdOpciones.appendChild(botonEditar);
             
             tr.appendChild(tdCodigo);
             tr.appendChild(tdRazon);
@@ -192,56 +192,122 @@ function addProveedor(codigoParaEditar){
 //--- Editar proveedores
 
 
+
 function editarProveedor(codigoAModificar) {
     //-- Obtengo la lista de proveedores y filtro el que me interesa
 
     let proveedores = JSON.parse(localStorage.getItem("proveedores"))
-    console.log(proveedores);
+
     let proveedorAModificar = proveedores.filter(proveedor => proveedor.codigo == codigoAModificar)[0]
+    console.log(proveedorAModificar);
+
 
     //Seteo el value de cada elemento del formulario según el proveedor a modificar
 
-    const codigo = document.getElementById("inputCodigoEditar")
+    let codigo = document.getElementById("inputCodigoEditar")
     codigo.value = codigoAModificar;
-    const razonSocial = document.getElementById("inputRazonSocialEditar")
+    let razonSocial = document.getElementById("inputRazonSocialEditar")
     razonSocial.value = proveedorAModificar.razonSocial
-    const rubro = document.getElementById("inputRubroEditar")
+    let rubro = document.getElementById("inputRubroEditar")
     rubro.value = proveedorAModificar.rubro;
-    const email = document.getElementById("inputEmailEditar")
+    let email = document.getElementById("inputEmailEditar")
     email.value = proveedorAModificar.email;
-    const telefono = document.getElementById("inputTelefonoEditar")
+    let telefono = document.getElementById("inputTelefonoEditar")
     telefono.value = proveedorAModificar.telefono
-    const web = document.getElementById("inputWebEditar")
+    let web = document.getElementById("inputWebEditar")
     web.value = proveedorAModificar.web
-    const calle = document.getElementById("inputCalleEditar")
+    let calle = document.getElementById("inputCalleEditar")
     calle.value = proveedorAModificar.calle
-    const altura = document.getElementById("inputAlturaEditar")
+    let altura = document.getElementById("inputAlturaEditar")
     altura.value = proveedorAModificar.altura
-    const codigoPostal = document.getElementById("inputCPEditar")
+    let codigoPostal = document.getElementById("inputCPEditar")
     codigoPostal.value = proveedorAModificar.codigoPostal
-    const provincia = document.getElementById("inputProvinciaEditar")
+    let provincia = document.getElementById("inputProvinciaEditar")
     provincia.value = proveedorAModificar.provincia
-    const localidad = document.getElementById("inputLocalidadEditar")
+    let localidad = document.getElementById("inputLocalidadEditar")
     localidad.value = proveedorAModificar.localidad
-    const pais = document.getElementById("inputPaisEditar")
+    let pais = document.getElementById("inputPaisEditar")
     pais.value = proveedorAModificar.pais
-    const cuit = document.getElementById("inputCUITEditar")
+    let cuit = document.getElementById("inputCUITEditar")
     cuit.value = proveedorAModificar.cuit
-    const condicionIVA = document.getElementById("inputCondicionIVAEditar")
+    let condicionIVA = document.getElementById("inputCondicionIVAEditar")
     condicionIVA.value = proveedorAModificar.condicionIVA
-    const nombreContacto = document.getElementById("inputNombreContactoEditar")
+    let nombreContacto = document.getElementById("inputNombreContactoEditar")
     nombreContacto.value = proveedorAModificar.nombreContacto
-    const apellidoContacto = document.getElementById("inputApellidoContactoEditar")
+    let apellidoContacto = document.getElementById("inputApellidoContactoEditar")
     apellidoContacto.value = proveedorAModificar.apellidoContacto
-    const telefonoContacto = document.getElementById("inputTelefonoContactoEditar")
+    let telefonoContacto = document.getElementById("inputTelefonoContactoEditar")
     telefonoContacto.value = proveedorAModificar.telefonoContacto
-    const emailContacto = document.getElementById("inputEmailContactoEditar")
+    let emailContacto = document.getElementById("inputEmailContactoEditar")
     emailContacto.value = proveedorAModificar.emailContacto
-    const rolContacto = document.getElementById("inputRolContactoEditar")
+    let rolContacto = document.getElementById("inputRolContactoEditar")
     rolContacto.value = proveedorAModificar.rolContacto
     
+    let btnEditarProveedor = document.getElementById("edit-proveedor")
+    btnEditarProveedor.addEventListener("click", ()=> actualizarProveedores(codigoAModificar));
+    
+
+}
 
 
+function actualizarProveedores (codigoAModificar){
 
-    // location.href = "./proveedores.html"
+    //-- Obtengo la lista de proveedores y remuevo la version vieja
+
+    let proveedores = JSON.parse(localStorage.getItem("proveedores"))
+
+    let todosLosProveedoresMenosElViejo = proveedores.filter(proveedor => proveedor.codigo != codigoAModificar)
+
+
+    //--- Obtengo los datos del formulario
+    const razonSocial = document.getElementById("inputRazonSocialEditar").value
+    const rubro = document.getElementById("inputRubroEditar").value
+    const email = document.getElementById("inputEmailEditar").value
+    const telefono = document.getElementById("inputTelefonoEditar").value
+    const web = document.getElementById("inputWebEditar").value
+    const calle = document.getElementById("inputCalleEditar").value
+    const altura = document.getElementById("inputAlturaEditar").value
+    const codigoPostal = document.getElementById("inputCPEditar").value
+    const provincia = document.getElementById("inputProvinciaEditar").value
+    const localidad = document.getElementById("inputLocalidadEditar").value
+    const pais = document.getElementById("inputPaisEditar").value
+    const cuit = document.getElementById("inputCUITEditar").value
+    const condicionIVA = document.getElementById("inputCondicionIVAEditar").value
+    const nombreContacto = document.getElementById("inputNombreContactoEditar").value
+    const apellidoContacto = document.getElementById("inputApellidoContactoEditar").value
+    const telefonoContacto = document.getElementById("inputTelefonoContactoEditar").value
+    const emailContacto = document.getElementById("inputEmailContactoEditar").value
+    const rolContacto = document.getElementById("inputRolContactoEditar").value
+
+    const datosProveedor = {
+        codigo: codigoAModificar,
+        razonSocial: razonSocial,
+        rubro: rubro,
+        email: email,
+        telefono: telefono,
+        web: web,
+        calle: calle,
+        altura: altura,
+        codigoPostal: codigoPostal,
+        provincia: provincia,
+        localidad: localidad,
+        pais: pais,
+        cuit: cuit,
+        condicionIVA: condicionIVA,
+        nombreContacto: nombreContacto,
+        apellidoContacto: apellidoContacto,
+        telefonoContacto: telefonoContacto,
+        emailContacto: emailContacto,
+        rolContacto: rolContacto
+    };
+
+    console.log(datosProveedor);
+    
+    todosLosProveedoresMenosElViejo.push(datosProveedor)
+    
+    console.log(todosLosProveedoresMenosElViejo);
+
+    localStorage.setItem("proveedores", JSON.stringify(todosLosProveedoresMenosElViejo))
+    
+    location.href = "./proveedores.html"
 }
