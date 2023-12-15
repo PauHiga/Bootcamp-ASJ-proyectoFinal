@@ -1,49 +1,3 @@
-/*modeloProveedoresHardcoded = [
-    {
-        "codigo": 1,
-        "razonSocial": "proveedores SRL",
-        "rubro": "alimentos",
-        "sitioWeb": "www.proveedoresSRL.com",
-        "email": "proveedores@provedoresSRL.com",
-        "telefono": "11-5613-4806",
-        "calle": "La plata",
-        "altura": "45",
-        "CP": "1550",
-        "localidad": "Las Parejas",
-        "provincia": "San Juan",
-        "pais": "Argentina",
-        "CUIT": "30-67006116-5",
-        "condicionIVA": "IVA inscripto",
-        "nombreContacto": "Juan",
-        "apellidoContacto": "Perez",
-        "telefonoContacto": "15-5560-1567",
-        "emailContacto": "juanP@provedoresSRL.com",
-        "rolContacto": "ventas"
-    },
-    {
-        "codigo": 2,
-        "razonSocial": "Otra Empresa SRL",
-        "rubro": "tecnología",
-        "sitioWeb": "www.otraempresaSRL.com",
-        "email": "info@otraempresaSRL.com",
-        "telefono": "11-1234-5678",
-        "calle": "Bolivar",
-        "altura": "28",
-        "CP": "1600",
-        "localidad": "Buenos Aires",
-        "provincia": "Buenos Aires",
-        "pais": "Argentina",
-        "CUIT": "30-12345678-9",
-        "condicionIVA": "IVA exento",
-        "nombreContacto": "Maria",
-        "apellidoContacto": "Gomez",
-        "telefonoContacto": "15-9876-5432",
-        "emailContacto": "mariaG@otraempresaSRL.com",
-        "rolContacto": "compras"
-    }
-]
-*/
-
 //-------------------------------------------------------------------
 //--- Llenar la tabla de proveedores
 
@@ -309,5 +263,7 @@ function actualizarProveedores (codigoAModificar){
 
     localStorage.setItem("proveedores", JSON.stringify(todosLosProveedoresMenosElViejo))
     
-    location.href = "./proveedores.html"
+    location.reload();
 }
+
+
