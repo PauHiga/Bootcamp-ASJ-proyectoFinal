@@ -3,125 +3,9 @@
 <p class="mb-4">En esta sección es posible añadir, eliminar o editar proveedores</p>
 
 <!-- Boton proveedor nuevo -->
-<a class="btn btn-primary mb-4" href="#" data-toggle="modal" data-target="#proveedorModal">
+<a class="btn btn-primary mb-4" routerLink="agregar-proveedor">
     Agregar Proveedor
 </a>
-
-
-<!--      FORM SUPPLIERS        -->
-<!-- <app-form-suppliers></app-form-suppliers> -->
-
-    <!-- Modal Agregar Proveedor-->
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar Proveedor</h5>
-                </div>
-                
-                <div class="modal-body">
-                    <form class="row g-3">
-                        <div class="col-md-3">
-                            <label for="inputCodigo" class="form-label mb-1 mt-2">Codigo</label>
-                            <input type="text" [(ngModel)]="codigo" name="codigo" class="form-control" id="inputCodigo" disabled>
-                        </div>
-                        <div class="col-md-9">
-                            <label for="inputRazonSocial" class="form-label mb-1 mt-2">Razón Social</label>
-                            <input type="text" [(ngModel)]="razonSocial" name="razonSocial" class="form-control" id="inputRazonSocial">
-                        </div>
-                        <div class="col-6">
-                            <label for="inputRubro" class="form-label mb-1 mt-2">Rubro</label>
-                            <input type="text" [(ngModel)]="rubro" name="rubro" class="form-control" id="inputRubro">
-                        </div>
-                        <div class="col-6">
-                            <label for="inputEmail" class="form-label mb-1 mt-2">E-mail</label>
-                            <input type="text" [(ngModel)]="email" name="email" class="form-control" id="inputEmail">
-                        </div>
-                        <div class="col-6">
-                            <label for="inputTelefono" class="form-label mb-1 mt-2">Teléfono</label>
-                            <input type="text" [(ngModel)]="telefono" name="telefono" class="form-control" id="inputTelefono">
-                        </div>
-                        <div class="col-6">
-                            <label for="inputWeb" class="form-label mb-1 mt-2">Sitio web</label>
-                            <input type="text" [(ngModel)]="web" name="web" class="form-control" id="inputWeb">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="inputCalle" class="form-label mb-1 mt-2">Calle</label>
-                            <input type="text" [(ngModel)]="calle" name="calle" class="form-control" id="inputCalle">
-                        </div>
-                        <div class="col-md-3">
-                            <label for="inputAltura" class="form-label mb-1 mt-2">Altura</label>
-                            <input type="text" [(ngModel)]="altura" name="altura" class="form-control" id="inputAltura">
-                        </div>
-                        <div class="col-md-3">
-                            <label for="inputCP" class="form-label mb-1 mt-2">CP</label>
-                            <input type="text" [(ngModel)]="codigoPostal" name="codigoPostal" class="form-control" id="inputCP">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="inputProvincia" class="form-label mb-1 mt-2">Provincia</label>
-                            <input type="text" [(ngModel)]="provincia" name="provincia" class="form-control" id="inputProvincia">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="inputLocalidad" class="form-label mb-1 mt-2">Localidad</label>
-                            <input type="text" [(ngModel)]="localidad" name="localidad" class="form-control" id="inputLocalidad">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="inputPais" class="form-label mb-1 mt-2">Pais</label>
-                            <input type="text" [(ngModel)]="pais" name="pais" class="form-control" id="inputPais">
-                        </div>
-                        
-                        <div class="col-md-12">
-                            <label for="inputCUIT" class="form-label mb-1 mt-2">CUIT</label>
-                            <input type="text" [(ngModel)]="cuit" name="cuit" class="form-control" id="inputCUIT">
-                        </div>
-                        <div class="col-md-6">
-                        <label for="inputCondicionIVA" class="form-label">Condicion IVA</label>
-                        <select id="inputCondicionIVA" [(ngModel)]="condicionIVA" name="condicionIVA" class="form-select mt-2 ">
-                            <option selected>Choose...</option>
-                            <option value="ResponsableInscripto">Responsable Inscripto</option>
-                        </select>
-                        </div>
-                        <div class="col-12 mt-3">
-                            <h5 class="modal-title" id="exampleModalLabel">Datos del contacto</h5>
-                        </div>
-                        <div class="col-6">
-                            <label for="inputNombreContacto" class="form-label mb-1 mt-2">Nombre</label>
-                            <input type="text" [(ngModel)]="nombreContacto" name="nombreContacto" class="form-control" id="inputNombreContacto">
-                        </div>
-                        <div class="col-6">
-                            <label for="inputApellidoContacto" class="form-label mb-1 mt-2">Apellido</label>
-                            <input type="text" [(ngModel)]="apellidoContacto" name="apellidoContacto" class="form-control" id="inputApellidoContacto">
-                        </div>
-                        <div class="col-4">
-                            <label for="inputTelefonoContacto" class="form-label mb-1 mt-2">Teléfono</label>
-                            <input type="text" [(ngModel)]="telefonoContacto" name="telefonoContacto" class="form-control" id="inputTelefonoContacto">
-                        </div>
-                        <div class="col-4">
-                            <label for="inputEmailContacto" class="form-label mb-1 mt-2">E-mail</label>
-                            <input type="text" [(ngModel)]="emailContacto" name="emailContacto" class="form-control" id="inputEmailContacto">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="inputRolContacto" class="form-label mb-1 mt-2">Rol</label>
-                            <input type="text" [(ngModel)]="rolContacto" name="rolContacto" class="form-control" id="inputRolContacto">
-                        </div>
-
-                        <!-- <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Sign in</button>
-                        </div> -->
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary close-modal" (click)="eraseForm()" type="button" data-dismiss="modal">Cancelar</button>
-                    <button id="add-proveedor" (click)="addProveedor()" class="btn btn-primary close-modal" type="button" data-dismiss="modal">Aceptar Proveedor</button>
-                    <!-- <a class="btn btn-primary" href="login.html">Logout</a> -->
-                </div>
-            </div>
-        </div>
-
-
-<!--      FIN FORM SUPPLIERS        -->
-
-
-
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
@@ -142,22 +26,14 @@
                 <tbody>
                     <tr *ngFor="let proveedor of proveedores">
                         <th>{{proveedor.codigo}}</th>
-                        <th>Razón Social</th>
-                        <th>Rubro</th>
+                        <th>{{proveedor.razonSocial}}</th>
+                        <th>{{proveedor.rubro}}</th>
                         <th>Opciones</th>
                     </tr>
-                </tbody>
-                <!-- <tfoot>
-                    <tr>
-                        <th>Código</th>
-                        <th>Razón Social</th>
-                        <th>Rubro</th>
-                        <th>Opciones</th>
-                    </tr>
-                </tfoot> -->
-                <tbody id="tabla-proveedores">
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<router-outlet></router-outlet>

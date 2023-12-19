@@ -5,12 +5,9 @@
 
 <!-- Boton proveedor nuevo -->
 
-<app-form-products></app-form-products>
-
-<a class="btn btn-primary mb-4" href="#" data-toggle="modal" data-target="#proveedorModal">
+<a class="btn btn-primary mb-4" routerLink="agregar-productos">
     Agregar Productos
 </a>
-
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
@@ -32,8 +29,19 @@
                     </tr>
                 </thead>
                 <tbody id="tabla-productos">
+                    <tr *ngFor = "let product of products">
+                        <th>{{product.id}}</th>
+                        <th>{{product.SKU}}</th>
+                        <th>{{product.proveedorId}}</th>
+                        <th>{{product.categoria}}</th>
+                        <th>{{product.nombreProducto}}</th>
+                        <th>{{product.descripcion}}</th>
+                        <th>Opciones</th>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<router-outlet></router-outlet>

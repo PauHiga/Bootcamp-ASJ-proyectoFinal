@@ -116,7 +116,7 @@ function addOrdenCompra(codigoParaEditar){
     
 
     const datosOrdenCompra = {
-        codigo: codigo,
+        id: id,
         fechaEmision: fechaEmision,
         fechaEntrega: fechaEntrega,
         direccionRecepcion: direccionRecepcion,
