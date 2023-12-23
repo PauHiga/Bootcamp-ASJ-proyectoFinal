@@ -1,0 +1,41 @@
+<div class="container">
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Ordenes</li>
+      </ol>
+    </nav>
+  
+    <button routerLink="/ordenes/formulario-ordenes">Añadir Orden</button>
+  
+    <table class="table table-striped ">
+      <thead>
+        <tr>
+          <th scope="col">Nº Orden</th>
+          <th scope="col">Fecha emisión</th>
+          <th scope="col">Entrega Estimada</th>
+          <th scope="col">Proveedor</th>
+          <th scope="col">Productos</th>
+          <th scope="col-1">Cancelar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders" [ngClass]="(order.estado=='CANCELADO')?'canceled':''" >
+          <td>{{order.numeroOrden}}</td>
+          <td>{{order.fechaEmision}}</td>
+          <td>{{order.fechaEntrega}}</td>
+          <td>{{order.proveedor}}</td>
+          <td>
+            <ul>
+              <li *ngFor="let pedido of order.productos">
+                {{pedido.codigoProducto}} - {{pedido.cantidad}}
+              </li>
+            </ul>
+
+          </td>
+          <td><img (click)="markCanceled(order.numeroOrden)" src="/assets/icons/x-square.svg" alt="mark as canceled" width="25" height="25" [ngClass]="(order.estado=='CANCELADO')?'d-none':''"><p [ngClass]="(order.estado=='CANCELADO')?'':'d-none'">CANCELADO</p></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

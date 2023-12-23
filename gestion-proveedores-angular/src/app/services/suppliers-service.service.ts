@@ -9,17 +9,16 @@ const dataProv = proveedores;
 })
 export class SuppliersServiceService {
 
-  data = dataProv;
+  dataProveedores = dataProv;
 
   constructor( private http: HttpClient) { }
 
   public getSuppliers(){
-    return this.data;
+    return this.dataProveedores;
   }
 
   public addSupplier(newSupplier:any){
-    this.data.push(newSupplier);
-    console.log(this.data)
+    this.dataProveedores.push(newSupplier);
+    console.log(this.dataProveedores)
   }
-
 }

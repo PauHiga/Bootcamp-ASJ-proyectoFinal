@@ -1,0 +1,36 @@
+<div class="container">
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Productos</li>
+      </ol>
+    </nav>
+  
+    <button routerLink="/productos/formulario-productos">Añadir Producto</button>
+  
+    <table class="table table-striped ">
+      <thead>
+        <tr>
+          <th scope="col">Imagen</th>
+          <th scope="col">Producto</th>
+          <th scope="col">Categoría</th>
+          <th scope="col">Proveedor</th>
+          <th scope="col">Precio</th>
+          <th scope="col-1"></th>
+          <th scope="col-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td><img src="{{product.URLimage}}" alt="{{product.nombreProducto}}" height=80 (error)="imageError($event)"></td>
+          <td>{{product.nombreProducto}}</td>
+          <td>{{product.categoria}}</td>
+          <td>{{product.idProveedor}}</td>
+          <td>{{product.precio}}</td>
+          <td (click)="editProduct(product.SKUProducto)"><img src="/assets/icons/pencil-square.svg" alt="trash" width="25" height="25"></td>
+          <td (click)="deleteProduct(product.SKUProducto)"><img src="/assets/icons/trash.svg" alt="trash" width="25" height="25"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

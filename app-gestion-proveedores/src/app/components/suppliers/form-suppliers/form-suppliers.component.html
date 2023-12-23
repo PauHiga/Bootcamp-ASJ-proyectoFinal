@@ -1,0 +1,133 @@
+<div class="container">
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item"><a [routerLink]="['/proveedores']">Proveedores</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{tituloFormulario}}</li>
+    </ol>
+  </nav>
+
+
+  <h2>{{tituloFormulario}}</h2>  
+
+  <form (ngSubmit)="onClickForm(formularioProveedores)" #formularioProveedores="ngForm" class="p-4">
+      <input type="hidden" name="codigo" [(ngModel)]="supplierService.supplier.codigo">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="razonSocial" class="form-label">Razon Social:</label>
+          <input type="text" class="form-control" id="razonSocial" name="razonSocial" [(ngModel)]="supplierService.supplier.razonSocial" required>
+        </div>
+        <div class="col-md-4">
+          <label for="rubro" class="form-label">Rubro:</label>
+          <input type="text" class="form-control" id="rubro" name="rubro" [(ngModel)]="supplierService.supplier.rubro" required>
+        </div>
+        <div class="col-md-4">
+          <label for="rubro" class="form-label">Logo (url):</label>
+          <input type="text" class="form-control" id="URLlogo" name="URLlogo" [(ngModel)]="supplierService.supplier.URLlogo" required>
+        </div>
+      </div>
+    
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label for="CUIT" class="form-label">CUIT:</label>
+          <input type="text" class="form-control" id="CUIT" name="CUIT" [(ngModel)]="supplierService.supplier.CUIT" required>
+        </div>
+        <div class="col-md-6">
+          <label for="condicionIva" class="form-label">Condicion IVA:</label>
+          <input type="text" class="form-control" id="condicionIva" name="condicionIva" [(ngModel)]="supplierService.supplier.condicionIva" required>
+        </div>
+      </div>
+    
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" class="form-control" id="email" name="email" [(ngModel)]="supplierService.supplier.email" required>
+        </div>
+        <div class="col-md-6">
+          <label for="telefono" class="form-label">Telefono:</label>
+          <input type="tel" class="form-control" id="telefono" name="telefono" [(ngModel)]="supplierService.supplier.telefono" required>
+        </div>
+      </div>
+    
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label for="web" class="form-label">Web:</label>
+          <input type="url" class="form-control" id="web" name="web" [(ngModel)]="supplierService.supplier.web" required>
+        </div>
+      </div>
+    
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label for="calle" class="form-label">Calle:</label>
+          <input type="text" class="form-control" id="calle" name="direccion.calle" [(ngModel)]="supplierService.supplier.direccion.calle" required>
+        </div>
+        <div class="col-md-6">
+          <label for="altura" class="form-label">Altura:</label>
+          <input type="text" class="form-control" id="altura" name="direccion.altura" [(ngModel)]="supplierService.supplier.direccion.altura" required>
+        </div>
+      </div>
+    
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label for="CP" class="form-label">CP:</label>
+          <input type="text" class="form-control" id="CP" name="direccion.CP" [(ngModel)]="supplierService.supplier.direccion.CP" required>
+        </div>
+      </div>
+    
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label for="pais" class="form-label">Pais:</label>
+          <input type="text" class="form-control" id="pais" name="direccion.pais" [(ngModel)]="supplierService.supplier.direccion.pais" required>
+        </div>
+        <div class="col-md-6">
+          <label for="provincia" class="form-label">Provincia:</label>
+          <input type="text" class="form-control" id="provincia" name="direccion.provincia" [(ngModel)]="supplierService.supplier.direccion.provincia" required>
+        </div>
+      </div>
+    
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label for="localidad" class="form-label">Localidad:</label>
+          <input type="text" class="form-control" id="localidad" name="direccion.localidad" [(ngModel)]="supplierService.supplier.direccion.localidad" required>
+        </div>
+      </div>
+    
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label for="nombreContacto" class="form-label">Nombre del Contacto:</label>
+          <input type="text" class="form-control" id="nombreContacto" name="contacto.nombre" [(ngModel)]="supplierService.supplier.contacto.nombre" required>
+        </div>
+        <div class="col-md-6">
+          <label for="apellidoContacto" class="form-label">Apellido del Contacto:</label>
+          <input type="text" class="form-control" id="apellidoContacto" name="contacto.apellido" [(ngModel)]="supplierService.supplier.contacto.apellido" required>
+        </div>
+      </div>
+    
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label for="emailContacto" class="form-label">Email del Contacto:</label>
+          <input type="email" class="form-control" id="emailContacto" name="contacto.email" [(ngModel)]="supplierService.supplier.contacto.email" required>
+        </div>
+        <div class="col-md-6">
+          <label for="telefonoContacto" class="form-label">Telefono del Contacto:</label>
+          <input type="tel" class="form-control" id="telefonoContacto" name="contacto.telefono" [(ngModel)]="supplierService.supplier.contacto.telefono" required>
+        </div>
+      </div>
+    
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label for="otrosContacto" class="form-label">Rol del Contacto:</label>
+          <input type="text" class="form-control" id="otrosContacto" name="contacto.rol" [(ngModel)]="supplierService.supplier.contacto.rol">
+        </div>
+      </div>
+    
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-primary">{{tituloFormulario}}</button>
+        </div>
+      </div>
+    </form>
+    
+
+</div>

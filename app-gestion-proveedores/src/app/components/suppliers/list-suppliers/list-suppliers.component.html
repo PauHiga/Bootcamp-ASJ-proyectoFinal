@@ -1,0 +1,40 @@
+<div class="container">
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Proveedores</li>
+    </ol>
+  </nav>
+
+  <button routerLink="/proveedores/formulario-proveedores">Añadir Proveedor</button>
+
+  <table class="table table-striped ">
+    <thead>
+      <tr>
+        <th scope="col">Codigo</th>
+        <th scope="col">Razon Social</th>
+        <th scope="col">Web</th>
+        <th scope="col">Contacto</th>
+        <th scope="col-1"></th>
+        <th scope="col-1"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let proveedor of proveedores">
+        <th scope="row">{{proveedor.codigo}}</th>
+        <td>{{proveedor.razonSocial}}</td>
+        <td>
+          <ul>
+            <li>{{proveedor.email}}</li>
+            <li>{{proveedor.telefono}}</li>
+            <li>{{proveedor.web}}</li>
+          </ul>  
+        </td>
+        <td>{{proveedor.contacto.apellido}}, {{proveedor.contacto.nombre}}</td>
+        <td (click)="editSupplier(proveedor.codigo)"><img src="/assets/icons/pencil-square.svg" alt="trash" width="25" height="25"></td>
+        <td (click)="deleteSupplier(proveedor.codigo)"><img src="/assets/icons/trash.svg" alt="trash" width="25" height="25"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

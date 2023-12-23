@@ -9,13 +9,15 @@ const data = ordenesCompra
 })
 export class OrdersServiceService {
 
+  orders = data;
+
   constructor( private http: HttpClient) { }
 
   public getOrders(){
-    return data;
+    return this.orders;
   }
 
-  public addProduct(newProduct:any){
-    data.push(newProduct);
+  public addOrder(newOrder:any){
+    this.orders.push(newOrder);
   }
 }
