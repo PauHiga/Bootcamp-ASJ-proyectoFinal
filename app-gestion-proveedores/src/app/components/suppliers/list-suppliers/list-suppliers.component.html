@@ -22,7 +22,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let proveedor of proveedores">
-        <th scope="row">{{proveedor.codigo}}</th>
+        <th scope="row">{{proveedor.id}}</th>
         <td>{{proveedor.razonSocial}}</td>
         <td>
           <ul>
@@ -32,8 +32,8 @@
           </ul>  
         </td>
         <td>{{proveedor.contacto.apellido}}, {{proveedor.contacto.nombre}}</td>
-        <td (click)="editSupplier(proveedor.codigo)"><img src="/assets/icons/pencil-square.svg" alt="trash" width="25" height="25"></td>
-        <td (click)="deleteSupplier(proveedor.codigo)"><img src="/assets/icons/trash.svg" alt="trash" width="25" height="25"></td>
+        <td (click)="editSupplier(proveedor.id)"><img src="/assets/icons/pencil-square.svg" alt="trash" width="25" height="25"></td>
+        <td (click)="deleteSupplier(proveedor.id)"><img src="/assets/icons/trash.svg" alt="trash" width="25" height="25"></td>
       </tr>
     </tbody>
   </table>

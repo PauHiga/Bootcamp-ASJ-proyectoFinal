@@ -13,21 +13,38 @@ export class ListProductsComponent implements OnInit{
 
   constructor(public productsService: ProductsServiceService, private route:ActivatedRoute, private router:Router){}
 
+  products : producto[]= [];
+
   ngOnInit(): void {
-    this.products = this.productsService.getProducts();
-    this.sortByProductName(this.products);
-    console.log(this.products)
+    this.createProductsList();
   }
 
-products : producto[]= [];
+  createProductsList(){
+    this.productsService.getProducts().subscribe(
+      (response)=>{
+        this.products = response;
+      }
+    )
+  }
 
-editProduct(SKUProducto:string){
-  this.router.navigate([`productos/formulario-productos/${SKUProducto}`])
-}
+  deleteProduct(id:string){
+    const confirmar = confirm("¿Eliminar proveedor?")
+    if (confirmar){
+      this.productsService.deleteProduct(id).subscribe(
+        (response) => {
+          this.createProductsList();
+        }
+      )
+    }
+  }
 
-deleteProduct(SKUProducto:string){
-  this.productsService.deleteProduct(SKUProducto)
-  this.products = this.productsService.getProducts();
+editProduct(id:string){
+  const selectedProduct = this.products.find(item => item.id == id)
+  if(!selectedProduct){
+    console.log("Error! No supplier found to be edited!")
+  } else{
+    this.router.navigate([`productos/formulario-productos/${id}`])
+  }
 }
 
 imageError(event: Event):void{

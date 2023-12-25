@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { proveedor } from '../models/proveedores';
-import { proveedoresEjemplo } from '../datos/proveedores';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SupplierServiceService {
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
+
+  URL_API = 'http://localhost:3000/suppliers'
 
   supplier: proveedor = {
+    id: '',
     codigo: '',
     razonSocial: '',
     rubro: '',
@@ -36,33 +40,36 @@ export class SupplierServiceService {
     }
   }
 
-  suppliers : proveedor[] = proveedoresEjemplo;
+  suppliers : proveedor[] = [];
 
-  getSuppliers(){
-    return this.suppliers;
+  getSuppliers() : Observable<any>{
+    return this.http.get(this.URL_API);
   }
 
-  setSupplierForEdit(codigo:string){
-    const selectedSupplier = this.suppliers.find(item => item.codigo == codigo)
-    if(selectedSupplier){
-      this.supplier = selectedSupplier;
-    }
+  getASupplier(id:string){
+    return this.http.get(this.URL_API + "/" + id);
   }
 
-  editSupplier(){
-    this.suppliers = this.suppliers.map(item => item.codigo == this.supplier.codigo ? this.supplier : item);
+  saveSupplier() : Observable<any>{    
+    return this.http.post(this.URL_API, this.supplier);
   }
 
-  deleteSupplier(codigo:string){
-    this.suppliers = this.suppliers.filter(item => item.codigo != codigo);
+  setSupplierForEdit(supplierForEdit : any){
+    this.supplier = supplierForEdit;
   }
 
-  saveSupplier(){
-    this.suppliers.push(this.supplier)
+  editSupplier(id: string){
+    return this.http.put(this.URL_API + "/" + id, this.supplier);
+  }
+
+  deleteSupplier(id:string){
+    console.log(this.URL_API + "/" + id)
+    return this.http.delete(this.URL_API + "/" + id)
   }
 
   clearSupplierData(){
     this.supplier = {
+      id: '',
       codigo: '',
       razonSocial: '',
       rubro: '',
@@ -89,5 +96,6 @@ export class SupplierServiceService {
       }
     }
   }
+
 
 }

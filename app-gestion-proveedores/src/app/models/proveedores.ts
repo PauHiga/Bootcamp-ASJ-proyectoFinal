@@ -2,6 +2,7 @@ import { direccion } from "./direccion";
 import { contacto } from "./contacto";
 
 export interface proveedor {
+    id: string,
     codigo: string,
     razonSocial: string,
     rubro: string,

@@ -14,18 +14,37 @@ export class ListSuppliersComponent implements OnInit{
 
   constructor(public supplierService: SupplierServiceService, private router:Router){}
 
-  ngOnInit(): void {
-    this.proveedores = this.supplierService.getSuppliers();
-  }
-
   proveedores : proveedor[] = []
 
-  deleteSupplier(codigo:string){
-    this.supplierService.deleteSupplier(codigo)
-    this.proveedores = this.supplierService.getSuppliers();
+  ngOnInit(): void {
+    this.createSuppliersList();
   }
-  editSupplier(codigo:string){
-    this.router.navigate([`proveedores/formulario-proveedores/${codigo}`])
+
+  createSuppliersList(){
+    this.supplierService.getSuppliers().subscribe( (response) => {
+      this.proveedores = response;
+    })
+  }
+
+  
+
+  deleteSupplier(id:string){
+    const confirmar = confirm("¿Eliminar proveedor?")
+    if (confirmar){
+      this.supplierService.deleteSupplier(id).subscribe(
+        (response) => {
+          this.createSuppliersList();
+        }
+      )
+    }
+  }
+  editSupplier(id:string){
+    const selectedSupplier = this.proveedores.find(item => item.id == id)
+    if(!selectedSupplier){
+      console.log("Error! No supplier found to be edited!")
+    } else{
+      this.router.navigate([`proveedores/formulario-proveedores/${selectedSupplier.id}`])
+    }
   }
 
 }

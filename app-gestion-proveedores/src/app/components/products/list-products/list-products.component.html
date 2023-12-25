@@ -26,10 +26,10 @@
           <td><img src="{{product.URLimage}}" alt="{{product.nombreProducto}}" height=80 (error)="imageError($event)"></td>
           <td>{{product.nombreProducto}}</td>
           <td>{{product.categoria}}</td>
-          <td>{{product.idProveedor}}</td>
+          <td>{{product.id}}</td>
           <td>{{product.precio}}</td>
-          <td (click)="editProduct(product.SKUProducto)"><img src="/assets/icons/pencil-square.svg" alt="trash" width="25" height="25"></td>
-          <td (click)="deleteProduct(product.SKUProducto)"><img src="/assets/icons/trash.svg" alt="trash" width="25" height="25"></td>
+          <td (click)="editProduct(product.id)"><img src="/assets/icons/pencil-square.svg" alt="trash" width="25" height="25"></td>
+          <td (click)="deleteProduct(product.id)"><img src="/assets/icons/trash.svg" alt="trash" width="25" height="25"></td>
         </tr>
       </tbody>
     </table>

@@ -1,6 +1,7 @@
 import { productoCantidad } from "./productoCantidad"
 
 export interface orden {
+    id: string,
     numeroOrden: number,
     fechaEmision: string,
     fechaEntrega: string,

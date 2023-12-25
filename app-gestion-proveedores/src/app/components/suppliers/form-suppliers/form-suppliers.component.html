@@ -12,7 +12,13 @@
   <h2>{{tituloFormulario}}</h2>  
 
   <form (ngSubmit)="onClickForm(formularioProveedores)" #formularioProveedores="ngForm" class="p-4">
-      <input type="hidden" name="codigo" [(ngModel)]="supplierService.supplier.codigo">
+    <input type="hidden" class="form-control" name="id" [(ngModel)]="supplierService.supplier.id">        
+      <div class="row">
+        <div class="col-md-4">
+          <label for="razonSocial" class="form-label">Codigo:</label>
+          <input type="text" class="form-control" name="codigo" [(ngModel)]="supplierService.supplier.id">        
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-4">
           <label for="razonSocial" class="form-label">Razon Social:</label>

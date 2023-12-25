@@ -12,15 +12,23 @@ export class ListOrdersComponent implements OnInit{
 
   constructor(public ordersService: OrdersServiceService, private route:ActivatedRoute, private router:Router){}
 
+  orders : orden[]= [];
+  
   ngOnInit(): void {
-    this.orders = this.ordersService.getOrders();
+    this.createOrdersList();
   }
 
-orders : orden[]= [];
-
-markCanceled(id:number){
-  this.ordersService.markAsCanceled(id)
-  this.orders = this.ordersService.getOrders();
-}
+  createOrdersList(){
+    this.ordersService.getOrders().subscribe( (response) => {
+      this.orders = response;
+    })
+  }
+  markCanceled(id:string){
+    const orderToCancel = this.orders.find(item=> item.id == id)
+    this.ordersService.markAsCanceled(orderToCancel).subscribe((response)=>{
+      console.log(response)
+    });
+    this.createOrdersList();
+  }
 
 }

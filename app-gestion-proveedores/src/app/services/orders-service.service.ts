@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { orden } from '../models/orden';
-import { ordenesEjemplo } from '../datos/ordenes';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersServiceService {
-  constructor() { }
+  constructor(private http:HttpClient) { }
+
+  URL_API = 'http://localhost:3000/orders'
 
   orden: orden = 
     {
+      id: "",
       numeroOrden: 0,
       fechaEmision: '',
       fechaEntrega: '',
@@ -23,23 +27,29 @@ export class OrdersServiceService {
       estado: 'NO CANCELADO'
     }
 
-  ordenes : orden[] = ordenesEjemplo;
+  ordenes : orden[] = [];
 
-  getOrders(){
-    return this.ordenes
+  getOrders() : Observable<any>{
+    return this.http.get(this.URL_API);
   }
 
-  markAsCanceled(numeroOrden:number){
-    this.ordenes = this.ordenes.map(item => item.numeroOrden == numeroOrden ? {...item, estado:'CANCELADO'} : item);
+  markAsCanceled(supplierForEdit : any){
+    console.log(supplierForEdit)
+    console.log("toCancel")
+    this.orden = {...supplierForEdit, estado: "CANCELADO"}
+    console.log(this.orden)
+    console.log(this.URL_API + "/" + this.orden.id)
+    return this.http.put(this.URL_API + "/" + this.orden.id, this.orden);
   }
 
-  saveOrder(){
-    this.ordenes.push(this.orden)
+  saveOrder() : Observable<any>{    
+    return this.http.post(this.URL_API, this.orden);
   }
 
   clearOrderData(){
     this.orden = 
     {
+      id: "",
       numeroOrden: 0,
       fechaEmision: '',
       fechaEntrega: '',

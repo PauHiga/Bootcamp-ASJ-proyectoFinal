@@ -19,7 +19,9 @@ export class FormOrdersComponent implements OnInit{
   }
 
   onClickForm(formularioProveedores:NgForm){
-      this.orderService.saveOrder()
+    this.orderService.saveOrder().subscribe((response)=>{
+      console.log(response);
+    })
     this.orderService.clearOrderData()
     this.router.navigate(["ordenes"])
   }

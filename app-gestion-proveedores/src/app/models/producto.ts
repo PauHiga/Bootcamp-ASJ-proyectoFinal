@@ -1,5 +1,5 @@
 export interface producto {
-    idProveedor: number,
+    id: string,
     SKUProducto: string,
     categoria: string,
     nombreProducto: string,

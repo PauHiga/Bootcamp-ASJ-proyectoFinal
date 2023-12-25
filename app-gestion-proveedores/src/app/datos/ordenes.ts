@@ -1,6 +1,6 @@
 import { orden } from "../models/orden";
 
-export const ordenesEjemplo : orden[] = [
+export const ordenesEjemplo1 : orden[] = [
   {
     numeroOrden: 1,
     fechaEmision: '2023-01-01',

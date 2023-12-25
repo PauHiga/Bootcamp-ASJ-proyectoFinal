@@ -14,7 +14,8 @@
 <!-- orden-form.component.html -->
 
 <div class="container mt-4">
-    <form #ordenForm="ngForm" (ngSubmit)="onClickForm(ordenForm)">
+  <form #ordenForm="ngForm" (ngSubmit)="onClickForm(ordenForm)">
+    <input type="hidden" class="form-control" id="numeroOrden" name="id" [(ngModel)]="orderService.orden.id">
       <div class="form-group">
         <label for="numeroOrden">Número de Orden</label>
         <input type="number" class="form-control" id="numeroOrden" name="numeroOrden" [(ngModel)]="orderService.orden.numeroOrden">

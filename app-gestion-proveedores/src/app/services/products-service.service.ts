@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { producto } from '../models/producto';
-import { productosEjemplo } from '../datos/productos';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsServiceService {
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
-  product: producto =     {
-    idProveedor: 0,
+  URL_API = 'http://localhost:3000/products'
+
+  product: producto = {
+    id: '',
     SKUProducto: '',
     categoria: '',
     nombreProducto: '',
@@ -18,38 +21,35 @@ export class ProductsServiceService {
     URLimage: ''
   }
 
-  products : producto[] = productosEjemplo;
+  products : producto[] = [];
 
-  getProducts(){
-    return this.products
+  getProducts(): Observable<any>{
+    return this.http.get(this.URL_API);
   }
 
-  getSuppliersList(){
-
+  getAProduct(id:string): Observable<any>{
+    return this.http.get(this.URL_API + "/" + id);
   }
 
-  setProductForEdit(SKUProducto: string){
-    const selectedSupplier = this.products.find(item => item.SKUProducto == SKUProducto)
-    if(selectedSupplier){
-      this.product = selectedSupplier;
-    }
+  saveProduct() : Observable<any>{    
+    return this.http.post(this.URL_API, this.product);
   }
 
-  editProduct(){
-    this.products = this.products.map(item => item.SKUProducto == this.product.SKUProducto ? this.product : item);
+  setProductForEdit(productForEdit : any){
+    this.product = productForEdit;
   }
 
-  deleteProduct(SKUProducto: string){
-    this.products = this.products.filter(item => item.SKUProducto != SKUProducto);
+  editProduct(id: string){
+    return this.http.put(this.URL_API + "/" + id, this.product);
   }
 
-  saveSupplier(){
-    this.products.push(this.product)
+  deleteProduct(id:string){
+    return this.http.delete(this.URL_API + "/" + id)
   }
 
   clearProductData(){
     this.product = {
-      idProveedor: 0,
+      id: '',
       SKUProducto: '',
       categoria: '',
       nombreProducto: '',
