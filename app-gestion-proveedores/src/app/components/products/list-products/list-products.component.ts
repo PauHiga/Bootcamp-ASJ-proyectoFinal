@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsServiceService } from '../../../services/products-service.service';
 import { producto } from '../../../models/producto';
+import { clippingParents } from '@popperjs/core';
 
 
 @Component({
@@ -13,18 +14,29 @@ export class ListProductsComponent implements OnInit{
 
   constructor(public productsService: ProductsServiceService, private route:ActivatedRoute, private router:Router){}
 
-  products : producto[]= [];
+  productsToDisplay : producto[]= [];
+  suppliersList : any[] = [];
 
   ngOnInit(): void {
+    this.getProveedores();
     this.createProductsList();
   }
 
   createProductsList(){
     this.productsService.getProducts().subscribe(
       (response)=>{
-        this.products = response;
+        this.productsToDisplay = response.map((item: producto) => {
+          item.idProveedor = this.suppliersList.find(supplier => item.idProveedor == supplier.id).razonSocial
+          return item
+        });
       }
     )
+  }
+
+  getProveedores(){
+    this.productsService.getSuppliersList().subscribe((response)=>{
+      this.suppliersList = response;
+    })
   }
 
   deleteProduct(id:string){
@@ -39,7 +51,7 @@ export class ListProductsComponent implements OnInit{
   }
 
 editProduct(id:string){
-  const selectedProduct = this.products.find(item => item.id == id)
+  const selectedProduct = this.productsToDisplay.find(item => item.id == id)
   if(!selectedProduct){
     console.log("Error! No supplier found to be edited!")
   } else{

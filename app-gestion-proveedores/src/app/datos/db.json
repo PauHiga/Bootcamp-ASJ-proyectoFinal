@@ -193,15 +193,27 @@
   "products": [
     {
       "id": 101,
+      "idProveedor": 1,
       "SKUProducto": "SKU123",
       "categoria": "Electrónicos",
-      "nombreProducto": "Smartphone ZZZ",
+      "nombreProducto": "Smartphone XYZ",
       "descripcion": "Un smartphone avanzado con características excepcionales.",
       "precio": 599.99,
       "URLimage": ""
     },
     {
+      "id": 102,
+      "idProveedor": 1,
+      "SKUProducto": "SKU456",
+      "categoria": "Ropa",
+      "nombreProducto": "Camisa Casual",
+      "descripcion": "Camisa de algodón para ocasiones informales.",
+      "precio": 29.99,
+      "URLimage": ""
+    },
+    {
       "id": 103,
+      "idProveedor": 1,
       "SKUProducto": "SKU789",
       "categoria": "Hogar",
       "nombreProducto": "Aspiradora Robótica",
@@ -211,6 +223,7 @@
     },
     {
       "id": 104,
+      "idProveedor": 1,
       "SKUProducto": "SKU012",
       "categoria": "Deportes",
       "nombreProducto": "Zapatillas para Correr",
@@ -220,17 +233,27 @@
     },
     {
       "id": 105,
+      "idProveedor": 1,
       "SKUProducto": "SKU345",
       "categoria": "Juguetes",
       "nombreProducto": "Rompecabezas Educativo",
       "descripcion": "Rompecabezas didáctico para el aprendizaje infantil.",
       "precio": 19.99,
       "URLimage": ""
+    },
+    {
+      "id": 106,
+      "idProveedor": "5",
+      "SKUProducto": "SKU123",
+      "categoria": "Hogar",
+      "nombreProducto": "Escoba",
+      "descripcion": "Escoba que barre",
+      "precio": 1000,
+      "URLimage": ""
     }
   ],
   "orders": [
     {
-      "id": "1",
       "numeroOrden": 1,
       "fechaEmision": "2023-01-01",
       "fechaEntrega": "2023-01-10",
@@ -250,7 +273,6 @@
       "estado": "NO CANCELADO"
     },
     {
-      "id": "2",
       "numeroOrden": 2,
       "fechaEmision": "2023-02-01",
       "fechaEntrega": "2023-02-15",
@@ -270,7 +292,6 @@
       "estado": "NO CANCELADO"
     },
     {
-      "id": "3",
       "numeroOrden": 3,
       "fechaEmision": "2023-03-01",
       "fechaEntrega": "2023-03-20",
@@ -283,26 +304,6 @@
         }
       ],
       "total": 300.75,
-      "estado": "CANCELADO"
-    },
-    {
-      "id": "Uxw2FuQ",
-      "numeroOrden": 12,
-      "fechaEmision": "2023-11-29",
-      "fechaEntrega": "2023-12-09",
-      "informacionRecepcion": "sass",
-      "proveedor": "",
-      "productos": [
-        {
-          "codigoProducto": "",
-          "cantidad": 0
-        },
-        {
-          "codigoProducto": "",
-          "cantidad": 0
-        }
-      ],
-      "total": 0,
       "estado": "CANCELADO"
     }
   ],

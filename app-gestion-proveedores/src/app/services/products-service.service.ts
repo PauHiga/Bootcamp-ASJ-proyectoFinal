@@ -1,18 +1,24 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { producto } from '../models/producto';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { SupplierServiceService } from './supplier-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsServiceService {
-  constructor(private http:HttpClient) { }
+export class ProductsServiceService implements OnInit {
+  constructor(private http:HttpClient, private suppliersService: SupplierServiceService) { }
+
+  ngOnInit(): void {
+  }
 
   URL_API = 'http://localhost:3000/products'
+  URL_API_S = 'http://localhost:3000/suppliers'
 
   product: producto = {
     id: '',
+    idProveedor: '',
     SKUProducto: '',
     categoria: '',
     nombreProducto: '',
@@ -21,7 +27,7 @@ export class ProductsServiceService {
     URLimage: ''
   }
 
-  products : producto[] = [];
+  proveedores : any[] = [];
 
   getProducts(): Observable<any>{
     return this.http.get(this.URL_API);
@@ -50,6 +56,7 @@ export class ProductsServiceService {
   clearProductData(){
     this.product = {
       id: '',
+      idProveedor: '',
       SKUProducto: '',
       categoria: '',
       nombreProducto: '',
@@ -58,4 +65,9 @@ export class ProductsServiceService {
       URLimage: ''
     }
   }
+
+  getSuppliersList(): Observable<any> {
+    return this.http.get(this.URL_API_S)
+    }  
+  
 }

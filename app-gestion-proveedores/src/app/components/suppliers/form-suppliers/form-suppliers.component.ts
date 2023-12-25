@@ -3,6 +3,7 @@ import { SupplierServiceService } from '../../../services/supplier-service.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { proveedor } from '../../../models/proveedores';
+import { clippingParents } from '@popperjs/core';
 
 @Component({
   selector: 'app-form-suppliers',
@@ -16,7 +17,59 @@ export class FormSuppliersComponent implements OnInit{
   parametroURL : string = this.route.snapshot.params['edit'] || false;
   tituloFormulario = "Agregar Proveedor"
 
-  supplier = {};
+  supplier: proveedor = {
+    id: '',
+    codigo: '',
+    razonSocial: '',
+    rubro: '',
+    URLlogo: '',
+    CUIT: '',
+    condicionIva: '',
+    email: '',
+    telefono: '',
+    web: '',
+    direccion : {
+      calle: '',
+      altura: '',
+      CP: '',
+      pais: '',
+      provincia: '',
+      localidad: '',
+    },
+    contacto: {
+      nombre: '',
+      apellido: '',
+      email: '',
+      telefono: '',
+      rol: ''
+    }
+  }
+
+  // id = ''
+  // codigo= ''
+  // razonSocial = ''
+  // rubro = ''
+  // URLlogo = ''
+  // CUIT = ''
+  // condicionIva = ''
+  // email = ''
+  // telefono = ''
+  // web = ''
+  // calle = ''
+  // altura = ''
+  // CP = ''
+  // pais = ''
+  // provincia = ''
+  // localidad = ''
+  // nombre = ''
+  // apellido = ''
+  // emailContacto = ''
+  // telefonoContacto = ''
+  // rol = ''
+
+  msjValidCode = "";
+  validEmail = true;
+  validEmailContacto = true;
 
   ngOnInit(): void {
     if(this.parametroURL) {
@@ -38,13 +91,47 @@ export class FormSuppliersComponent implements OnInit{
   }
 
   onClickForm(formularioProveedores:NgForm){
-    if(this.parametroURL){
-      this.supplierService.editSupplier(this.parametroURL).subscribe((response)=> console.log(response))
-    } else {
-      this.supplierService.saveSupplier().subscribe((response)=> console.log(response))
+    this.validarFormulario();
+    console.log(formularioProveedores.valid)
+    if(formularioProveedores.valid && this.validarFormulario()){
+      if(this.parametroURL){
+        this.supplierService.editSupplier(this.parametroURL).subscribe((response)=> console.log(response))
+      } else {
+        this.supplierService.saveSupplier().subscribe((response)=> console.log(response))
+      }
+      this.supplierService.clearSupplierData()
+      this.router.navigate(["proveedores"])
     }
-    this.supplierService.clearSupplierData()
-    this.router.navigate(["proveedores"])
+  }
+
+  validarFormulario() : boolean{
+    const codigoValido = this.validarCodigo(this.supplierService.supplier.codigo) 
+    const emailValido = this.validarEmail(this.supplierService.supplier.email)
+    const emailContactoValido = this.validarEmailContacto(this.supplierService.supplier.contacto.email)
+    return(codigoValido && emailValido && emailContactoValido)
+  }
+  
+
+  validarCodigo(stringToValidate : string){
+    const regexCode = new RegExp('^[a-zA-Z0-9]+$');
+    if (!regexCode.test(stringToValidate)){
+      this.msjValidCode = "Solo se permiten números o letras"
+      return false;
+    }
+    this.msjValidCode = ""
+    return true;
+  }
+
+  validarEmail(stringToValidate : string) :boolean {
+    const regexCode = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    this.validEmail = regexCode.test(stringToValidate)
+    return regexCode.test(stringToValidate)
+  }
+
+  validarEmailContacto(stringToValidate: string): boolean {
+    const regexCode = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    this.validEmailContacto = regexCode.test(stringToValidate);
+    return this.validEmailContacto;
   }
 
 }

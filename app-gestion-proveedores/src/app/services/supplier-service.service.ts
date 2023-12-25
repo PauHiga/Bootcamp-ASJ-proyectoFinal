@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { proveedor } from '../models/proveedores';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { UpperCasePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'

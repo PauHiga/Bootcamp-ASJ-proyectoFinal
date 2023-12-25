@@ -193,6 +193,7 @@
   "products": [
     {
       "id": 101,
+      "idProveedor": 1,
       "SKUProducto": "SKU123",
       "categoria": "Electrónicos",
       "nombreProducto": "Smartphone XYZ",
@@ -202,6 +203,7 @@
     },
     {
       "id": 102,
+      "idProveedor": 1,
       "SKUProducto": "SKU456",
       "categoria": "Ropa",
       "nombreProducto": "Camisa Casual",
@@ -211,6 +213,7 @@
     },
     {
       "id": 103,
+      "idProveedor": 1,
       "SKUProducto": "SKU789",
       "categoria": "Hogar",
       "nombreProducto": "Aspiradora Robótica",
@@ -220,6 +223,7 @@
     },
     {
       "id": 104,
+      "idProveedor": 1,
       "SKUProducto": "SKU012",
       "categoria": "Deportes",
       "nombreProducto": "Zapatillas para Correr",
@@ -229,6 +233,7 @@
     },
     {
       "id": 105,
+      "idProveedor": 1,
       "SKUProducto": "SKU345",
       "categoria": "Juguetes",
       "nombreProducto": "Rompecabezas Educativo",

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsServiceService } from '../../../services/products-service.service';
+import { proveedor } from '../../../models/proveedores';
 
 @Component({
   selector: 'app-form-products',
@@ -17,7 +18,12 @@ export class FormProductsComponent implements OnInit{
 
   product = {};
 
+  suppliersList : proveedor[] = [];
+
+  categorias : string[] = [ "Electrónicos", "Deportes", "Juguetes", "ArtOficina", "Ropa", "Hogar"]
+
   ngOnInit(): void {
+    this.getProveedores();
     if(this.parametroURL) {
       this.tituloFormulario = "Editar Producto";
       this.getAProduct(this.parametroURL)
@@ -25,6 +31,12 @@ export class FormProductsComponent implements OnInit{
     else{
       this.productsService.clearProductData()
     }
+  }
+
+  getProveedores(){
+    this.productsService.getSuppliersList().subscribe((response)=>{
+      this.suppliersList = response;
+    })
   }
 
   getAProduct(id : string){
@@ -37,13 +49,17 @@ export class FormProductsComponent implements OnInit{
   }
 
   onClickForm(formularioProveedores:NgForm){
-    if(this.parametroURL){
-      this.productsService.editProduct(this.parametroURL).subscribe((response)=> console.log(response))
+    if(formularioProveedores.valid){
+      if(this.parametroURL){
+        this.productsService.editProduct(this.parametroURL).subscribe((response)=> console.log(response))
+      } else {
+        this.productsService.saveProduct().subscribe((response)=> console.log(response))
+      }
+      this.productsService.clearProductData()
+      this.router.navigate(["productos"])
     } else {
-      this.productsService.saveProduct().subscribe((response)=> console.log(response))
+      alert("Hay campos incompletos o erróneos. Por favor, revise el formulario")
     }
-    this.productsService.clearProductData()
-    this.router.navigate(["productos"])
   }
 
 }

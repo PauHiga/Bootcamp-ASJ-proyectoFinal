@@ -22,13 +22,13 @@
     </thead>
     <tbody>
       <tr *ngFor="let proveedor of proveedores">
-        <th scope="row">{{proveedor.id}}</th>
+        <th scope="row">{{proveedor.codigo}}</th>
         <td>{{proveedor.razonSocial}}</td>
         <td>
           <ul>
             <li>{{proveedor.email}}</li>
             <li>{{proveedor.telefono}}</li>
-            <li>{{proveedor.web}}</li>
+            <li *ngIf="proveedor.web">{{proveedor.web}}</li>
           </ul>  
         </td>
         <td>{{proveedor.contacto.apellido}}, {{proveedor.contacto.nombre}}</td>
