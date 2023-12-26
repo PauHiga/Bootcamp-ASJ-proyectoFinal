@@ -2,8 +2,8 @@
 
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a [routerLink]="['/ordenes']">Ordenes</a></li>
+        <li class="breadcrumb-item"><a (click)="cancelarHome()">Home</a></li>
+        <li class="breadcrumb-item"><a (click)="cancelar()">Ordenes</a></li>
         <li class="breadcrumb-item active" aria-current="page">Nueva Orden</li>
       </ol>
     </nav>
@@ -15,60 +15,83 @@
 
 <div class="container mt-4">
   <form #ordenForm="ngForm" (ngSubmit)="onClickForm(ordenForm)">
-    <input type="hidden" class="form-control" id="numeroOrden" name="id" [(ngModel)]="orderService.orden.id">
+    <input type="hidden" class="form-control" id="numeroOrden" name="id" [(ngModel)]="orden.id">
       <div class="form-group">
         <label for="numeroOrden">Número de Orden</label>
-        <input type="number" class="form-control" id="numeroOrden" name="numeroOrden" [(ngModel)]="orderService.orden.numeroOrden">
+        <input type="number" class="form-control" id="numeroOrden" name="numeroOrden" [(ngModel)]="orden.numeroOrden" disabled>
       </div>
   
       <div class="form-group">
         <label for="fechaEmision">Fecha de Emisión</label>
-        <input type="date" class="form-control" id="fechaEmision" name="fechaEmision" [(ngModel)]="orderService.orden.fechaEmision">
+        <input type="date" min="{{ getCurrentDate() | date:'yyyy-MM-dd' }}" class="form-control" id="fechaEmision" name="fechaEmision" [(ngModel)]="orden.fechaEmision" #FechaEmision="ngModel" required>
+        <div *ngIf="FechaEmision.errors?.['required']" class="col-auto">
+          <span class="form-text text-danger">
+              Este campo es requerido
+          </span>
+        </div>
       </div>
+
   
       <div class="form-group">
         <label for="fechaEntrega">Fecha de Entrega</label>
-        <input type="date" class="form-control" id="fechaEntrega" name="fechaEntrega" [(ngModel)]="orderService.orden.fechaEntrega">
-      </div>
-  
-      <div class="form-group">
-        <label for="informacionRecepcion">Información de Recepción</label>
-        <textarea class="form-control" id="informacionRecepcion" name="informacionRecepcion" [(ngModel)]="orderService.orden.informacionRecepcion"></textarea>
-      </div>
-  
-      <div class="form-group">
-        <label for="proveedor">Proveedor</label>
-        <input type="text" class="form-control" id="proveedor" name="proveedor" [(ngModel)]="orderService.orden.proveedor">
-      </div>
-  
-      <div class="form-group">
-        <label for="productos">Productos</label>
-        <div *ngFor="let producto of orderService.orden.productos; let i = index">
-          <div class="form-row">
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Código del Producto" [(ngModel)]="producto.codigoProducto" name="productos[{{i}}].codigoProducto">
-            </div>
-            <div class="col">
-              <input type="number" class="form-control" placeholder="Cantidad" [(ngModel)]="producto.cantidad" name="productos[{{i}}].cantidad">
-            </div>
-          </div>
+        <input type="date" min="{{ getCurrentDate() | date:'yyyy-MM-dd' }}" class="form-control" id="fechaEntrega" name="fechaEntrega" [(ngModel)]="orden.fechaEntrega" #FechaEntrega="ngModel" required>
+        <div *ngIf="FechaEntrega.errors?.['required']" class="col-auto">
+          <span class="form-text text-danger">
+              Este campo es requerido
+          </span>
         </div>
       </div>
   
       <div class="form-group">
-        <label for="total">Total</label>
-        <input type="number" class="form-control" id="total" name="total" [(ngModel)]="orderService.orden.total">
+        <label for="informacionRecepcion">Información de Recepción</label>
+        <textarea class="form-control" id="informacionRecepcion" name="informacionRecepcion" [(ngModel)]="orden.informacionRecepcion"></textarea>
       </div>
   
       <div class="form-group">
-        <label for="estado">Estado</label>
-        <select class="form-control" id="estado" name="estado" [(ngModel)]="orderService.orden.estado">
-          <option value="NO CANCELADO">NO CANCELADO</option>
-          <option value="CANCELADO">CANCELADO</option>
+        <label for="proveedor">Proveedor</label>
+        <select (change)="onSelect($event)" class="form-control" id="proveedor" name="proveedor" [(ngModel)]="orden.proveedor" #Proveedor="ngModel" required>
+          <option *ngFor="let proveedor of suppliers" value="{{proveedor.id}}">{{proveedor.razonSocial}}</option>
         </select>
+        <div *ngIf="Proveedor.errors?.['required']" class="col-auto">
+          <span class="form-text text-danger">
+              Este campo es requerido
+          </span>
+        </div>
       </div>
+      
+      <div class="form-group d-flex justify-content-center my-3 " *ngIf="productsToDisplay.length > 0">
+        <!-- <label for="productos">Productos</label> -->
+          <table>
+            <thead>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let entry of productsToDisplay">
+                <td>{{entry.nombreProducto}}</td>
+                <td>{{entry.precio}}</td>
+                <td><input type="number" min="0" placeholder="Seleccione Cantidad" (change)="addProductToOrder($event, entry)"></td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    
+      <div class="form-group">
+        <label for="total">Total</label>
+        <input type="number" class="form-control" id="total" name="total" [(ngModel)]="orden.total" disabled>
+        <div class="col-auto">
+          <span class="form-text text-danger">
+              {{mensajeTotalMayorACero}}
+          </span>
+        </div>
+      </div>
+      
+        <input type="hidden" class="form-control" id="total" name="total" [(ngModel)]="orden.estado">
   
       <button type="submit" class="btn btn-primary">Nueva Orden</button>
+      <div (click)="cancelar()" class="btn btn-secondary">Cancelar</div>
+
     </form>
   </div>
   

@@ -6,35 +6,221 @@
       <li class="breadcrumb-item active" aria-current="page">Proveedores</li>
     </ol>
   </nav>
+  <h1>Proveedores</h1>
+  
+  <div class="container" *ngIf="proveedores.length>0">
+    <button routerLink="/proveedores/formulario-proveedores">Añadir Proveedor</button>
+    <table class="table table-striped ">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Codigo</th>
+          <th scope="col">Razon Social</th>
+          <th scope="col">Web</th>
+          <th scope="col">Contacto</th>
+          <th scope="col-1"></th>
+          <th scope="col-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let proveedor of proveedores">
+          <td><div class="imgContainer"><img src="{{proveedor.URLlogo}}" alt="{{proveedor.razonSocial}}" height=80 (error)="imageError($event)"></div></td>
+          <th scope="row">{{proveedor.codigo}}</th>
+          <td>{{proveedor.razonSocial}}</td>
+          <td>
+            <ul>
+              <li>E-mail: {{proveedor.email}}</li>
+              <li>Teléfono: {{proveedor.telefono}}</li>
+              <li *ngIf="proveedor.web">Web: {{proveedor.web}}</li>
+            </ul>  
+          </td>
+          <td>{{proveedor.contacto.apellido}}, {{proveedor.contacto.nombre}}</td>
+          <td (click)="editSupplier(proveedor.id)"><img src="/assets/icons/pencil-square.svg" alt="trash" width="25" height="25"></td>
+          <td (click)="deleteSupplier(proveedor.id)"><img src="/assets/icons/trash.svg" alt="trash" width="25" height="25"></td>
+          <td><button type="button" (click)="getASupplier(proveedor.id)" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Ver detalle
+          </button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <button routerLink="/proveedores/formulario-proveedores">Añadir Proveedor</button>
+  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="proveedores.length<=0">
+    <p>No hay proveedores registrados</p>
+    <button routerLink="/proveedores/formulario-proveedores">Añadir Proveedor</button>
+  </div>
 
-  <table class="table table-striped ">
-    <thead>
-      <tr>
-        <th scope="col">Codigo</th>
-        <th scope="col">Razon Social</th>
-        <th scope="col">Web</th>
-        <th scope="col">Contacto</th>
-        <th scope="col-1"></th>
-        <th scope="col-1"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let proveedor of proveedores">
-        <th scope="row">{{proveedor.codigo}}</th>
-        <td>{{proveedor.razonSocial}}</td>
-        <td>
-          <ul>
-            <li>{{proveedor.email}}</li>
-            <li>{{proveedor.telefono}}</li>
-            <li *ngIf="proveedor.web">{{proveedor.web}}</li>
-          </ul>  
-        </td>
-        <td>{{proveedor.contacto.apellido}}, {{proveedor.contacto.nombre}}</td>
-        <td (click)="editSupplier(proveedor.id)"><img src="/assets/icons/pencil-square.svg" alt="trash" width="25" height="25"></td>
-        <td (click)="deleteSupplier(proveedor.id)"><img src="/assets/icons/trash.svg" alt="trash" width="25" height="25"></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title w-100 text-center" id="exampleModalLabel">{{supplierService.supplier.razonSocial}}</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="imgContainerModal">
+                  <img src="{{supplierService.supplier.URLlogo}}" alt="{{supplierService.supplier.URLlogo}}">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <h5>Datos generales</h5>
+                <table class="table">
+                  <tr>
+                    <td>
+                      ID del proveedor:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.id}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Codigo:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.codigo}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Razón social:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.razonSocial}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Rubro:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.rubro}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Cuit:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.CUIT}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Condicion IVA:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.condicionIva}}
+                    </td>
+                  </tr>
+                </table>
+                <hr>
+                <h6>Direccion</h6>
+                <table class="table">
+                  <tr>
+                    <td>
+                      Calle:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.direccion.calle}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Altura:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.direccion.altura}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Código Postal
+                    </td>
+                    <td>
+                      {{supplierService.supplier.direccion.CP}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Pais:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.direccion.pais}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Provincia:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.direccion.provincia}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Localidad:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.direccion.localidad}}
+                    </td>
+                  </tr>
+                </table>
+                <hr>
+                <h6>Contacto</h6>
+                <table class="table">
+                  <tr>
+                    <td>
+                      Contacto:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.contacto.apellido}}, {{supplierService.supplier.contacto.nombre}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Email:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.contacto.email}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Teléfono:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.contacto.telefono}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Rol:
+                    </td>
+                    <td>
+                      {{supplierService.supplier.contacto.rol}}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="editSupplier(supplierService.supplier.id)" class="btn btn-primary" data-bs-dismiss="modal">Editar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,30 @@
+.imgContainer{
+    width:5em;
+    height:5em;
+    aspect-ratio: 2/1;
+    overflow: hidden;
+}
+
+.imgContainer img{
+    width:5em;
+    object-fit: cover;
+}
+
+.imgContainerModal{
+    width:100%;
+    aspect-ratio: 2/1;
+    overflow: hidden;
+}
+
+.imgContainerModal img{
+    height:100%;
+}
+
+.modal-body ul {
+    list-style-type: none
+}
+
+.empty-table{
+    height: 50vh;
+    width: 75vw;
+}

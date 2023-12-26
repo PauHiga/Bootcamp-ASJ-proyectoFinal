@@ -2,3 +2,8 @@
     background-color: rgb(214, 214, 214) !important; 
     color:rgb(72, 72, 72) !important;
 }
+
+.empty-table{
+    height: 50vh;
+    width: 75vw;
+}

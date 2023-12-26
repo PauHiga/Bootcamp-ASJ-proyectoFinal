@@ -6,36 +6,44 @@
         <li class="breadcrumb-item active" aria-current="page">Ordenes</li>
       </ol>
     </nav>
+    <h1>Ordenes</h1>
+    <div class="container" *ngIf="ordersToDisplay.length>0">
+      <button routerLink="/ordenes/formulario-ordenes">Añadir Orden</button>
+    
+      <table class="table table-striped ">
+        <thead>
+          <tr>
+            <th scope="col">Nº Orden</th>
+            <th scope="col">Fecha emisión</th>
+            <th scope="col">Entrega Estimada</th>
+            <th scope="col">Proveedor</th>
+            <th scope="col">Productos</th>
+            <th scope="col-1">Cancelar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of ordersToDisplay" [ngClass]="(order.estado=='CANCELADO')?'canceled':''" >
+            <td>{{order.numeroOrden}}</td>
+            <td>{{order.fechaEmision}}</td>
+            <td>{{order.fechaEntrega}}</td>
+            <td>{{order.proveedor}}</td>
+            <td>
+              <ul>
+                <li *ngFor="let pedido of order.productos">
+                  {{pedido.nombreProducto}} - {{pedido.cantidad}}
+                </li>
+              </ul>
   
-    <button routerLink="/ordenes/formulario-ordenes">Añadir Orden</button>
-  
-    <table class="table table-striped ">
-      <thead>
-        <tr>
-          <th scope="col">Nº Orden</th>
-          <th scope="col">Fecha emisión</th>
-          <th scope="col">Entrega Estimada</th>
-          <th scope="col">Proveedor</th>
-          <th scope="col">Productos</th>
-          <th scope="col-1">Cancelar</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let order of orders" [ngClass]="(order.estado=='CANCELADO')?'canceled':''" >
-          <td>{{order.numeroOrden}}</td>
-          <td>{{order.fechaEmision}}</td>
-          <td>{{order.fechaEntrega}}</td>
-          <td>{{order.proveedor}}</td>
-          <td>
-            <ul>
-              <li *ngFor="let pedido of order.productos">
-                {{pedido.codigoProducto}} - {{pedido.cantidad}}
-              </li>
-            </ul>
+            </td>
+            <td><img (click)="markCanceled(order.id)" src="/assets/icons/x-square.svg" alt="mark as canceled" width="25" height="25" [ngClass]="(order.estado=='CANCELADO')?'d-none':''"><p [ngClass]="(order.estado=='CANCELADO')?'':'d-none'">CANCELADO</p></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-          </td>
-          <td><img (click)="markCanceled(order.id)" src="/assets/icons/x-square.svg" alt="mark as canceled" width="25" height="25" [ngClass]="(order.estado=='CANCELADO')?'d-none':''"><p [ngClass]="(order.estado=='CANCELADO')?'':'d-none'">CANCELADO</p></td>
-        </tr>
-      </tbody>
-    </table>
+  </div>
+
+  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="ordersToDisplay.length<=0">
+    <p>No hay órdenes registradas</p>
+    <button routerLink="/ordenes/formulario-ordenes">Añadir Orden</button>
   </div>

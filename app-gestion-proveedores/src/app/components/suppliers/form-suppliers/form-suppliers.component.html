@@ -2,8 +2,8 @@
 
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a [routerLink]="['/proveedores']">Proveedores</a></li>
+      <li class="breadcrumb-item"><a (click)="cancelarHome()">Home</a></li>
+      <li class="breadcrumb-item"><a (click)="cancelar()">Proveedores</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{tituloFormulario}}</li>
     </ol>
   </nav>
@@ -244,6 +244,7 @@
       <div class="row mt-3">
         <div class="col-md-12">
           <button type="submit" class="btn btn-primary">{{tituloFormulario}}</button>
+          <div (click)="cancelar()" class="btn btn-secondary">Cancelar</div>
         </div>
       </div>
     </form>

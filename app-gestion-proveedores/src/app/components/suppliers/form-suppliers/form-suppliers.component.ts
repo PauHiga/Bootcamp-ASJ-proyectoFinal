@@ -45,28 +45,6 @@ export class FormSuppliersComponent implements OnInit{
     }
   }
 
-  // id = ''
-  // codigo= ''
-  // razonSocial = ''
-  // rubro = ''
-  // URLlogo = ''
-  // CUIT = ''
-  // condicionIva = ''
-  // email = ''
-  // telefono = ''
-  // web = ''
-  // calle = ''
-  // altura = ''
-  // CP = ''
-  // pais = ''
-  // provincia = ''
-  // localidad = ''
-  // nombre = ''
-  // apellido = ''
-  // emailContacto = ''
-  // telefonoContacto = ''
-  // rol = ''
-
   msjValidCode = "";
   validEmail = true;
   validEmailContacto = true;
@@ -100,7 +78,10 @@ export class FormSuppliersComponent implements OnInit{
         this.supplierService.saveSupplier().subscribe((response)=> console.log(response))
       }
       this.supplierService.clearSupplierData()
+      alert("Los datos del proveedor fueron cargados exitosamente")
       this.router.navigate(["proveedores"])
+    } else{
+      alert("Por favor, compruebe que no haya campos erróneos en el formulario")
     }
   }
 
@@ -132,6 +113,20 @@ export class FormSuppliersComponent implements OnInit{
     const regexCode = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     this.validEmailContacto = regexCode.test(stringToValidate);
     return this.validEmailContacto;
+  }
+
+  cancelar(){
+    const confirmar = confirm("¿Seguro desea salir? Los datos se perderán")
+    if(confirmar){
+      this.router.navigate(["proveedores"])
+    }
+  }
+
+  cancelarHome(){
+    const confirmar = confirm("¿Seguro desea salir? Los datos se perderán")
+    if(confirmar){
+      this.router.navigate([""])
+    }
   }
 
 }

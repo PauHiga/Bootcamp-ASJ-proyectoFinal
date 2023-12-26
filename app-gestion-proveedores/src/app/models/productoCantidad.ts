@@ -1,4 +1,5 @@
 export interface productoCantidad {
-    codigoProducto: string,
+    id: string,
+    nombreProducto: string,
     cantidad: number   
 }

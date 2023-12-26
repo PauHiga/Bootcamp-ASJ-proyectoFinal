@@ -2,8 +2,8 @@
 
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a [routerLink]="['/productos']">Productos</a></li>
+      <li class="breadcrumb-item"><a (click)="cancelarHome()">Home</a></li>
+      <li class="breadcrumb-item"><a (click)="cancelar()">Productos</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{tituloFormulario}}</li>
     </ol>
   </nav>
@@ -16,7 +16,7 @@
 
     <input type="hidden" class="form-control" id="id" name="id" [(ngModel)]="productsService.product.id">
     <div class="form-group">
-      <label for="idProveedor">ID Proveedor</label>
+      <label for="idProveedor">Proveedor</label>
       <select class="form-select" aria-label="Default select example" id="idProveedor" name="idProveedor" [(ngModel)]="productsService.product.idProveedor" #idProveedor="ngModel" required>
         <option *ngFor="let supplier of suppliersList" value="{{supplier.id}}">{{supplier.razonSocial}}</option>
       </select>
@@ -24,15 +24,20 @@
         <span class="form-text text-danger">
             Este campo es requerido
         </span>
-      </div>  
+      </div>
     </div>
 
     <div class="form-group">
       <label for="SKUProducto">SKU Producto</label>
-      <input type="text" class="form-control" id="SKUProducto" name="SKUProducto" [(ngModel)]="productsService.product.SKUProducto" #SKUProducto="ngModel" required>
+      <input type="text" (keyup)="skuIsUnique($event)" class="form-control" id="SKUProducto" name="SKUProducto" [(ngModel)]="productsService.product.SKUProducto" #SKUProducto="ngModel" required>
       <div *ngIf="SKUProducto.errors?.['required']" class="col-auto">
         <span class="form-text text-danger">
             Este campo es requerido
+        </span>
+      </div> 
+      <div *ngIf="skuRepetido" class="col-auto">
+        <span class="form-text text-danger">
+            Hay otro producto con este código
         </span>
       </div> 
     </div>
@@ -74,7 +79,13 @@
       </div>
     </div>
 
+    <div class="form-group">
+      <label for="precio">URL imagen</label>
+      <input type="text" class="form-control" id="URLImagen" name="URLImagen" [(ngModel)]="productsService.product.URLimage" >
+    </div>
+
     <button type="submit" class="btn btn-primary">Guardar</button>
+    <div (click)="cancelar()" class="btn btn-secondary">Cancelar</div>
   </form>
 </div>
 

@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsServiceService } from '../../../services/products-service.service';
 import { proveedor } from '../../../models/proveedores';
+import { producto } from '../../../models/producto';
 
 @Component({
   selector: 'app-form-products',
@@ -19,11 +20,15 @@ export class FormProductsComponent implements OnInit{
   product = {};
 
   suppliersList : proveedor[] = [];
+  productos : producto[] = [];
+
+  skuRepetido = false;
 
   categorias : string[] = [ "Electrónicos", "Deportes", "Juguetes", "ArtOficina", "Ropa", "Hogar"]
 
   ngOnInit(): void {
     this.getProveedores();
+    this.getProductos();
     if(this.parametroURL) {
       this.tituloFormulario = "Editar Producto";
       this.getAProduct(this.parametroURL)
@@ -39,6 +44,12 @@ export class FormProductsComponent implements OnInit{
     })
   }
 
+  getProductos(){
+    this.productsService.getProducts().subscribe((response)=>{
+      this.productos = response;
+    })
+  }
+
   getAProduct(id : string){
     this.productsService.getAProduct(id).subscribe(
       (response) =>{
@@ -49,7 +60,7 @@ export class FormProductsComponent implements OnInit{
   }
 
   onClickForm(formularioProveedores:NgForm){
-    if(formularioProveedores.valid){
+    if(formularioProveedores.valid && !this.skuRepetido){
       if(this.parametroURL){
         this.productsService.editProduct(this.parametroURL).subscribe((response)=> console.log(response))
       } else {
@@ -57,9 +68,29 @@ export class FormProductsComponent implements OnInit{
       }
       this.productsService.clearProductData()
       this.router.navigate(["productos"])
+      alert("Los datos del producto fueron cargados exitosamente")
+
     } else {
       alert("Hay campos incompletos o erróneos. Por favor, revise el formulario")
     }
   }
 
+  skuIsUnique(event : Event){
+    const currentSku = (event.target as HTMLSelectElement).value;
+    const productosSKUs = this.productos.map(item=> item.SKUProducto)
+    this.skuRepetido = productosSKUs.includes(currentSku);
+  }
+
+  cancelar(){
+    const confirmar = confirm("¿Seguro desea salir? Los datos se perderán")
+    if(confirmar){
+      this.router.navigate(["productos"])
+    }
+  }
+  cancelarHome(){
+    const confirmar = confirm("¿Seguro desea salir? Los datos se perderán")
+    if(confirmar){
+      this.router.navigate([""])
+    }
+  }
 }

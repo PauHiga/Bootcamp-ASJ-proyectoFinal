@@ -1,36 +1,138 @@
 <div class="container">
 
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Productos</li>
-      </ol>
-    </nav>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Productos</li>
+    </ol>
+  </nav>
   
-    <button routerLink="/productos/formulario-productos">Añadir Producto</button>
-  
-    <table class="table table-striped ">
-      <thead>
-        <tr>
-          <th scope="col">Imagen</th>
-          <th scope="col">Producto</th>
-          <th scope="col">Categoría</th>
-          <th scope="col">Proveedor</th>
-          <th scope="col">Precio</th>
-          <th scope="col-1"></th>
-          <th scope="col-1"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let product of productsToDisplay">
-          <td><img src="{{product.URLimage}}" alt="{{product.nombreProducto}}" height=80 (error)="imageError($event)"></td>
-          <td>{{product.nombreProducto}}</td>
-          <td>{{product.categoria}}</td>
-          <td>{{product.idProveedor}}</td>
-          <td>{{product.precio}}</td>
-          <td (click)="editProduct(product.id)"><img src="/assets/icons/pencil-square.svg" alt="trash" width="25" height="25"></td>
-          <td (click)="deleteProduct(product.id)"><img src="/assets/icons/trash.svg" alt="trash" width="25" height="25"></td>
-        </tr>
-      </tbody>
-    </table>
+    <h1>Productos</h1>
+
+    <div class="container" *ngIf="productsToDisplay.length>0">
+      <button routerLink="/productos/formulario-productos">Añadir Producto</button>
+    
+      <table class="table table-striped ">
+        <thead>
+          <tr>
+            <th scope="col">Imagen</th>
+            <th scope="col">Producto</th>
+            <th scope="col">Categoría</th>
+            <th scope="col">Proveedor</th>
+            <th scope="col">Precio</th>
+            <th scope="col-1"></th>
+            <th scope="col-1"></th>
+            <th scope="col-1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of productsToDisplay">
+            <td><div class="imgContainer"><img src="{{product.URLimage}}" alt="{{product.nombreProducto}}" height=80 (error)="imageError($event)"></div></td>
+            <td>{{product.nombreProducto}}</td>
+            <td>{{product.categoria}}</td>
+            <td>{{product.idProveedor}}</td>
+            <td>{{product.precio}}</td>
+            <td (click)="editProduct(product.id)"><img src="/assets/icons/pencil-square.svg" alt="trash" width="25" height="25"></td>
+            <td (click)="deleteProduct(product.id)"><img src="/assets/icons/trash.svg" alt="trash" width="25" height="25"></td>
+            <td><button type="button" (click)="getAProduct(product.id)" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Ver detalle
+            </button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+
+  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="productsToDisplay.length<=0">
+    <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="suppliersList.length>0">
+      <p>No hay productos registrados en el sistema</p>
+      <button routerLink="/productos/formulario-productos">Añadir Producto</button>
+    </div>
+    <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="suppliersList.length<=0">
+      <p>No hay proveedores registrados en el sistema</p>
+      <p>Comience <b>añadiendo un proveedor</b> para poder luego registrar productos</p>
+      <button routerLink="/proveedores/formulario-proveedores">Agregar un proveedor</button>
+    </div>
+  </div>
+
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title w-100 text-center" id="exampleModalLabel">{{productsService.product.nombreProducto}}</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="imgContainerModal">
+                <img src="{{productsService.product.URLimage}}" alt="{{productsService.product.nombreProducto}}">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <table>
+                <tr>
+                  <td>
+                    ID del producto:
+                  </td>
+                  <td>
+                    {{productsService.product.id}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Proveedor:
+                  </td>
+                  <td>
+                    {{productsService.product.idProveedor}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    SKU producto:
+                  </td>
+                  <td>
+                    {{productsService.product.SKUProducto}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Categoria:
+                  </td>
+                  <td>
+                    {{productsService.product.categoria}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Precio:
+                  </td>
+                  <td>
+                    {{productsService.product.precio}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Descripcion:
+                  </td>
+                  <td>
+                    {{productsService.product.descripcion}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" (click)="editProduct(productsService.product.id)" class="btn btn-primary" data-bs-dismiss="modal">Editar</button>
+      </div>
+    </div>
+  </div>
+</div>
