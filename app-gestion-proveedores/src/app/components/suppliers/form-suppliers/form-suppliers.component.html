@@ -17,8 +17,8 @@
       <div class="row">
         <div class="col-md-2">
           <label for="razonSocial" class="form-label">Codigo:</label>
-          <input type="text" [disabled]="disabledInEdit" class="form-control form-control-sm" name="codigo" [(ngModel)]="supplier.codigo" #codigo="ngModel" minlength="4" required>  
-          <div *ngIf="(msjValidCode != ''  || codigo.errors?.['minlength']) && !codigo.errors?.['required']" class="col-auto">
+          <input type="text" (keyup)="supplierCodeIsUnique($event)" [disabled]="disabledInEdit" class="form-control form-control-sm" name="codigo" [(ngModel)]="supplier.codigo" #codigo="ngModel" minlength="4" required>  
+          <div *ngIf="(!validCode  || codigo.errors?.['minlength']) && !codigo.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
                 Debe tener al menos 4 caracteres alfanuméricos
             </span>
@@ -26,6 +26,11 @@
           <div *ngIf="codigo.errors?.['required']" class="col-auto">
             <span class="form-text text-primary">
                 Este campo es requerido
+            </span>
+          </div> 
+          <div *ngIf="codigoProveedorRepetido" class="col-auto">
+            <span class="form-text text-danger">
+                Hay otro producto con este código
             </span>
           </div>    
         </div>
@@ -109,6 +114,11 @@
                 Este campo es requerido
             </span>
           </div> 
+          <div *ngIf="!validTelefono && !telefono.errors?.['required']" class="col-auto">
+            <span class="form-text text-danger">
+                El formato de teléfono solo acepta números, paréntesis, guiones o espacios
+            </span>
+          </div>  
         </div>
         <div class="col-md-4">
           <label for="web" class="form-label">Web:</label>
@@ -197,7 +207,7 @@
       <hr>
       <h3>Contacto</h3>
       <div class="row mt-3">
-        <div class="col-md-2">
+        <div class="col-md-3">
           <label for="nombreContacto" class="form-label">Nombre:</label>
           <input type="text" class="form-control form-control-sm" id="nombreContacto" name="contacto.nombre" [(ngModel)]="supplier.contacto.nombre" #nombreContacto="ngModel" required>
           <div *ngIf="nombreContacto.errors?.['required']" class="col-auto">
@@ -206,7 +216,7 @@
             </span>
           </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <label for="apellidoContacto" class="form-label">Apellido:</label>
           <input type="text" class="form-control form-control-sm" id="apellidoContacto" name="contacto.apellido" [(ngModel)]="supplier.contacto.apellido" #apellidoContacto="ngModel" required>
           <div *ngIf="apellidoContacto.errors?.['required']" class="col-auto">
@@ -237,6 +247,11 @@
                 Este campo es requerido
             </span>
           </div>
+          <div *ngIf="!validTelefonoContacto && !telefono.errors?.['required']" class="col-auto">
+            <span class="form-text text-danger">
+                El formato de teléfono solo acepta números, paréntesis, guiones o espacios
+            </span>
+          </div>  
         </div>
         <div class="col-md-2">
           <label for="otrosContacto" class="form-label">Rol:</label>

@@ -45,19 +45,26 @@ export class FormSuppliersComponent implements OnInit{
     }
   }
 
+  suppliersList : proveedor[] = [];
+  
   countries : any[] = []
   states : any[] = []
   cities : any[] = []
 
-  msjValidCode = "";
-  validEmail = true;
-  validEmailContacto = true;
-  validCUIT = true;
+  codigoProveedorRepetido : boolean = false;
+
+  validCode : boolean = true;
+  validEmail : boolean = true;
+  validEmailContacto : boolean = true;
+  validCUIT : boolean = true;
+  validTelefono : boolean = true;
+  validTelefonoContacto : boolean = true
 
   disabledInEdit : boolean = false;
 
   ngOnInit(): void {
     this.getCountries()
+    this.getProveedores();
     if(this.parametroURL) {
       this.tituloFormulario = "Editar Proveedor";
       this.getASupplier(this.parametroURL);
@@ -66,6 +73,12 @@ export class FormSuppliersComponent implements OnInit{
     else{
       this.clearSupplierData()
     }
+  }
+
+  getProveedores(){
+    this.supplierService.getSuppliers().subscribe((response)=>{
+      this.suppliersList = response;
+    })
   }
 
   getASupplier(id : string){
@@ -126,18 +139,15 @@ export class FormSuppliersComponent implements OnInit{
     const emailValido = this.validarEmail(this.supplier.email)
     const emailContactoValido = this.validarEmailContacto(this.supplier.contacto.email)
     const validarCUIT = this.validarCUIT(this.supplier.CUIT);
-    return(codigoValido && emailValido && emailContactoValido && validarCUIT)
+    const validarTelefono =  this.validarTelefono(this.supplier.telefono)
+    const validarTelefonoContacto =  this.validarTelefonoContacto(this.supplier.telefono)
+    return(codigoValido && emailValido && emailContactoValido && validarCUIT && validarTelefono && validarTelefonoContacto)
   }
-  
 
   validarCodigo(stringToValidate : string){
     const regexCode = new RegExp('^[a-zA-Z0-9]+$');
-    if (!regexCode.test(stringToValidate)){
-      this.msjValidCode = "Solo se permiten números o letras"
-      return false;
-    }
-    this.msjValidCode = ""
-    return true;
+    this.validCode = regexCode.test(stringToValidate)
+    return regexCode.test(stringToValidate)
   }
 
   validarCUIT(stringToValidate : string){
@@ -156,6 +166,18 @@ export class FormSuppliersComponent implements OnInit{
     const regexCode = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     this.validEmailContacto = regexCode.test(stringToValidate);
     return this.validEmailContacto;
+  }
+
+  validarTelefono(stringToValidate: string): boolean {
+    const regexCode = /^[0-9()+\s-]{5,}$/;
+    this.validTelefono = regexCode.test(stringToValidate);
+    return this.validTelefono;
+  }
+
+  validarTelefonoContacto(stringToValidate: string): boolean {
+    const regexCode = /^[0-9()+\s-]{5,}$/;
+    this.validTelefonoContacto = regexCode.test(stringToValidate);
+    return this.validTelefonoContacto;
   }
 
   cancelar(objetivo: string){
@@ -179,6 +201,13 @@ export class FormSuppliersComponent implements OnInit{
       return stringWithoutHyphens.slice(0, 2) + '-' + stringWithoutHyphens.slice(2, 10)
     }
     return stringWithoutHyphens.slice(0, 2) + '-' + stringWithoutHyphens.slice(2, 10) + '-' + stringWithoutHyphens.slice(10, 11);
+  }
+
+  //Check if the supplier code is unique
+  supplierCodeIsUnique(event : Event){
+    const currentSupplierCode = (event.target as HTMLSelectElement).value;
+    const suppliersCodeArray = this.suppliersList.map(item=> item.codigo)
+    this.codigoProveedorRepetido = suppliersCodeArray.includes(currentSupplierCode);
   }
 
   //Clear the form
