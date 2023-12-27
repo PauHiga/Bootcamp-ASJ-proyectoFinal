@@ -2,8 +2,8 @@
 
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a (click)="cancelarHome()">Home</a></li>
-      <li class="breadcrumb-item"><a (click)="cancelar()">Proveedores</a></li>
+      <li class="breadcrumb-item"><a (click)="cancelar('')">Home</a></li>
+      <li class="breadcrumb-item"><a (click)="cancelar('proveedores')">Proveedores</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{tituloFormulario}}</li>
     </ol>
   </nav>
@@ -12,66 +12,66 @@
   <h2>{{tituloFormulario}}</h2>  
 
   <form (ngSubmit)="onClickForm(formularioProveedores)" #formularioProveedores="ngForm" class="p-4">
-    <input type="hidden" class="form-control" name="id" [(ngModel)]="supplierService.supplier.id">        
+    <input type="hidden" class="form-control form-control-sm" name="id" [(ngModel)]="supplier.id">        
+    <h3>Datos generales</h3>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-2">
           <label for="razonSocial" class="form-label">Codigo:</label>
-          <input type="text" class="form-control" name="codigo" [(ngModel)]="supplierService.supplier.codigo" #codigo="ngModel" minlength="4" required>  
+          <input type="text" [disabled]="disabledInEdit" class="form-control form-control-sm" name="codigo" [(ngModel)]="supplier.codigo" #codigo="ngModel" minlength="4" required>  
           <div *ngIf="(msjValidCode != ''  || codigo.errors?.['minlength']) && !codigo.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
                 Debe tener al menos 4 caracteres alfanuméricos
             </span>
           </div>  
           <div *ngIf="codigo.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
+            <span class="form-text text-primary">
                 Este campo es requerido
             </span>
           </div>    
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="razonSocial" class="form-label">Razon Social:</label>
-          <input type="text" class="form-control" id="razonSocial" name="razonSocial" [(ngModel)]="supplierService.supplier.razonSocial"  #razonSocial="ngModel" required>
+          <input type="text" class="form-control form-control-sm" id="razonSocial" name="razonSocial" [(ngModel)]="supplier.razonSocial"  #razonSocial="ngModel" required>
           <div *ngIf="razonSocial.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
+            <span class="form-text text-primary">
                 Este campo es requerido
             </span>
           </div>   
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="rubro" class="form-label">Rubro:</label>
-          <input type="text" class="form-control" id="rubro" name="rubro" [(ngModel)]="supplierService.supplier.rubro" #rubro="ngModel" required>
+          <input type="text" class="form-control form-control-sm" id="rubro" name="rubro" [(ngModel)]="supplier.rubro" #rubro="ngModel" required>
           <div *ngIf="rubro.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
+            <span class="form-text text-primary">
                 Este campo es requerido
             </span>
           </div>   
         </div>
         <div class="col-md-4">
           <label for="rubro" class="form-label">Logo (url):</label>
-          <input type="text" class="form-control" id="URLlogo" name="URLlogo" [(ngModel)]="supplierService.supplier.URLlogo">
+          <input type="text" class="form-control form-control-sm" id="URLlogo" name="URLlogo" [(ngModel)]="supplier.URLlogo">
         </div>
       </div>
     
       <div class="row mt-3">
         <div class="col-md-6">
           <label for="CUIT" class="form-label">CUIT:</label>
-          <!-- <div class="input-group">
-            <input type="text" aria-label="First name" class="form-control cuit1" maxlength="2" minlength="2" size="2" [(ngModel)]="supplierService.supplier.CUIT" #cuit="ngModel" required>-
-            <input type="text" aria-label="First name" class="form-control cuit2" maxlength="8" minlength="8" size="8">-
-            <input type="text" aria-label="Last name" class="form-control cuit3" maxlength="1" minlength="1" size="1">
-          </div> -->
-          <input type="text" class="form-control" id="CUIT" name="CUIT" [(ngModel)]="supplierService.supplier.CUIT" #cuit="ngModel" required>
+          <input type="text" maxlength="13" class="form-control form-control-sm" id="CUIT" name="CUIT" [(ngModel)]="supplier.CUIT" (ngModelChange)="onCUITChange($event)"
+          #cuit="ngModel" required [disabled]="disabledInEdit">
           <div *ngIf="cuit.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
+            <span class="form-text text-primary">
                 Este campo es requerido
             </span>
-          </div>   
+          </div> 
+          <div *ngIf="!validCUIT && !cuit.errors?.['required']" class="col-auto">
+            <span class="form-text text-danger">
+                CUIT invalido
+            </span>
+          </div>  
         </div>
         <div class="col-md-6">
           <label for="condicionIva" class="form-label">Condicion IVA:</label>
-          <select class="form-select" aria-label="Default select example" id="condicionIva" name="condicionIva" [(ngModel)]="supplierService.supplier.condicionIva" #condicionIva="ngModel" required>
+          <select class="form-select form-select-sm" aria-label="Default select example" id="condicionIva" name="condicionIva" [(ngModel)]="supplier.condicionIva" #condicionIva="ngModel" required>
             <option value="IVA Responsable Inscripto">IVA Responsable Inscripto</option>
             <option value="IVA no Responsable">IVA no Responsable</option>
             <option value="IVA exento">IVA exento</option>
@@ -79,7 +79,7 @@
             <option value="Monotributista Social">Monotributista Social</option>
           </select>
           <div *ngIf="condicionIva.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
+            <span class="form-text text-primary">
                 Este campo es requerido
             </span>
           </div>  
@@ -87,11 +87,11 @@
       </div>
     
       <div class="row mt-3">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label for="email" class="form-label">Email:</label>
-          <input type="email" class="form-control" id="email" name="email" [(ngModel)]="supplierService.supplier.email" #email="ngModel" required>
+          <input type="email" class="form-control form-control-sm" id="email" name="email" [(ngModel)]="supplier.email" #email="ngModel" placeholder="ejemplo&#64;ejemplo.com" required>
           <div *ngIf="email.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
+            <span class="form-text text-primary">
                 Este campo es requerido
             </span>
           </div> 
@@ -100,127 +100,126 @@
                 Compruebe el formato del email ingresado. Ejemplo: ejemplo&#64;ejemplo.com
             </span>
           </div>
-          
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label for="telefono" class="form-label">Telefono:</label>
-          <input type="tel" class="form-control" id="telefono" name="telefono" [(ngModel)]="supplierService.supplier.telefono" #telefono="ngModel" required>
+          <input type="tel" class="form-control form-control-sm" id="telefono" name="telefono" [(ngModel)]="supplier.telefono" #telefono="ngModel" required>
           <div *ngIf="telefono.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
+            <span class="form-text text-primary">
                 Este campo es requerido
             </span>
           </div> 
         </div>
-      </div>
-    
-      <div class="row mt-3">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label for="web" class="form-label">Web:</label>
-          <input type="url" class="form-control" id="web" name="web" [(ngModel)]="supplierService.supplier.web">
+          <input type="url" class="form-control form-control-sm" id="web" name="web" [(ngModel)]="supplier.web">
         </div>
       </div>
     
+      <hr>
+      <h3>Dirección</h3>
+
       <div class="row mt-3">
-        <div class="col-md-6">
-          <label for="calle" class="form-label">Calle:</label>
-          <input type="text" class="form-control" id="calle" name="direccion.calle" [(ngModel)]="supplierService.supplier.direccion.calle" #calle="ngModel" required>
-          <div *ngIf="calle.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
-                Este campo es requerido
-            </span>
-          </div> 
-        </div>
-        <div class="col-md-6">
-          <label for="altura" class="form-label">Altura:</label>
-          <input type="text" class="form-control" id="altura" name="direccion.altura" [(ngModel)]="supplierService.supplier.direccion.altura" #altura="ngModel" required>
-          <div *ngIf="altura.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
-                Este campo es requerido
-            </span>
+        <div class="col-md-5">
+          <div class="row">
+            <div class="col-md-6">
+              <label for="calle" class="form-label">Calle:</label>
+              <input type="text" class="form-control form-control-sm" id="calle" name="direccion.calle" [(ngModel)]="supplier.direccion.calle" #calle="ngModel" required>
+              <div *ngIf="calle.errors?.['required']" class="col-auto">
+                <span class="form-text text-primary">
+                    Este campo es requerido
+                </span>
+              </div> 
+            </div>
+            <div class="col-md-3">
+              <label for="altura" class="form-label">Altura:</label>
+              <input type="text" class="form-control form-control-sm" id="altura" name="direccion.altura" [(ngModel)]="supplier.direccion.altura" #altura="ngModel" required>
+              <div *ngIf="altura.errors?.['required']" class="col-auto">
+                <span class="form-text text-primary">
+                    Este campo es requerido
+                </span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label for="CP" class="form-label">CP:</label>
+              <input type="text" maxlength="8" class="form-control form-control-sm" id="CP" name="direccion.CP" [(ngModel)]="supplier.direccion.CP" #CP="ngModel" required>
+              <div *ngIf="CP.errors?.['required']" class="col-auto">
+                <span class="form-text text-primary">
+                    Este campo es requerido
+                </span>
+              </div>
+            </div>
+    
           </div>
+        </div>
+        <div class="col-md-1">
 
         </div>
-      </div>
-    
-      <div class="row mt-3">
         <div class="col-md-6">
-          <label for="CP" class="form-label">CP:</label>
-          <input type="text" class="form-control" id="CP" name="direccion.CP" [(ngModel)]="supplierService.supplier.direccion.CP" #CP="ngModel" required>
-          <div *ngIf="CP.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
-                Este campo es requerido
-            </span>
+          <div class="row">
+            <div class="col-md-4">
+              <label for="pais" class="form-label">Pais:</label>
+              <select (change)="filterState()" class="form-select form-select-sm" aria-label="Default select example" id="pais" name="direccion.pais" [(ngModel)]="supplier.direccion.pais" #pais="ngModel" required>
+                <option *ngFor="let country of countries" value={{country.name}}>{{country.name}}</option>
+              </select>
+              <div *ngIf="pais.errors?.['required']" class="col-auto">
+                <span class="form-text text-primary">
+                  Este campo es requerido
+                </span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="provincia" class="form-label">Provincia:</label>
+              <select (change)="filterCity()" class="form-select form-select-sm" aria-label="Default select example" id="provincia" name="direccion.provincia" [(ngModel)]="supplier.direccion.provincia" #provincia="ngModel" required>
+                <option *ngFor="let state of states" value={{state.name}}>{{state.name}}</option>
+              </select>
+              <div *ngIf="provincia.errors?.['required']" class="col-auto">
+                <span class="form-text text-primary">
+                    Este campo es requerido
+                </span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="localidad" class="form-label">Localidad:</label>
+              <select class="form-select form-select-sm" aria-label="Default select example" id="localidad" name="direccion.localidad" [(ngModel)]="supplier.direccion.localidad" #localidad="ngModel" required>
+                <option *ngFor="let city of cities" value={{city}}>{{city}}</option>
+              </select>
+              <div *ngIf="localidad.errors?.['required']" class="col-auto">
+                <span class="form-text text-primary">
+                    Este campo es requerido
+                </span>
+              </div>
+            </div>
+    
           </div>
         </div>
       </div>
-    
+      <hr>
+      <h3>Contacto</h3>
       <div class="row mt-3">
-        <div class="col-md-6">
-          <label for="pais" class="form-label">Pais:</label>
-          <select (change)="filterState()" class="form-select" aria-label="Default select example" id="pais" name="direccion.pais" [(ngModel)]="supplierService.supplier.direccion.pais" #pais="ngModel" required>
-            <option *ngFor="let country of countries" value={{country.name}}>{{country.name}}</option>
-          </select>
-          <div *ngIf="pais.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
-              Este campo es requerido
-            </span>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <label for="provincia" class="form-label">Provincia:</label>
-          <select (change)="filterCity()" class="form-select" aria-label="Default select example" id="provincia" name="direccion.provincia" [(ngModel)]="supplierService.supplier.direccion.provincia" #provincia="ngModel" required>
-            <option *ngFor="let state of states" value={{state.name}}>{{state.name}}</option>
-          </select>
-          <div *ngIf="provincia.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
-                Este campo es requerido
-            </span>
-          </div>
-        </div>
-      </div>
-    
-      <div class="row mt-3">
-        <div class="col-md-6">
-          <label for="localidad" class="form-label">Localidad:</label>
-          <!-- <input type="text" class="form-control" id="localidad" name="direccion.localidad" [(ngModel)]="supplierService.supplier.direccion.localidad" #localidad="ngModel" required> -->
-          <select class="form-select" aria-label="Default select example" id="localidad" name="direccion.localidad" [(ngModel)]="supplierService.supplier.direccion.localidad" #localidad="ngModel" required>
-            <option *ngFor="let city of cities" value={{city}}>{{city}}</option>
-          </select>
-          <div *ngIf="localidad.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
-                Este campo es requerido
-            </span>
-          </div>
-        </div>
-      </div>
-    
-      <div class="row mt-3">
-        <div class="col-md-6">
-          <label for="nombreContacto" class="form-label">Nombre del Contacto:</label>
-          <input type="text" class="form-control" id="nombreContacto" name="contacto.nombre" [(ngModel)]="supplierService.supplier.contacto.nombre" #nombreContacto="ngModel" required>
+        <div class="col-md-2">
+          <label for="nombreContacto" class="form-label">Nombre:</label>
+          <input type="text" class="form-control form-control-sm" id="nombreContacto" name="contacto.nombre" [(ngModel)]="supplier.contacto.nombre" #nombreContacto="ngModel" required>
           <div *ngIf="nombreContacto.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
+            <span class="form-text text-primary">
                 Este campo es requerido
             </span>
           </div>
         </div>
-        <div class="col-md-6">
-          <label for="apellidoContacto" class="form-label">Apellido del Contacto:</label>
-          <input type="text" class="form-control" id="apellidoContacto" name="contacto.apellido" [(ngModel)]="supplierService.supplier.contacto.apellido" #apellidoContacto="ngModel" required>
+        <div class="col-md-2">
+          <label for="apellidoContacto" class="form-label">Apellido:</label>
+          <input type="text" class="form-control form-control-sm" id="apellidoContacto" name="contacto.apellido" [(ngModel)]="supplier.contacto.apellido" #apellidoContacto="ngModel" required>
           <div *ngIf="apellidoContacto.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
+            <span class="form-text text-primary">
                 Este campo es requerido
             </span>
           </div>
         </div>
-      </div>
-    
-      <div class="row mt-3">
-        <div class="col-md-6">
-          <label for="emailContacto" class="form-label">Email del Contacto:</label>
-          <input type="email" class="form-control" id="emailContacto" name="contacto.email" [(ngModel)]="supplierService.supplier.contacto.email" #emailContacto="ngModel" required>
+        <div class="col-md-2">
+          <label for="emailContacto" class="form-label">Email:</label>
+          <input type="email" class="form-control form-control-sm" id="emailContacto" name="contacto.email" [(ngModel)]="supplier.contacto.email" #emailContacto="ngModel" placeholder="ejemplo&#64;ejemplo.com" required>
           <div *ngIf="emailContacto.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
+            <span class="form-text text-primary">
                 Este campo es requerido
             </span>
           </div>
@@ -230,28 +229,25 @@
             </span>
           </div>
         </div>
-        <div class="col-md-6">
-          <label for="telefonoContacto" class="form-label">Telefono del Contacto:</label>
-          <input type="tel" class="form-control" id="telefonoContacto" name="contacto.telefono" [(ngModel)]="supplierService.supplier.contacto.telefono" #telefonoContacto="ngModel" required>
+        <div class="col-md-2">
+          <label for="telefonoContacto" class="form-label">Telefono:</label>
+          <input type="tel" class="form-control form-control-sm" id="telefonoContacto" name="contacto.telefono" [(ngModel)]="supplier.contacto.telefono" #telefonoContacto="ngModel" required>
           <div *ngIf="telefonoContacto.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
+            <span class="form-text text-primary">
                 Este campo es requerido
             </span>
           </div>
         </div>
-      </div>
-    
-      <div class="row mt-3">
-        <div class="col-md-6">
-          <label for="otrosContacto" class="form-label">Rol del Contacto:</label>
-          <input type="text" class="form-control" id="otrosContacto" name="contacto.rol" [(ngModel)]="supplierService.supplier.contacto.rol">
+        <div class="col-md-2">
+          <label for="otrosContacto" class="form-label">Rol:</label>
+          <input type="text" class="form-control form-control-sm" id="otrosContacto" name="contacto.rol" [(ngModel)]="supplier.contacto.rol">
         </div>
       </div>
     
       <div class="row mt-3">
         <div class="col-md-12">
-          <button type="submit" class="btn btn-primary">{{tituloFormulario}}</button>
-          <div (click)="cancelar()" class="btn btn-secondary">Cancelar</div>
+          <button type="submit" class="btn btn-primary my-3">{{tituloFormulario}}</button>
+          <div (click)="cancelar('proveedores')" class="btn btn-secondary m-3">Cancelar</div>
         </div>
       </div>
     </form>

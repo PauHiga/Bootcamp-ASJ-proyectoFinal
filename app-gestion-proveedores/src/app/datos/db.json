@@ -34,7 +34,7 @@
       "rubro": "Servicios Financieros",
       "URLlogo": "",
       "CUIT": "30-87654321-0",
-      "condicionIva": "Responsable Inscripto",
+      "condicionIva": "IVA Responsable Inscripto",
       "email": "info@empresaB.com",
       "telefono": "011-987654321",
       "web": "http://www.empresaB.com",
@@ -43,8 +43,8 @@
         "altura": "456",
         "CP": "5678",
         "pais": "Argentina",
-        "provincia": "Córdoba",
-        "localidad": "Ciudad B"
+        "provincia": "Jujuy Province",
+        "localidad": "San Pedro de Jujuy"
       },
       "contacto": {
         "nombre": "Maria",
@@ -61,7 +61,7 @@
       "rubro": "Alimentación",
       "URLlogo": "",
       "CUIT": "30-55555555-5",
-      "condicionIva": "Monotributo",
+      "condicionIva": "IVA Responsable Inscripto",
       "email": "info@empresaC.com",
       "telefono": "011-555555555",
       "web": "http://www.empresaC.com",
@@ -70,8 +70,8 @@
         "altura": "789",
         "CP": "9012",
         "pais": "Argentina",
-        "provincia": "Santa Fe",
-        "localidad": "Ciudad C"
+        "provincia": "Río Negro Province",
+        "localidad": "El Cuy"
       },
       "contacto": {
         "nombre": "Carlos",

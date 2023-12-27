@@ -52,23 +52,28 @@ export class FormSuppliersComponent implements OnInit{
   msjValidCode = "";
   validEmail = true;
   validEmailContacto = true;
+  validCUIT = true;
+
+  disabledInEdit : boolean = false;
 
   ngOnInit(): void {
     this.getCountries()
     if(this.parametroURL) {
       this.tituloFormulario = "Editar Proveedor";
-      this.getASupplier(this.parametroURL)
+      this.getASupplier(this.parametroURL);
+      this.disabledInEdit = true;
     }
     else{
-      this.supplierService.clearSupplierData()
+      this.clearSupplierData()
     }
   }
 
   getASupplier(id : string){
     this.supplierService.getASupplier(id).subscribe(
       (response) =>{
-        console.log(response)
-        this.supplierService.setSupplierForEdit(response)
+        this.supplier = response
+        this.filterCity()
+        this.filterState()
       }
     )
   }
@@ -83,15 +88,15 @@ export class FormSuppliersComponent implements OnInit{
   }
 
   filterState(){
-    const selectedCountry = this.countries.find(item => item.name == this.supplierService.supplier.direccion.pais);
+    const selectedCountry = this.countries.find(item => item.name == this.supplier.direccion.pais);
     console.log(selectedCountry)
     this.states = selectedCountry.states;
   }
 
   filterCity(){
     const cityState = {
-      country: this.supplierService.supplier.direccion.pais,
-      state: this.supplierService.supplier.direccion.provincia
+      country: this.supplier.direccion.pais,
+      state: this.supplier.direccion.provincia
     }
     this.countryService.getCities(cityState).subscribe((response) => {
       console.log(response)
@@ -104,11 +109,11 @@ export class FormSuppliersComponent implements OnInit{
     console.log(formularioProveedores.valid)
     if(formularioProveedores.valid && this.validarFormulario()){
       if(this.parametroURL){
-        this.supplierService.editSupplier(this.parametroURL).subscribe((response)=> console.log(response))
+        this.supplierService.editSupplier(this.supplier, this.parametroURL).subscribe((response)=> console.log(response))
       } else {
-        this.supplierService.saveSupplier().subscribe((response)=> console.log(response))
+        this.supplierService.saveSupplier(this.supplier).subscribe((response)=> console.log(response))
       }
-      this.supplierService.clearSupplierData()
+      this.clearSupplierData()
       alert("Los datos del proveedor fueron cargados exitosamente")
       this.router.navigate(["proveedores"])
     } else{
@@ -117,10 +122,11 @@ export class FormSuppliersComponent implements OnInit{
   }
 
   validarFormulario() : boolean{
-    const codigoValido = this.validarCodigo(this.supplierService.supplier.codigo) 
-    const emailValido = this.validarEmail(this.supplierService.supplier.email)
-    const emailContactoValido = this.validarEmailContacto(this.supplierService.supplier.contacto.email)
-    return(codigoValido && emailValido && emailContactoValido)
+    const codigoValido = this.validarCodigo(this.supplier.codigo) 
+    const emailValido = this.validarEmail(this.supplier.email)
+    const emailContactoValido = this.validarEmailContacto(this.supplier.contacto.email)
+    const validarCUIT = this.validarCUIT(this.supplier.CUIT);
+    return(codigoValido && emailValido && emailContactoValido && validarCUIT)
   }
   
 
@@ -132,6 +138,12 @@ export class FormSuppliersComponent implements OnInit{
     }
     this.msjValidCode = ""
     return true;
+  }
+
+  validarCUIT(stringToValidate : string){
+    const regexCode = new RegExp('^[0-9-]{13}$');
+    this.validCUIT = regexCode.test(stringToValidate)
+    return regexCode.test(stringToValidate)
   }
 
   validarEmail(stringToValidate : string) :boolean {
@@ -146,18 +158,57 @@ export class FormSuppliersComponent implements OnInit{
     return this.validEmailContacto;
   }
 
-  cancelar(){
+  cancelar(objetivo: string){
     const confirmar = confirm("¿Seguro desea salir? Los datos se perderán")
     if(confirmar){
-      this.router.navigate(["proveedores"])
+      this.router.navigate([objetivo])
     }
   }
 
-  cancelarHome(){
-    const confirmar = confirm("¿Seguro desea salir? Los datos se perderán")
-    if(confirmar){
-      this.router.navigate([""])
-    }
+  onCUITChange(newValue: string): void {
+    const formattedValue = this.formatCUIT(newValue);
+    this.supplier.CUIT = formattedValue;
   }
 
+  // Method to format the CUIT
+  private formatCUIT(value: string): string {
+    let stringWithoutHyphens = value.replace(/-/g, '')
+    if (stringWithoutHyphens.length == 1 || stringWithoutHyphens.length == 0) {
+      return stringWithoutHyphens;
+    } if (stringWithoutHyphens.length <=9 && stringWithoutHyphens.length>1){
+      return stringWithoutHyphens.slice(0, 2) + '-' + stringWithoutHyphens.slice(2, 10)
+    }
+    return stringWithoutHyphens.slice(0, 2) + '-' + stringWithoutHyphens.slice(2, 10) + '-' + stringWithoutHyphens.slice(10, 11);
+  }
+
+  //Clear the form
+  clearSupplierData(){
+    this.supplier = {
+      id: '',
+      codigo: '',
+      razonSocial: '',
+      rubro: '',
+      URLlogo: '',
+      CUIT: '',
+      condicionIva: '',
+      email: '',
+      telefono: '',
+      web: '',
+      direccion : {
+        calle: '',
+        altura: '',
+        CP: '',
+        pais: '',
+        provincia: '',
+        localidad: '',
+      },
+      contacto: {
+        nombre: '',
+        apellido: '',
+        email: '',
+        telefono: '',
+        rol: ''
+      }
+    }
+  }
 }

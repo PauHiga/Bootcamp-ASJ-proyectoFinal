@@ -57,7 +57,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title w-100 text-center" id="exampleModalLabel">{{supplierService.supplier.razonSocial}}</h5>
+          <h5 class="modal-title w-100 text-center" id="exampleModalLabel">{{modalSupplier.razonSocial}}</h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -67,7 +67,7 @@
             <div class="row">
               <div class="col-sm-6">
                 <div class="imgContainerModal">
-                  <img src="{{supplierService.supplier.URLlogo}}" alt="{{supplierService.supplier.URLlogo}}">
+                  <img src="{{modalSupplier.URLlogo}}" alt="{{modalSupplier.URLlogo}}">
                 </div>
               </div>
               <div class="col-sm-6">
@@ -78,7 +78,7 @@
                       ID del proveedor:
                     </td>
                     <td>
-                      {{supplierService.supplier.id}}
+                      {{modalSupplier.id}}
                     </td>
                   </tr>
                   <tr>
@@ -86,7 +86,7 @@
                       Codigo:
                     </td>
                     <td>
-                      {{supplierService.supplier.codigo}}
+                      {{modalSupplier.codigo}}
                     </td>
                   </tr>
                   <tr>
@@ -94,7 +94,7 @@
                       Razón social:
                     </td>
                     <td>
-                      {{supplierService.supplier.razonSocial}}
+                      {{modalSupplier.razonSocial}}
                     </td>
                   </tr>
                   <tr>
@@ -102,7 +102,7 @@
                       Rubro:
                     </td>
                     <td>
-                      {{supplierService.supplier.rubro}}
+                      {{modalSupplier.rubro}}
                     </td>
                   </tr>
                   <tr>
@@ -110,7 +110,7 @@
                       Cuit:
                     </td>
                     <td>
-                      {{supplierService.supplier.CUIT}}
+                      {{modalSupplier.CUIT}}
                     </td>
                   </tr>
                   <tr>
@@ -118,7 +118,7 @@
                       Condicion IVA:
                     </td>
                     <td>
-                      {{supplierService.supplier.condicionIva}}
+                      {{modalSupplier.condicionIva}}
                     </td>
                   </tr>
                 </table>
@@ -130,7 +130,7 @@
                       Calle:
                     </td>
                     <td>
-                      {{supplierService.supplier.direccion.calle}}
+                      {{modalSupplier.direccion.calle}}
                     </td>
                   </tr>
                   <tr>
@@ -138,7 +138,7 @@
                       Altura:
                     </td>
                     <td>
-                      {{supplierService.supplier.direccion.altura}}
+                      {{modalSupplier.direccion.altura}}
                     </td>
                   </tr>
                   <tr>
@@ -146,7 +146,7 @@
                       Código Postal
                     </td>
                     <td>
-                      {{supplierService.supplier.direccion.CP}}
+                      {{modalSupplier.direccion.CP}}
                     </td>
                   </tr>
                   <tr>
@@ -154,7 +154,7 @@
                       Pais:
                     </td>
                     <td>
-                      {{supplierService.supplier.direccion.pais}}
+                      {{modalSupplier.direccion.pais}}
                     </td>
                   </tr>
                   <tr>
@@ -162,7 +162,7 @@
                       Provincia:
                     </td>
                     <td>
-                      {{supplierService.supplier.direccion.provincia}}
+                      {{modalSupplier.direccion.provincia}}
                     </td>
                   </tr>
                   <tr>
@@ -170,7 +170,7 @@
                       Localidad:
                     </td>
                     <td>
-                      {{supplierService.supplier.direccion.localidad}}
+                      {{modalSupplier.direccion.localidad}}
                     </td>
                   </tr>
                 </table>
@@ -182,7 +182,7 @@
                       Contacto:
                     </td>
                     <td>
-                      {{supplierService.supplier.contacto.apellido}}, {{supplierService.supplier.contacto.nombre}}
+                      {{modalSupplier.contacto.apellido}}, {{modalSupplier.contacto.nombre}}
                     </td>
                   </tr>
                   <tr>
@@ -190,7 +190,7 @@
                       Email:
                     </td>
                     <td>
-                      {{supplierService.supplier.contacto.email}}
+                      {{modalSupplier.contacto.email}}
                     </td>
                   </tr>
                   <tr>
@@ -198,7 +198,7 @@
                       Teléfono:
                     </td>
                     <td>
-                      {{supplierService.supplier.contacto.telefono}}
+                      {{modalSupplier.contacto.telefono}}
                     </td>
                   </tr>
                   <tr>
@@ -206,7 +206,7 @@
                       Rol:
                     </td>
                     <td>
-                      {{supplierService.supplier.contacto.rol}}
+                      {{modalSupplier.contacto.rol}}
                     </td>
                   </tr>
                 </table>
@@ -216,7 +216,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" (click)="editSupplier(supplierService.supplier.id)" class="btn btn-primary" data-bs-dismiss="modal">Editar</button>
+          <button type="button" (click)="editSupplier(modalSupplier.id)" class="btn btn-primary" data-bs-dismiss="modal">Editar</button>
         </div>
       </div>
     </div>
