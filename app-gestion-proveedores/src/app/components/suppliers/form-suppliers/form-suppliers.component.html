@@ -157,16 +157,20 @@
       <div class="row mt-3">
         <div class="col-md-6">
           <label for="pais" class="form-label">Pais:</label>
-          <input type="text" class="form-control" id="pais" name="direccion.pais" [(ngModel)]="supplierService.supplier.direccion.pais" #pais="ngModel" required>
-        </div>
-        <div *ngIf="pais.errors?.['required']" class="col-auto">
-          <span class="form-text text-danger">
+          <select (change)="filterState()" class="form-select" aria-label="Default select example" id="pais" name="direccion.pais" [(ngModel)]="supplierService.supplier.direccion.pais" #pais="ngModel" required>
+            <option *ngFor="let country of countries" value={{country.name}}>{{country.name}}</option>
+          </select>
+          <div *ngIf="pais.errors?.['required']" class="col-auto">
+            <span class="form-text text-danger">
               Este campo es requerido
-          </span>
+            </span>
+          </div>
         </div>
         <div class="col-md-6">
           <label for="provincia" class="form-label">Provincia:</label>
-          <input type="text" class="form-control" id="provincia" name="direccion.provincia" [(ngModel)]="supplierService.supplier.direccion.provincia" #provincia="ngModel" required>
+          <select (change)="filterCity()" class="form-select" aria-label="Default select example" id="provincia" name="direccion.provincia" [(ngModel)]="supplierService.supplier.direccion.provincia" #provincia="ngModel" required>
+            <option *ngFor="let state of states" value={{state.name}}>{{state.name}}</option>
+          </select>
           <div *ngIf="provincia.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
                 Este campo es requerido
@@ -178,7 +182,10 @@
       <div class="row mt-3">
         <div class="col-md-6">
           <label for="localidad" class="form-label">Localidad:</label>
-          <input type="text" class="form-control" id="localidad" name="direccion.localidad" [(ngModel)]="supplierService.supplier.direccion.localidad" #localidad="ngModel" required>
+          <!-- <input type="text" class="form-control" id="localidad" name="direccion.localidad" [(ngModel)]="supplierService.supplier.direccion.localidad" #localidad="ngModel" required> -->
+          <select class="form-select" aria-label="Default select example" id="localidad" name="direccion.localidad" [(ngModel)]="supplierService.supplier.direccion.localidad" #localidad="ngModel" required>
+            <option *ngFor="let city of cities" value={{city}}>{{city}}</option>
+          </select>
           <div *ngIf="localidad.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
                 Este campo es requerido

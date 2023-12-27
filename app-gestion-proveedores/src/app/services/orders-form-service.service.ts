@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { orden } from '../models/orden';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { producto } from '../models/producto';
 
 @Injectable({
   providedIn: 'root'

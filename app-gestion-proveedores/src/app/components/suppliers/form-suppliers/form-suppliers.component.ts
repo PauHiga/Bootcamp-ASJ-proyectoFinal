@@ -3,7 +3,7 @@ import { SupplierServiceService } from '../../../services/supplier-service.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { proveedor } from '../../../models/proveedores';
-import { clippingParents } from '@popperjs/core';
+import { CountryStateCityService } from '../../../services/country-state-city.service';
 
 @Component({
   selector: 'app-form-suppliers',
@@ -12,7 +12,7 @@ import { clippingParents } from '@popperjs/core';
 })
 export class FormSuppliersComponent implements OnInit{
 
-  constructor(public supplierService: SupplierServiceService, private route:ActivatedRoute, private router:Router){}
+  constructor(public supplierService: SupplierServiceService, private countryService: CountryStateCityService, private route:ActivatedRoute, private router:Router){}
 
   parametroURL : string = this.route.snapshot.params['edit'] || false;
   tituloFormulario = "Agregar Proveedor"
@@ -45,11 +45,16 @@ export class FormSuppliersComponent implements OnInit{
     }
   }
 
+  countries : any[] = []
+  states : any[] = []
+  cities : any[] = []
+
   msjValidCode = "";
   validEmail = true;
   validEmailContacto = true;
 
   ngOnInit(): void {
+    this.getCountries()
     if(this.parametroURL) {
       this.tituloFormulario = "Editar Proveedor";
       this.getASupplier(this.parametroURL)
@@ -66,6 +71,32 @@ export class FormSuppliersComponent implements OnInit{
         this.supplierService.setSupplierForEdit(response)
       }
     )
+  }
+
+  getCountries(){
+    this.countryService.getCountriesStates().subscribe((response)=>{
+      this.countries = response.data.map((item : any)=>{
+        const country = {name: item.name, states: item.states}
+          return country;
+      })
+    })
+  }
+
+  filterState(){
+    const selectedCountry = this.countries.find(item => item.name == this.supplierService.supplier.direccion.pais);
+    console.log(selectedCountry)
+    this.states = selectedCountry.states;
+  }
+
+  filterCity(){
+    const cityState = {
+      country: this.supplierService.supplier.direccion.pais,
+      state: this.supplierService.supplier.direccion.provincia
+    }
+    this.countryService.getCities(cityState).subscribe((response) => {
+      console.log(response)
+      this.cities = response.data
+    })
   }
 
   onClickForm(formularioProveedores:NgForm){
