@@ -296,16 +296,6 @@
       "URLimage": ""
     },
     {
-      "id": 106,
-      "idProveedor": "5",
-      "SKUProducto": "SKU123",
-      "categoria": "Hogar",
-      "nombreProducto": "Escoba",
-      "descripcion": "Escoba que barre",
-      "precio": 1000,
-      "URLimage": ""
-    },
-    {
       "id": 107,
       "idProveedor": "8",
       "SKUProducto": "LLL",
@@ -489,6 +479,23 @@
         }
       ],
       "total": "999.96",
+      "estado": "NO CANCELADO"
+    },
+    {
+      "id": "tXZod-u",
+      "numeroOrden": 8,
+      "fechaEmision": "2023-12-27",
+      "fechaEntrega": "2023-12-28",
+      "informacionRecepcion": "",
+      "proveedor": "8",
+      "productos": [
+        {
+          "id": 107,
+          "nombreProducto": "Balon",
+          "cantidad": 1
+        }
+      ],
+      "total": "100.00",
       "estado": "NO CANCELADO"
     }
   ],
