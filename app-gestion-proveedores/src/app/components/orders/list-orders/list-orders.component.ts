@@ -16,9 +16,13 @@ export class ListOrdersComponent implements OnInit{
 
   orders : orden[]= [];
   ordersToDisplay : orden[]= [];
+  productsAvailable = 0;
+  suppliersAvailable = 0;
   
   ngOnInit(): void {
     this.getData();
+    this.getAvailableProducts();
+    this.getAvailableSuppliers();
   }
 
   getData() {
@@ -36,6 +40,18 @@ export class ListOrdersComponent implements OnInit{
         return itemConProveedor 
       })
     });
+  }
+
+  getAvailableProducts(){
+    this.ordersService.getProductsAmount().subscribe((response)=>{
+      this.productsAvailable = response;
+    })
+  }
+  
+  getAvailableSuppliers(){
+    this.ordersService.getSuppliersAmount().subscribe((response)=>{
+      this.suppliersAvailable = response;
+    })
   }
 
   markCanceled(id:string){

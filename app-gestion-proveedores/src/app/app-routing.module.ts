@@ -6,9 +6,11 @@ import { ListProductsComponent } from './components/products/list-products/list-
 import { FormProductsComponent } from './components/products/form-products/form-products.component';
 import { ListOrdersComponent } from './components/orders/list-orders/list-orders.component';
 import { FormOrdersComponent } from './components/orders/form-orders/form-orders.component';
+import { MainWelcomeComponent } from './components/welcome/main-welcome/main-welcome.component';
 
 
 const routes: Routes = [
+  {path: "", component:MainWelcomeComponent},
   {path: 'proveedores', children:[
     {path: '', component:ListSuppliersComponent},
     {path: 'formulario-proveedores', children:[

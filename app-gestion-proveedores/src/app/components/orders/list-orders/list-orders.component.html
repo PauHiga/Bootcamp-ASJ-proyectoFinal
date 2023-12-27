@@ -43,7 +43,21 @@
 
   </div>
 
-  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="ordersToDisplay.length<=0">
+  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="ordersToDisplay.length<=0 && productsAvailable>0 && suppliersAvailable>0">
     <p>No hay órdenes registradas</p>
-    <button routerLink="/ordenes/formulario-ordenes">Añadir Orden</button>
+    <p>Cree una orden nueva</p>
+    <button routerLink="/ordenes/formulario-ordenes">Crear Orden</button>
   </div>
+
+  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="productsAvailable<=0 && suppliersAvailable>0">
+    <p>No hay productos registrados en el sistema</p>
+    <p>Añada al menos un producto para poder crear una orden</p>
+    <button routerLink="/productos/formulario-productos">Añadir Producto</button>
+  </div>
+
+    <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="suppliersAvailable<=0">
+      <p>No hay proveedores registrados en el sistema</p>
+      <p>Comience <b>añadiendo un proveedor</b> para poder luego registrar productos y crear órdenes</p>
+      <button routerLink="/proveedores/formulario-proveedores">Agregar un proveedor</button>
+    </div>
+

@@ -14,6 +14,8 @@ import { FormProductsComponent } from './components/products/form-products/form-
 import { ListProductsComponent } from './components/products/list-products/list-products.component';
 import { FormOrdersComponent } from './components/orders/form-orders/form-orders.component';
 import { ListOrdersComponent } from './components/orders/list-orders/list-orders.component';
+import { ModalConfirmComponent } from './components/orders/modal-confirm/modal-confirm.component';
+import { MainWelcomeComponent } from './components/welcome/main-welcome/main-welcome.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { ListOrdersComponent } from './components/orders/list-orders/list-orders
     ListProductsComponent,
     FormOrdersComponent,
     ListOrdersComponent,
+    ModalConfirmComponent,
+    MainWelcomeComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,8 +6,9 @@ import { orden } from '../../../models/orden';
 import { OrdersFormServiceService } from '../../../services/orders-form-service.service';
 import { producto } from '../../../models/producto';
 import { proveedor } from '../../../models/proveedores';
-import { productoCantidad } from '../../../models/productoCantidad';
 import { forkJoin } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
 
 
 @Component({
@@ -17,7 +18,13 @@ import { forkJoin } from 'rxjs';
 })
 export class FormOrdersComponent implements OnInit{
 
-  constructor(public orderFormService: OrdersFormServiceService, private router:Router){}
+  constructor(public orderFormService: OrdersFormServiceService, private router:Router, private modalService: NgbModal){}
+
+  openModal() {
+    alert("openModal")
+    // Use NgbModal to open the modal
+    this.modalService.open(ModalConfirmComponent);
+  }
 
   orden : orden = 
     {
@@ -43,11 +50,13 @@ export class FormOrdersComponent implements OnInit{
     idProveedorArray : string[] = []
 
     mensajeTotalMayorACero: string = "";
+    mensajeFechaEmisionErronea: string = "";
+    mensajeFechaEntregaErronea: string = "";
 
   ngOnInit(): void {
     this.getData();
     this.clearData();
-    
+    this.setCurrentDateOnInputs();
   }
 
   getData() {
@@ -77,8 +86,8 @@ export class FormOrdersComponent implements OnInit{
   }
 
   getSuppliersWithProducts(){
-    this.idProveedorArray = this.products.map(item=> item.idProveedor)
-    this.suppliers = this.suppliers.filter(item => this.idProveedorArray.includes(item.id))
+    this.idProveedorArray = this.products.map(item=> item.idProveedor.toString())
+    this.suppliers = this.suppliers.filter(item => this.idProveedorArray.includes(item.id.toString()))
   }
 
   onSelect(event : Event): any
@@ -118,16 +127,14 @@ export class FormOrdersComponent implements OnInit{
   }
 
   onClickForm(formularioProveedores:NgForm){
+    // this.openModal()
     this.productsInProcessToOrdenProductos()
-    this.totalMayorACero();
+    this.manageErrorMessages();
     if(formularioProveedores.valid && this.validacionFormulario()){
-      alert('crear orden')
-      this.orderFormService.saveOrder(this.orden).subscribe((response)=>{
-        console.log(response);
-      })
-      this.clearData()
-      this.router.navigate(["ordenes"])
-      alert("Orden creada exitosamente")
+      const confirmar = confirm("Está a punto de generar una nueva orden. ¿Desea continuar?")
+      if(confirmar){
+        this.confirmarNuevaOrden();
+      }
     } else {
       alert("Hay campos incompletos o erróneos. Por favor, revise el formulario")
     }
@@ -135,8 +142,49 @@ export class FormOrdersComponent implements OnInit{
 
 
   validacionFormulario(){
+    const totalMayorACero = this.orden.total>0
+    const fechaEmision =  this.validateStringDatesOnlyForward(this.orden.fechaEmision, this.getCurrentDate())
+    const fechaEntrega =  this.validateStringDatesOnlyForward(this.orden.fechaEntrega, this.getCurrentDate())
+    return totalMayorACero && fechaEmision && fechaEntrega
+  }
 
-    return (this.orden.total>0)
+  validateStringDatesOnlyForward(date :string , currentDate : string){
+    const dateDate = new Date(date);
+    const currentDateDate = new Date(currentDate);
+    return dateDate >= currentDateDate
+  }
+
+  manageErrorMessages(){
+    const totalMayorACero = this.orden.total>0
+    const fechaEmision =  this.validateStringDatesOnlyForward(this.orden.fechaEmision, this.getCurrentDate())
+    const fechaEntrega =  this.validateStringDatesOnlyForward(this.orden.fechaEntrega, this.getCurrentDate())
+
+    if(!totalMayorACero){
+      this.mensajeTotalMayorACero = "El total debe ser mayor a 0. Por favor seleccione un proveedor y uno o más productos"
+    } else {
+      this.mensajeTotalMayorACero = ""
+    }
+
+    if(!fechaEmision){
+      this.mensajeFechaEmisionErronea = "La fecha de emisión no puede ser anterior a la fecha actual"
+    } else {
+      this.mensajeFechaEmisionErronea = ""
+    }
+
+    if(!fechaEntrega){
+      this.mensajeFechaEntregaErronea = "La fecha de entrega no puede ser anterior a la fecha actual"
+    } else {
+      this.mensajeFechaEntregaErronea = ""
+    }
+  }
+
+  confirmarNuevaOrden(){
+    this.orderFormService.saveOrder(this.orden).subscribe((response)=>{
+      console.log(response);
+    })
+    this.clearData()
+    this.router.navigate(["ordenes"])
+    alert("Orden creada exitosamente")
   }
 
   clearData(){
@@ -167,12 +215,8 @@ export class FormOrdersComponent implements OnInit{
     return `${year}-${formattedMonth}-${formattedDay}`;
   }
 
-  totalMayorACero(): void {
-    if(this.orden.total<=0){
-      this.mensajeTotalMayorACero = "Seleccione uno o más productos"
-    } else {
-      this.mensajeTotalMayorACero = ""
-    }
+  setCurrentDateOnInputs() : void{
+    this.orden.fechaEmision = this.getCurrentDate();
   }
 
   cancelar(){
@@ -188,4 +232,5 @@ export class FormOrdersComponent implements OnInit{
       this.router.navigate([""])
     }
   }
+
 }

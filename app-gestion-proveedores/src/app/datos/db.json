@@ -396,7 +396,7 @@
         }
       ],
       "total": "1000.00",
-      "estado": "NO CANCELADO"
+      "estado": "CANCELADO"
     },
     {
       "id": "ZVQOu69",
@@ -428,6 +428,23 @@
         }
       ],
       "total": "1459.92",
+      "estado": "NO CANCELADO"
+    },
+    {
+      "id": "00MMb_c",
+      "numeroOrden": 6,
+      "fechaEmision": "2023-12-27",
+      "fechaEntrega": "2023-12-28",
+      "informacionRecepcion": "",
+      "proveedor": "1",
+      "productos": [
+        {
+          "id": 101,
+          "nombreProducto": "Smartphone XYZ",
+          "cantidad": 2
+        }
+      ],
+      "total": "1199.98",
       "estado": "NO CANCELADO"
     }
   ],
