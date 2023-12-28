@@ -103,7 +103,6 @@ export class FormSuppliersComponent implements OnInit{
 
   filterState(){
     const selectedCountry = this.countries.find(item => item.name == this.supplier.direccion.pais);
-    console.log(selectedCountry)
     this.states = selectedCountry.states;
   }
 
@@ -113,7 +112,6 @@ export class FormSuppliersComponent implements OnInit{
       state: this.supplier.direccion.provincia
     }
     this.countryService.getCities(cityState).subscribe((response) => {
-      console.log(response)
       this.cities = response.data
     })
   }
@@ -182,7 +180,7 @@ export class FormSuppliersComponent implements OnInit{
   }
 
   cancelar(objetivo: string){
-    const confirmar = confirm("¿Seguro desea salir? Los datos se perderán")
+    const confirmar = confirm("¿Seguro desea salir? Los cambios se perderán")
     if(confirmar){
       this.router.navigate([objetivo])
     }

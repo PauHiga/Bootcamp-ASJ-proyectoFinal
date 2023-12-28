@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pt-2">
 
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -18,7 +18,7 @@
             <th scope="col">Entrega Estimada</th>
             <th scope="col">Proveedor</th>
             <th scope="col">Productos</th>
-            <th scope="col-1">Cancelar</th>
+            <th class="text-center" scope="col-1">Cancelar</th>
             <th scope="col-1">Ver detalles</th>
           </tr>
         </thead>
@@ -36,7 +36,7 @@
               </ul>
   
             </td>
-            <td (click)="markCanceled(ordersToDisplay[ngForIndex].id)"><img src="/assets/icons/x-square.svg" alt="mark as canceled" width="25" height="25" [ngClass]="(order.estado=='CANCELADO')?'d-none':''"><p [ngClass]="(order.estado=='CANCELADO')?'':'d-none'">CANCELADO</p></td>
+            <td class="text-center" (click)="markCanceled(ordersToDisplay[ngForIndex].id)"><img src="/assets/icons/x-square.svg" alt="mark as canceled" width="25" height="25" [ngClass]="(order.estado=='CANCELADO')?'d-none':''"><p [ngClass]="(order.estado=='CANCELADO')?'':'d-none'">CANCELADO</p></td>
             <td><button type="button" (click)="setIndex(i)" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
               Ver detalle
             </button></td>

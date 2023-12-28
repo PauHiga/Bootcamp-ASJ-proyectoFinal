@@ -7,7 +7,7 @@
       "rubro": "Articulos de oficina",
       "URLlogo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbmGEM2Vt2G66LZL2u7BrjgubPNgtrTU-UL3H9nyWsSE_fPUknx6nTDy9ohuCGmYXGgSI&usqp=CAU",
       "CUIT": "30-12345678-9",
-      "condicionIva": "Responsable Inscripto",
+      "condicionIva": "IVA exento",
       "email": "info@lapapelera.com",
       "telefono": "011-123456789",
       "web": "http://www.lapapelera.com",
@@ -16,8 +16,8 @@
         "altura": "123",
         "CP": "1234",
         "pais": "Argentina",
-        "provincia": "Buenos Aires",
-        "localidad": "Ciudad A"
+        "provincia": "Corrientes",
+        "localidad": "Departamento de General Alvear"
       },
       "contacto": {
         "nombre": "Juan",
@@ -119,7 +119,7 @@
       "rubro": "Importador",
       "URLlogo": "",
       "CUIT": "30-77777777-7",
-      "condicionIva": "Responsable Inscripto",
+      "condicionIva": "IVA Responsable Inscripto",
       "email": "info@electroimport.com",
       "telefono": "011-777777777",
       "web": "http://www.electroimport.com",
@@ -128,8 +128,8 @@
         "altura": "202",
         "CP": "3344",
         "pais": "Argentina",
-        "provincia": "Neuquen",
-        "localidad": "Ciudad E"
+        "provincia": "Córdoba Province",
+        "localidad": "Departamento de Calamuchita"
       },
       "contacto": {
         "nombre": "Carlos",
