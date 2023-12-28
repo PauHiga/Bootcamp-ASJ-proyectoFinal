@@ -42,7 +42,8 @@ export class FormSuppliersComponent implements OnInit{
       email: '',
       telefono: '',
       rol: ''
-    }
+    },
+    deleted: false,
   }
 
   suppliersList : proveedor[] = [];
@@ -237,7 +238,8 @@ export class FormSuppliersComponent implements OnInit{
         email: '',
         telefono: '',
         rol: ''
-      }
+      },
+      deleted: false,
     }
   }
 }

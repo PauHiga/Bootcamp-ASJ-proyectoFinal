@@ -25,7 +25,8 @@
         "email": "juan.perez@empresaA.com",
         "telefono": "011-987654321",
         "rol": "Encargado de ventas"
-      }
+      },
+      "deleted": true
     },
     {
       "id": "2",
@@ -52,7 +53,8 @@
         "email": "maria.gomez@empresaB.com",
         "telefono": "011-123456789",
         "rol": "Gerente de Ventas"
-      }
+      },
+      "deleted": false
     },
     {
       "id": "3",
@@ -79,7 +81,8 @@
         "email": "carlos.rodriguez@empresaC.com",
         "telefono": "011-987654321",
         "rol": "Jefe de Compras"
-      }
+      },
+      "deleted": true
     },
     {
       "id": "4",
@@ -106,7 +109,8 @@
         "email": "laura.fernandez@empresaD.com",
         "telefono": "011-123456789",
         "rol": "Director de Proyectos"
-      }
+      },
+      "deleted": true
     },
     {
       "id": "6",
@@ -133,7 +137,8 @@
         "email": "ana.martinez@empresaF.com",
         "telefono": "011-123456789",
         "rol": "Gerente de Marketing"
-      }
+      },
+      "deleted": false
     },
     {
       "id": "7",
@@ -160,7 +165,8 @@
         "email": "rodrigo.garcia@empresaG.com",
         "telefono": "011-987654321",
         "rol": "Director de Operaciones"
-      }
+      },
+      "deleted": true
     },
     {
       "id": "8",
@@ -187,7 +193,8 @@
         "email": "sss@f.com",
         "telefono": "ss",
         "rol": "ss"
-      }
+      },
+      "deleted": true
     },
     {
       "id": "RTHTdFP",
@@ -214,12 +221,13 @@
         "email": "juan@perez.com",
         "telefono": "sssss",
         "rol": "a"
-      }
+      },
+      "deleted": false
     },
     {
       "id": "eImw3-A",
       "codigo": "B001",
-      "razonSocial": "Empresa B S.A.",
+      "razonSocial": "Empresa H S.A.",
       "rubro": "Servicios Financieros",
       "URLlogo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAA81BMVEXjAAv///8AAAD/7QBWAATfAAv/8AD/8gD/9AD/9gD/+wD/+AD7+/vo6Ojl5eWoqKjw8PDY2NhnZ2eKioqysrLe3t7Q0NA8PDzAwMDIyMhtbW2VlZU2NjYYGBgvLy9cXFz94gI8OQAjIyP5zAT05gB4eHhERETzowb4wwT0rgbqXgn72gNUVFSenp4NDQ3nPQrvgwjpVAntdwj2ugXn1wApJQDlJQrragnoSArxlwfFAAmEfABwaACYjQDXyABRSwCrnwA1MQB4AAbwjQiOAAeqAAi9sQBqAAVgWQAfHABHQgA1AAPJvAAWAAH2AAsUEwBHAAQlfxAgAAASKUlEQVR4nO1cWVsiO7QFSmtEBhkEbASZBxEEBBFFulGO9vV2n///a26mSqUyVHHe6rtfradua5tkZQ/Z2UlMpFJn54n/Bzg/S6USMZkIIiYTVcRkooqYTFQRk4kqYjJRRUwmqojJRBUxmagiJhNVxGSiiphMVBGTiSpiMlFFTCaqiMlEFTGZqCImE1XEZKKKmExUEZOJKmIyUUVMJqqIyUQVMZkwrFarKcDTdLpahcghnN6s4sv58zkk8B/JTB/W8xnCfP0gaXr1BL4f+sPFYjAYtAeDYf8wXz+p5RD6m8NsPZJIucLTEej0sOn3+xtZx+cfv379en/+b2RW881i3DRsCEdrthebuZ/p+jAcNDXbcSzLxLDAv5vt/mzKyj3NN8N2U0dyEI5jW9p40D+MJNMzBcKDseYAaQjb1pvjxWbGUD9/P3t//ng/+/gPZKabQdOyDF3D0HXDspoLj86oP2galkkFKHTT0QYbSmcOiJiWyYnphmnp48GG04+sUdix1h7Snj/++Xh/B3TOnhMnkllt2ho/ANCu1ezj2XxYjHXxu8dHa8+Q3AYwUcoZpjYeMnTmi7FCWDeN5gC3eH72cZ56/vj3/P39RDKjgW",
       "CUIT": "11-11111111-1",
@@ -241,7 +249,8 @@
         "email": "s@d.com",
         "telefono": "s",
         "rol": "Jefe de Compras"
-      }
+      },
+      "deleted": false
     }
   ],
   "products": [
@@ -257,7 +266,7 @@
     },
     {
       "id": 102,
-      "idProveedor": "1",
+      "idProveedor": "2",
       "SKUProducto": "SKU456",
       "categoria": "Ropa",
       "nombreProducto": "Camisa Casual de Algodón",
@@ -267,7 +276,7 @@
     },
     {
       "id": 103,
-      "idProveedor": "4",
+      "idProveedor": "3",
       "SKUProducto": "SKU789",
       "categoria": "Hogar",
       "nombreProducto": "Aspiradora Robótica",
@@ -334,6 +343,16 @@
       "descripcion": "pisa los papeles",
       "precio": 400,
       "URLimage": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoHCA8SDxASEhASEhIKDRQPDQwMDRESGA8MJSEnJyUhJCQpLi4zKSwrLSQYNDg0OC8xNTU1KCQ7QDszPy40NTEBDAwMEA8QGhISHjEkJCExNDE0NDQ0QDQxMTE0MTQxNDQ0ND80NDE0MTQxNDExND00NDQxNDE/NDExNDQxNDQxP//AABEIALQBDgMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAAAQIDBAUGBwj/xAA+EAACAQMDAQUGAwYFAwUAAAABAhEAAyEEEjFBBSJRYXEGEzKBkaEHQrEUUsHR8PEjM0NicmOC4RUWJVOS/8QAFwEBAQEBAAAAAAAAAAAAAAAAAAECA//EAB0RAQEBAQEAAgMAAAAAAAAAAAABESECEjFBYYH/2gAMAwEAAhEDEQA/APXKKJorSCiiigKKKKAooooFooooCiiigKKKIx5eJ4oCkqjqe2NLbxcvoCOVUlyPWJiqX/urQzh2aPBRn0zTTG3RWPZ9pNG/53XMS6QPsau2+09KxgX0nwZtn6xTTFuihCCJBDDxUhh9qWgSiiigKKKKAooooCiigmgKKKKAooooCiikoFooooCiiigKKWigSloooCiisP2h9pdPo1hpe6y7ksIYO3xY9B9/Kmk63P4CSTwB5msDtL2u0NiRv96y422BuAbzbj6TXmvbPtVqtWxD3NiTjT2TtUfxJ9ay1sXChfY+xSNzldoz4Tz8qxfTU8u11/4gX2P+CiWxJUFu+31P8q5/V9v6m7PvLzsD+UtgVjsJknxzgRSbfP6HO49KbV+lwaknrPWlLErv2iFcKWJE7iCeOelUwMCR164nzpV/o0FtL7DgnyG6Ks2NY3whoPHeODWY104/2iM57s0q3PLIJMkwCv8AOg2019+2ZRyCoOFYoR54rU0ntpq7eGcXAMd9d335rmfeys+HXqKcHnk8eDR/emmPQdB7eWWgXbRXMF7RkfQ5rotD2xpb8e7vIxPCMdrfQ8/KvHWKnnwxTAYOGYRV1Me6Ef0aSvKOzPavW2IBc3VTlbvfHy6j5Guy7I9tNJfhbh9y5gQ5lCfXp86up8XS0UAggEEEMJUqZBXyNFVBRRRQFAoooFpKWkoCiiigWiiiKAiilooEopaDQJRSzSUC1xHtN7FPqL737N5Q107mtXlgbo6MOmODXbUUs1JceH9pezuv0zL72wI3AI63EIZuQJOCfKazdX2ldA2XQ6iZLOgbr0IOK9/v2UuI1t0V0uLtdHUMrL4EGvDPxH9mRob6m1uNjV7mshjuNu4PiSSc4ggnMek1ixuemRb1lnj323MEOpX9RU9ttw7txGHI2sDP0rmWT1MrgnEedRuixgHcTg9D6UHWOXHnPU9ftTQ7EwV4wZgd2uaS7dWQtx1hQSCxHyqVO09SD8e6MnciMR6mi8dEH6kjwjihyIBn4iQVE92OpMRnNYSdt3QcpbPnBU/Y1YTttPzWT6q+c+oobG1p7oDRODloirOptlG/2uNyEHlfGsO12vp5WfeLmGJtgwvjINa2q9odObSWwyMLQJtuFlhPIIifr1FFKHx8uvNITx3sSBPArL/9UQnAdt7RgBe9E+vFW9JcFyO6YJ2hdu47oJMycQB8oonEi3yWMiChIC8+kxiYqRNJqLrN7hLjuglVtJuLN0EcdeuI8K7T2X9lffoLt1Nlp2IUMe86DqAPEzkx6GvQtHorVldlq2qCM7Vgt6nk0kL6YnsX2Zq9Ppo1Tqbl3a3uUIIskCCJGJOJjEiuipaK1GLdJRS0RVCUlLRQJS0UUBRSUtAtFFFAUUURQFJSxSigbFEUtKKBIoiiigDXI/iXpkfsx2aJ01+06SQCSTtI85BOPLyrrXYKJYhQOWZgo+9eT/iH7TJqXTT2G3WdK+97oOLuoAgR4hZOepzwATKSOHa0rTIHgD1qu+jUjicyCDEVPB+/MRQSYz0OKiqb6NZyZwC2DI8pqN9EQZXgiCoydtXy0dOTk+HrQCD8ukYoqgmkIIBiIl+7uLL88elQG2NwItNBYhg5JAnwAHzrWIn/ALowaGPSfUjqvhUwY6okMGkPPcUTDY8aNNak5xPjzt6+tawA/h6U9EUHgcEEkCR1+lMFVUgDH5ZBAnvZiPpFb/YmlV71lA3fvOiAKxC21LASYyT96yCSFgclm2zB7sTHrNX+y9U9u4rqdrIyuvitwGR9CKD6Ct2lRVRRtVFCqo6KKfVXs3XW9RZS8jBluLJ2/lccg+BBkVaitMiiiiqCiiigKKKKBIoilooEopaIoCKIpYoigSiliiKBKKWKXbQNqj2t2vp9Ige8+0O21FUSXbmAPSpddr7Fhd166lsHje0FvQcn5V5l7fdq2tebC6dxs0nvCzXu4GJiIB8geRUtJNdJe9vLR/y7fo11t32H86y9X7aXmkIGPgFdLIn1En7152/Z99RIEifjtujgL8jP2qH3l5Z3E93DBzBDeYIxWdaxudrdpaq+e/hW5RGdgc9WJJPpx5VkOCCZEx40iat4krheZBWPLFH7QjfEGHmryd3zqoguahQOAZk4PFRnVCYHXieuOKkuaS2/F3bOYdOG9RVW52VdYDabbySVK3ACfkaCY3kJ5mRwB+apJBz+/nd4t1rNuaC8ozbfIliO8PtVZgR+bI/K0g0VuumInnqOlRsPHx7oIjj+dZIdhw65MSs/fxqwNW4wYMH4ipz6H+FEXOmByelSW2k5GGxkVUt6ok7QFJPEHA9akTUIeehgNmN3rUoviwAAD+9kRjzz/XNKAI9G2jM8VFp74LEA7lKSVWHKN4/L9KsMhwvTBWTBMeBOKK3/AGX9or2ibADW3YC5aYmG8DPQ+f1mvVOye3tLqgPd3AHIG6xcO11bwg8+omvEgk8QYOVV4PnImrWmR47rcHujdH0mqle8R/RpK8l0HtDr7QEXgRwqXLhYY6EEGPHpXRab28jF6xJGC9m4I3emRV1MdxRUOg1S3rKXVDBbolVYQRmP4VY20TDaKdtpIqqSiliiKBKKWKWKgdRRQKoKKKg1WqtWl33LiW1Ey1xgg+9QT1y3tj7Vpok92hDam6sqhyLS/vMP0HX0rK9oPxARQbejG5jIOqurCJ5qpyx9YHrXnV5HuM1y45drr7nuvLFp6nx6Vm+lkGr7RuXXa5duNcdzDOzFifIeA8hioDdHhzhZMw00l3SkdML+cD4l8aY1hsD50inkJuwYLZ7pK1IupuiIu3IUmF94WH061UcNx+6cY4pVvOMgckBmGCPlx9qYLLXnJ7wtvu+IXLKCfDIiobj2yc6dcqFYW7z/AGBkClXVeIM4DNIM+cU5NSk5GCCdzWx8hjNTDVVzptwn31vMkMgcHPEggj6fShLNtj3b9sQJAu77csfUVdi0c93if8yCGnwINMu9nWz5TG3cuD4yRxVwQra1MBkYv527gYfY+dI+pvLJuJOwS3vrcj6RzTX7OAkqSJP5GjvR4c0qHU2/gvNBEgM+8GPCZ+lTpxCz2WY7rNsTyVlT/eo20+l6e8tmcbXDD79atLrtSPjtW7ixkvbAP2ihdZpWI97pWQlTuezcwW8YIxVFV9GhgLdB2QVa5bgmOkjp8qa+iuDANtgcHviT8zFaI0ugcE29Rct4EC4ob6kGnDsp3EW9TYcZ2Kbu0mOTmKmrjMt2r1uBsbaDO4gCfHImtDT32diFXkAlpckYHIOAfOnnsvW2we4TiQ1tgwK+Ig0qpq7gFt0ci2TtUjYAxzJOJzTTFxdSiNLbOICrDHHiYpX7VQg7bamDJLKBDGox2QFj3t5LZME2kQuw8pGKmTs7QKAWN64xLTuYIPtmnyMUb3apIhQqmCvdGfKJpdJa1N1twt3HCQWcMihFgxMxn9Otbaay1bAFmzbt7VgsEEnzJMk/xqK/rXfdubDmSqnaDNO043ewfaTVaK37t/c3UDkrYN477ankAgEc5jPlXZ9m+2Ojujvk2m6hyGX6jj5gV5I7hfCPISKa2o2sD1GfOrOJcr323cVlDKwZWEhkYMGHiCOafXlPsp7Smw+1iTaumXs/un95fPxA5HnFeoWLyXEV0ZXRxKshkH+vCtSpZiaiiiiCiiigKjv30tozuwVbaFnY8Ko5NSVznt5dZOzNRt5ubUkdASJ/SlSINT7a6aSLRRiOWu3Nv0Akn7V5r2nZ1uo1N24dRadr1xnRGukFEJkKAwGAIAg8CskEg4MHiRju0JdYTBMMSSNx61i7XSWRZfQ6+3JbTMygGWtoWIXrkSPpVU6zadro6lQCyuhBDeh6/wAqsJrLimVdgT1VitWh23qOr7wPhS6iXB6HcD9jUyrxQ/arZgdZOGBkT4U9Lk5XzBIJPdgzVw9oWCV95pbTDaQ3uw9shj4EEgfSmtp+z7mIv29xBlblu4F9J2n7zim/o/qmAJxiBJnj+1NKwJj4+lXB2UpI261VCkkLfs3EJXoJ7wI+fjQ/ZeoP+Xd098cL7u4jEt6Eg/amxMUzbGJSDIExE9f06033QPGPCeDUmotalJ97p7ixADFXzBjwOBmoP2pCwzBILElYOJ5mDOKspYV9P4dBkx+aoxYImOYxtMR41Ol5CcXEnjaTtn64FNJfkIT/AMTuiqiEO6yJMMIIJmj3gOCIzgqT/OpDqAuWBBPAYET60quh9J7zRigYt2Fz4be8vHmDQbikGduOdy7f71OLaHqIPBmaLlgZIAy2CDJx65oIDbtn4hlgNsxJpjaW3+XHPAINWv2YbSDxyJmM+FQtaMGDyYEc/wA6KrjREQVuMNs7drHHpU+k0lwM7M7kBVMhnac9SflTAGkwOu6Rzx4VZ0V1hvXpcQoygc9R+lCJwIMY4JzimpeX7deRUJQkCc78qfHzoNvu4+ING3oV9aIlfUcQIjzmm75/kKT3eMiDPH9c1NaSDOJGc4FA0Annx5ifnQ9sR4+Q4HjVkBVzHXrk0O6AScR1bAHpRUK2XBxI2kYB/LW32T21qdMSUubZI3KTIbpkHBPnz51hP2jaU4ljI+Hj69Kbauam6SLNpmDfnVDCt5sYArJHqHZPtuHZU1CKgYgftFpu6vmQeB4kHFdoPscgjg14LY7OwDqLttjB3orPc2r5kQJHrW/pvaW9ZZfd6h2VFAFtxuU9OOAIjrVnovl67RWV7O9pftWlS8QAzyrhQQNwMEgHitWtsiuV/EVo7POedRbB9DNdRNcn+JZ/+NPnqLYP3pUn28hc59OlKpzj6GkByJziFI602fDw6istHOR1kSvxASBNNuOAhbnaCwHj4fU0rkxjInKicr4VFeIZMfmCkD/bIoGpck7SZO0lm2lIaegPTOD5U8jOeuDApt6TdTytuDPXIpboJQgRJIicSuJH0oHIzLwSB0IP8qkOpaMqrcGWUYbyqukB3URCBGUDgTgj9KUvBgq23B3qJGeRFBoaXtG4hhHuWwfjFu46j1iY+0VbudpXmLK727u04a9prbAyPEAHjw8KwwQRg4JmnAY+cQKmRdrSe5pnBD6WySPz6a/cts3mAQw/nSHRaB1w2psOBILoLq88Epn7VnAZP1JBgimkmck90gySfiFPia1B2WWxa1tm5mAj3QDt9HAPqKZqOxNUg72nSCDLW1Kgr4mMeFVv2hpJba67x3WQE5zOfCpdPqntn/Dd0g/6Nx0Bg9QDGPSplOKxZVkfs5QN0Uv8Qz605L0N8cYgL8PdjrM1rJ29qMi463AZUe/09tyPmIJHPWk/bdLcEXNLbBBndp7j29zeMGabVyM4apyIO3zZWwfCI4/8U0Xp+JHkmCxUj0z61ojRaG4AFuam2dwba1uzcHoNpmom7MtN3bersbmk98vaJjoJEcedNMUjdkE8FsMC2T5RM/alLp3cAbGlWV4J+lW27E1g7wQOsEhrbo42jz5qg9i8gG60wEFiNjr3j6dKbEytA2gW7ojaZUg49PWpIMmR8REMJwvlVBLuoaPdWSBAEuz3HZuMADieJq6Oyda+LjpaUQWOobaTb6QIn9KbFyorjovxOq7ciTny4qBu0VmEQsSOpCjbWknZmitsGd7l55kizstofLMmPSpR2hZtKTp9OtuD8bAM7MeknNX5X8RMihY0evvZS13GJlywtrtjB3npVodgWlh9VqknBe3YL3D5QeJqK9q7lwtvd2lm2hndu6DA56elQsxj/lIHP1qZassXhd0tsn3enU7JCPflyF54OP1pj9o3rkB3YqBJUwBtGeAAPlFVChLDJyBPh4R+pqRCB856x3RVw1HZbcSnfPuwSWI7u3wngnyqdCIMdO6T4eVQo5KkrB7rMBOCwp+n3+8uboCDYbceYz65qj1r2CcHs9ABHu7txTiJaZ/jXSCuX/D4z2epiA1+4Vn92RXTzVjF+za5n8Q7LP2ZdK/6Ny3cbP5QYP610xql2roxf092y3w6hCpno3IP1Aq1I8EKYHHHQ8U0qR16xnpW72h7M6+0WnS3Sqk7bttRcUqOp2yR9KxrgKsQ2CIkMCD9DmstoC5UkjMrAAz3hNKiQir4IFJ/3AU8if1kfu0kDrj0olDATJ/d256SZP6U0iD6yFkgT5CpHnu4mcA8xNRttOPijBBGaCNBBaSN7kM0dF4AHl+tJeB2k/ltqWdRgsvhPSn7AJgcxIHOP7024h23AJJuCAv7s4/80UrH7CAAIG2lQZz8257vXFIPLoIxwYptksQCyhTnuAzREjjvMFMhH2h4jcsTJ8OlQlzsYyRKIR/yMZI+dK7kJf8AAO7f9sCP1pmoEWB/tW0jeUkUEpPfcGMAFYESpJB+kU522qSfyCfPaPCmuYZjIABjc2Bz5+tLekq8CTAAA4PHHlQKhBCnpcBK9CYMHHkaeEB69euCahQje3dCup7zLnunIg+FWCfsMieF/rpQRMueOPOaUO0fEY4g5FDiY9YFR2QgdnYb1ViqqrlAygQIPTOflQiwt5hxIOYZCVlvOCDV632kYg3LwzLBnS4DnwcH9ayUnr05P+6pAJ/QZ5qXzFnqtm4yLuuW79xzcEsipbshVkAA7eRnjjHSq5uHd3miTIHgvM023bCl0aENx1Db8jcOcdYzSOZLT1wOhKxH0pChG3ZjrmOeOaZeQtcTomn74BBAe4Z/QAfepLMIj/7Qu0HJ3cY+tQ6S06W0RnLs25dzHnMk56ZIFVExGB5bZj0z/Ci6+1N3Pu1YhT+ZpED5nFRX7620uO5xbXcQuTkgDB+VM1zl9M725ldlzIgm3OR5Hr8qKzOzu0Lh1Drcct7xTBkAIwzgeEYitd377ITJ2F1DL3fn4Yj1NYfZeidrysQYViZBg46+Y6Vui6W5TFxZZlMd4GAD14E0UWVCgAQPdmI4iZz8yatWFODEkQST0aqV9YcHMvtUGZ2MDyB4kSJ8hVhW2oInLTt5jmc0R6r+Hc/+njy1F2JM+HHgJ6V1INYnsjpfddn6ZdsF0N5geZYk/oRWyDVjNKaawpxpCKqICv8AcVFqNLbuCLiJcHEXbaP+oqyRRFQczrPYrsu4Sf2UWyeX01y5b+wMfasTV/htaP8Ak6q4kcLqLSXAPmNpr0CKQii68l1PsB2in+X+z3wvRbptk/Jh/GsTWdh6+zJu6O8m0fGLZdfqs/WvdCKQCODHoYqYa+dy68TB4hhB+nNK5M+bDwxXv2r7OsXhF2xauT/9tpXP1ImsLVew3ZtydtlrROd2mvOg3ehkfamLrx6ehxuE+W6KUjP28a9G1P4cLH+Fq2wSQurshhu9Vj9KwtX7B9oIe7btXQASDYvQS3TunaaK5J7SsCCXhsOqttDqOhFF23vEbtoLhmGyd0GQPKtLV9k6qz/mae9b5k3LNyM+YBH3rOnzBPEAg0CXUDrDfmMtHG7nFIwO3usRtKgsvIUYIpx8IiT4UszxzxM0RGhlnbo+1VORMDJ9KlBPTPhBmg/WAIJJpCqxOQZ6GO7QBMz0PIqNgA1vOEDcqTOOYHJpwQgk7icCNw4XzoI7w/6ZJgeYigW2ZHqu7ODtpwMD7ZpBnjrilQdOpOGIpSL9wkO54BHcDAyVAHj0xSk+XDEAkQfWo1dCWVZi2xG1+QxAJBJycg0i3lYMFnuOUbcNveEcHr4TRUhPdz1YmCZIpl50272gfsocs7Y28A/eBHiah7Qvsll2Sd6bdvd3EMSJIBximNZa7YCPCNqEBuFQSUuyCMcRgyPOguFU2XCwlbqzzujqDHkcim2k2pt57qgnxigwVKx0CEDE9DUWo1Qtt+8WMNHA8/lRUxISWC8tjp/bikW5CnHWVJPPT+NRaAXbzLbtI1wmAfcoXjzMV1Og9iNfcg3DasJ/1Sbj/wD5BgfNqDl9Rcc3ECRCN/iMRu7vGB4nxrc9m9D+1apbZXuIwa+wBJFkGSPAE8fOuv7M9gNDazca7fMAEO+xDHkMn5k11Wk0lu2oS2iW0XhLaBB9qYmrqtPAgdABEL4U4GmqKfVZOIppFPNIRVQ2kpSKCKBKSKWKKBsUEU6igbFJFPooIytIUqSKSKCMAjg/Q1R1nY+lvT73TWbm7kvZST8wJrSigiorj9V7A9nvOxbtknj3F4sB8m3CsLV/htdEmzrEeRhNVYKn6qT+lemFaQrTF14vqvYntW3JGnF4cltNdRz9CQftWNqNLeswL1q5bYnIvW3tnngEiK9/KUj25EHIPKsNwPyOKmGvnhBu88zjMRSgffwr27X+y3Z96Tc0lqT+e2ptt9VIrD1X4c6Qz7q9ftT+VmS6v0IB+9Ojy1AY9OfmKs9n25v2VA/1kUCeVkePpXW6r8OdWgPurtm6OgZrlon6hh96y9R7N6+whjs/UNcLLtu23t3ERQRMbcyeJ8KlWYzrj3GZ3Z1cvdPvCqlQjEkgQc5H6VS1L3JthB3Tc/xmxKqIx6+lbWh9ne0Lm4LpL6+8VFY31S2AwJMkk+Zrf0H4eXWg37625MlNOpc/UwPsaTS44vf9+f8Aj1mp9BpNTqHIs2blw9diSB0Ek4H1r1Ts72P0FmCLPvGH+pqW3n6cD6VvpagADAXAVRAHoBVw15loPYDUv/n3ksoTJt2P8Rz6kwB966js/wBiuzrRB/ZxdcZ36pjcO70OB9K6gW6cEpiar2dOqLtRVRRwqKEA+QqYW6eFpwFVEYSnAU+KUCgAKUCgCnAUDjSGloqoYaKKKANJRRQKaSiigKQ0UUBRRRQFFFFAlAoooooNFFQFFFFAbRS0UUBRtFFFAbRSlRRRQG0UBRRRQJRS0UBRRRQANG40UUH/2Q=="
+    },
+    {
+      "id": 112,
+      "idProveedor": "1",
+      "SKUProducto": "dsd",
+      "categoria": "Electrónicos",
+      "nombreProducto": "Lego",
+      "descripcion": "",
+      "precio": 5,
+      "URLimage": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxETEBAQEhIWEhAVERUVEBUYFRkVFRUXFxYYFhYWFhUYHygiGBolGxcVIzEhJSkrMS4uFx81ODMtNygtLisBCgoKDg0OGxAQGy0lICUuLS0wLS03NS8tLS8tLS0tKy0tLS0vLS0tLS0tLS01LS0tLS0tLS0tLS0vLS0vLS0tLf/AABEIALcBEwMBIgACEQEDEQH/xAAcAAEAAgMBAQEAAAAAAAAAAAAABQYDBAcCAQj/xABKEAACAQIDBAUGCgYJBAMAAAABAgADEQQSIQUTMVEGByJBcTJhgZGx0RQjQlJyc5KhssEzVIKDosIWJDRTYpPD4fAVROLxCBc1/8QAGgEBAAIDAQAAAAAAAAAAAAAAAAIEAwUGAf/EADsRAAIBAgMEBwcCAwkAAAAAAAABAgMRBCExBRJBYRNRcYGRsfAUIjKhwdHhFVJykvEGIzNCQ1NistL/2gAMAwEAAhEDEQA/AO4xEQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREw1qqorO5CoqlmYmwAAuST3ACAZpHYvbeFpELUxFKmxNgrVFDE8gCbzg/T7rOr4qpUpYZjSwYBVbaNVJ0z1Dxy8bJw4Xvwlb2L0gOHoOi0lY51NVjqagJ8ltPJyi1vGAfqDZ21cPiFz0K1OsvNHVx9xm7PzPS6VsuYAGnUoim1GqtxUNIMFqJUI8oWLML957iAZ1Xq66ejFN8Ern+sAfFsRY1LDtKwGmcWbhxCk2FtQOhxEQBERAEREARE8PUA4kDxNoB7iaOM2nQpANVrU6angWcLfwufOPXMdLbmEbycRSbwcH857ut6Ii5xWrRJRMdKoGAZSCpGhBuCOYImv8A9SoXt"
     }
   ],
   "orders": [

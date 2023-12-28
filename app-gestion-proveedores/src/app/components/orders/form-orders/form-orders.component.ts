@@ -87,7 +87,7 @@ export class FormOrdersComponent implements OnInit{
 
   getSuppliersWithProducts(){
     this.idProveedorArray = this.products.map(item=> item.idProveedor.toString())
-    this.suppliers = this.suppliers.filter(item => this.idProveedorArray.includes(item.id.toString()))
+    this.suppliers = this.suppliers.filter(item => this.idProveedorArray.includes(item.id.toString()) && item.deleted==false)
   }
 
   onSelect(event : Event): any

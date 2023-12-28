@@ -16,7 +16,7 @@
     <input type="hidden" class="form-control form-control-sm " id="id" name="id" [(ngModel)]="productsService.product.id">
 
       <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-8">
           <div class="form-group">
             <label for="nombreProducto">Nombre del Producto</label>
             <input type="text" class="form-control form-control-sm" id="nombreProducto" name="nombreProducto" [(ngModel)]="productsService.product.nombreProducto" #nombreProducto="ngModel" required>
@@ -27,7 +27,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="form-group">
             <label for="SKUProducto">SKU Producto</label>
             <input type="text" (keyup)="skuIsUnique($event)" class="form-control form-control-sm" id="SKUProducto" name="SKUProducto" [(ngModel)]="productsService.product.SKUProducto" #SKUProducto="ngModel" required>
@@ -39,6 +39,21 @@
             <div *ngIf="skuRepetido" class="col-auto">
               <span class="form-text text-danger">
                   Hay otro producto con este código
+              </span>
+            </div> 
+          </div>
+        </div>
+      </div> 
+      <div class="row">              
+        <div class="col-sm-8">
+          <div class="form-group">
+            <label for="idProveedor">Proveedor</label>
+            <select class="form-select form-select-sm" aria-label="Default select example" id="idProveedor" name="idProveedor" [(ngModel)]="productsService.product.idProveedor" #idProveedor="ngModel" required>
+              <option *ngFor="let supplier of suppliersList" value="{{supplier.id}}">{{supplier.razonSocial}} &nbsp;&nbsp;-&nbsp;&nbsp; CUIT: {{supplier.CUIT}}</option>
+            </select>
+            <div *ngIf="idProveedor.errors?.['required']" class="col-auto">
+              <span class="form-text text-danger">
+                  Este campo es requerido
               </span>
             </div> 
           </div>

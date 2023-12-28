@@ -41,6 +41,7 @@ export class FormProductsComponent implements OnInit{
   getProveedores(){
     this.productsService.getSuppliersList().subscribe((response)=>{
       this.suppliersList = response;
+      this.suppliersList = this.suppliersList.filter(item => item.deleted == false)
     })
   }
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsServiceService } from '../../../services/products-service.service';
 import { producto } from '../../../models/producto';
-import { clippingParents } from '@popperjs/core';
 import { proveedor } from '../../../models/proveedores';
 
 
@@ -27,15 +26,15 @@ export class ListProductsComponent implements OnInit{
     this.productsService.getProducts().subscribe(
       (response)=>{
         this.productsToDisplay = response.map((item: producto) => {
-          const proveedordelItem = this.suppliersList.find(supplier => item.idProveedor == supplier.id)
-          if(proveedordelItem){
+          const proveedordelItem = this.suppliersList.find(supplier => supplier.id == item.idProveedor)
+          if(proveedordelItem && proveedordelItem.deleted == false){
             item.idProveedor = proveedordelItem.razonSocial            
           } else{
             item.idProveedor = "Proveedor dado de baja"
           }
-
           return item
         });
+        this.productsToDisplay = this.productsToDisplay.filter(item=> item.idProveedor != "Proveedor dado de baja")
         this.sortByProductName(this.productsToDisplay)
       }
     )

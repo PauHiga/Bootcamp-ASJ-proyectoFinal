@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { proveedor } from '../models/proveedores';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
 import { UpperCasePipe } from '@angular/common';
 
 @Injectable({
@@ -31,7 +31,13 @@ export class SupplierServiceService {
     return this.http.put(this.URL_API + "/" + id, supplierToEdit);
   }
 
-  deleteSupplier(id:string){
-    return this.http.delete(this.URL_API + "/" + id)
+  logicalDeleteSupplier(id: string) : Observable<proveedor> {
+    return this.http.get<proveedor>(this.URL_API + "/" + id).pipe(
+      map((supplier) => {
+        let modifiedSupplier = { ...supplier, deleted: true };
+        return modifiedSupplier;
+      }),
+      switchMap((modifiedSupplier) => this.http.put <proveedor> (this.URL_API + "/" + id, modifiedSupplier))
+    );
   }
 }

@@ -13,5 +13,6 @@ export interface proveedor {
     telefono: string,
     web: string,
     direccion: direccion,
-    contacto: contacto
+    contacto: contacto,
+    deleted: boolean
 }

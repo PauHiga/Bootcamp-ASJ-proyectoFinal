@@ -36,7 +36,7 @@
           </td>
           <td>{{proveedor.contacto.apellido}}, {{proveedor.contacto.nombre}}</td>
           <td (click)="editSupplier(proveedor.id)"><img src="/assets/icons/pencil-square.svg" alt="trash" width="25" height="25"></td>
-          <td (click)="deleteSupplier(proveedor.id)"><img src="/assets/icons/trash.svg" alt="trash" width="25" height="25"></td>
+          <td (click)="logicalDeleteSupplier(proveedor.id)"><img src="/assets/icons/trash.svg" alt="trash" width="25" height="25"></td>
           <td><button type="button" (click)="getASupplier(proveedor.id)" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Ver detalle
           </button></td>

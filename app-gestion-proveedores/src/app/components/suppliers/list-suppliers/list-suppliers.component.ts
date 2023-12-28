@@ -3,6 +3,7 @@ import {proveedoresEjemplo} from '../../../datos/proveedores'
 import { proveedor } from '../../../models/proveedores';
 import { SupplierServiceService } from '../../../services/supplier-service.service';
 import { Router } from '@angular/router';
+import { map } from 'rxjs';
 
 
 @Component({
@@ -21,21 +22,24 @@ export class ListSuppliersComponent implements OnInit{
   }
 
   createSuppliersList(){
-    this.supplierService.getSuppliers().subscribe( (response) => {
+    this.supplierService.getSuppliers().pipe(
+      map((supplier)=>{
+        return supplier.filter((item : proveedor)=> item.deleted == false)
+      })
+    ).subscribe( (response) => {
       this.proveedores = response;
     })
   } 
 
-  deleteSupplier(id:string){
+  logicalDeleteSupplier(id:string){
     const confirmar = confirm("¿Eliminar proveedor?")
     if (confirmar){
-      this.supplierService.deleteSupplier(id).subscribe(
-        (response) => {
-          this.createSuppliersList();
-          alert("Proveedor Eliminado")
-        }
-      )
+      this.supplierService.logicalDeleteSupplier(id).subscribe((response)=>{
+        console.log(response)
+        this.createSuppliersList()
+      })
     }
+
   }
   editSupplier(id:string){
     const selectedSupplier = this.proveedores.find(item => item.id == id)
@@ -84,7 +88,8 @@ export class ListSuppliersComponent implements OnInit{
       email: '',
       telefono: '',
       rol: ''
-    }
+    },
+    deleted: false,
   }
 
 }

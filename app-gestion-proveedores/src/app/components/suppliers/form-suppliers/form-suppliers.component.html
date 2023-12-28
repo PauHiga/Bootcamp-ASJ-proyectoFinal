@@ -257,6 +257,7 @@
           <input type="text" class="form-control form-control-sm" id="otrosContacto" name="contacto.rol" [(ngModel)]="supplier.contacto.rol">
         </div>
       </div>
+      <input type="hidden" class="form-control form-control-sm" id="deleted" name="deleted" [(ngModel)]="supplier.deleted">
     
       <div class="row mt-3">
         <div class="col-md-12">
@@ -267,4 +268,10 @@
     </form>
     
 
+</div>
+
+<div aria-live="polite" aria-atomic="true" class="position-relative">
+  <div class="toast-container position-absolute top-0 end-0 p-3">
+    <!-- Toasts will be dynamically inserted here -->
+  </div>
 </div>
