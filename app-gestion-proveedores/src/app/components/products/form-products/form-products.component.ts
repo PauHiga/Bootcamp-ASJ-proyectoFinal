@@ -24,7 +24,7 @@ export class FormProductsComponent implements OnInit{
 
   skuRepetido = false;
 
-  categorias : string[] = [ "Electrónicos", "Deportes", "Juguetes", "ArtOficina", "Ropa", "Hogar"]
+  categorias : string[] = [ "Art. Oficina", "Catering", "Electrónicos", "Papelería", "Reparaciones", "Servicios"]
 
   ngOnInit(): void {
     this.getProveedores();

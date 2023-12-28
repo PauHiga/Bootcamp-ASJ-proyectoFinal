@@ -8,7 +8,7 @@
     </nav>
     <h1>Ordenes</h1>
     <div class="container" *ngIf="ordersToDisplay.length>0">
-      <button routerLink="/ordenes/formulario-ordenes">Añadir Orden</button>
+      <button class="btn btn-primary my-2" routerLink="/ordenes/formulario-ordenes">Añadir Orden</button>
     
       <table class="table table-striped ">
         <thead>
@@ -19,10 +19,11 @@
             <th scope="col">Proveedor</th>
             <th scope="col">Productos</th>
             <th scope="col-1">Cancelar</th>
+            <th scope="col-1">Ver detalles</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let order of ordersToDisplay" [ngClass]="(order.estado=='CANCELADO')?'canceled':''" >
+          <tr *ngFor="let order of ordersToDisplay, let i = index" [ngClass]="(order.estado=='CANCELADO')?'canceled':''" >
             <td>{{order.numeroOrden}}</td>
             <td>{{order.fechaEmision}}</td>
             <td>{{order.fechaEntrega}}</td>
@@ -35,7 +36,10 @@
               </ul>
   
             </td>
-            <td><img (click)="markCanceled(order.id)" src="/assets/icons/x-square.svg" alt="mark as canceled" width="25" height="25" [ngClass]="(order.estado=='CANCELADO')?'d-none':''"><p [ngClass]="(order.estado=='CANCELADO')?'':'d-none'">CANCELADO</p></td>
+            <td (click)="markCanceled(ordersToDisplay[ngForIndex].id)"><img src="/assets/icons/x-square.svg" alt="mark as canceled" width="25" height="25" [ngClass]="(order.estado=='CANCELADO')?'d-none':''"><p [ngClass]="(order.estado=='CANCELADO')?'':'d-none'">CANCELADO</p></td>
+            <td><button type="button" (click)="setIndex(i)" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Ver detalle
+            </button></td>
           </tr>
         </tbody>
       </table>
@@ -61,3 +65,99 @@
       <button routerLink="/proveedores/formulario-proveedores">Agregar un proveedor</button>
     </div>
 
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title w-100 text-center" id="exampleModalLabel">Orden Nº {{ordersToDisplay[ngForIndex].numeroOrden}}</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div *ngIf="ordersToDisplay[ngForIndex].estado == 'CANCELADO'">
+              <h5>Estado: {{ordersToDisplay[ngForIndex].estado}}</h5>
+            </div>
+            <div class="row">
+              <!-- <div class="col-sm-6">
+                <div class="imgContainerModal">
+                  <img src="{{ordersToDisplay[ngForIndex].URLlogo}}" alt="{{ordersToDisplay[ngForIndex].URLlogo}}">
+                </div>
+              </div> -->
+              <h5>Datos generales</h5>
+              <div class="col-sm-3">
+              </div>
+              <div class="col-sm-6">
+                <table class="table">
+                  <tr>
+                    <td>
+                      Proveedor:
+                    </td>
+                    <td>
+                      {{ordersToDisplay[ngForIndex].proveedor}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Fecha de emisión:
+                    </td>
+                    <td>
+                      {{ordersToDisplay[ngForIndex].fechaEmision}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Fecha estimada de entrega:
+                    </td>
+                    <td>
+                      {{ordersToDisplay[ngForIndex].fechaEntrega}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Comentarios sobre entrega:
+                    </td>
+                    <td>
+                      {{ordersToDisplay[ngForIndex].informacionRecepcion}}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <h5>Productos</h5>
+              <div class="col-sm-2">
+              </div>
+              <div class="col-sm-8">
+                <table class="table">
+                  <thead>
+                    <th>
+                      Producto
+                    </th>
+                    <th>
+                      Cantidad
+                    </th>
+                  </thead>
+                  <tr *ngFor="let producto of ordersToDisplay[ngForIndex].productos">
+                    <td>
+                      {{producto.nombreProducto}}
+                    </td>
+                    <td>
+                      {{producto.cantidad}}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button *ngIf="ordersToDisplay[ngForIndex].estado != 'CANCELADO'" type="button" (click)="markCanceled(ordersToDisplay[ngForIndex].id)" class="btn btn-primary" data-bs-dismiss="modal">Cancelar orden</button>
+        </div>
+      </div>
+    </div>
+  </div>

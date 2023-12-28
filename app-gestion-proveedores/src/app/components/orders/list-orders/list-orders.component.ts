@@ -15,10 +15,25 @@ export class ListOrdersComponent implements OnInit{
   constructor(public ordersService: OrdersServiceService, private route:ActivatedRoute, private router:Router){}
 
   orders : orden[]= [];
-  ordersToDisplay : orden[]= [];
+  ordersToDisplay : orden[]= [{
+    id: "",
+    numeroOrden: 0,
+    fechaEmision: '',
+    fechaEntrega: '',
+    informacionRecepcion: '',
+    proveedor: '',
+    productos: [
+      { id: '', nombreProducto: '', cantidad: 0 },
+      { id: '', nombreProducto: '', cantidad: 0 }
+    ],
+    total: 0,
+    estado: 'NO CANCELADO'
+  }];
   productsAvailable = 0;
   suppliersAvailable = 0;
   
+  ngForIndex = 0
+
   ngOnInit(): void {
     this.getData();
     this.getAvailableProducts();
@@ -66,4 +81,7 @@ export class ListOrdersComponent implements OnInit{
     }
   }
 
+  setIndex(index : number){
+    this.ngForIndex = index;
+  }
 }

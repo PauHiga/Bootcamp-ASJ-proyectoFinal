@@ -230,23 +230,6 @@
       ],
       "total": "40000.00",
       "estado": "NO CANCELADO"
-    },
-    {
-      "id": 2,
-      "numeroOrden": 2,
-      "fechaEmision": "2023-12-28",
-      "fechaEntrega": "2023-12-29",
-      "informacionRecepcion": "Recibir de 12 a 18",
-      "proveedor": "1",
-      "productos": [
-        {
-          "id": 1,
-          "nombreProducto": "Resma Pampa A4",
-          "cantidad": 2
-        }
-      ],
-      "total": "2000.00",
-      "estado": "CANCELADO"
     }
   ]
 }

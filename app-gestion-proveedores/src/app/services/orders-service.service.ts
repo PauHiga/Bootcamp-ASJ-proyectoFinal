@@ -13,23 +13,6 @@ export class OrdersServiceService {
   constructor(private http:HttpClient, private productService : ProductsServiceService, private suppliersService : SupplierServiceService) { }
 
   private URL_API = 'http://localhost:3000/orders'
-  // private URL_API_SUPPLIERS = 'http://localhost:3000/suppliers'
-
-  orden: orden = 
-    {
-      id: "",
-      numeroOrden: 0,
-      fechaEmision: '',
-      fechaEntrega: '',
-      informacionRecepcion: '',
-      proveedor: '',
-      productos: [
-        { id: '', nombreProducto: '', cantidad: 0 },
-        { id: '', nombreProducto: '', cantidad: 0 }
-      ],
-      total: 0,
-      estado: 'NO CANCELADO'
-    }
 
   getOrders() : Observable<any>{
     return this.http.get(this.URL_API);
@@ -48,8 +31,8 @@ export class OrdersServiceService {
   }
 
   markAsCanceled(supplierForEdit : any){
-    this.orden = {...supplierForEdit, estado: "CANCELADO"}
-    return this.http.put(this.URL_API + "/" + this.orden.id, this.orden);
+    const canceledOrder = {...supplierForEdit, estado: "CANCELADO"}
+    return this.http.put(this.URL_API + "/" + canceledOrder.id, canceledOrder);
   }
 }
 

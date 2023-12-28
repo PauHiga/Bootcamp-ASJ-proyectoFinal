@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {proveedoresEjemplo} from '../../../datos/proveedores'
 import { proveedor } from '../../../models/proveedores';
 import { SupplierServiceService } from '../../../services/supplier-service.service';
 import { Router } from '@angular/router';
