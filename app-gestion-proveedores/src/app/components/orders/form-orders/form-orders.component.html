@@ -1,9 +1,9 @@
-<div class="container pt-2">
+<section class="container pt-2">
 
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a (click)="cancelarHome()">Home</a></li>
-        <li class="breadcrumb-item"><a (click)="cancelar()">Ordenes</a></li>
+        <li class="breadcrumb-item"><a (click)="cancelar('')">Home</a></li>
+        <li class="breadcrumb-item"><a (click)="cancelar('ordenes')">Ordenes</a></li>
         <li class="breadcrumb-item active" aria-current="page">Nueva Orden</li>
       </ol>
     </nav>
@@ -25,15 +25,15 @@
       <div class="col-sm-2">
         <div class="form-group">
           <label for="fechaEmision">Fecha de Emisión</label>
-          <input type="date" min="{{ getCurrentDate() | date:'yyyy-MM-dd' }}" class="form-control" id="fechaEmision" name="fechaEmision" [(ngModel)]="orden.fechaEmision" #FechaEmision="ngModel" required>
+          <input type="date" (change)="validateDateFechaEmision()" min="{{ getCurrentDate() | date:'yyyy-MM-dd' }}" class="form-control" id="fechaEmision" name="fechaEmision" [(ngModel)]="orden.fechaEmision" #FechaEmision="ngModel" required>
           <div *ngIf="FechaEmision.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
                 Este campo es requerido
             </span>
           </div>
-          <div class="col-auto">
+          <div *ngIf="!fechaEmisionValida" class="col-auto">
             <span class="form-text text-danger">
-                {{mensajeFechaEmisionErronea}}
+                La fecha de emisión no puede ser previa a la fecha actual
             </span>
           </div>
         </div>
@@ -41,15 +41,15 @@
       <div class="col-sm-2">
         <div class="form-group">
           <label for="fechaEntrega">Fecha de Entrega</label>
-          <input type="date" min="{{ getCurrentDate() | date:'yyyy-MM-dd' }}" class="form-control" id="fechaEntrega" name="fechaEntrega" [(ngModel)]="orden.fechaEntrega" #FechaEntrega="ngModel" required>
+          <input type="date" (change)="validateDateFechaEntrega()" min="{{ getCurrentDate() | date:'yyyy-MM-dd' }}" class="form-control" id="fechaEntrega" name="fechaEntrega" [(ngModel)]="orden.fechaEntrega" #FechaEntrega="ngModel" required>
           <div *ngIf="FechaEntrega.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
                 Este campo es requerido
             </span>
           </div>
-          <div class="col-auto">
+          <div *ngIf="!fechaEntregaValida" class="col-auto">
             <span class="form-text text-danger">
-                {{mensajeFechaEntregaErronea}}
+                La fecha de entrega no puede ser previa a la fecha de emisión
             </span>
           </div>
         </div>
@@ -82,15 +82,15 @@
         <div class="form-group mt-2">
           <label for="total">Total</label>
           <input type="number" class="form-control" id="total" name="total" [(ngModel)]="orden.total" disabled>
-          <div class="col-auto">
+          <div *ngIf="!totalMayorACeroValido" class="col-auto">
             <span class="form-text text-danger">
-                {{mensajeTotalMayorACero}}
+                El total no puede ser cero. Por favor, agregue al menos un producto
             </span>
           </div>
         </div>
           
         <button type="submit" class="btn btn-primary my-4">Crear Nueva Orden</button>
-        <div (click)="cancelar()" class="btn btn-secondary my-4 mx-2">Cancelar</div>
+        <div (click)="cancelar('ordenes')" class="btn btn-secondary my-4 mx-2">Cancelar</div>
       </div>
       <div class="col-md-8">
         <div class="form-group d-flex justify-content-center my-3 " *ngIf="productsToDisplay.length > 0">
@@ -117,4 +117,4 @@
 
     </form>
   </div>     
-</div>
+</section>

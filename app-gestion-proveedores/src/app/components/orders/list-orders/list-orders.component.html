@@ -1,76 +1,70 @@
-<div class="container pt-2">
+<section class="container pt-2">
 
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Ordenes</li>
-      </ol>
-    </nav>
-    <h1>Ordenes</h1>
-    <div class="container" *ngIf="ordersToDisplay.length>0">
-      <button class="btn btn-primary my-2" routerLink="/ordenes/formulario-ordenes">Añadir Orden</button>
-    
-      <table class="table table-striped ">
-        <thead>
-          <tr>
-            <th scope="col">Nº Orden</th>
-            <th scope="col">Fecha emisión</th>
-            <th scope="col">Entrega Estimada</th>
-            <th scope="col">Proveedor</th>
-            <th scope="col">Productos</th>
-            <th class="text-center" scope="col-1">Cancelar</th>
-            <th scope="col-1">Ver detalles</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let order of ordersToDisplay, let i = index" [ngClass]="(order.estado=='CANCELADO')?'canceled':''" >
-            <td>{{order.numeroOrden}}</td>
-            <td>{{order.fechaEmision}}</td>
-            <td>{{order.fechaEntrega}}</td>
-            <td>{{order.proveedor}}</td>
-            <td>
-              <ul>
-                <li *ngFor="let pedido of order.productos">
-                  {{pedido.nombreProducto}} - {{pedido.cantidad}}
-                </li>
-              </ul>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Ordenes</li>
+    </ol>
+  </nav>
+  <h1>Ordenes</h1>
+  <div class="container" *ngIf="ordersAvailable>0">
+    <button *ngIf="productsAvailable>0 && suppliersAvailable>0" class="btn btn-primary my-2" routerLink="/ordenes/formulario-ordenes">Añadir Orden</button>
   
-            </td>
-            <td class="text-center" (click)="markCanceled(ordersToDisplay[ngForIndex].id)"><img src="/assets/icons/x-square.svg" alt="mark as canceled" width="25" height="25" [ngClass]="(order.estado=='CANCELADO')?'d-none':''"><p [ngClass]="(order.estado=='CANCELADO')?'':'d-none'">CANCELADO</p></td>
-            <td><button type="button" (click)="setIndex(i)" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Ver detalle
-            </button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table class="table table-striped ">
+      <thead>
+        <tr>
+          <th scope="col">Nº Orden</th>
+          <th scope="col">Fecha emisión</th>
+          <th scope="col">Entrega Estimada</th>
+          <th scope="col">Proveedor</th>
+          <th scope="col">Total</th>
+          <th class="text-center" scope="col-1">Cancelar</th>
+          <th class="text-center" scope="col-1">Ver detalles</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of ordersToDisplay, let i = index" [ngClass]="(order.estado=='CANCELADO')?'canceled':''" >
+          <td>{{order.numeroOrden}}</td>
+          <td>{{order.fechaEmision}}</td>
+          <td>{{order.fechaEntrega}}</td>
+          <td>{{order.proveedor}}</td>
+          <td>{{order.total | currency}}</td>
+          <td class="text-center" (click)="markCanceled(order.id, order.numeroOrden)"><img src="/assets/icons/x-square.svg" alt="mark as canceled" width="25" height="25" [ngClass]="(order.estado=='CANCELADO')?'d-none':''"><p [ngClass]="(order.estado=='CANCELADO')?'':'d-none'">CANCELADO</p></td>
+          <td class="text-center" (click)="setIndex(i)" data-bs-toggle="modal" data-bs-target="#detalleOrdenModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del proveedor" width="25" height="25"></td>
 
+
+        </tr>
+      </tbody>
+    </table>
   </div>
 
-  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="ordersToDisplay.length<=0 && productsAvailable>0 && suppliersAvailable>0">
+
+  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="ordersAvailable==0 && productsAvailable>0 && suppliersAvailable>0">
     <p>No hay órdenes registradas</p>
     <p>Cree una orden nueva</p>
-    <button routerLink="/ordenes/formulario-ordenes">Crear Orden</button>
+    <button class="btn btn-primary" routerLink="/ordenes/formulario-ordenes">Crear Orden</button>
   </div>
 
-  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="productsAvailable<=0 && suppliersAvailable>0">
+  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="productsAvailable==0 && suppliersAvailable>0">
     <p>No hay productos registrados en el sistema</p>
     <p>Añada al menos un producto para poder crear una orden</p>
-    <button routerLink="/productos/formulario-productos">Añadir Producto</button>
+    <button class="btn btn-primary" routerLink="/productos/formulario-productos">Añadir Producto</button>
   </div>
 
-    <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="suppliersAvailable<=0">
-      <p>No hay proveedores registrados en el sistema</p>
-      <p>Comience <b>añadiendo un proveedor</b> para poder luego registrar productos y crear órdenes</p>
-      <button routerLink="/proveedores/formulario-proveedores">Agregar un proveedor</button>
-    </div>
+  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="suppliersAvailable==0">
+    <p>No hay proveedores registrados en el sistema</p>
+    <p>Comience <b>añadiendo un proveedor</b> para poder luego registrar productos y crear órdenes</p>
+    <button class="btn btn-primary" routerLink="/proveedores/formulario-proveedores">Agregar un proveedor</button>
+  </div>
+
+</section>
 
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="detalleOrdenModal" tabindex="-1" role="dialog" aria-labelledby="detalleOrdenModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title w-100 text-center" id="exampleModalLabel">Orden Nº {{ordersToDisplay[ngForIndex].numeroOrden}}</h5>
+          <h5 class="modal-title w-100 text-center" id="detalleOrdenModalLabel">Orden Nº {{ordersToDisplay[ngForIndex].numeroOrden}}</h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -129,9 +123,9 @@
             <hr>
             <div class="row">
               <h5>Productos</h5>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
               </div>
-              <div class="col-sm-8">
+              <div class="col-sm-7">
                 <table class="table">
                   <thead>
                     <th>
@@ -152,11 +146,18 @@
                 </table>
               </div>
             </div>
+            <div class="row">
+              <div class="col-sm-8">                
+              </div>
+              <div class="col-sm-4">
+                <h5>Total: {{ordersToDisplay[ngForIndex].total | currency}}</h5>
+              </div>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button *ngIf="ordersToDisplay[ngForIndex].estado != 'CANCELADO'" type="button" (click)="markCanceled(ordersToDisplay[ngForIndex].id)" class="btn btn-primary" data-bs-dismiss="modal">Cancelar orden</button>
+          <button *ngIf="ordersToDisplay[ngForIndex].estado != 'CANCELADO'" type="button" (click)="markCanceled(ordersToDisplay[ngForIndex].id, ordersToDisplay[ngForIndex].numeroOrden)" class="btn btn-primary" data-bs-dismiss="modal">Cancelar orden</button>
         </div>
       </div>
     </div>

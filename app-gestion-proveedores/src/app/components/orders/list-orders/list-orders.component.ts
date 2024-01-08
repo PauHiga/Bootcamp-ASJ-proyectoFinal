@@ -4,6 +4,7 @@ import { OrdersServiceService } from '../../../services/orders-service.service';
 import { orden } from '../../../models/orden';
 import { forkJoin } from 'rxjs';
 import { proveedor } from '../../../models/proveedores';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-orders',
@@ -24,11 +25,12 @@ export class ListOrdersComponent implements OnInit{
     proveedor: '',
     productos: [
       { id: '', nombreProducto: '', cantidad: 0 },
-      { id: '', nombreProducto: '', cantidad: 0 }
     ],
     total: 0,
     estado: 'NO CANCELADO'
   }];
+
+  ordersAvailable = 0;
   productsAvailable = 0;
   suppliersAvailable = 0;
   
@@ -46,14 +48,17 @@ export class ListOrdersComponent implements OnInit{
       this.ordersService.getSuppliers()
     ]).subscribe(([orders, suppliers]) => {
       this.orders = orders;
-      this.ordersToDisplay = orders.map((item:orden) => {
-        const proveedor = suppliers.find((supplier : proveedor) => supplier.id == item.proveedor)
-        let itemConProveedor = {...item, proveedor: "Proveedor dado de baja"}
-        if(proveedor){
-          itemConProveedor = {...item, proveedor: proveedor.razonSocial}
-        } 
-        return itemConProveedor 
-      })
+      if(orders.length >0){
+        this.ordersAvailable = orders.length;
+        this.ordersToDisplay = orders.map((item:orden) => {
+          const proveedor = suppliers.find((supplier : proveedor) => supplier.id == item.proveedor)
+          let itemConProveedor = {...item, proveedor: "Proveedor dado de baja"}
+          if(proveedor){
+            itemConProveedor = {...item, proveedor: proveedor.razonSocial}
+          } 
+          return itemConProveedor 
+        })
+      }
     });
   }
 
@@ -66,19 +71,28 @@ export class ListOrdersComponent implements OnInit{
   getAvailableSuppliers(){
     this.ordersService.getSuppliersAmount().subscribe((response)=>{
       this.suppliersAvailable = response;
+      console.log(response)
     })
   }
 
-  markCanceled(id:string){
-    const confirmacion = confirm("Está por cancelar esta orden. ¿Desea continuar?")
-    if(confirmacion){
-      const orderToCancel = this.orders.find(item=> item.id == id)
-      this.ordersService.markAsCanceled(orderToCancel).subscribe((response)=>{
-        console.log(response)
-      });
-      this.getData();
-      alert("Orden Cancelada")
-    }
+  markCanceled(id:string, numeroOrden:number){
+    Swal.fire({
+      text: `Está por cancelar la orden Nº ${numeroOrden}. ¿Desea continuar?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Cancelar orden",
+      cancelButtonText: "No cancelar la orden"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const orderToCancel = this.orders.find(item=> item.id == id)
+        this.ordersService.markAsCanceled(orderToCancel).subscribe((response)=>{
+          console.log(response)
+        });
+        this.getData();
+      }
+    });
   }
 
   setIndex(index : number){

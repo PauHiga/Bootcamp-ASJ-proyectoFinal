@@ -1,4 +1,4 @@
-<div class="container pt-2">
+<section class="container pt-2">
 
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -16,8 +16,8 @@
           <th scope="col"></th>
           <th scope="col">Codigo</th>
           <th scope="col">Razon Social</th>
-          <th scope="col">Web</th>
-          <th scope="col">Contacto</th>
+          <th scope="col">Medios de contacto</th>
+          <th scope="col">Representante</th>
           <th colspan="3" scope="col" class="text-center">Opciones</th>
         </tr>
       </thead>
@@ -34,11 +34,9 @@
             </ul>  
           </td>
           <td>{{proveedor.contacto.apellido}}, {{proveedor.contacto.nombre}}</td>
-          <td (click)="editSupplier(proveedor.id)"><img src="/assets/icons/pencil-square.svg" alt="trash" width="25" height="25"></td>
-          <td (click)="logicalDeleteSupplier(proveedor.id)"><img src="/assets/icons/trash.svg" alt="trash" width="25" height="25"></td>
-          <td><button type="button" (click)="getASupplier(proveedor.id)" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Ver detalle
-          </button></td>
+          <td (click)="editSupplier(proveedor.id)"><img src="/assets/icons/pencil-square.svg" alt="editar proveedor" width="25" height="25"></td>
+          <td (click)="logicalDeleteSupplier(proveedor.id)"><img src="/assets/icons/trash.svg" alt="borrar proveedor" width="25" height="25"></td>
+          <td (click)="getASupplier(proveedor.id)" data-bs-toggle="modal" data-bs-target="#detalleProductoModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del proveedor" width="25" height="25"></td>
         </tr>
       </tbody>
     </table>
@@ -47,33 +45,33 @@
   <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="proveedores.length<=0">
     <p>No hay proveedores registrados</p>
     <p>Comience <b>añadiendo un proveedor</b></p>
-    <button routerLink="/proveedores/formulario-proveedores">Añadir Proveedor</button>
+    <button class="btn btn-primary" routerLink="/proveedores/formulario-proveedores">Añadir Proveedor</button>
   </div>
-</div>
+</section>
 
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="detalleProductoModal" tabindex="-1" role="dialog" aria-labelledby="detalleProductoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title w-100 text-center" id="exampleModalLabel">{{modalSupplier.razonSocial}}</h5>
+          <h5 class="modal-title w-100 text-center" id="detalleProductoModalLabel">{{modalSupplier.razonSocial}}</h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="container">
-            <div class="row">
-              <div class="col-sm-6">
+            <div class="d-flex justify-content-center ">
+              <div *ngIf="modalSupplier.URLlogo != ''" class="w-50">
                 <div class="imgContainerModal">
                   <img src="{{modalSupplier.URLlogo}}" alt="{{modalSupplier.URLlogo}}">
                 </div>
               </div>
-              <div class="col-sm-6">
+              <div class="w-75">
                 <h5>Datos generales</h5>
                 <table class="table">
                   <tr>
-                    <td>
+                    <td class="col-sm-5">
                       ID del proveedor:
                     </td>
                     <td>
@@ -165,7 +163,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    <td class="col-sm-5">
                       Localidad:
                     </td>
                     <td>
@@ -177,7 +175,7 @@
                 <h6>Contacto</h6>
                 <table class="table">
                   <tr>
-                    <td>
+                    <td class="col-sm-5">
                       Contacto:
                     </td>
                     <td>

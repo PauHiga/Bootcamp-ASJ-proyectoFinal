@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsServiceService } from '../../../services/products-service.service';
 import { producto } from '../../../models/producto';
 import { proveedor } from '../../../models/proveedores';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -46,16 +47,24 @@ export class ListProductsComponent implements OnInit{
     })
   }
 
-  deleteProduct(id:string){
-    const confirmar = confirm("¿Eliminar producto?")
-    if (confirmar){
-      this.productsService.deleteProduct(id).subscribe(
-        (response) => {
-          this.createProductsList();
-          alert("Producto Eliminado")
-        }
-      )
-    }
+  deleteProduct(id:string, nombreProducto : string){
+    Swal.fire({
+      text: `¿Eliminar producto ${nombreProducto}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Eliminar producto",
+      cancelButtonText: "No eliminar el producto"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productsService.deleteProduct(id).subscribe(
+          (response) => {
+            this.createProductsList();
+          }
+        )
+      }
+    });
   }
 
   editProduct(id:string){

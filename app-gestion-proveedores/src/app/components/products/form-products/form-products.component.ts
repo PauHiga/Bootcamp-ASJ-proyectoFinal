@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsServiceService } from '../../../services/products-service.service';
 import { proveedor } from '../../../models/proveedores';
 import { producto } from '../../../models/producto';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-products',
@@ -14,24 +15,26 @@ export class FormProductsComponent implements OnInit{
 
   constructor(public productsService: ProductsServiceService, private route:ActivatedRoute, private router:Router){}
 
-  parametroURL = this.route.snapshot.params['edit'] || false;
-  tituloFormulario = "Agregar Producto"
+  parametroURL : string = ''
+  tituloFormulario : string = "Agregar Producto"
 
   product = {};
 
   suppliersList : proveedor[] = [];
   productos : producto[] = [];
 
+  disabledInEdit : boolean = false;
+
   skuRepetido = false;
 
   categorias : string[] = [ "Art. Oficina", "Catering", "Electrónicos", "Papelería", "Reparaciones", "Servicios"]
 
   ngOnInit(): void {
+    this.parametroURL = this.route.snapshot.params['edit'];
     this.getProveedores();
     this.getProductos();
-    if(this.parametroURL) {
-      this.tituloFormulario = "Editar Producto";
-      this.getAProduct(this.parametroURL)
+    if(this.parametroURL != '') {
+      this.setEditForm();
     }
     else{
       this.productsService.clearProductData()
@@ -49,6 +52,13 @@ export class FormProductsComponent implements OnInit{
     this.productsService.getProducts().subscribe((response)=>{
       this.productos = response;
     })
+  }
+
+  setEditForm(){
+    this.tituloFormulario = "Editar Producto";
+    this.getAProduct(this.parametroURL);
+    this.disabledInEdit = true;
+
   }
 
   getAProduct(id : string){
@@ -69,11 +79,12 @@ export class FormProductsComponent implements OnInit{
       }
       this.productsService.clearProductData()
       this.router.navigate(["productos"])
-      alert("Los datos del producto fueron cargados exitosamente")
-
+      Swal.fire("Los datos del producto fueron cargados exitosamente");
     } else {
-      alert("Hay campos incompletos o erróneos. Por favor, revise el formulario")
-    }
+      Swal.fire({
+        text: "Hay campos incompletos o erróneos. Por favor, revise el formulario",
+        icon: "warning"
+      });    }
   }
 
   skuIsUnique(event : Event){
@@ -82,16 +93,19 @@ export class FormProductsComponent implements OnInit{
     this.skuRepetido = productosSKUs.includes(currentSku);
   }
 
-  cancelar(){
-    const confirmar = confirm("¿Seguro desea salir? Los datos se perderán")
-    if(confirmar){
-      this.router.navigate(["productos"])
-    }
-  }
-  cancelarHome(){
-    const confirmar = confirm("¿Seguro desea salir? Los datos se perderán")
-    if(confirmar){
-      this.router.navigate([""])
-    }
+  cancelar(objetivo: string){
+    Swal.fire({
+      text: "¿Seguro desea salir? Los datos se perderán",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Salir",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate([objetivo])
+      }
+    });
   }
 }

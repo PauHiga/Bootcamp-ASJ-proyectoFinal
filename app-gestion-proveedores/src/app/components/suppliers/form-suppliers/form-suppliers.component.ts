@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { proveedor } from '../../../models/proveedores';
 import { CountryStateCityService } from '../../../services/country-state-city.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-form-suppliers',
@@ -46,11 +47,19 @@ export class FormSuppliersComponent implements OnInit{
     deleted: false,
   }
 
+  condicionesAfip : string[] = [
+    "IVA Responsable Inscripto",
+    "IVA no Responsable",
+    "IVA exento",
+    "Responsable Monotributo",
+    "Monotributista Social"
+  ]
+
   suppliersList : proveedor[] = [];
   
   countries : any[] = []
   states : any[] = []
-  cities : any[] = []
+  // cities : any[] = []
 
   codigoProveedorRepetido : boolean = false;
 
@@ -86,18 +95,15 @@ export class FormSuppliersComponent implements OnInit{
     this.supplierService.getASupplier(id).subscribe(
       (response) =>{
         this.supplier = response
-        this.filterCity()
+        // this.filterCity()
         this.filterState()
       }
     )
   }
 
   getCountries(){
-    this.countryService.getCountriesStates().subscribe((response)=>{
-      this.countries = response.data.map((item : any)=>{
-        const country = {name: item.name, states: item.states}
-          return country;
-      })
+    this.countryService.getCountries().subscribe((response)=>{
+      this.countries = response
     })
   }
 
@@ -106,15 +112,15 @@ export class FormSuppliersComponent implements OnInit{
     this.states = selectedCountry.states;
   }
 
-  filterCity(){
-    const cityState = {
-      country: this.supplier.direccion.pais,
-      state: this.supplier.direccion.provincia
-    }
-    this.countryService.getCities(cityState).subscribe((response) => {
-      this.cities = response.data
-    })
-  }
+  // filterCity(){
+  //   const cityState = {
+  //     country: this.supplier.direccion.pais,
+  //     state: this.supplier.direccion.provincia
+  //   }
+  //   this.countryService.getCities(cityState).subscribe((response) => {
+  //     this.cities = response.data
+  //   })
+  // }
 
   onClickForm(formularioProveedores:NgForm){
     this.validarFormulario();
@@ -126,10 +132,13 @@ export class FormSuppliersComponent implements OnInit{
         this.supplierService.saveSupplier(this.supplier).subscribe((response)=> console.log(response))
       }
       this.clearSupplierData()
-      alert("Los datos del proveedor fueron cargados exitosamente")
+      Swal.fire("Los datos del proveedor fueron cargados exitosamente");
       this.router.navigate(["proveedores"])
     } else{
-      alert("Por favor, compruebe que no haya campos erróneos en el formulario")
+      Swal.fire({
+        text: "Hay campos incompletos o erróneos. Por favor, revise el formulario",
+        icon: "warning"
+      });
     }
   }
 
@@ -139,7 +148,7 @@ export class FormSuppliersComponent implements OnInit{
     const emailContactoValido = this.validarEmailContacto(this.supplier.contacto.email)
     const validarCUIT = this.validarCUIT(this.supplier.CUIT);
     const validarTelefono =  this.validarTelefono(this.supplier.telefono)
-    const validarTelefonoContacto =  this.validarTelefonoContacto(this.supplier.telefono)
+    const validarTelefonoContacto =  this.validarTelefonoContacto(this.supplier.contacto.telefono)
     return(codigoValido && emailValido && emailContactoValido && validarCUIT && validarTelefono && validarTelefonoContacto)
   }
 
@@ -180,10 +189,19 @@ export class FormSuppliersComponent implements OnInit{
   }
 
   cancelar(objetivo: string){
-    const confirmar = confirm("¿Seguro desea salir? Los cambios se perderán")
-    if(confirmar){
-      this.router.navigate([objetivo])
-    }
+    Swal.fire({
+      text: "¿Seguro desea salir? Los datos se perderán",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Salir",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate([objetivo])
+      }
+    });
   }
 
   onCUITChange(newValue: string): void {

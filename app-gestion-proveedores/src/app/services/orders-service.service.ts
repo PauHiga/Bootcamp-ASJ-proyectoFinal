@@ -5,6 +5,7 @@ import { Observable, map } from 'rxjs';
 import { ProductsServiceService } from './products-service.service';
 import { proveedor } from '../models/proveedores';
 import { SupplierServiceService } from './supplier-service.service';
+import { producto } from '../models/producto';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,8 @@ export class OrdersServiceService {
   }
 
   getSuppliersAmount(): Observable<number>{
-    return this.suppliersService.getSuppliers().pipe(map(suppliers => suppliers.length))
+    return this.suppliersService.getSuppliers().pipe(map(suppliers => suppliers.filter((supplier : proveedor)=> supplier.deleted == false).length
+    ))
   }
 
   markAsCanceled(supplierForEdit : any){

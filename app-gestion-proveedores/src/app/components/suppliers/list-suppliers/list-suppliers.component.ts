@@ -3,6 +3,7 @@ import { proveedor } from '../../../models/proveedores';
 import { SupplierServiceService } from '../../../services/supplier-service.service';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -31,15 +32,24 @@ export class ListSuppliersComponent implements OnInit{
   } 
 
   logicalDeleteSupplier(id:string){
-    const confirmar = confirm("¿Eliminar proveedor?")
-    if (confirmar){
-      this.supplierService.logicalDeleteSupplier(id).subscribe((response)=>{
-        console.log(response)
-        this.createSuppliersList()
-      })
-    }
-
+    Swal.fire({
+      text: "¿Eliminar proveedor?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Eliminar el proveedor",
+      cancelButtonText: "No eliminar el proveedor"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.supplierService.logicalDeleteSupplier(id).subscribe((response)=>{
+          console.log(response)
+          this.createSuppliersList()
+        })
+      }
+    });
   }
+
   editSupplier(id:string){
     const selectedSupplier = this.proveedores.find(item => item.id == id)
     if(!selectedSupplier){

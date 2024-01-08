@@ -1,4 +1,4 @@
-<div class="container pt-2">
+<section class="container pt-2">
 
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -61,7 +61,7 @@
       <div class="row mt-3">
         <div class="col-md-6">
           <label for="CUIT" class="form-label">CUIT:</label>
-          <input type="text" maxlength="13" class="form-control form-control-sm" id="CUIT" name="CUIT" [(ngModel)]="supplier.CUIT" (ngModelChange)="onCUITChange($event)"
+          <input type="text" (keyup)="validarCUIT(supplier.CUIT)" maxlength="13" class="form-control form-control-sm" id="CUIT" name="CUIT" [(ngModel)]="supplier.CUIT" (ngModelChange)="onCUITChange($event)"
           #cuit="ngModel" required [disabled]="disabledInEdit">
           <div *ngIf="cuit.errors?.['required']" class="col-auto">
             <span class="form-text text-primary">
@@ -77,11 +77,7 @@
         <div class="col-md-6">
           <label for="condicionIva" class="form-label">Condicion IVA:</label>
           <select class="form-select form-select-sm" aria-label="Default select example" id="condicionIva" name="condicionIva" [(ngModel)]="supplier.condicionIva" #condicionIva="ngModel" required>
-            <option value="IVA Responsable Inscripto">IVA Responsable Inscripto</option>
-            <option value="IVA no Responsable">IVA no Responsable</option>
-            <option value="IVA exento">IVA exento</option>
-            <option value="Responsable Monotributo">Responsable Monotributo</option>
-            <option value="Monotributista Social">Monotributista Social</option>
+            <option *ngFor="let condicion of condicionesAfip" value="{{condicion}}">{{condicion}}</option>
           </select>
           <div *ngIf="condicionIva.errors?.['required']" class="col-auto">
             <span class="form-text text-primary">
@@ -94,7 +90,7 @@
       <div class="row mt-3">
         <div class="col-md-4">
           <label for="email" class="form-label">Email:</label>
-          <input type="email" class="form-control form-control-sm" id="email" name="email" [(ngModel)]="supplier.email" #email="ngModel" placeholder="ejemplo&#64;ejemplo.com" required>
+          <input type="email" (keyup)="validarEmail(supplier.email)" class="form-control form-control-sm" id="email" name="email" [(ngModel)]="supplier.email" #email="ngModel" placeholder="ejemplo&#64;ejemplo.com" required>
           <div *ngIf="email.errors?.['required']" class="col-auto">
             <span class="form-text text-primary">
                 Este campo es requerido
@@ -108,7 +104,7 @@
         </div>
         <div class="col-md-4">
           <label for="telefono" class="form-label">Telefono:</label>
-          <input type="tel" class="form-control form-control-sm" id="telefono" name="telefono" [(ngModel)]="supplier.telefono" #telefono="ngModel" required>
+          <input type="tel" (keyup)="validarTelefono(supplier.telefono)" class="form-control form-control-sm" id="telefono" name="telefono" [(ngModel)]="supplier.telefono" #telefono="ngModel" required>
           <div *ngIf="telefono.errors?.['required']" class="col-auto">
             <span class="form-text text-primary">
                 Este campo es requerido
@@ -116,7 +112,7 @@
           </div> 
           <div *ngIf="!validTelefono && !telefono.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
-                El formato de teléfono solo acepta números, paréntesis, guiones o espacios
+              El formato de teléfono solo acepta 5 o más caracteres núméricos, paréntesis, guiones o espacios
             </span>
           </div>  
         </div>
@@ -180,7 +176,7 @@
             </div>
             <div class="col-md-4">
               <label for="provincia" class="form-label">Provincia:</label>
-              <select (change)="filterCity()" class="form-select form-select-sm" aria-label="Default select example" id="provincia" name="direccion.provincia" [(ngModel)]="supplier.direccion.provincia" #provincia="ngModel" required>
+              <select class="form-select form-select-sm" aria-label="Default select example" id="provincia" name="direccion.provincia" [(ngModel)]="supplier.direccion.provincia" #provincia="ngModel" required>
                 <option *ngFor="let state of states" value={{state.name}}>{{state.name}}</option>
               </select>
               <div *ngIf="provincia.errors?.['required']" class="col-auto">
@@ -191,9 +187,7 @@
             </div>
             <div class="col-md-4">
               <label for="localidad" class="form-label">Localidad:</label>
-              <select class="form-select form-select-sm" aria-label="Default select example" id="localidad" name="direccion.localidad" [(ngModel)]="supplier.direccion.localidad" #localidad="ngModel" required>
-                <option *ngFor="let city of cities" value={{city}}>{{city}}</option>
-              </select>
+              <input type="text" class="form-control form-control-sm" aria-label="Default select example" id="localidad" name="direccion.localidad" [(ngModel)]="supplier.direccion.localidad" #localidad="ngModel" required>
               <div *ngIf="localidad.errors?.['required']" class="col-auto">
                 <span class="form-text text-primary">
                     Este campo es requerido
@@ -226,7 +220,7 @@
         </div>
         <div class="col-md-2">
           <label for="emailContacto" class="form-label">Email:</label>
-          <input type="email" class="form-control form-control-sm" id="emailContacto" name="contacto.email" [(ngModel)]="supplier.contacto.email" #emailContacto="ngModel" placeholder="ejemplo&#64;ejemplo.com" required>
+          <input type="email" (keyup)="validarEmailContacto(supplier.contacto.email)" class="form-control form-control-sm" id="emailContacto" name="contacto.email" [(ngModel)]="supplier.contacto.email" #emailContacto="ngModel" placeholder="ejemplo&#64;ejemplo.com" required>
           <div *ngIf="emailContacto.errors?.['required']" class="col-auto">
             <span class="form-text text-primary">
                 Este campo es requerido
@@ -240,15 +234,15 @@
         </div>
         <div class="col-md-2">
           <label for="telefonoContacto" class="form-label">Telefono:</label>
-          <input type="tel" class="form-control form-control-sm" id="telefonoContacto" name="contacto.telefono" [(ngModel)]="supplier.contacto.telefono" #telefonoContacto="ngModel" required>
+          <input type="tel" (keyup)="validarTelefonoContacto(supplier.contacto.telefono)" class="form-control form-control-sm" id="telefonoContacto" name="contacto.telefono" [(ngModel)]="supplier.contacto.telefono" #telefonoContacto="ngModel" required>
           <div *ngIf="telefonoContacto.errors?.['required']" class="col-auto">
             <span class="form-text text-primary">
                 Este campo es requerido
             </span>
           </div>
-          <div *ngIf="!validTelefonoContacto && !telefono.errors?.['required']" class="col-auto">
+          <div *ngIf="!validTelefonoContacto && !telefonoContacto.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
-                El formato de teléfono solo acepta números, paréntesis, guiones o espacios
+                El formato de teléfono solo acepta 5 o más caracteres núméricos, paréntesis, guiones o espacios
             </span>
           </div>  
         </div>
@@ -268,10 +262,4 @@
     </form>
     
 
-</div>
-
-<div aria-live="polite" aria-atomic="true" class="position-relative">
-  <div class="toast-container position-absolute top-0 end-0 p-3">
-    <!-- Toasts will be dynamically inserted here -->
-  </div>
-</div>
+</section>

@@ -1,9 +1,9 @@
-<div class="container pt-2">
+<section class="container pt-2">
 
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a (click)="cancelarHome()">Home</a></li>
-      <li class="breadcrumb-item"><a (click)="cancelar()">Productos</a></li>
+      <li class="breadcrumb-item"><a (click)="cancelar('')">Home</a></li>
+      <li class="breadcrumb-item"><a (click)="cancelar('productos')">Productos</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{tituloFormulario}}</li>
     </ol>
   </nav>
@@ -11,100 +11,100 @@
 
   <h2>{{tituloFormulario}}</h2>  
 
-<div class="container mt-4">
-  <form (ngSubmit)="onClickForm(formularioProductos)" #formularioProductos="ngForm" class="p-4">
-    <input type="hidden" class="form-control form-control-sm " id="id" name="id" [(ngModel)]="productsService.product.id">
+  <div class="container mt-4">
+    <form (ngSubmit)="onClickForm(formularioProductos)" #formularioProductos="ngForm" class="p-4">
+      <input type="hidden" class="form-control form-control-sm " id="id" name="id" [(ngModel)]="productsService.product.id">
 
-      <div class="row">
-        <div class="col-sm-8">
-          <div class="form-group">
-            <label for="nombreProducto">Nombre del Producto</label>
-            <input type="text" class="form-control form-control-sm" id="nombreProducto" name="nombreProducto" [(ngModel)]="productsService.product.nombreProducto" #nombreProducto="ngModel" required>
-            <div *ngIf="nombreProducto.errors?.['required']" class="col-auto">
-              <span class="form-text text-danger">
-                  Este campo es requerido
-              </span>
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="form-group">
+              <label for="nombreProducto">Nombre del Producto</label>
+              <input type="text" class="form-control form-control-sm" id="nombreProducto" name="nombreProducto" [(ngModel)]="productsService.product.nombreProducto" #nombreProducto="ngModel" required>
+              <div *ngIf="nombreProducto.errors?.['required']" class="col-auto">
+                <span class="form-text text-danger">
+                    Este campo es requerido
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="SKUProducto">SKU Producto</label>
+              <input type="text" (keyup)="skuIsUnique($event)" class="form-control form-control-sm" id="SKUProducto" name="SKUProducto" [(ngModel)]="productsService.product.SKUProducto" #SKUProducto="ngModel" [disabled]="disabledInEdit" required>
+              <div *ngIf="SKUProducto.errors?.['required']" class="col-auto">
+                <span class="form-text text-danger">
+                    Este campo es requerido
+                </span>
+              </div> 
+              <div *ngIf="skuRepetido" class="col-auto">
+                <span class="form-text text-danger">
+                    Hay otro producto con este código
+                </span>
+              </div> 
+            </div>
+          </div>
+        </div> 
+        <div class="row">              
+          <div class="col-sm-8">
+            <div class="form-group">
+              <label for="idProveedor">Proveedor</label>
+              <select class="form-select form-select-sm" aria-label="Default select example" id="idProveedor" name="idProveedor" [(ngModel)]="productsService.product.idProveedor" #idProveedor="ngModel" [disabled]="disabledInEdit" required>
+                <option *ngFor="let supplier of suppliersList" value="{{supplier.id}}">{{supplier.razonSocial}} &nbsp;&nbsp;-&nbsp;&nbsp; CUIT: {{supplier.CUIT}}</option>
+              </select>
+              <div *ngIf="idProveedor.errors?.['required']" class="col-auto">
+                <span class="form-text text-danger">
+                    Este campo es requerido
+                </span>
+              </div> 
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="categoria">Categoría</label>
+              <select class="form-select form-select-sm" aria-label="Default select example" id="categoria" name="categoria" [(ngModel)]="productsService.product.categoria" #categoria="ngModel" required>
+                <option *ngFor="let categoria of categorias" value="{{categoria}}">{{categoria}}</option>
+              </select>
+              <div *ngIf="categoria.errors?.['required']" class="col-auto">
+                <span class="form-text text-danger">
+                    Este campo es requerido
+                </span>
+              </div> 
             </div>
           </div>
         </div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label for="SKUProducto">SKU Producto</label>
-            <input type="text" (keyup)="skuIsUnique($event)" class="form-control form-control-sm" id="SKUProducto" name="SKUProducto" [(ngModel)]="productsService.product.SKUProducto" #SKUProducto="ngModel" required>
-            <div *ngIf="SKUProducto.errors?.['required']" class="col-auto">
-              <span class="form-text text-danger">
-                  Este campo es requerido
-              </span>
-            </div> 
-            <div *ngIf="skuRepetido" class="col-auto">
-              <span class="form-text text-danger">
-                  Hay otro producto con este código
-              </span>
-            </div> 
-          </div>
-        </div>
-      </div> 
-      <div class="row">              
-        <div class="col-sm-8">
-          <div class="form-group">
-            <label for="idProveedor">Proveedor</label>
-            <select class="form-select form-select-sm" aria-label="Default select example" id="idProveedor" name="idProveedor" [(ngModel)]="productsService.product.idProveedor" #idProveedor="ngModel" required>
-              <option *ngFor="let supplier of suppliersList" value="{{supplier.id}}">{{supplier.razonSocial}} &nbsp;&nbsp;-&nbsp;&nbsp; CUIT: {{supplier.CUIT}}</option>
-            </select>
-            <div *ngIf="idProveedor.errors?.['required']" class="col-auto">
-              <span class="form-text text-danger">
-                  Este campo es requerido
-              </span>
-            </div> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label for="categoria">Categoría</label>
-            <select class="form-select form-select-sm" aria-label="Default select example" id="categoria" name="categoria" [(ngModel)]="productsService.product.categoria" #categoria="ngModel" required>
-              <option *ngFor="let categoria of categorias" value="{{categoria}}">{{categoria}}</option>
-            </select>
-            <div *ngIf="categoria.errors?.['required']" class="col-auto">
-              <span class="form-text text-danger">
-                  Este campo es requerido
-              </span>
-            </div> 
-          </div>
-        </div>
-      </div>
-  
-      <div class="row">
-        <div class="form-group">
-          <label for="descripcion">Descripción</label>
-          <textarea class="form-control form-control-sm" id="descripcion" name="descripcion" [(ngModel)]="productsService.product.descripcion"></textarea>
-        </div>
-      </div>
-  
-      <div class="row mt-3">
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label for="precio">Precio</label>
-            <input type="number" min="1" max="10000000" class="form-control form-control-sm" id="precio" name="precio" [(ngModel)]="productsService.product.precio" #precio="ngModel" required>
-            <div *ngIf="precio.errors?.['min']" class="col-auto">
-              <span class="form-text text-danger">
-                  El precio mínimo es $1
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-1">
-        </div>
-        <div class="col-sm-8">
-          <div class="form-group">
-            <label for="precio">URL imagen</label>
-            <input type="text" class="form-control form-control-sm" id="URLImagen" name="URLImagen" [(ngModel)]="productsService.product.URLimage" >
-          </div>
-        </div>
-      </div>
     
-    <button type="submit" class="btn btn-primary my-4">Guardar</button>
-    <div (click)="cancelar()" class="btn btn-secondary my-4 mx-2">Cancelar</div>
-  </form>
-</div>   
+        <div class="row">
+          <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea class="form-control form-control-sm" id="descripcion" name="descripcion" [(ngModel)]="productsService.product.descripcion"></textarea>
+          </div>
+        </div>
+    
+        <div class="row mt-3">
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="precio">Precio</label>
+              <input type="number" min="1" max="10000000" class="form-control form-control-sm" id="precio" name="precio" [(ngModel)]="productsService.product.precio" #precio="ngModel" required>
+              <div *ngIf="precio.errors?.['min']" class="col-auto">
+                <span class="form-text text-danger">
+                    El precio mínimo es $1
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-1">
+          </div>
+          <div class="col-sm-8">
+            <div class="form-group">
+              <label for="precio">URL imagen</label>
+              <input type="text" class="form-control form-control-sm" id="URLImagen" name="URLImagen" [(ngModel)]="productsService.product.URLimage" >
+            </div>
+          </div>
+        </div>
+      
+      <button type="submit" class="btn btn-primary my-4">Guardar</button>
+      <div (click)="cancelar('productos')" class="btn btn-secondary my-4 mx-2">Cancelar</div>
+    </form>
+  </div>   
 
-</div>
+</section>

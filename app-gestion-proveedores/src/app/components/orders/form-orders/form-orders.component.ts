@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { OrdersServiceService } from '../../../services/orders-service.service';
 import { orden } from '../../../models/orden';
 import { OrdersFormServiceService } from '../../../services/orders-form-service.service';
 import { producto } from '../../../models/producto';
 import { proveedor } from '../../../models/proveedores';
 import { forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
-
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-form-orders',
@@ -19,12 +17,6 @@ import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component'
 export class FormOrdersComponent implements OnInit{
 
   constructor(public orderFormService: OrdersFormServiceService, private router:Router, private modalService: NgbModal){}
-
-  openModal() {
-    alert("openModal")
-    // Use NgbModal to open the modal
-    this.modalService.open(ModalConfirmComponent);
-  }
 
   orden : orden = 
     {
@@ -49,9 +41,9 @@ export class FormOrdersComponent implements OnInit{
 
     idProveedorArray : string[] = []
 
-    mensajeTotalMayorACero: string = "";
-    mensajeFechaEmisionErronea: string = "";
-    mensajeFechaEntregaErronea: string = "";
+    totalMayorACeroValido : boolean = true;
+    fechaEmisionValida : boolean = true;
+    fechaEntregaValida : boolean = true;
 
   ngOnInit(): void {
     this.getData();
@@ -112,6 +104,7 @@ export class FormOrdersComponent implements OnInit{
     }
     this.productosInProcess = filteredOrdenProducts
     this.getTotal()
+    this.validateTotal()
   }
 
   getTotal(){
@@ -127,25 +120,47 @@ export class FormOrdersComponent implements OnInit{
   }
 
   onClickForm(formularioProveedores:NgForm){
-    // this.openModal()
     this.productsInProcessToOrdenProductos()
-    this.manageErrorMessages();
     if(formularioProveedores.valid && this.validacionFormulario()){
-      const confirmar = confirm("Está a punto de generar una nueva orden. ¿Desea continuar?")
-      if(confirmar){
-        this.confirmarNuevaOrden();
-      }
+      Swal.fire({
+        text: "Está a punto de generar una nueva orden. ¿Desea continuar?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Generar orden",
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.confirmarNuevaOrden();
+        }
+      });
     } else {
-      alert("Hay campos incompletos o erróneos. Por favor, revise el formulario")
+      Swal.fire({
+        text: "Hay campos incompletos o erróneos. Por favor, revise el formulario",
+        icon: "warning"
+      });  
     }
   }
 
 
   validacionFormulario(){
-    const totalMayorACero = this.orden.total>0
-    const fechaEmision =  this.validateStringDatesOnlyForward(this.orden.fechaEmision, this.getCurrentDate())
-    const fechaEntrega =  this.validateStringDatesOnlyForward(this.orden.fechaEntrega, this.getCurrentDate())
-    return totalMayorACero && fechaEmision && fechaEntrega
+    this.totalMayorACeroValido = this.orden.total>0
+    this.fechaEmisionValida =  this.validateStringDatesOnlyForward(this.orden.fechaEmision, this.getCurrentDate())
+    this.fechaEntregaValida =  this.validateStringDatesOnlyForward(this.orden.fechaEntrega, this.orden.fechaEmision)
+    return this.totalMayorACeroValido && this.fechaEmisionValida && this.fechaEntregaValida
+  }
+
+  validateTotal(){
+    this.totalMayorACeroValido = this.orden.total>0
+  }
+
+  validateDateFechaEmision(){
+    this.fechaEmisionValida =  this.validateStringDatesOnlyForward(this.orden.fechaEmision, this.getCurrentDate())
+  }
+
+  validateDateFechaEntrega(){
+    this.fechaEntregaValida =  this.validateStringDatesOnlyForward(this.orden.fechaEntrega, this.orden.fechaEmision)
   }
 
   validateStringDatesOnlyForward(date :string , currentDate : string){
@@ -154,37 +169,13 @@ export class FormOrdersComponent implements OnInit{
     return dateDate >= currentDateDate
   }
 
-  manageErrorMessages(){
-    const totalMayorACero = this.orden.total>0
-    const fechaEmision =  this.validateStringDatesOnlyForward(this.orden.fechaEmision, this.getCurrentDate())
-    const fechaEntrega =  this.validateStringDatesOnlyForward(this.orden.fechaEntrega, this.getCurrentDate())
-
-    if(!totalMayorACero){
-      this.mensajeTotalMayorACero = "El total debe ser mayor a 0. Por favor seleccione un proveedor y uno o más productos"
-    } else {
-      this.mensajeTotalMayorACero = ""
-    }
-
-    if(!fechaEmision){
-      this.mensajeFechaEmisionErronea = "La fecha de emisión no puede ser anterior a la fecha actual"
-    } else {
-      this.mensajeFechaEmisionErronea = ""
-    }
-
-    if(!fechaEntrega){
-      this.mensajeFechaEntregaErronea = "La fecha de entrega no puede ser anterior a la fecha actual"
-    } else {
-      this.mensajeFechaEntregaErronea = ""
-    }
-  }
-
   confirmarNuevaOrden(){
     this.orderFormService.saveOrder(this.orden).subscribe((response)=>{
       console.log(response);
     })
     this.clearData()
     this.router.navigate(["ordenes"])
-    alert("Orden creada exitosamente")
+    Swal.fire("Orden creada exitosamente");
   }
 
   clearData(){
@@ -219,18 +210,20 @@ export class FormOrdersComponent implements OnInit{
     this.orden.fechaEmision = this.getCurrentDate();
   }
 
-  cancelar(){
-    const confirmar = confirm("¿Seguro desea salir? Los datos se perderán")
-    if(confirmar){
-      this.router.navigate(["ordenes"])
-    }
-  }
-
-  cancelarHome(){
-    const confirmar = confirm("¿Seguro desea salir? Los datos se perderán")
-    if(confirmar){
-      this.router.navigate([""])
-    }
+  cancelar(objetivo: string){
+    Swal.fire({
+      text: "¿Seguro desea salir? Los datos se perderán",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Salir",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate([objetivo])
+      }
+    });
   }
 
 }

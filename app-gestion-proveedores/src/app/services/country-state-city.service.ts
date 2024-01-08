@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +20,10 @@ export class CountryStateCityService {
     return this.http.post(this.URL_API_CITIES, CountryState);
   }
 
-
+  getCountries() : Observable<any> {
+    return this.getCountriesStates().pipe(
+      map((country)=>{
+      return country.data.map((item: {name: string, states: string}) => ({name: item.name, states: item.states}));
+    }))
+  }
 }
