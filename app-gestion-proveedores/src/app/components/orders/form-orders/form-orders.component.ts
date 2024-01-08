@@ -9,6 +9,7 @@ import { forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2'
 
+
 @Component({
   selector: 'app-form-orders',
   templateUrl: './form-orders.component.html',
@@ -44,6 +45,8 @@ export class FormOrdersComponent implements OnInit{
     totalMayorACeroValido : boolean = true;
     fechaEmisionValida : boolean = true;
     fechaEntregaValida : boolean = true;
+
+    search : string = "";
 
   ngOnInit(): void {
     this.getData();
