@@ -63,11 +63,11 @@ WHERE suppliers.phone LIKE '+54 351%'
 --5) Traer un listado de todos los proveedores que no hayan sido eliminados , ordenados por razon social, codigo proveedor y fecha en que se dió de alta ASC. 
 --De este listado mostrar los datos que correspondan con su tabla del front.
 
--- Primero voy a eliminar un proveedor para que haya al menos un eliminado (Los eliminados son los que tienen deleted = 1)
+--Primero voy a eliminar un proveedor para que haya al menos un eliminado (Los eliminados son los que tienen deleted = 1)
 
 UPDATE suppliers SET suppliers.deleted = 1 WHERE suppliers.id = 3;
 
-SELECT 
+SELECT
 	suppliers.business_name AS 'Razón Social', 
 	suppliers.code AS 'Código Proveedor', 
 	suppliers.created_at AS 'Fecha de alta'
@@ -190,5 +190,9 @@ WHERE id = 4;
 
 --11) Escribir la sentencia para eliminar el producto con id = 1 (NO EJECUTAR, SÓLO MOSTRAR SENTENCIA)
 
-DELETE FROM products 
-WHERE products.id = 1;
+--DELETE FROM order_details
+--WHERE order_details.product_id = 1;
+
+--DELETE FROM products 
+--WHERE products.id = 1;
+
