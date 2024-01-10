@@ -158,13 +158,14 @@ GROUP BY orders.issue_date,
 --9) Mostrar el detalle de una orden de compra del proveedor 3, trayendo: SKU del producto, nombre producto, cantidad y subtotal.
 
 --El proveedor 3 posee una orden de compra con id = 3 con un producto. 
---Voy a insertar un segundo producto
+--Primero voy a insertar un segundo producto para mostrar en la query
 
 INSERT INTO products (SKU, name, supplier_id, category_id, description, price, URLimage, deleted, created_at, updated_at) VALUES
 	('COC001P02', 'Coca-Cola 2l', 3, 3, 'Coca-Cola soda original 2l', 1200.00, 'cocacola_2l.jpg', 0, '2023-01-16', '2023-01-17');
 
 INSERT INTO order_details (product_id, quantity, order_id, unit_price) VALUES
 	(7, 100, 3, 1200.00);
+
 
 SELECT 
 	products.SKU AS 'SKU producto', 
@@ -178,6 +179,16 @@ WHERE order_details.order_id = 3
 
 --10)Cambiar el estado a Cancelada y la fecha de modificación a la orden de compra con ID = 4.
 
+-- Nota: "Cancelada" es el status id = 3
+
+UPDATE orders
+SET 
+    status_id = 3,
+    updated_at = '2024-01-10'
+WHERE id = 4;
 
 
 --11) Escribir la sentencia para eliminar el producto con id = 1 (NO EJECUTAR, SÓLO MOSTRAR SENTENCIA)
+
+DELETE FROM products 
+WHERE products.id = 1;
