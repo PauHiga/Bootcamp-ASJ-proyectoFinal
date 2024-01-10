@@ -188,6 +188,12 @@ SET
 WHERE id = 4;
 
 
+-- Agrego select para visualizar el cambio
+
+SELECT orders.id, orders.status_id
+FROM orders
+
+
 --11) Escribir la sentencia para eliminar el producto con id = 1 (NO EJECUTAR, SÓLO MOSTRAR SENTENCIA)
 
 --DELETE FROM order_details
