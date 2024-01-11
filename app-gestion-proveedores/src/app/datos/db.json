@@ -1,86 +1,206 @@
 {
-  "suppliers": [
+  "sectors": [
     {
       "id": 1,
-      "codigo": "A001",
-      "razonSocial": "Empresa B S.A.",
-      "rubro": "Servicios Financieros",
-      "URLlogo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAA81BMVEXjAAv///8AAAD/7QBWAATfAAv/8AD/8gD/9AD/9gD/+wD/+AD7+/vo6Ojl5eWoqKjw8PDY2NhnZ2eKioqysrLe3t7Q0NA8PDzAwMDIyMhtbW2VlZU2NjYYGBgvLy9cXFz94gI8OQAjIyP5zAT05gB4eHhERETzowb4wwT0rgbqXgn72gNUVFSenp4NDQ3nPQrvgwjpVAntdwj2ugXn1wApJQDlJQrragnoSArxlwfFAAmEfABwaACYjQDXyABRSwCrnwA1MQB4AAbwjQiOAAeqAAi9sQBqAAVgWQAfHABHQgA1AAPJvAAWAAH2AAsUEwBHAAQlfxAgAAASKUlEQVR4nO1cWVsiO7QFSmtEBhkEbASZBxEEBBFFulGO9vV2n///a26mSqUyVHHe6rtfradua5tkZQ/Z2UlMpFJn54n/Bzg/S6USMZkIIiYTVcRkooqYTFQRk4kqYjJRRUwmqojJRBUxmagiJhNVxGSiiphMVBGTiSpiMlFFTCaqiMlEFTGZqCImE1XEZKKKmExUEZOJKmIyUUVMJqqIyUQVMZkwrFarKcDTdLpahcghnN6s4sv58zkk8B/JTB/W8xnCfP0gaXr1BL4f+sPFYjAYtAeDYf8wXz+p5RD6m8NsPZJIucLTEej0sOn3+xtZx+cfv379en/+b2RW881i3DRsCEdrthebuZ/p+jAcNDXbcSzLxLDAv5vt/mzKyj3NN8N2U0dyEI5jW9p40D+MJNMzBcKDseYAaQjb1pvjxWbGUD9/P3t//ng/+/gPZKabQdOyDF3D0HXDspoLj86oP2galkkFKHTT0QYbSmcOiJiWyYnphmnp48GG04+sUdix1h7Snj/++Xh/B3TOnhMnkllt2ho/ANCu1ezj2XxYjHXxu8dHa8+Q3AYwUcoZpjYeMnTmi7FCWDeN5gC3eH72cZ56/vj3/P39RDKjgW",
-      "CUIT": "30-87654321-0",
-      "condicionIva": "IVA Responsable Inscripto",
-      "email": "info@empresaB.com",
-      "telefono": "011-555555555",
-      "web": "http://www.empresaB.com",
-      "direccion": {
-        "calle": "Calle Secundaria",
-        "altura": "456",
-        "CP": "5678",
-        "pais": "Bahrain",
-        "provincia": "Capital Governorate",
-        "localidad": "Jidd Ḩafş"
-      },
-      "contacto": {
-        "nombre": "Juan",
-        "apellido": "Fernandez",
-        "email": "maria.gomez@techsupplies.com",
-        "telefono": "ddsd",
-        "rol": "Encargado de ventas"
-      },
-      "deleted": true
+      "name": "Office Supplies",
+      "deleted": 1
     },
     {
       "id": 2,
-      "codigo": "C001",
-      "razonSocial": "Empresa C S.A.",
-      "rubro": "Empresa",
-      "URLlogo": "",
-      "CUIT": "11-11111111-1",
-      "condicionIva": "IVA no Responsable",
-      "email": "info@empresaB.com",
-      "telefono": "111-1111-111",
-      "web": "111",
+      "name": "Technology",
+      "deleted": 1
+    },
+    {
+      "id": 3,
+      "name": "Food and Beverage",
+      "deleted": 1
+    },
+    {
+      "id": 4,
+      "name": "General Merchandise",
+      "deleted": 1
+    },
+    {
+      "name": "Travel",
+      "deleted": 0,
+      "id": 5
+    },
+    {
+      "name": "Health care",
+      "deleted": 0,
+      "id": 6
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Office Supplies Category",
+      "deleted": 1
+    },
+    {
+      "id": 2,
+      "name": "Technology Category",
+      "deleted": 1
+    },
+    {
+      "id": 3,
+      "name": "Food and Beverage Category",
+      "deleted": 0
+    },
+    {
+      "id": 4,
+      "name": "General Merchandise Category",
+      "deleted": 0
+    },
+    {
+      "name": "Travel Category",
+      "deleted": 0,
+      "id": 5
+    },
+    {
+      "name": "Health care",
+      "deleted": 0,
+      "id": 6
+    }
+  ],
+  "suppliers": [
+    {
+      "id": "1",
+      "codigo": "A001",
+      "razonSocial": "La Papelera",
+      "rubro": "Office Supplies",
+      "URLlogo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbmGEM2Vt2G66LZL2u7BrjgubPNgtrTU-UL3H9nyWsSE_fPUknx6nTDy9ohuCGmYXGgSI&usqp=CAU",
+      "CUIT": "30-12345678-9",
+      "condicionIva": "IVA exento",
+      "email": "info@lapapelera.com",
+      "telefono": "011-123456789",
+      "web": "http://www.lapapelera.com",
       "direccion": {
-        "calle": "Calle Secundaria",
-        "altura": "456",
-        "CP": "5678",
-        "pais": "Australia",
-        "provincia": "New South Wales",
-        "localidad": "dd"
+        "calle": "Av. Principal",
+        "altura": "123",
+        "CP": "1234",
+        "pais": "Argentina",
+        "provincia": "Corrientes",
+        "localidad": "Departamento de General Alvear"
       },
       "contacto": {
-        "nombre": "s",
-        "apellido": "d",
-        "email": "maria.gomez@lorem.com",
-        "telefono": "111-1111-111",
-        "rol": "Ventas"
+        "nombre": "Juan",
+        "apellido": "Perez",
+        "email": "juan.perez@lapapelera.com",
+        "telefono": "011-987654321",
+        "rol": "Encargado de ventas"
+      },
+      "deleted": false
+    },
+    {
+      "id": "2",
+      "codigo": "A002",
+      "razonSocial": "CyberConnect",
+      "rubro": "Technology",
+      "URLlogo": "https://www.logomaker.com/wpstatic/uploads/2019/06/techlogo7.png",
+      "CUIT": "30-87654321-0",
+      "condicionIva": "IVA Responsable Inscripto",
+      "email": "info@cyberconnect.com",
+      "telefono": "011-987654321",
+      "web": "http://www.cyberconnect.com",
+      "direccion": {
+        "calle": "Calle T",
+        "altura": "456",
+        "CP": "5678",
+        "pais": "Argentina",
+        "provincia": "Mendoza",
+        "localidad": "Departamento de San Rafael"
+      },
+      "contacto": {
+        "nombre": "Maria",
+        "apellido": "Gomez",
+        "email": "maria.gomez@techsupplies.com",
+        "telefono": "011-123456789",
+        "rol": "Gerente de ventas"
+      },
+      "deleted": false
+    },
+    {
+      "id": "3",
+      "codigo": "A003",
+      "razonSocial": "Distribuidora Sabores",
+      "rubro": "Food and Beverage",
+      "URLlogo": "https://www.logomaker.com/wpstatic/uploads/2018/11/bakerlogo9.png",
+      "CUIT": "30-55555555-5",
+      "condicionIva": "Responsable Monotributo",
+      "email": "info@sabores.com",
+      "telefono": "011-555555555",
+      "web": "http://www.sabores.com",
+      "direccion": {
+        "calle": "Calle del Sabor",
+        "altura": "789",
+        "CP": "9876",
+        "pais": "Argentina",
+        "provincia": "Corrientes",
+        "localidad": "Curuzú Cuatiá"
+      },
+      "contacto": {
+        "nombre": "Pedro",
+        "apellido": "Rodriguez",
+        "email": "pedro.rodriguez@sabores.com",
+        "telefono": "011-111111111",
+        "rol": "Representante de ventas"
       },
       "deleted": true
     },
     {
-      "id": 3,
-      "codigo": "B001",
-      "razonSocial": "La Empresa",
-      "rubro": "Alimentación",
-      "URLlogo": "",
-      "CUIT": "11-11111111-1",
+      "id": "4",
+      "codigo": "A004",
+      "razonSocial": "Importaciones Globales",
+      "rubro": "General Merchandise",
+      "URLlogo": "https://www.logomaker.com/wpstatic/uploads/2019/06/techlogo5.png",
+      "CUIT": "30-99999999-9",
       "condicionIva": "IVA Responsable Inscripto",
-      "email": "info@empresaB.com",
-      "telefono": "011-555555555",
-      "web": "",
+      "email": "info@importaciones.com",
+      "telefono": "011-999999999",
+      "web": "http://www.importaciones.com",
       "direccion": {
-        "calle": "Av. Principal",
+        "calle": "Avenida Importadora",
         "altura": "101",
-        "CP": "9876",
-        "pais": "Bangladesh",
-        "provincia": "Gaibandha District",
-        "localidad": "dd"
+        "CP": "1122",
+        "pais": "Uruguay",
+        "provincia": "Florida Department",
+        "localidad": "Alejandro Gallinal"
       },
       "contacto": {
-        "nombre": "Pedro",
-        "apellido": "Perez",
-        "email": "carlos.rodriguez@empresaC.com",
-        "telefono": "123123g",
-        "rol": "Gerente de ventas"
+        "nombre": "Laura",
+        "apellido": "Fernandez",
+        "email": "laura.fernandez@importaciones.com",
+        "telefono": "011-333333333",
+        "rol": "Especialista en importaciones"
+      },
+      "deleted": false
+    },
+    {
+      "id": "5",
+      "codigo": "A005",
+      "razonSocial": "ElectroImport",
+      "rubro": "General Merchandise",
+      "URLlogo": "",
+      "CUIT": "30-77777777-7",
+      "condicionIva": "IVA Responsable Inscripto",
+      "email": "info@electroimport.com",
+      "telefono": "011-777777777",
+      "web": "http://www.electroimport.com",
+      "direccion": {
+        "calle": "Calle Electrónica",
+        "altura": "202",
+        "CP": "3344",
+        "pais": "Argentina",
+        "provincia": "Córdoba Province",
+        "localidad": "Departamento de Calamuchita"
+      },
+      "contacto": {
+        "nombre": "Carlos",
+        "apellido": "Lopez",
+        "email": "carlos.lopez@electroimport.com",
+        "telefono": "011-444444444",
+        "rol": "Especialista en electrónica"
       },
       "deleted": false
     }
@@ -88,22 +208,62 @@
   "products": [
     {
       "id": 1,
-      "idProveedor": "3",
-      "SKUProducto": "dsd",
-      "categoria": "Catering",
-      "nombreProducto": "Lego Education",
-      "descripcion": "",
-      "precio": 3,
-      "URLimage": ""
+      "idProveedor": "1",
+      "SKUProducto": "SKU001",
+      "categoria": "Art. Oficina",
+      "nombreProducto": "Resma Pampa A4",
+      "descripcion": "Kit 10 Resma Pampa A4 multifunción de 500 hojas de 70 gr color blanco",
+      "precio": 1000,
+      "URLimage": "data:image/webp;base64,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"
     },
     {
       "id": 2,
       "idProveedor": "3",
-      "SKUProducto": "SKU001",
+      "SKUProducto": "SKU002",
       "categoria": "Catering",
-      "nombreProducto": "sd",
-      "descripcion": "",
+      "nombreProducto": "Agua mineral ECO 1.5lt",
+      "descripcion": "Agua Mineral De Manantial Sin Gas Eco De Los Andes 1500 Cc",
+      "precio": 500,
+      "URLimage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-vV1CqoCgLuZcmDdmcItE79Sv5Vi4tZcG2rfXBaKjhOmjzrDItu9dRMGO5Q&s"
+    },
+    {
+      "id": 3,
+      "idProveedor": "5",
+      "SKUProducto": "SKU003",
+      "categoria": "Art. Oficina",
+      "nombreProducto": "pisapapeles",
+      "descripcion": "Pisa los papeles",
       "precio": 1,
+      "URLimage": "data:image/jpeg;base64,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"
+    },
+    {
+      "id": 4,
+      "idProveedor": "2",
+      "SKUProducto": "SKU004",
+      "categoria": "Electrónicos",
+      "nombreProducto": "Auriculares Bluetooth",
+      "descripcion": "Auriculares Bluetooth Inalámbricos Huellitas Gatito Color Negro",
+      "precio": 10000,
+      "URLimage": "https://http2.mlstatic.com/D_NQ_NP_2X_919006-MLU72850753016_112023-F.webp"
+    },
+    {
+      "id": 5,
+      "idProveedor": "2",
+      "SKUProducto": "SKU005",
+      "categoria": "Electrónicos",
+      "nombreProducto": "Audífonos multidispositivo con toma de 3,5 mm",
+      "descripcion": "Permiten oír lo esencial y ser oído con claridad. Los H111 tienen una toma de audio estándar de 3,5 mm y son compatibles con la mayoría de los sistemas operativos y plataformas.",
+      "precio": 5000,
+      "URLimage": "data:image/jpeg;base64,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"
+    },
+    {
+      "id": 6,
+      "idProveedor": "2",
+      "SKUProducto": "SKU006",
+      "categoria": "Electrónicos",
+      "nombreProducto": "Mouse inalámbrico",
+      "descripcion": "Mouse inalámbrico Logitech M170 negro",
+      "precio": 10000,
       "URLimage": ""
     }
   ],
@@ -111,52 +271,79 @@
     {
       "id": 1,
       "numeroOrden": 1,
-      "fechaEmision": "2023-12-30",
-      "fechaEntrega": "2023-12-31",
-      "informacionRecepcion": "",
+      "fechaEmision": "2023-12-29",
+      "fechaEntrega": "2023-12-30",
+      "informacionRecepcion": "Recepcion de 9 a 18",
       "proveedor": "1",
       "productos": [
         {
           "id": 1,
-          "nombreProducto": "Lego Education",
+          "nombreProducto": "Resma Pampa A4",
           "cantidad": 3
         }
       ],
-      "total": "12.00",
-      "estado": "CANCELADO"
+      "total": "3000.00",
+      "estado": "NO CANCELADO"
     },
     {
       "id": 2,
       "numeroOrden": 2,
-      "fechaEmision": "2023-12-30",
-      "fechaEntrega": "2023-12-31",
+      "fechaEmision": "2023-12-29",
+      "fechaEntrega": "2023-12-30",
       "informacionRecepcion": "",
-      "proveedor": "1",
+      "proveedor": "2",
       "productos": [
         {
-          "id": 1,
-          "nombreProducto": "Lego Education",
-          "cantidad": 3
+          "id": 4,
+          "nombreProducto": "Auriculares Bluetooth",
+          "cantidad": 2
+        },
+        {
+          "id": 5,
+          "nombreProducto": "Audífonos multidispositivo con toma de 3,5 mm",
+          "cantidad": 2
+        },
+        {
+          "id": 6,
+          "nombreProducto": "Mouse inalámbrico",
+          "cantidad": 2
         }
       ],
-      "total": "12.00",
-      "estado": "CANCELADO"
+      "total": "50000.00",
+      "estado": "NO CANCELADO"
     },
     {
       "id": 3,
       "numeroOrden": 3,
-      "fechaEmision": "2024-01-01",
-      "fechaEntrega": "2024-01-03",
+      "fechaEmision": "2023-12-29",
+      "fechaEntrega": "2024-01-04",
       "informacionRecepcion": "",
-      "proveedor": "1",
+      "proveedor": "3",
       "productos": [
         {
-          "id": 1,
-          "nombreProducto": "Lego Education",
+          "id": 2,
+          "nombreProducto": "Agua mineral ECO 1.5lt",
+          "cantidad": 4
+        }
+      ],
+      "total": "2000.00",
+      "estado": "NO CANCELADO"
+    },
+    {
+      "id": 4,
+      "numeroOrden": 4,
+      "fechaEmision": "2024-01-11",
+      "fechaEntrega": "2024-01-12",
+      "informacionRecepcion": "",
+      "proveedor": "3",
+      "productos": [
+        {
+          "id": 2,
+          "nombreProducto": "Agua mineral ECO 1.5lt",
           "cantidad": 2
         }
       ],
-      "total": "8.00",
+      "total": "1000.00",
       "estado": "NO CANCELADO"
     }
   ]

@@ -1,0 +1,232 @@
+{
+  "sectors": [
+    {
+      "id": 1,
+      "name": "Office Supplies",
+      "deleted": 1
+    },
+    {
+      "id": 2,
+      "name": "Technology",
+      "deleted": 1
+    },
+    {
+      "id": 3,
+      "name": "Food and Beverage",
+      "deleted": 1
+    },
+    {
+      "id": 4,
+      "name": "General Merchandise",
+      "deleted": 1
+    },
+    {
+      "name": "Travel",
+      "deleted": 0,
+      "id": 5
+    },
+    {
+      "name": "Health care",
+      "deleted": 0,
+      "id": 6
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Office Supplies Category",
+      "deleted": 1
+    },
+    {
+      "id": 2,
+      "name": "Technology Category",
+      "deleted": 1
+    },
+    {
+      "id": 3,
+      "name": "Food and Beverage Category",
+      "deleted": 0
+    },
+    {
+      "id": 4,
+      "name": "General Merchandise Category",
+      "deleted": 0
+    },
+    {
+      "name": "Travel Category",
+      "deleted": 0,
+      "id": 5
+    },
+    {
+      "name": "Health care",
+      "deleted": 0,
+      "id": 6
+    },
+    {
+      "name": "Art",
+      "deleted": 1,
+      "id": 7
+    }
+  ],
+  "suppliers": [
+    {
+      "id": 1,
+      "codigo": "A001",
+      "razonSocial": "Empresa B S.A.",
+      "rubro": "Servicios Financieros",
+      "URLlogo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAA81BMVEXjAAv///8AAAD/7QBWAATfAAv/8AD/8gD/9AD/9gD/+wD/+AD7+/vo6Ojl5eWoqKjw8PDY2NhnZ2eKioqysrLe3t7Q0NA8PDzAwMDIyMhtbW2VlZU2NjYYGBgvLy9cXFz94gI8OQAjIyP5zAT05gB4eHhERETzowb4wwT0rgbqXgn72gNUVFSenp4NDQ3nPQrvgwjpVAntdwj2ugXn1wApJQDlJQrragnoSArxlwfFAAmEfABwaACYjQDXyABRSwCrnwA1MQB4AAbwjQiOAAeqAAi9sQBqAAVgWQAfHABHQgA1AAPJvAAWAAH2AAsUEwBHAAQlfxAgAAASKUlEQVR4nO1cWVsiO7QFSmtEBhkEbASZBxEEBBFFulGO9vV2n///a26mSqUyVHHe6rtfradua5tkZQ/Z2UlMpFJn54n/Bzg/S6USMZkIIiYTVcRkooqYTFQRk4kqYjJRRUwmqojJRBUxmagiJhNVxGSiiphMVBGTiSpiMlFFTCaqiMlEFTGZqCImE1XEZKKKmExUEZOJKmIyUUVMJqqIyUQVMZkwrFarKcDTdLpahcghnN6s4sv58zkk8B/JTB/W8xnCfP0gaXr1BL4f+sPFYjAYtAeDYf8wXz+p5RD6m8NsPZJIucLTEej0sOn3+xtZx+cfv379en/+b2RW881i3DRsCEdrthebuZ/p+jAcNDXbcSzLxLDAv5vt/mzKyj3NN8N2U0dyEI5jW9p40D+MJNMzBcKDseYAaQjb1pvjxWbGUD9/P3t//ng/+/gPZKabQdOyDF3D0HXDspoLj86oP2galkkFKHTT0QYbSmcOiJiWyYnphmnp48GG04+sUdix1h7Snj/++Xh/B3TOnhMnkllt2ho/ANCu1ezj2XxYjHXxu8dHa8+Q3AYwUcoZpjYeMnTmi7FCWDeN5gC3eH72cZ56/vj3/P39RDKjgW",
+      "CUIT": "30-87654321-0",
+      "condicionIva": "IVA Responsable Inscripto",
+      "email": "info@empresaB.com",
+      "telefono": "011-555555555",
+      "web": "http://www.empresaB.com",
+      "direccion": {
+        "calle": "Calle Secundaria",
+        "altura": "456",
+        "CP": "5678",
+        "pais": "Bahrain",
+        "provincia": "Capital Governorate",
+        "localidad": "Jidd Ḩafş"
+      },
+      "contacto": {
+        "nombre": "Juan",
+        "apellido": "Fernandez",
+        "email": "maria.gomez@techsupplies.com",
+        "telefono": "ddsd",
+        "rol": "Encargado de ventas"
+      },
+      "deleted": true
+    },
+    {
+      "id": 2,
+      "codigo": "C001",
+      "razonSocial": "Empresa C S.A.",
+      "rubro": "Empresa",
+      "URLlogo": "",
+      "CUIT": "11-11111111-1",
+      "condicionIva": "IVA no Responsable",
+      "email": "info@empresaB.com",
+      "telefono": "111-1111-111",
+      "web": "111",
+      "direccion": {
+        "calle": "Calle Secundaria",
+        "altura": "456",
+        "CP": "5678",
+        "pais": "Australia",
+        "provincia": "New South Wales",
+        "localidad": "dd"
+      },
+      "contacto": {
+        "nombre": "s",
+        "apellido": "d",
+        "email": "maria.gomez@lorem.com",
+        "telefono": "111-1111-111",
+        "rol": "Ventas"
+      },
+      "deleted": true
+    },
+    {
+      "id": 3,
+      "codigo": "B001",
+      "razonSocial": "La Empresa",
+      "rubro": "Alimentación",
+      "URLlogo": "",
+      "CUIT": "11-11111111-1",
+      "condicionIva": "IVA Responsable Inscripto",
+      "email": "info@empresaB.com",
+      "telefono": "011-555555555",
+      "web": "",
+      "direccion": {
+        "calle": "Av. Principal",
+        "altura": "101",
+        "CP": "9876",
+        "pais": "Bangladesh",
+        "provincia": "Gaibandha District",
+        "localidad": "dd"
+      },
+      "contacto": {
+        "nombre": "Pedro",
+        "apellido": "Perez",
+        "email": "carlos.rodriguez@empresaC.com",
+        "telefono": "123123g",
+        "rol": "Gerente de ventas"
+      },
+      "deleted": false
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "idProveedor": "3",
+      "SKUProducto": "dsd",
+      "categoria": "Catering",
+      "nombreProducto": "Lego Education",
+      "descripcion": "",
+      "precio": 3,
+      "URLimage": ""
+    },
+    {
+      "id": 2,
+      "idProveedor": "3",
+      "SKUProducto": "SKU001",
+      "categoria": "Catering",
+      "nombreProducto": "sd",
+      "descripcion": "",
+      "precio": 1,
+      "URLimage": ""
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "numeroOrden": 1,
+      "fechaEmision": "2023-12-30",
+      "fechaEntrega": "2023-12-31",
+      "informacionRecepcion": "",
+      "proveedor": "1",
+      "productos": [
+        {
+          "id": 1,
+          "nombreProducto": "Lego Education",
+          "cantidad": 3
+        }
+      ],
+      "total": "12.00",
+      "estado": "CANCELADO"
+    },
+    {
+      "id": 2,
+      "numeroOrden": 2,
+      "fechaEmision": "2023-12-30",
+      "fechaEntrega": "2023-12-31",
+      "informacionRecepcion": "",
+      "proveedor": "1",
+      "productos": [
+        {
+          "id": 1,
+          "nombreProducto": "Lego Education",
+          "cantidad": 3
+        }
+      ],
+      "total": "12.00",
+      "estado": "CANCELADO"
+    },
+    {
+      "id": 3,
+      "numeroOrden": 3,
+      "fechaEmision": "2024-01-01",
+      "fechaEntrega": "2024-01-03",
+      "informacionRecepcion": "",
+      "proveedor": "1",
+      "productos": [
+        {
+          "id": 1,
+          "nombreProducto": "Lego Education",
+          "cantidad": 2
+        }
+      ],
+      "total": "8.00",
+      "estado": "NO CANCELADO"
+    }
+  ]
+}

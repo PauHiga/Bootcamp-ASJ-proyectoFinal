@@ -1,10 +1,74 @@
 {
+  "sectors": [
+    {
+      "id": 1,
+      "name": "Office Supplies",
+      "deleted": 1
+    },
+    {
+      "id": 2,
+      "name": "Technology",
+      "deleted": 1
+    },
+    {
+      "id": 3,
+      "name": "Food and Beverage",
+      "deleted": 1
+    },
+    {
+      "id": 4,
+      "name": "General Merchandise",
+      "deleted": 1
+    },
+    {
+      "name": "Travel",
+      "deleted": 0,
+      "id": 5
+    },
+    {
+      "name": "Health care",
+      "deleted": 0,
+      "id": 6
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Office Supplies Category",
+      "deleted": 1
+    },
+    {
+      "id": 2,
+      "name": "Technology Category",
+      "deleted": 1
+    },
+    {
+      "id": 3,
+      "name": "Food and Beverage Category",
+      "deleted": 0
+    },
+    {
+      "id": 4,
+      "name": "General Merchandise Category",
+      "deleted": 0
+    },
+    {
+      "name": "Travel Category",
+      "deleted": 0,
+      "id": 5
+    },
+    {
+      "name": "Health care",
+      "deleted": 0,
+      "id": 6
+    }
+  ],
   "suppliers": [
     {
       "id": "1",
       "codigo": "A001",
       "razonSocial": "La Papelera",
-      "rubro": "Articulos de oficina",
+      "rubro": "Office Supplies",
       "URLlogo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbmGEM2Vt2G66LZL2u7BrjgubPNgtrTU-UL3H9nyWsSE_fPUknx6nTDy9ohuCGmYXGgSI&usqp=CAU",
       "CUIT": "30-12345678-9",
       "condicionIva": "IVA exento",
@@ -32,7 +96,7 @@
       "id": "2",
       "codigo": "A002",
       "razonSocial": "CyberConnect",
-      "rubro": "Tecnologia",
+      "rubro": "Technology",
       "URLlogo": "https://www.logomaker.com/wpstatic/uploads/2019/06/techlogo7.png",
       "CUIT": "30-87654321-0",
       "condicionIva": "IVA Responsable Inscripto",
@@ -60,7 +124,7 @@
       "id": "3",
       "codigo": "A003",
       "razonSocial": "Distribuidora Sabores",
-      "rubro": "Alimentos",
+      "rubro": "Food and Beverage",
       "URLlogo": "https://www.logomaker.com/wpstatic/uploads/2018/11/bakerlogo9.png",
       "CUIT": "30-55555555-5",
       "condicionIva": "Responsable Monotributo",
@@ -88,7 +152,7 @@
       "id": "4",
       "codigo": "A004",
       "razonSocial": "Importaciones Globales",
-      "rubro": "Importador",
+      "rubro": "General Merchandise",
       "URLlogo": "https://www.logomaker.com/wpstatic/uploads/2019/06/techlogo5.png",
       "CUIT": "30-99999999-9",
       "condicionIva": "IVA Responsable Inscripto",
@@ -116,7 +180,7 @@
       "id": "5",
       "codigo": "A005",
       "razonSocial": "ElectroImport",
-      "rubro": "Importador",
+      "rubro": "General Merchandise",
       "URLlogo": "",
       "CUIT": "30-77777777-7",
       "condicionIva": "IVA Responsable Inscripto",

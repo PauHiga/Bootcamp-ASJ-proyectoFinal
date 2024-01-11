@@ -61,14 +61,16 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="categoria">Categoría</label>
-              <select class="form-select form-select-sm" aria-label="Default select example" id="categoria" name="categoria" [(ngModel)]="productsService.product.categoria" #categoria="ngModel" required>
-                <option *ngFor="let categoria of categorias" value="{{categoria}}">{{categoria}}</option>
+              <select class="form-select form-select-sm" aria-label="Default select example" id="categoria" name="categoria" [(ngModel)]="productsService.product.categoria" #category="ngModel" required>
+                <option *ngFor="let category of categories" value="{{category.name}}">{{category.name}}</option>
               </select>
-              <div *ngIf="categoria.errors?.['required']" class="col-auto">
+              <div *ngIf="category.errors?.['required']" class="col-auto">
                 <span class="form-text text-danger">
                     Este campo es requerido
                 </span>
               </div> 
+              <div (click)="addCategoryModal()" class="btn btn btn-outline-secondary btn-sm m-2">Add a category</div>
+              <div (click)="deleteCategoryModal()" class="btn btn btn-outline-secondary btn-sm">Delete a category</div>
             </div>
           </div>
         </div>

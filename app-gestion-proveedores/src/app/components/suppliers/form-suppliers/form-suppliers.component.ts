@@ -56,10 +56,11 @@ export class FormSuppliersComponent implements OnInit{
   ]
 
   suppliersList : proveedor[] = [];
-  
+
+  sectors : any[] = []
+
   countries : any[] = []
   states : any[] = []
-  // cities : any[] = []
 
   codigoProveedorRepetido : boolean = false;
 
@@ -74,6 +75,7 @@ export class FormSuppliersComponent implements OnInit{
 
   ngOnInit(): void {
     this.getCountries()
+    this.getSectors();
     this.getProveedores();
     if(this.parametroURL) {
       this.tituloFormulario = "Editar Proveedor";
@@ -91,12 +93,18 @@ export class FormSuppliersComponent implements OnInit{
     })
   }
 
+  getSectors(){
+    this.supplierService.getSectors().subscribe((response)=>{
+      this.sectors = response.filter((item: any)=> item.deleted == 0);
+    })
+  }
+
   getASupplier(id : string){
     this.supplierService.getASupplier(id).subscribe(
       (response) =>{
-        this.supplier = response
-        // this.filterCity()
-        this.filterState()
+        this.supplier = response;
+        this.filterState();
+        this.supplier.deleted = false;
       }
     )
   }
@@ -111,16 +119,6 @@ export class FormSuppliersComponent implements OnInit{
     const selectedCountry = this.countries.find(item => item.name == this.supplier.direccion.pais);
     this.states = selectedCountry.states;
   }
-
-  // filterCity(){
-  //   const cityState = {
-  //     country: this.supplier.direccion.pais,
-  //     state: this.supplier.direccion.provincia
-  //   }
-  //   this.countryService.getCities(cityState).subscribe((response) => {
-  //     this.cities = response.data
-  //   })
-  // }
 
   onClickForm(formularioProveedores:NgForm){
     this.validarFormulario();
@@ -258,4 +256,68 @@ export class FormSuppliersComponent implements OnInit{
       deleted: false,
     }
   }
+
+
+  //Add a new sector
+  addSectorModal(){
+    Swal.fire({
+      title: "New sector",
+      text: "Write a new sector",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off"
+      },
+      showCancelButton: true,
+      confirmButtonText: "Save sector",
+      allowOutsideClick: () => !Swal.isLoading(),
+      inputValidator: (value): any => {
+        if (value == '') {
+          return "You need to write something!";
+        } else if (this.sectors.some(item => item.name.toUpperCase() === value.toUpperCase())){
+          return "That sector name already exists!";
+        }
+      }
+    }).then((result) => {
+      const exists = this.sectors.some(item => item.name === result.value);
+      if (result.isConfirmed && !exists) {
+        this.supplierService.saveSector(result.value).subscribe((result)=> console.log(result))
+        Swal.fire({
+          text: `The sector "${result.value}" has been saved`,
+        });
+        this.getSectors();
+      }
+    });
+  }
+
+    //Delete a sector
+    deleteSectorModal(){
+      const options = Object.fromEntries(this.sectors.map(item => [item.id, item.name]))
+      Swal.fire({
+        title: "Delete Sector",
+        text: "Select a sector to delete",
+        input: "select",
+        inputOptions: options,
+        inputPlaceholder: "Select a sector",
+        showCancelButton: true,
+        confirmButtonText: "Delete sector",
+        allowOutsideClick: () => !Swal.isLoading(),
+        inputValidator: (value): any => {
+          if (value == '') {
+            return "You need to choose something!";
+          }
+        }
+      }).then((result) => {
+        if (result.isConfirmed && result.value != '') {
+          const chosenOption = this.sectors.find(item => item.id == result.value).name
+          this.supplierService.logicalDeleteSector(result.value).subscribe((result)=> console.log(result))
+          Swal.fire({
+            text: `Sector "${chosenOption}" has been deleted`,
+          });
+
+          //No alcanza con llamar de nuevo a los sectores para refrescar. Se ve que se tarda mucho en actualizar todo. Voy a hacer el cambio en el front en paralelo.
+          this.sectors = this.sectors.filter(item => item.id !=result.value)
+        }
+      });
+    }
+
 }

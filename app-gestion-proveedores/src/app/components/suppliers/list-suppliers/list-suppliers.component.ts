@@ -17,11 +17,15 @@ export class ListSuppliersComponent implements OnInit{
 
   proveedores : proveedor[] = []
 
+  seeDeleted : boolean = false;
+
+  search : string = ""
+
   ngOnInit(): void {
-    this.createSuppliersList();
+    this.getSuppliers();
   }
 
-  createSuppliersList(){
+  getSuppliers(){
     this.supplierService.getSuppliers().pipe(
       map((supplier)=>{
         return supplier.filter((item : proveedor)=> item.deleted == false)
@@ -29,11 +33,27 @@ export class ListSuppliersComponent implements OnInit{
     ).subscribe( (response) => {
       this.proveedores = response;
     })
+    this.seeDeleted = false;
   } 
 
+  showDeletedSuppliers(){
+    this.supplierService.getSuppliers().pipe(
+      map((supplier)=>{
+        return supplier.filter((item : proveedor)=> item.deleted == true)
+      })
+    ).subscribe( (response) => {
+      this.proveedores = response;
+    })
+    this.seeDeleted = true;
+  }
+
   logicalDeleteSupplier(id:string){
+    let supplier : proveedor | undefined | string = this.proveedores.find(item => item.id == id)
+    if(supplier !== undefined){
+      supplier = supplier.razonSocial
+    }
     Swal.fire({
-      text: "¿Eliminar proveedor?",
+      text: `¿Eliminar proveedor "${supplier}?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -44,7 +64,7 @@ export class ListSuppliersComponent implements OnInit{
       if (result.isConfirmed) {
         this.supplierService.logicalDeleteSupplier(id).subscribe((response)=>{
           console.log(response)
-          this.createSuppliersList()
+          this.getSuppliers()
         })
       }
     });
@@ -55,7 +75,24 @@ export class ListSuppliersComponent implements OnInit{
     if(!selectedSupplier){
       console.log("Error! No supplier found to be edited!")
     } else{
-      this.router.navigate([`proveedores/formulario-proveedores/${selectedSupplier.id}`])
+      if(selectedSupplier.deleted == true){
+        Swal.fire({
+          title: "This supplier is deleted",
+          text: "If you edit this supplier, it will be activated again.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Activate supplier and edit"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigate([`proveedores/formulario-proveedores/${selectedSupplier.id}`])
+          }
+        });
+      }
+      else{
+        this.router.navigate([`proveedores/formulario-proveedores/${selectedSupplier.id}`])
+      }
     }
   }
 

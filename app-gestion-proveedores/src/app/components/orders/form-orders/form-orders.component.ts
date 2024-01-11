@@ -124,15 +124,26 @@ export class FormOrdersComponent implements OnInit{
 
   onClickForm(formularioProveedores:NgForm){
     this.productsInProcessToOrdenProductos()
+    let productsString = ""
+    for(let product of this.orden.productos){
+      productsString = productsString + "<li>" + product.nombreProducto +"</li>"
+    }
     if(formularioProveedores.valid && this.validacionFormulario()){
       Swal.fire({
-        text: "Está a punto de generar una nueva orden. ¿Desea continuar?",
-        icon: "warning",
+        title: "Está a punto de generar una nueva orden. ¿Desea continuar?",
+        icon: "info",
+        html: `
+        <p>Total: ${this.orden.total}</p>
+        <ul>
+          ${productsString}
+        </ul>
+      `,
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Generar orden",
         cancelButtonText: "Cancelar"
+        
       }).then((result) => {
         if (result.isConfirmed) {
           this.confirmarNuevaOrden();

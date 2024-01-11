@@ -43,16 +43,21 @@
             </span>
           </div>   
         </div>
-        <div class="col-md-3">
-          <label for="rubro" class="form-label">Rubro:</label>
-          <input type="text" class="form-control form-control-sm" id="rubro" name="rubro" [(ngModel)]="supplier.rubro" #rubro="ngModel" required>
-          <div *ngIf="rubro.errors?.['required']" class="col-auto">
-            <span class="form-text text-primary">
-                Este campo es requerido
-            </span>
-          </div>   
-        </div>
         <div class="col-md-4">
+          <label for="rubro" class="form-label">Rubro:</label>
+
+              <select class="form-select form-select-sm" aria-label="Default select example" id="rubro" name="rubro" [(ngModel)]="supplier.rubro" #rubro="ngModel" required>
+                <option *ngFor="let sector of sectors" value={{sector.name}}>{{sector.name}}</option>
+              </select>
+              <div *ngIf="rubro.errors?.['required']" class="col-auto">
+                <span class="form-text text-primary">
+                    Este campo es requerido
+                </span>
+              </div>   
+              <div (click)="addSectorModal()" class="btn btn btn-outline-secondary btn-sm m-2">Add a sector</div>
+              <div (click)="deleteSectorModal()" class="btn btn btn-outline-secondary btn-sm">Delete a sector</div>
+        </div>
+        <div class="col-md-3">
           <label for="rubro" class="form-label">Logo (url):</label>
           <input type="text" class="form-control form-control-sm" id="URLlogo" name="URLlogo" [(ngModel)]="supplier.URLlogo">
         </div>
