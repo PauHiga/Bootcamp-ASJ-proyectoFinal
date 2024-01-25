@@ -61,7 +61,7 @@ CREATE TABLE contacts (
 
 CREATE TABLE suppliers (
 	id INT PRIMARY KEY IDENTITY,
-	code VARCHAR(50) NOT NULL,
+	code VARCHAR(50) NOT NULL UNIQUE,
 	business_name VARCHAR(50) NOT NULL,
 	sector_id INT NOT NULL,
 	url_logo VARCHAR(50),
@@ -91,7 +91,7 @@ CREATE TABLE categories (
 
 CREATE TABLE products (
 	id INT PRIMARY KEY IDENTITY,
-	SKU VARCHAR(20) NOT NULL,
+	SKU VARCHAR(20) NOT NULL UNIQUE,
 	name VARCHAR(50) NOT NULL,
 	supplier_id INT NOT NULL,
 	category_id INT NOT NULL,
@@ -112,7 +112,7 @@ CREATE TABLE status(
 
 CREATE TABLE orders(
 	id INT PRIMARY KEY IDENTITY,
-	order_number INT NOT NULL,
+	order_number INT NOT NULL UNIQUE,
     issue_date DATE NOT NULL,
 	delivery_date DATE NOT NULL,
 	details VARCHAR(500),

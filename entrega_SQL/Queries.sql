@@ -81,11 +81,11 @@ ORDER BY suppliers.business_name, suppliers.code, suppliers.created_at
 
 --Como todos los proveedores tienen una sola orden, primero voy a crear una nueva orden de compra para el proveedor 1 y para el proveedor 2 para que aparezcan en el select:
 
-INSERT INTO orders (order_number, issue_date, delivery_date, details, supplier_id, status_id, created_at, updated_at) VALUES
-  (11245, '2024-01-10', '2024-01-20', null, 1, 1, '2024-01-10', null);
+--INSERT INTO orders (order_number, issue_date, delivery_date, details, supplier_id, status_id, created_at, updated_at) VALUES
+--  (11245, '2024-01-10', '2024-01-20', null, 1, 1, '2024-01-10', null);
 
-INSERT INTO orders (order_number, issue_date, delivery_date, details, supplier_id, status_id, created_at, updated_at) VALUES
-  (1125, '2024-01-10', '2024-01-20', null, 2, 1, '2024-01-10', null);
+--INSERT INTO orders (order_number, issue_date, delivery_date, details, supplier_id, status_id, created_at, updated_at) VALUES
+--  (1125, '2024-01-10', '2024-01-20', null, 2, 1, '2024-01-10', null);
 
 
 SELECT 
