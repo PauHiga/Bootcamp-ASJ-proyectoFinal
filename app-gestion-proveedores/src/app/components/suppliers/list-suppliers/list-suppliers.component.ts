@@ -4,6 +4,7 @@ import { SupplierServiceService } from '../../../services/supplier-service.servi
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import Swal from 'sweetalert2';
+import { Supplier } from '../../../models/supplier';
 
 
 @Component({
@@ -26,26 +27,21 @@ export class ListSuppliersComponent implements OnInit{
   }
 
   getSuppliers(){
-    this.supplierService.getSuppliers().pipe(
-      map((supplier)=>{
-        return supplier.filter((item : proveedor)=> item.deleted == false)
-      })
-    ).subscribe( (response) => {
-      console.log(response);
+    this.supplierService.getSuppliers().subscribe( (response) => {
       this.proveedores = response;
     })
     this.seeDeleted = false;
   } 
 
   showDeletedSuppliers(){
-    this.supplierService.getSuppliers().pipe(
-      map((supplier)=>{
-        return supplier.filter((item : proveedor)=> item.deleted == true)
-      })
-    ).subscribe( (response) => {
-      this.proveedores = response;
-    })
-    this.seeDeleted = true;
+    // this.supplierService.getSuppliers().pipe(
+    //   map((supplier)=>{
+    //     return supplier.filter((item : proveedor)=> item.deleted == true)
+    //   })
+    // ).subscribe( (response) => {
+    //   this.proveedores = response;
+    // })
+    // this.seeDeleted = true;
   }
 
   logicalDeleteSupplier(id:string){
