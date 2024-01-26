@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.SupplierDTO;
-import com.example.demo.models.Country;
+import com.example.demo.models.Address;
+import com.example.demo.models.Contact;
 import com.example.demo.models.Sector;
 import com.example.demo.models.Supplier;
 import com.example.demo.models.VATCondition;
@@ -30,6 +31,12 @@ public class SupplierService {
 	@Autowired
 	VATConditionRepository vatConditionRepository;
 	
+	@Autowired
+	AddressService addressService;
+	
+	@Autowired
+	ContactService contactService;
+	
 	public List<Supplier> getSupplieres(){
 		return supplierRepository.findAll();
 	}
@@ -38,10 +45,15 @@ public class SupplierService {
 		return supplierRepository.findById(id);
 	}
 	
+	public SupplierDTO returnSupplier(SupplierDTO supplierDTO) {
+		return supplierDTO;
+	}
+	
 	public Supplier createSupplier(SupplierDTO supplierDTO) {
 		Supplier newSupplier = new Supplier();
 		newSupplier.setCode(supplierDTO.getCode());
-		newSupplier.setBusiness_name(supplierDTO.getBusinessName());
+		
+		newSupplier.setBusiness_name(supplierDTO.getBusiness_name());
 		newSupplier.setUrl_logo(supplierDTO.getUrlLogo());
 		newSupplier.setCuit(supplierDTO.getCuit());
 		newSupplier.setEmail(supplierDTO.getEmail());
@@ -50,27 +62,31 @@ public class SupplierService {
 		newSupplier.setDeleted(supplierDTO.isDeleted());
 		newSupplier.setCreatedAt(LocalDate.now());
 		
-		Sector sector = sectorRepository.findByName(supplierDTO.getSectorName())
+		Sector sector = sectorRepository.findByName(supplierDTO.getSector())
 				.orElseGet(()->{
 					Sector newSector =  new Sector();
-					newSector.setName(supplierDTO.getSectorName());
-					return newSector;
+					newSector.setName(supplierDTO.getSector());
+					newSector.setCreatedAt(LocalDate.now());
+					newSector.setDeleted(false);
+					return sectorRepository.save(newSector);
 				});
 		
 		newSupplier.setSector(sector);
 		
-		VATCondition vatCondition = vatConditionRepository.findByName(supplierDTO.getVatConditionName())
+		VATCondition vatCondition = vatConditionRepository.findByName(supplierDTO.getVatCondition())
 				.orElseGet(()->{
 					VATCondition newVatCondition =  new VATCondition();
-					newVatCondition.setName(supplierDTO.getVatConditionName());
-					return newVatCondition;
+					newVatCondition.setName(supplierDTO.getVatCondition());
+					return vatConditionRepository.save(newVatCondition);
 				});
 		
 		newSupplier.setVATCondition(vatCondition);
-		
-		
-		
 
+		Address address = addressService.createAddress(supplierDTO.getAddress());
+		newSupplier.setAddress(address);
+		
+		Contact contact = contactService.createContact(supplierDTO.getContact());
+		newSupplier.setContact(contact);
 		
 		supplierRepository.save(newSupplier);
 		return newSupplier;

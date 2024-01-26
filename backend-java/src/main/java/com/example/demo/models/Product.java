@@ -57,7 +57,7 @@ public class Product {
 	private LocalDate updatedAt;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "supplier_id", referencedColumnName = "id", insertable = false, updatable = false, nullable=false)
+	@JoinColumn(name = "supplier_id", referencedColumnName = "id", nullable=false)
 	@NotNull(message = "The supplier cannot be null")
 	private Supplier supplier;
     

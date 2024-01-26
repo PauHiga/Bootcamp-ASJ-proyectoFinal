@@ -9,7 +9,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "provinces")
 public class Province {
@@ -22,47 +30,8 @@ public class Province {
 	private String name;
 	
 	@ManyToOne
-	@JoinColumn(name = "country_id", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
+	@JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
 	@NotNull(message = "The country cannot be null")
 	private Country country;
-
-	public Province(Integer id, @NotNull(message = "The province name cannot be null") String name,
-			@NotNull(message = "The country_id cannot be null") Integer country_id, Country country) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.country = country;
-	}
-
-	public Province() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Country getCountry() {
-		return country;
-	}
-
-	public void setCountry(Country country) {
-		this.country = country;
-	}
-    
-    
     
 }

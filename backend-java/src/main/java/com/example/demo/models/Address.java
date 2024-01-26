@@ -39,7 +39,7 @@ public class Address {
 	private String postal_code;
 	
 	@ManyToOne
-	@JoinColumn(name = "locality_id", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
+	@JoinColumn(name = "locality_id", referencedColumnName = "id", nullable = false)
 	@NotNull(message = "The locality cannot be null")
 	private Locality locality;
     

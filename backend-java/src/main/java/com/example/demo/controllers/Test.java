@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.ProvinceDTO;
 import com.example.demo.models.Country;
 import com.example.demo.models.Province;
 import com.example.demo.services.CountryService;
@@ -43,8 +44,8 @@ public class Test {
 	}
 	
 	@PostMapping("/provinces")
-	public ResponseEntity<Province> createSupplier(@RequestBody Province province){
-		return ResponseEntity.ok(provinceService.createProvince(province));
+	public ResponseEntity<Province> createSupplier(@RequestBody ProvinceDTO provinceDTO){
+		return ResponseEntity.ok(provinceService.createProvince(provinceDTO));
 	}
 	
 	@GetMapping("/countries")

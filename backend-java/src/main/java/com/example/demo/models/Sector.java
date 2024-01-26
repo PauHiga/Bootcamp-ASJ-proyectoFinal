@@ -25,7 +25,7 @@ public class Sector {
 	private Integer id;
 	
 	@Column(unique = true, length = 50, nullable = false)
-	@NotNull(message = "The name cannot be null")
+	@NotNull(message = "The sector name cannot be null")
 	private String name;
     
 	@Column(name = "created_at", nullable = false)

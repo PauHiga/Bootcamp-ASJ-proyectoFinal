@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.ProvinceDTO;
 import com.example.demo.models.Country;
 import com.example.demo.models.Province;
 import com.example.demo.repositories.CountryRepository;
@@ -25,23 +26,24 @@ public class ProvinceService {
 		return provinceRepository.findById(id);
 	}
 	
-	public Province createProvince(Province province) {
-		System.out.println(province);
-		//		provinceRepository.save(province);
-		
-		// Check if the associated country exists
-        Country country = countryRepository.findByName(province.getName())
-                .orElseGet(() -> {
-                    // If the country doesn't exist, create a new one
-                    Country newCountry = new Country();
-                    newCountry.setName(province.getCountry().getName());
-                    return countryRepository.save(newCountry);
-                });
-
-        // Set the country for the city
-        province.setCountry(country);
-
-        // Save the city
-        return provinceRepository.save(province);
+	public Province createProvince(ProvinceDTO provinceDTO) {
+		Country country = countryRepository.findByName(provinceDTO.getCountry())
+				.orElseGet(()->{
+					Country newCountry =  new Country();
+					newCountry.setName(provinceDTO.getCountry());
+					return countryRepository.save(newCountry);
+				});
+		System.out.println(country.getName());
+		Province province = provinceRepository.findByName(provinceDTO.getProvince())
+				.orElseGet(()->{
+					Province newProvince =  new Province();
+					newProvince.setName(provinceDTO.getProvince());
+					newProvince.setCountry(country);
+					System.out.println(newProvince.getCountry().getName());
+					System.out.println(newProvince.getCountry().getId());
+					return provinceRepository.save(newProvince);
+				});
+		return province;
 	}
+	
 }

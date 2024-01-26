@@ -54,7 +54,7 @@ public class Order {
 	private LocalDate updatedAt;
     
 	@ManyToOne
-	@JoinColumn(name = "supplier_id", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
+	@JoinColumn(name = "supplier_id", referencedColumnName = "id", nullable = false)
 	@NotNull(message = "The supplier cannot be null")
 	private Supplier supplier;
     

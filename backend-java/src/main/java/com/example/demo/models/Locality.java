@@ -10,6 +10,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "localities")
 public class Locality {
@@ -22,46 +31,7 @@ public class Locality {
 	private String name;
 	
 	@ManyToOne
-	@JoinColumn(name = "province_id", referencedColumnName = "id", insertable = false, updatable = false, nullable = false)
+	@JoinColumn(name = "province_id", referencedColumnName = "id", nullable = false)
 	@NotNull(message = "The province cannot be null")
 	private Province province;
-
-	public Locality(Integer id, @NotNull(message = "The locality name cannot be null") String name,
-			@NotNull(message = "The province_id cannot be null") Integer province_id, Province province) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.province = province;
-	}
-
-	public Locality() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Province getProvince() {
-		return province;
-	}
-
-	public void setProvince(Province province) {
-		this.province = province;
-	}
-    
-    
 }

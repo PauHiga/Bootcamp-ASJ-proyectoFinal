@@ -29,6 +29,11 @@ public class SupplierController {
 		return ResponseEntity.ok(supplierService.getSupplieres());
 	}
 	
+	@PostMapping("/dto")
+	public ResponseEntity<SupplierDTO> returnSupplier(@RequestBody SupplierDTO supplierDTO){
+		return ResponseEntity.ok(supplierService.returnSupplier(supplierDTO));
+	}
+	
 	@PostMapping()
 	public ResponseEntity<Object> createSupplier(@RequestBody SupplierDTO supplierDTO){
 		try {
@@ -38,5 +43,6 @@ public class SupplierController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating supplier: " + e.getMessage());			
 		}
 	}
+
 	
 }
