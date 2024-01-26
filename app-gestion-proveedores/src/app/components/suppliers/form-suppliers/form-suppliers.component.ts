@@ -58,6 +58,7 @@ export class FormSuppliersComponent implements OnInit{
   suppliersList : proveedor[] = [];
 
   sectors : any[] = []
+  vatConditions : String[] = []
 
   countries : any[] = []
   states : any[] = []
@@ -77,6 +78,7 @@ export class FormSuppliersComponent implements OnInit{
     this.getCountries()
     this.getSectors();
     this.getProveedores();
+    this.getVatCondition();
     if(this.parametroURL) {
       this.tituloFormulario = "Editar Proveedor";
       this.getASupplier(this.parametroURL);
@@ -96,6 +98,13 @@ export class FormSuppliersComponent implements OnInit{
   getSectors(){
     this.supplierService.getSectors().subscribe((response)=>{
       this.sectors = response.filter((item: any)=> item.deleted == 0);
+    })
+  }
+
+  getVatCondition(){
+    this.supplierService.getVatCondition().subscribe((response)=>{
+      console.log(response);
+      this.vatConditions = response;
     })
   }
 

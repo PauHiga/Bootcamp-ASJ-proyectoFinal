@@ -13,15 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.SectorDTO;
-import com.example.demo.dto.SupplierDTO;
 import com.example.demo.models.Sector;
-import com.example.demo.models.Supplier;
 import com.example.demo.services.SectorService;
-import com.example.demo.services.SupplierService;
 
 @RestController
 @RequestMapping("/sectors")
-@CrossOrigin(origins = "http://localhost:4200")
 public class SectorController {
 	
 	@Autowired

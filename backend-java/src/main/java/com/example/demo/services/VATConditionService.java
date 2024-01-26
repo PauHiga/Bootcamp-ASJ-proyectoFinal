@@ -2,6 +2,8 @@ package com.example.demo.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.demo.models.VATCondition;
@@ -12,8 +14,12 @@ public class VATConditionService {
 	@Autowired
 	VATConditionRepository vatConditionRepository;
 	
-	public List<VATCondition> getVATConditiones(){
-		return vatConditionRepository.findAll();
+	public List<String> getVATConditions(){
+		List<VATCondition> listOfVAT = vatConditionRepository.findAll();
+        List<String> namesList = listOfVAT.stream()
+                .map(VATCondition::getName)
+                .collect(Collectors.toList());
+        return namesList;
 	}
 	
 	public Optional<VATCondition> getVATConditionesById(int id) {

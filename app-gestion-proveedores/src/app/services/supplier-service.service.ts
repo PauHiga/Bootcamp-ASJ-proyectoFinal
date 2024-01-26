@@ -16,6 +16,7 @@ export class SupplierServiceService {
 
   URL_API = 'http://localhost:8080/suppliers'
   URL_API_SECTOR = 'http://localhost:8080/sectors'
+  URL_API_VAT = 'http://localhost:8080/vat-conditions'
 
   getSuppliers() : Observable<proveedor[]>{
     return this.http.get<Supplier[]>(this.URL_API).pipe(
@@ -145,6 +146,10 @@ export class SupplierServiceService {
 
   getSectors() : Observable<any>{
     return this.http.get<any>(this.URL_API_SECTOR);
+  }
+
+  getVatCondition() : Observable<any>{
+    return this.http.get<any>(this.URL_API_VAT);
   }
 
   saveSector(sectorToSave : any) : Observable<any>{
