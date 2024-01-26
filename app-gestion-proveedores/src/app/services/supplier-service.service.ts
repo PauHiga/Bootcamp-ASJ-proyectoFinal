@@ -21,7 +21,6 @@ export class SupplierServiceService {
   getSuppliers() : Observable<proveedor[]>{
     return this.http.get<Supplier[]>(this.URL_API).pipe(
       map((supplier)=>{
-        console.log(supplier[1].url_logo);
         const filteredSupplier = supplier.filter((item : Supplier)=> item.deleted == false)
         const adaptedSupplier : proveedor[] = filteredSupplier.map((item : Supplier) => {
           const adaptedItem : proveedor  = {

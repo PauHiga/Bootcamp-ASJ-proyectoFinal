@@ -82,7 +82,7 @@
         <div class="col-md-6">
           <label for="condicionIva" class="form-label">Condicion IVA:</label>
           <select class="form-select form-select-sm" aria-label="Default select example" id="condicionIva" name="condicionIva" [(ngModel)]="supplier.condicionIva" #condicionIva="ngModel" required>
-            <option *ngFor="let condicion of condicionesAfip" value="{{condicion}}">{{condicion}}</option>
+            <option *ngFor="let condition of vatConditions" value="{{condition}}">{{condition}}</option>
           </select>
           <div *ngIf="condicionIva.errors?.['required']" class="col-auto">
             <span class="form-text text-primary">

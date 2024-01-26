@@ -47,14 +47,6 @@ export class FormSuppliersComponent implements OnInit{
     deleted: false,
   }
 
-  condicionesAfip : string[] = [
-    "IVA Responsable Inscripto",
-    "IVA no Responsable",
-    "IVA exento",
-    "Responsable Monotributo",
-    "Monotributista Social"
-  ]
-
   suppliersList : proveedor[] = [];
 
   sectors : any[] = []
@@ -91,6 +83,7 @@ export class FormSuppliersComponent implements OnInit{
 
   getProveedores(){
     this.supplierService.getSuppliers().subscribe((response)=>{
+      console.log(response);
       this.suppliersList = response;
     })
   }
@@ -103,7 +96,6 @@ export class FormSuppliersComponent implements OnInit{
 
   getVatCondition(){
     this.supplierService.getVatCondition().subscribe((response)=>{
-      console.log(response);
       this.vatConditions = response;
     })
   }
