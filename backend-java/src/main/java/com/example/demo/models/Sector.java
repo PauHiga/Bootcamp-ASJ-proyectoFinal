@@ -24,7 +24,7 @@ public class Sector {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(unique = true, length = 50, nullable = false)
+	@Column(length = 50, nullable = false)
 	@NotNull(message = "The sector name cannot be null")
 	private String name;
     

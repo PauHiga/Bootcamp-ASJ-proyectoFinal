@@ -91,7 +91,7 @@ export class FormSuppliersComponent implements OnInit{
 
   getSectors(){
     this.sectorService.getSectors().subscribe((response)=>{
-      this.sectors = response.filter((item: any)=> item.deleted == 0);
+      this.sectors = response.filter((item: any)=> item.deleted == false);
     })
   }
 
@@ -275,7 +275,7 @@ export class FormSuppliersComponent implements OnInit{
       inputValidator: (value): any => {
         if (value == '') {
           return "You need to write something!";
-        } else if (this.sectors.some(item => item.name.toUpperCase() === value.toUpperCase())){
+        } else if (this.sectors.some(item => (item.name.toUpperCase() === value.toUpperCase()) && item.deleted==false )){
           return "That sector name already exists!";
         }
       }
@@ -319,7 +319,6 @@ export class FormSuppliersComponent implements OnInit{
           Swal.fire({
             text: `Sector "${chosenOption}" has been deleted`,
           });
-
           //No alcanza con llamar de nuevo a los sectores para refrescar. Se ve que se tarda mucho en actualizar todo. Voy a hacer el cambio en el front en paralelo.
           this.sectors = this.sectors.filter(item => item.id !=result.value)
         }

@@ -24,16 +24,23 @@ public class SectorService {
 	}
 	
 	public Sector createSector(SectorDTO sectorDTO) {
-		Sector sector = sectorRepository.findByName(sectorDTO.getName())
-				.orElseGet(()->{
-					Sector newSector =  new Sector();
-					newSector.setName(sectorDTO.getName());
-					newSector.setCreatedAt(LocalDate.now());
-					newSector.setDeleted(false);
-					return sectorRepository.save(newSector);
-				});
-		return sector;
+			Sector newSector =  new Sector();
+			newSector.setName(sectorDTO.getName());
+			newSector.setCreatedAt(LocalDate.now());
+			newSector.setDeleted(false);
+			return sectorRepository.save(newSector);
+
+//		Sector sector = sectorRepository.findByName(sectorDTO.getName())
+//				.orElseGet(()->{
+//					Sector newSector =  new Sector();
+//					newSector.setName(sectorDTO.getName());
+//					newSector.setCreatedAt(LocalDate.now());
+//					newSector.setDeleted(false);
+//					return sectorRepository.save(newSector);
+//				});
+//		return sector;
 	}
+	
 	public Sector editSector(Integer id, SectorDTO sectorDTO) {
 		Sector sector = sectorRepository.findById(id).get();
 		if (sector != null) {
