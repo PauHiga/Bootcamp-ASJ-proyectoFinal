@@ -34,7 +34,8 @@ export class ProductsServiceService implements OnInit {
     return this.http.get(this.URL_API + "/" + id);
   }
 
-  saveProduct() : Observable<any>{    
+  saveProduct() : Observable<any>{   
+    console.log(this.product); 
     return this.http.post(this.URL_API, this.product);
   }
 

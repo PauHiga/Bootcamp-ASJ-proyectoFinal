@@ -16,8 +16,8 @@
     <h3>Datos generales</h3>
       <div class="row">
         <div class="col-md-2">
-          <label for="razonSocial" class="form-label">Codigo:</label>
-          <input type="text" (keyup)="supplierCodeIsUnique($event)" [disabled]="disabledInEdit" class="form-control form-control-sm" name="codigo" [(ngModel)]="supplier.codigo" #codigo="ngModel" minlength="4" required>  
+          <label for="codigo"  class="form-label">Codigo:</label>
+          <input type="text" id="codigo" (keyup)="supplierCodeIsUnique($event)" [disabled]="disabledInEdit" class="form-control form-control-sm" name="codigo" [(ngModel)]="supplier.codigo" #codigo="ngModel" minlength="4" required>  
           <div *ngIf="(!validCode  || codigo.errors?.['minlength']) && !codigo.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
                 Debe tener al menos 4 caracteres alfanuméricos
@@ -58,8 +58,8 @@
               <div (click)="deleteSectorModal()" class="btn btn btn-outline-secondary btn-sm">Delete a sector</div>
         </div>
         <div class="col-md-3">
-          <label for="rubro" class="form-label">Logo (url):</label>
-          <input type="text" class="form-control form-control-sm" id="URLlogo" name="URLlogo" [(ngModel)]="supplier.URLlogo">
+          <label for="URLlogo" class="form-label">Logo (url):</label>
+          <input type="text" maxlength="1500" class="form-control form-control-sm" id="URLlogo" name="URLlogo" [(ngModel)]="supplier.URLlogo">
         </div>
       </div>
     

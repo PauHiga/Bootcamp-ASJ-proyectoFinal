@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.SupplierDTO;
+import com.example.demo.models.Category;
 import com.example.demo.models.Supplier;
 import com.example.demo.services.SupplierService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/suppliers")
-
 public class SupplierController {
 	
 	@Autowired
@@ -33,8 +33,13 @@ public class SupplierController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Supplier>> getSupplier(@PathVariable Integer id){
-		return ResponseEntity.ok(supplierService.getSupplierById(id));
+	public ResponseEntity<Supplier> getSectorById(@PathVariable Integer id){
+		Optional<Supplier> optionalSupplier = supplierService.getSupplierById(id);
+		if (optionalSupplier.isPresent()) {
+			return ResponseEntity.ok(optionalSupplier.get());
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 	
 //	@PostMapping("/dto")

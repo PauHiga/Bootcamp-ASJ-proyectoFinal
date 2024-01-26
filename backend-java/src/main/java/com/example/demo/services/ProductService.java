@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+//import com.example.demo.controllers.ProductDTO;
 import com.example.demo.models.Product;
 import com.example.demo.repositories.ProductRepository;
 
@@ -20,8 +22,8 @@ public class ProductService {
 		return productRepository.findById(id);
 	}
 	
-	public Product createProduct(Product product) {
-		productRepository.save(product);
-		return product;
-	}
+//	public Product createProduct(ProductDTO productDTO) {
+//		productRepository.save(productDTO);
+//		return product;
+//	}
 }

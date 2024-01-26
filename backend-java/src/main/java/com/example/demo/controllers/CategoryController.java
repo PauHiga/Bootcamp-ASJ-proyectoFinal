@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.CategoryDTO;
 import com.example.demo.models.Category;
-import com.example.demo.models.VideoModel;
 import com.example.demo.services.CategoryService;
 
 @RestController

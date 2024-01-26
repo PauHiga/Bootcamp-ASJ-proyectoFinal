@@ -31,9 +31,15 @@ public class SectorController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Sector>> getSectorById(@PathVariable Integer id){
-		return ResponseEntity.ok(sectorService.getSectorById(id));
+	public ResponseEntity<Sector> getSectorById(@PathVariable Integer id){
+		Optional<Sector> optionalSector =sectorService.getSectorById(id);
+		if(optionalSector.isPresent()) {
+			return ResponseEntity.ok(optionalSector.get());
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
+	
 	
 	@PostMapping()
 	public ResponseEntity<Object> createSector(@RequestBody SectorDTO sectorDTO){
