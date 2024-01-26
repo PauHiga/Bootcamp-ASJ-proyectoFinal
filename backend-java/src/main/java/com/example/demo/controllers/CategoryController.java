@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.CategoryDTO;
-import com.example.demo.dto.SectorDTO;
 import com.example.demo.models.Category;
-import com.example.demo.models.Sector;
+import com.example.demo.models.VideoModel;
 import com.example.demo.services.CategoryService;
-import com.example.demo.services.SectorService;
 
 @RestController
 @RequestMapping("/categories")
@@ -34,8 +32,13 @@ public class CategoryController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Category>> getSectorById(@PathVariable Integer id){
-		return ResponseEntity.ok(categoryService.getCategoryById(id));
+	public ResponseEntity<Category> getSectorById(@PathVariable Integer id){
+		Optional<Category> optionalCategory = categoryService.getCategoryById(id);
+		if (optionalCategory.isPresent()) {
+			return ResponseEntity.ok(optionalCategory.get());
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 	
 	@PostMapping()
@@ -51,7 +54,7 @@ public class CategoryController {
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> editSector(@PathVariable Integer id, @RequestBody CategoryDTO categoryDTO){
 		try {
-			return ResponseEntity.ok(categoryService.editSector(id, categoryDTO));
+			return ResponseEntity.ok(categoryService.editCategory(id, categoryDTO));
 		}
 		catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error editing sector: " + e.getMessage());			
