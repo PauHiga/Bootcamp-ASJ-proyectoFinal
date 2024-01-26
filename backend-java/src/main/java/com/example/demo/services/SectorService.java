@@ -19,7 +19,7 @@ public class SectorService {
 		return sectorRepository.findAll();
 	}
 	
-	public Optional<Sector> getSectoresById(int id) {
+	public Optional<Sector> getSectorById(int id) {
 		return sectorRepository.findById(id);
 	}
 	
@@ -32,6 +32,17 @@ public class SectorService {
 					newSector.setDeleted(false);
 					return sectorRepository.save(newSector);
 				});
+		return sector;
+	}
+	public Sector editSector(Integer id, SectorDTO sectorDTO) {
+		Sector sector = sectorRepository.findById(id).get();
+		if (sector != null) {
+			sector.setUpdatedAt(LocalDate.now());
+			sector.setDeleted(sectorDTO.getDeleted());
+			sector.setName(sectorDTO.getName());
+			sectorRepository.save(sector);
+			return sector;
+		}
 		return sector;
 	}
 }

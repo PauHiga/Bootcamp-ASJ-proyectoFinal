@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { proveedor } from '../../../models/proveedores';
 import { CountryStateCityService } from '../../../services/country-state-city.service';
 import Swal from 'sweetalert2'
+import { SectorService } from '../../../services/sector.service';
 
 @Component({
   selector: 'app-form-suppliers',
@@ -13,7 +14,7 @@ import Swal from 'sweetalert2'
 })
 export class FormSuppliersComponent implements OnInit{
 
-  constructor(public supplierService: SupplierServiceService, private countryService: CountryStateCityService, private route:ActivatedRoute, private router:Router){}
+  constructor(public supplierService: SupplierServiceService, private sectorService: SectorService, private countryService: CountryStateCityService, private route:ActivatedRoute, private router:Router){}
 
   parametroURL : string = this.route.snapshot.params['edit'] || false;
   tituloFormulario = "Agregar Proveedor"
@@ -89,7 +90,7 @@ export class FormSuppliersComponent implements OnInit{
   }
 
   getSectors(){
-    this.supplierService.getSectors().subscribe((response)=>{
+    this.sectorService.getSectors().subscribe((response)=>{
       this.sectors = response.filter((item: any)=> item.deleted == 0);
     })
   }
@@ -281,11 +282,13 @@ export class FormSuppliersComponent implements OnInit{
     }).then((result) => {
       const exists = this.sectors.some(item => item.name === result.value);
       if (result.isConfirmed && !exists) {
-        this.supplierService.saveSector(result.value).subscribe((result)=> console.log(result))
+        this.sectorService.saveSector(result.value).subscribe((result)=> {
+          this.getSectors();
+        })
         Swal.fire({
           text: `The sector "${result.value}" has been saved`,
         });
-        this.getSectors();
+
       }
     });
   }
@@ -310,7 +313,9 @@ export class FormSuppliersComponent implements OnInit{
       }).then((result) => {
         if (result.isConfirmed && result.value != '') {
           const chosenOption = this.sectors.find(item => item.id == result.value).name
-          this.supplierService.logicalDeleteSector(result.value).subscribe((result)=> console.log(result))
+          this.sectorService.logicalDeleteSector(result.value).subscribe((result)=> {
+            console.log(result);
+          })
           Swal.fire({
             text: `Sector "${chosenOption}" has been deleted`,
           });
