@@ -31,6 +31,7 @@ export class ListSuppliersComponent implements OnInit{
         return supplier.filter((item : proveedor)=> item.deleted == false)
       })
     ).subscribe( (response) => {
+      console.log(response);
       this.proveedores = response;
     })
     this.seeDeleted = false;

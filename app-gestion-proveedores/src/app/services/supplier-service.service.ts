@@ -10,8 +10,8 @@ export class SupplierServiceService {
 
   constructor(private http:HttpClient) { }
 
-  URL_API = 'http://localhost:3000/suppliers'
-  URL_API_SECTOR = 'http://localhost:3000/sectors'
+  URL_API = 'http://localhost:8080/suppliers'
+  URL_API_SECTOR = 'http://localhost:8080/sectors'
 
   getSuppliers() : Observable<proveedor[]>{
     return this.http.get<proveedor[]>(this.URL_API);
