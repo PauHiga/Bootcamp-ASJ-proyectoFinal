@@ -20,6 +20,7 @@ export class SupplierServiceService {
   getSuppliers() : Observable<proveedor[]>{
     return this.http.get<Supplier[]>(this.URL_API).pipe(
       map((supplier)=>{
+        console.log(supplier[1].url_logo);
         const filteredSupplier = supplier.filter((item : Supplier)=> item.deleted == false)
         const adaptedSupplier : proveedor[] = filteredSupplier.map((item : Supplier) => {
           const adaptedItem : proveedor  = {
@@ -27,7 +28,7 @@ export class SupplierServiceService {
             codigo: item.code,
             razonSocial: item.business_name,
             rubro: item.sector,
-            URLlogo: item.urlLogo,
+            URLlogo: item.url_logo,
             CUIT: item.cuit,
             condicionIva: item.vatCondition,
             email: item.email,
@@ -64,7 +65,7 @@ export class SupplierServiceService {
             codigo: supplier.code,
             razonSocial: supplier.business_name,
             rubro: supplier.sector.name,
-            URLlogo: supplier.urlLogo,
+            URLlogo: supplier.url_logo,
             CUIT: supplier.cuit,
             condicionIva: supplier.vatcondition.name,
             email: supplier.email,

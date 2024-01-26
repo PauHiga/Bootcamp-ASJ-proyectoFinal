@@ -29,19 +29,20 @@ export class ListSuppliersComponent implements OnInit{
   getSuppliers(){
     this.supplierService.getSuppliers().subscribe( (response) => {
       this.proveedores = response;
+      console.log(response);
     })
     this.seeDeleted = false;
   } 
 
   showDeletedSuppliers(){
-    // this.supplierService.getSuppliers().pipe(
-    //   map((supplier)=>{
-    //     return supplier.filter((item : proveedor)=> item.deleted == true)
-    //   })
-    // ).subscribe( (response) => {
-    //   this.proveedores = response;
-    // })
-    // this.seeDeleted = true;
+    this.supplierService.getSuppliers().pipe(
+      map((supplier)=>{
+        return supplier.filter((item : proveedor)=> item.deleted == true)
+      })
+    ).subscribe( (response) => {
+      this.proveedores = response;
+    })
+    this.seeDeleted = true;
   }
 
   logicalDeleteSupplier(id:string){

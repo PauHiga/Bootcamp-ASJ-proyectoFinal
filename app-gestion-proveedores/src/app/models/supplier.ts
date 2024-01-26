@@ -6,7 +6,7 @@ export interface Supplier {
     code: string,
     business_name: string,
     sector: string,
-    urlLogo: string,
+    url_logo: string,
     cuit: string,
     vatCondition: string,
     email: string,
