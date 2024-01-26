@@ -37,7 +37,7 @@ public class Supplier {
 	@NotNull(message = "The business name cannot be null")
 	private String business_name;
 	
-	@Column(length = 200)
+	@Column(length = 1500)
 	private String url_logo;
 	
 	@Column(length = 13, nullable = false)

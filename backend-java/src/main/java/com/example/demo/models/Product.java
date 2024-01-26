@@ -43,7 +43,7 @@ public class Product {
 	@NotNull(message = "The price cannot be null")
 	private Integer price;
 	
-	@Column(length = 200)
+	@Column(length = 1500)
 	private String url_image;
 	
 	@Column(columnDefinition = "BIT", nullable = false)

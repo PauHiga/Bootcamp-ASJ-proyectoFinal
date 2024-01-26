@@ -3,6 +3,9 @@ import { proveedor } from '../models/proveedores';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, switchMap } from 'rxjs';
 import { Supplier } from '../models/supplier';
+import { Address } from '../models/address';
+import { Contact } from '../models/contact';
+import { SupplierCreate } from '../models/supplierCreate';
 
 @Injectable({
   providedIn: 'root'
@@ -89,8 +92,40 @@ export class SupplierServiceService {
       );
     }
     
-  saveSupplier(supplierToSave : proveedor) : Observable<proveedor>{    
-    return this.http.post<proveedor>(this.URL_API, supplierToSave);
+  saveSupplier(supplierToSave : proveedor) : Observable<proveedor>{  
+
+    const contact : Contact = {
+      first_name: supplierToSave.contacto.nombre,
+      last_name: supplierToSave.contacto.apellido,
+      email: supplierToSave.contacto.email,
+      phone: supplierToSave.contacto.telefono,
+      role: supplierToSave.contacto.rol
+    }
+
+    const address : Address = {
+      street: supplierToSave.direccion.calle,
+      number: supplierToSave.direccion.altura,
+      postal_code: supplierToSave.direccion.CP,
+      country: supplierToSave.direccion.pais,
+      province: supplierToSave.direccion.provincia,
+      locality: supplierToSave.direccion.localidad
+    }
+
+    const sendSupplier : SupplierCreate = {
+      code: supplierToSave.codigo,
+      business_name: supplierToSave.razonSocial,
+      sector: supplierToSave.rubro,
+      urlLogo: supplierToSave.URLlogo,
+      cuit: supplierToSave.CUIT,
+      vatCondition: supplierToSave.condicionIva,
+      email: supplierToSave.email,
+      phone: supplierToSave.telefono,
+      web: supplierToSave.web,
+      address: address,
+      contact: contact
+  }
+    console.log(sendSupplier);  
+    return this.http.post<proveedor>(this.URL_API, sendSupplier);
   }
 
   editSupplier(supplierToEdit : proveedor, id: string){
