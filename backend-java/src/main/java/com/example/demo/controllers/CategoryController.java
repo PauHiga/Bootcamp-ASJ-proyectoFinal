@@ -14,31 +14,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.CategoryDTO;
 import com.example.demo.dto.SectorDTO;
+import com.example.demo.models.Category;
 import com.example.demo.models.Sector;
+import com.example.demo.services.CategoryService;
 import com.example.demo.services.SectorService;
 
 @RestController
-@RequestMapping("/sectors")
-public class SectorController {
-	
+@RequestMapping("/categories")
+public class CategoryController {
+
 	@Autowired
-	SectorService sectorService;
+	CategoryService categoryService;
 
 	@GetMapping()
-	public ResponseEntity<List<Sector>> getSectors(){
-		return ResponseEntity.ok(sectorService.getSectores());
+	public ResponseEntity<List<Category>> getSectors(){
+		return ResponseEntity.ok(categoryService.getCategories());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Sector>> getSectorById(@PathVariable Integer id){
-		return ResponseEntity.ok(sectorService.getSectorById(id));
+	public ResponseEntity<Optional<Category>> getSectorById(@PathVariable Integer id){
+		return ResponseEntity.ok(categoryService.getCategoryById(id));
 	}
 	
 	@PostMapping()
-	public ResponseEntity<Object> createSector(@RequestBody SectorDTO sectorDTO){
+	public ResponseEntity<Object> createSector(@RequestBody CategoryDTO categoryDTO){
 		try {
-			return ResponseEntity.ok(sectorService.createSector(sectorDTO));
+			return ResponseEntity.ok(categoryService.createCategory(categoryDTO));
 		}
 		catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating sector: " + e.getMessage());			
@@ -46,9 +49,9 @@ public class SectorController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> editSector(@PathVariable Integer id, @RequestBody SectorDTO sectorDTO){
+	public ResponseEntity<Object> editSector(@PathVariable Integer id, @RequestBody CategoryDTO categoryDTO){
 		try {
-			return ResponseEntity.ok(sectorService.editSector(id, sectorDTO));
+			return ResponseEntity.ok(categoryService.editSector(id, categoryDTO));
 		}
 		catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error editing sector: " + e.getMessage());			

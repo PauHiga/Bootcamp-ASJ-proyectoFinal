@@ -13,9 +13,7 @@ export class ProductsServiceService implements OnInit {
   ngOnInit(): void {
   }
 
-  URL_API = 'http://localhost:3000/products'
-  URL_API_S = 'http://localhost:3000/suppliers'
-  URL_API_CATEGORIES = 'http://localhost:3000/categories'
+  URL_API = 'http://localhost:8080/products'
 
   product: producto = {
     id: '',
@@ -66,28 +64,28 @@ export class ProductsServiceService implements OnInit {
   }
 
   getSuppliersList(): Observable<any> {
-    return this.http.get(this.URL_API_S)
+    return this.suppliersService.getSuppliers();
     }  
 
-  getCategories() : Observable<any>{
-    return this.http.get<any>(this.URL_API_CATEGORIES);
-  }
+  // getCategories() : Observable<any>{
+  //   return this.http.get<any>(this.URL_API_CATEGORIES);
+  // }
 
-  saveCategory(sectorToSave : any) : Observable<any>{
-    const sector = {
-      name: sectorToSave,
-      deleted: 0
-    }
-    return this.http.post<any>(this.URL_API_CATEGORIES, sector);
-  }
+  // saveCategory(sectorToSave : any) : Observable<any>{
+  //   const sector = {
+  //     name: sectorToSave,
+  //     deleted: 0
+  //   }
+  //   return this.http.post<any>(this.URL_API_CATEGORIES, sector);
+  // }
 
-  logicalDeleteCategory(id: string) : Observable<any> {
-    return this.http.get<any>(this.URL_API_CATEGORIES + "/" + id).pipe(
-      map((category) => {
-        let modifiedCategory = { ...category, deleted: 1 };
-        return modifiedCategory;
-      }),
-      switchMap((modifiedCategory) => this.http.put <any> (this.URL_API_CATEGORIES + "/" + id, modifiedCategory))
-    );
-  }
+  // logicalDeleteCategory(id: string) : Observable<any> {
+  //   return this.http.get<any>(this.URL_API_CATEGORIES + "/" + id).pipe(
+  //     map((category) => {
+  //       let modifiedCategory = { ...category, deleted: 1 };
+  //       return modifiedCategory;
+  //     }),
+  //     switchMap((modifiedCategory) => this.http.put <any> (this.URL_API_CATEGORIES + "/" + id, modifiedCategory))
+  //   );
+  // }
 }

@@ -5,6 +5,7 @@ import { ProductsServiceService } from '../../../services/products-service.servi
 import { proveedor } from '../../../models/proveedores';
 import { producto } from '../../../models/producto';
 import Swal from 'sweetalert2';
+import { CategoryService } from '../../../services/category.service';
 
 @Component({
   selector: 'app-form-products',
@@ -13,7 +14,7 @@ import Swal from 'sweetalert2';
 })
 export class FormProductsComponent implements OnInit{
 
-  constructor(public productsService: ProductsServiceService, private route:ActivatedRoute, private router:Router){}
+  constructor(public productsService: ProductsServiceService, private categoryService: CategoryService, private route:ActivatedRoute, private router:Router){}
 
   parametroURL : string = ''
   tituloFormulario : string = "Agregar Producto"
@@ -58,7 +59,7 @@ export class FormProductsComponent implements OnInit{
   }
 
   getCategories(){
-    this.productsService.getCategories().subscribe((response)=>{
+    this.categoryService.getCategories().subscribe((response)=>{
       this.categories = response.filter((item: any)=> item.deleted == 0);
     })
   }
@@ -133,14 +134,14 @@ export class FormProductsComponent implements OnInit{
       inputValidator: (value): any => {
         if (value == '') {
           return "You need to write something!";
-        } else if (this.categories.some(item => item.name.toUpperCase() === value.toUpperCase())){
+        } else if (this.categories.some(item => (item.name.toUpperCase() === value.toUpperCase())&& item.deleted == false)){
           return "That category name already exists!";
         }
       }
     }).then((result) => {
       const exists = this.categories.some(item => item.name === result.value);
       if (result.isConfirmed && !exists) {
-        this.productsService.saveCategory(result.value).subscribe((result)=> console.log(result))
+        this.categoryService.saveCategory(result.value).subscribe((result)=> console.log(result))
         Swal.fire({
           text: `The Category "${result.value}" has been saved`,
         });
@@ -169,7 +170,7 @@ export class FormProductsComponent implements OnInit{
       }).then((result) => {
         if (result.isConfirmed && result.value != '') {
           const chosenOption = this.categories.find(item => item.id == result.value).name
-          this.productsService.logicalDeleteCategory(result.value).subscribe((result)=> console.log(result))
+          this.categoryService.logicalDeleteCategory(result.value).subscribe((result)=> console.log(result))
           Swal.fire({
             text: `Category "${chosenOption}" has been deleted`,
           });

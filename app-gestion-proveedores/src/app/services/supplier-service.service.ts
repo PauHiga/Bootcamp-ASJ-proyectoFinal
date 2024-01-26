@@ -143,29 +143,7 @@ export class SupplierServiceService {
     );
   }
 
-  // getSectors() : Observable<any>{
-  //   return this.http.get<any>(this.URL_API_SECTOR);
-  // }
-
   getVatCondition() : Observable<any>{
     return this.http.get<any>(this.URL_API_VAT);
   }
-
-  // saveSector(sectorToSave : any) : Observable<any>{
-  //   const sector = {
-  //     name: sectorToSave,
-  //     deleted: 0
-  //   }
-  //   return this.http.post<any>(this.URL_API_SECTOR, sector);
-  // }
-
-  // logicalDeleteSector(id: string) : Observable<any> {
-  //   return this.http.get<any>(this.URL_API_SECTOR + "/" + id).pipe(
-  //     map((sector) => {
-  //       let modifiedSector = { ...sector, deleted: 1 };
-  //       return modifiedSector;
-  //     }),
-  //     switchMap((modifiedSector) => this.http.put <any> (this.URL_API_SECTOR + "/" + id, modifiedSector))
-  //   );
-  // }
 }

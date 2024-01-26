@@ -4,6 +4,7 @@ import { ProductsServiceService } from '../../../services/products-service.servi
 import { producto } from '../../../models/producto';
 import { proveedor } from '../../../models/proveedores';
 import Swal from 'sweetalert2';
+import { CategoryService } from '../../../services/category.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class ListProductsComponent implements OnInit{
 
   ngOnInit(): void {
     this.getProveedores();
-    this.createProductsList();
+    // this.createProductsList();
   }
 
   createProductsList(){
@@ -43,6 +44,7 @@ export class ListProductsComponent implements OnInit{
 
   getProveedores(){
     this.productsService.getSuppliersList().subscribe((response)=>{
+      console.log(response);
       this.suppliersList = response;
     })
   }
