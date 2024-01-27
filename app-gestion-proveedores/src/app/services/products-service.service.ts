@@ -38,7 +38,7 @@ export class ProductsServiceService implements OnInit {
   saveProduct() : Observable<any>{   
     console.log(this.product); 
     const productToSave : Product = {
-      SKU: this.product.SKUProducto,
+      sku: this.product.SKUProducto,
       name: this.product.nombreProducto,
       description: this.product.descripcion,
       price: this.product.precio,

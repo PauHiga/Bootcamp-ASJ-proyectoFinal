@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.SupplierDTO;
+import com.example.demo.dto.SupplierUpdateDTO;
 import com.example.demo.models.Address;
 import com.example.demo.models.Contact;
 import com.example.demo.models.Sector;
@@ -52,12 +53,12 @@ public class SupplierService {
 	public Supplier createSupplier(SupplierDTO supplierDTO) {
 		String code = supplierDTO.getCode();
 		String business_name = supplierDTO.getBusiness_name();
-		String url_logo = supplierDTO.getUrlLogo();
+		String url_logo = supplierDTO.getUrl_logo();
 		String cuit = supplierDTO.getCuit();
 		String email = supplierDTO.getEmail();
 		String phone = supplierDTO.getPhone();
 		String web = supplierDTO.getWeb();
-		boolean deleted = supplierDTO.isDeleted();
+		boolean deleted = supplierDTO.getDeleted();
 		LocalDate createdAt = LocalDate.now();
 		LocalDate updatedAt = null;
 		
@@ -86,7 +87,49 @@ public class SupplierService {
 		return newSupplier;
 	}	
 	
+	public Supplier editSupplier(int id, SupplierDTO supplierDTO) {
+		Optional<Supplier> editedSupplier = supplierRepository.findById(id);
+	    if (editedSupplier.isEmpty()) {
+	        throw new RuntimeException("Supplier to edit not found with id: " + id);
+	    } 
+	    
+		String code = supplierDTO.getCode();
+		String business_name = supplierDTO.getBusiness_name();
+		String url_logo = supplierDTO.getUrl_logo();
+		String cuit = supplierDTO.getCuit();
+		String email = supplierDTO.getEmail();
+		String phone = supplierDTO.getPhone();
+		String web = supplierDTO.getWeb();
+		boolean deleted = supplierDTO.getDeleted();
+		LocalDate createdAt = LocalDate.now();
+		LocalDate updatedAt = null;
+		
+		Sector sector = sectorRepository.findActiveSectorByName(supplierDTO.getSector())
+				.orElseGet(()->{
+					Sector newSector =  new Sector();
+					newSector.setName(supplierDTO.getSector());
+					newSector.setCreatedAt(LocalDate.now());
+					newSector.setDeleted(false);
+					return sectorRepository.save(newSector);
+				});
+		
+		VATCondition vatCondition = vatConditionRepository.findByName(supplierDTO.getVatCondition())
+				.orElseGet(()->{
+					VATCondition newVatCondition =  new VATCondition();
+					newVatCondition.setName(supplierDTO.getVatCondition());
+					return vatConditionRepository.save(newVatCondition);
+				});
+		
+		Address address = addressService.createAddress(supplierDTO.getAddress());
+		
+		Contact contact = contactService.createContact(supplierDTO.getContact());
+		
+		Supplier newSupplier = new Supplier(null, code, business_name, url_logo, cuit, email, phone, web, deleted, createdAt, updatedAt, sector, vatCondition, address, contact);
+		supplierRepository.save(newSupplier);
+		return newSupplier;
+	}	
 	
+// create supplier with empty constructor:	
 //	public Supplier createSupplier(SupplierDTO supplierDTO) {
 //		Supplier newSupplier = new Supplier();
 //		newSupplier.setCode(supplierDTO.getCode());		
@@ -128,4 +171,48 @@ public class SupplierService {
 //		supplierRepository.save(newSupplier);
 //		return newSupplier;
 //	}
+	
+    public Supplier updateSupplier(Integer id, SupplierUpdateDTO supplierUpdateDTO) {
+        Optional<Supplier> existingSupplier = supplierRepository.findById(id);
+        	if(existingSupplier.isEmpty()) {
+        		throw new RuntimeException("Supplier not found with ID: " + id);
+        	} 
+        Supplier updatedSupplier = existingSupplier.get();
+        
+        if (supplierUpdateDTO.getBusiness_name() != null) {
+        	updatedSupplier.setBusiness_name(supplierUpdateDTO.getBusiness_name());
+        }
+
+        if (supplierUpdateDTO.getUrl_logo() != null) {
+        	updatedSupplier.setUrl_logo(supplierUpdateDTO.getUrl_logo());
+        }
+        
+        if (supplierUpdateDTO.getCuit() != null) {
+        	updatedSupplier.setCuit(supplierUpdateDTO.getCuit());
+        }
+
+        if (supplierUpdateDTO.getEmail() != null) {
+        	updatedSupplier.setEmail(supplierUpdateDTO.getEmail());
+        }        
+
+        if (supplierUpdateDTO.getPhone() != null) {
+        	updatedSupplier.setPhone(supplierUpdateDTO.getPhone());
+        }                
+        
+        if (supplierUpdateDTO.getWeb() != null) {
+        	updatedSupplier.setWeb(supplierUpdateDTO.getWeb());
+        } 
+        
+        if (supplierUpdateDTO.getDeleted() != null) {
+        	updatedSupplier.setDeleted(supplierUpdateDTO.getDeleted());
+        } 
+        
+        updatedSupplier.setUpdatedAt(LocalDate.now());
+        
+        //Hacer service de edición de address, contact, y unir campos de vat condition y sector
+        
+        
+
+        return supplierRepository.save(updatedSupplier);
+    }
 }

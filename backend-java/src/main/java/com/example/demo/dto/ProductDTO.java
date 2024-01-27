@@ -17,5 +17,5 @@ public class ProductDTO {
     private String description;
     private float price;
     private String url_image;
-    private boolean deleted;
+    private Boolean deleted;
 }

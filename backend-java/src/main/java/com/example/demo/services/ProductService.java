@@ -44,7 +44,11 @@ public class ProductService {
 		LocalDate createdAt = LocalDate.now();
 		LocalDate updatedAt = null;
 
+		
 		Optional<Supplier> supplier = supplierRepository.findById(productDTO.getSupplier_id());
+	    if (supplier.isEmpty()) {
+	        throw new RuntimeException("Supplier not found with id: " + productDTO.getSupplier_id());
+	    }
 		
 		Category category = categoryRepository.findActiveCategoryByName(productDTO.getCategory())
 			.orElseGet(()->{

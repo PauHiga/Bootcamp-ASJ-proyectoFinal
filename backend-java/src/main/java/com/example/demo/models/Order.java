@@ -62,5 +62,9 @@ public class Order {
 	@JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
 	@NotNull(message = "The status cannot be null")
 	private Status status;
+	
+	@Column(nullable = false)
+	@NotNull(message = "The deletion field cannot be null")
+	private Boolean deleted;
     
 }

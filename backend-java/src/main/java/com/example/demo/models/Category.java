@@ -34,7 +34,7 @@ public class Category {
 	@Column(name = "updated_at")
 	private LocalDate updatedAt;
     
-	@Column(columnDefinition = "BIT", nullable = false)
-	@NotNull(message = "The name cannot be null")
-	private boolean deleted;
+	@Column(nullable = false)
+	@NotNull(message = "The deletion field cannot be null")
+	private Boolean deleted;
 }

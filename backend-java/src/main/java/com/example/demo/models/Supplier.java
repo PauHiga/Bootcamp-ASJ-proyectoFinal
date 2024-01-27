@@ -55,9 +55,9 @@ public class Supplier {
 	@Column(length = 50)
 	private String web;
 		
-	@Column(columnDefinition = "BIT", nullable = false)
-	@NotNull(message = "The deleted condition cannot be null")
-	private boolean deleted;
+	@Column(nullable = false)
+	@NotNull(message = "The deletion field cannot be null")
+	private Boolean deleted;
     
 	@Column(name = "created_at", nullable = false)
 	private LocalDate createdAt;

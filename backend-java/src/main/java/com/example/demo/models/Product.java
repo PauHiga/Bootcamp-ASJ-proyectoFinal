@@ -47,9 +47,9 @@ public class Product {
 	@Column(length = 1500)
 	private String url_image;
 	
-	@Column(columnDefinition = "BIT", nullable = false)
-	@NotNull(message = "The name cannot be null")
-	private boolean deleted;
+	@Column(nullable = false)
+	@NotNull(message = "The deletion field cannot be null")
+	private Boolean deleted;
     
 	@Column(name = "created_at", nullable = false)
 	private LocalDate createdAt;
