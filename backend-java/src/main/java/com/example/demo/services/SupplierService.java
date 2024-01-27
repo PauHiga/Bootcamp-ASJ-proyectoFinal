@@ -50,19 +50,18 @@ public class SupplierService {
 	}
 	
 	public Supplier createSupplier(SupplierDTO supplierDTO) {
-		Supplier newSupplier = new Supplier();
-		newSupplier.setCode(supplierDTO.getCode());
+		String code = supplierDTO.getCode();
+		String business_name = supplierDTO.getBusiness_name();
+		String url_logo = supplierDTO.getUrlLogo();
+		String cuit = supplierDTO.getCuit();
+		String email = supplierDTO.getEmail();
+		String phone = supplierDTO.getPhone();
+		String web = supplierDTO.getWeb();
+		boolean deleted = supplierDTO.isDeleted();
+		LocalDate createdAt = LocalDate.now();
+		LocalDate updatedAt = null;
 		
-		newSupplier.setBusiness_name(supplierDTO.getBusiness_name());
-		newSupplier.setUrl_logo(supplierDTO.getUrlLogo());
-		newSupplier.setCuit(supplierDTO.getCuit());
-		newSupplier.setEmail(supplierDTO.getEmail());
-		newSupplier.setPhone(supplierDTO.getPhone());
-		newSupplier.setWeb(supplierDTO.getWeb());
-		newSupplier.setDeleted(supplierDTO.isDeleted());
-		newSupplier.setCreatedAt(LocalDate.now());
-		
-		Sector sector = sectorRepository.findByName(supplierDTO.getSector())
+		Sector sector = sectorRepository.findActiveSectorByName(supplierDTO.getSector())
 				.orElseGet(()->{
 					Sector newSector =  new Sector();
 					newSector.setName(supplierDTO.getSector());
@@ -71,8 +70,6 @@ public class SupplierService {
 					return sectorRepository.save(newSector);
 				});
 		
-		newSupplier.setSector(sector);
-		
 		VATCondition vatCondition = vatConditionRepository.findByName(supplierDTO.getVatCondition())
 				.orElseGet(()->{
 					VATCondition newVatCondition =  new VATCondition();
@@ -80,15 +77,55 @@ public class SupplierService {
 					return vatConditionRepository.save(newVatCondition);
 				});
 		
-		newSupplier.setVATCondition(vatCondition);
-
 		Address address = addressService.createAddress(supplierDTO.getAddress());
-		newSupplier.setAddress(address);
 		
 		Contact contact = contactService.createContact(supplierDTO.getContact());
-		newSupplier.setContact(contact);
 		
+		Supplier newSupplier = new Supplier(null, code, business_name, url_logo, cuit, email, phone, web, deleted, createdAt, updatedAt, sector, vatCondition, address, contact);
 		supplierRepository.save(newSupplier);
 		return newSupplier;
-	}
+	}	
+	
+	
+//	public Supplier createSupplier(SupplierDTO supplierDTO) {
+//		Supplier newSupplier = new Supplier();
+//		newSupplier.setCode(supplierDTO.getCode());		
+//		newSupplier.setBusiness_name(supplierDTO.getBusiness_name());
+//		newSupplier.setUrl_logo(supplierDTO.getUrlLogo());
+//		newSupplier.setCuit(supplierDTO.getCuit());
+//		newSupplier.setEmail(supplierDTO.getEmail());
+//		newSupplier.setPhone(supplierDTO.getPhone());
+//		newSupplier.setWeb(supplierDTO.getWeb());
+//		newSupplier.setDeleted(supplierDTO.isDeleted());
+//		newSupplier.setCreatedAt(LocalDate.now());
+//		
+//		Sector sector = sectorRepository.findByName(supplierDTO.getSector())
+//				.orElseGet(()->{
+//					Sector newSector =  new Sector();
+//					newSector.setName(supplierDTO.getSector());
+//					newSector.setCreatedAt(LocalDate.now());
+//					newSector.setDeleted(false);
+//					return sectorRepository.save(newSector);
+//				});
+//		
+//		newSupplier.setSector(sector);
+//		
+//		VATCondition vatCondition = vatConditionRepository.findByName(supplierDTO.getVatCondition())
+//				.orElseGet(()->{
+//					VATCondition newVatCondition =  new VATCondition();
+//					newVatCondition.setName(supplierDTO.getVatCondition());
+//					return vatConditionRepository.save(newVatCondition);
+//				});
+//		
+//		newSupplier.setVATCondition(vatCondition);
+//
+//		Address address = addressService.createAddress(supplierDTO.getAddress());
+//		newSupplier.setAddress(address);
+//		
+//		Contact contact = contactService.createContact(supplierDTO.getContact());
+//		newSupplier.setContact(contact);
+//		
+//		supplierRepository.save(newSupplier);
+//		return newSupplier;
+//	}
 }

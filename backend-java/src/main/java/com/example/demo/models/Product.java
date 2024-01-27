@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,7 +42,7 @@ public class Product {
 	
 	@Column(columnDefinition = "DECIMAL(10,2)", nullable = false)
 	@NotNull(message = "The price cannot be null")
-	private Integer price;
+	private float price;
 	
 	@Column(length = 1500)
 	private String url_image;
@@ -65,5 +66,5 @@ public class Product {
 	@JoinColumn(name = "category_id", referencedColumnName = "id", nullable=false)
 	@NotNull(message = "The category cannot be null")
 	private Category category;
-    
+
 }

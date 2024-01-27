@@ -3,6 +3,7 @@ import { producto } from '../models/producto';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, switchMap } from 'rxjs';
 import { SupplierServiceService } from './supplier-service.service';
+import { Product } from '../models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,16 @@ export class ProductsServiceService implements OnInit {
 
   saveProduct() : Observable<any>{   
     console.log(this.product); 
+    const productToSave : Product = {
+      SKU: this.product.SKUProducto,
+      name: this.product.nombreProducto,
+      description: this.product.descripcion,
+      price: this.product.precio,
+      url_image: this.product.URLimage,
+      supplier_id: Number(this.product.idProveedor),
+      category: this.product.categoria, 
+      deleted: false
+    }
     return this.http.post(this.URL_API, this.product);
   }
 
@@ -68,25 +79,4 @@ export class ProductsServiceService implements OnInit {
     return this.suppliersService.getSuppliers();
     }  
 
-  // getCategories() : Observable<any>{
-  //   return this.http.get<any>(this.URL_API_CATEGORIES);
-  // }
-
-  // saveCategory(sectorToSave : any) : Observable<any>{
-  //   const sector = {
-  //     name: sectorToSave,
-  //     deleted: 0
-  //   }
-  //   return this.http.post<any>(this.URL_API_CATEGORIES, sector);
-  // }
-
-  // logicalDeleteCategory(id: string) : Observable<any> {
-  //   return this.http.get<any>(this.URL_API_CATEGORIES + "/" + id).pipe(
-  //     map((category) => {
-  //       let modifiedCategory = { ...category, deleted: 1 };
-  //       return modifiedCategory;
-  //     }),
-  //     switchMap((modifiedCategory) => this.http.put <any> (this.URL_API_CATEGORIES + "/" + id, modifiedCategory))
-  //   );
-  // }
 }
