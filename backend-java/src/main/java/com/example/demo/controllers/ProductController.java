@@ -15,11 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ProductDTO;
-import com.example.demo.dto.SupplierDTO;
 import com.example.demo.models.Product;
-import com.example.demo.models.Supplier;
 import com.example.demo.services.ProductService;
-import com.example.demo.services.SupplierService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -45,7 +42,6 @@ public class ProductController {
 
 	@PostMapping()
 	public ResponseEntity<Object> createSupplier(@RequestBody ProductDTO productDTO){
-		System.out.println(productDTO.toString());
 		try {
 			return ResponseEntity.ok(productService.createProduct(productDTO));
 		}

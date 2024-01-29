@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map, switchMap } from 'rxjs';
 import { SupplierServiceService } from './supplier-service.service';
 import { Product } from '../models/product';
+import { ProductDisplay } from '../models/productDisplay';
 
 @Injectable({
   providedIn: 'root'
@@ -16,41 +17,49 @@ export class ProductsServiceService implements OnInit {
 
   URL_API = 'http://localhost:8080/products'
 
-  product: producto = {
-    id: '',
-    idProveedor: '',
-    SKUProducto: '',
-    categoria: '',
-    nombreProducto: '',
-    descripcion: '',
-    precio: 0,
-    URLimage: ''
+  product: ProductDisplay = {
+    id : 0, 
+    sku: '',
+    name: '',
+    description: '',
+    price: 0,
+    url_image: '',
+    supplier: {
+        business_name: '',
+        id: 0
+    },
+    category: {
+        name: '',
+    },
+    deleted: false
   }
 
-  getProducts(): Observable<any>{
-    return this.http.get(this.URL_API);
+  getProducts(): Observable<ProductDisplay[]>{
+    return this.http.get<ProductDisplay[]>(this.URL_API);
   }
 
-  getAProduct(id:string): Observable<any>{
-    return this.http.get(this.URL_API + "/" + id);
+  getAProduct(id:number): Observable<ProductDisplay>{
+    return this.http.get<ProductDisplay>(this.URL_API + "/" + id);
   }
 
   saveProduct() : Observable<any>{   
-    console.log(this.product); 
     const productToSave : Product = {
-      sku: this.product.SKUProducto,
-      name: this.product.nombreProducto,
-      description: this.product.descripcion,
-      price: this.product.precio,
-      url_image: this.product.URLimage,
-      supplier_id: Number(this.product.idProveedor),
-      category: this.product.categoria, 
-      deleted: false
+      id : this.product.id, 
+      sku: this.product.sku,
+      name: this.product.name,
+      description: this.product.description,
+      price: this.product.price,
+      url_image: this.product.url_image,
+      deleted: false,
+      supplier_id: this.product.supplier.id,
+      category: this.product.category.name
     }
-    return this.http.post(this.URL_API, this.product);
+    console.log(productToSave);
+    return this.http.post(this.URL_API, productToSave);
   }
 
   setProductForEdit(productForEdit : any){
+    console.log(this.product);
     this.product = productForEdit;
   }
 
@@ -58,20 +67,26 @@ export class ProductsServiceService implements OnInit {
     return this.http.put(this.URL_API + "/" + id, this.product);
   }
 
-  deleteProduct(id:string){
+  deleteProduct(id:number){
     return this.http.delete(this.URL_API + "/" + id)
   }
 
   clearProductData(){
     this.product = {
-      id: '',
-      idProveedor: '',
-      SKUProducto: '',
-      categoria: '',
-      nombreProducto: '',
-      descripcion: '',
-      precio: 0,
-      URLimage: ''
+      id : 0, 
+      sku: '',
+      name: '',
+      description: '',
+      price: 0,
+      url_image: '',
+      supplier: {
+          business_name: '',
+          id: 0
+      },
+      category: {
+          name: '',
+      },
+      deleted: false
     }
   }
 

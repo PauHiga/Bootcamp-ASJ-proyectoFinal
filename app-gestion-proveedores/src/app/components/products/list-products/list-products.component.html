@@ -25,13 +25,13 @@
       </thead>
       <tbody>
         <tr *ngFor="let product of productsToDisplay">
-          <td><div class="imgContainer"><img src="{{product.URLimage}}" alt="{{product.nombreProducto}}" height=80 (error)="imageError($event)"></div></td>
-          <td>{{product.nombreProducto}}</td>
-          <td>{{product.categoria}}</td>
-          <td>{{product.idProveedor}}</td>
-          <td>{{product.precio}}</td>
+          <td><div class="imgContainer"><img src="{{product.url_image}}" alt="{{product.name}}" height=80 (error)="imageError($event)"></div></td>
+          <td>{{product.name}}</td>
+          <td>{{product.category.name}}</td>
+          <td>{{product.supplier.business_name}}</td>
+          <td>{{product.price}}</td>
           <td (click)="editProduct(product.id)"><img src="/assets/icons/pencil-square.svg" alt="editar producto" width="25" height="25"></td>
-          <td (click)="deleteProduct(product.id, product.nombreProducto)"><img src="/assets/icons/trash.svg" alt="borrar producto" width="25" height="25"></td>
+          <td (click)="deleteProduct(product.id, product.name)"><img src="/assets/icons/trash.svg" alt="borrar producto" width="25" height="25"></td>
           <td (click)="getAProduct(product.id)" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del producto" width="25" height="25"></td>
         </tr>
       </tbody>
@@ -57,7 +57,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title w-100 text-center" id="exampleModalLabel">{{productsService.product.nombreProducto}}</h5>
+        <h5 class="modal-title w-100 text-center" id="exampleModalLabel">{{productsService.product.name}}</h5>
         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -67,7 +67,7 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="imgContainerModal">
-                <img src="{{productsService.product.URLimage}}" alt="{{productsService.product.nombreProducto}}">
+                <img src="{{productsService.product.url_image}}" alt="{{productsService.product.name}}">
               </div>
             </div>
             <div class="col-sm-6">
@@ -85,7 +85,7 @@
                     Proveedor:
                   </td>
                   <td>
-                    {{productsService.product.idProveedor}}
+                    {{productsService.product.supplier.business_name}}
                   </td>
                 </tr>
                 <tr>
@@ -93,7 +93,7 @@
                     SKU producto:
                   </td>
                   <td>
-                    {{productsService.product.SKUProducto}}
+                    {{productsService.product.sku}}
                   </td>
                 </tr>
                 <tr>
@@ -101,7 +101,7 @@
                     Categoria:
                   </td>
                   <td>
-                    {{productsService.product.categoria}}
+                    {{productsService.product.category.name}}
                   </td>
                 </tr>
                 <tr>
@@ -109,7 +109,7 @@
                     Precio:
                   </td>
                   <td>
-                    {{productsService.product.precio}}
+                    {{productsService.product.price}}
                   </td>
                 </tr>
                 <tr>
@@ -117,7 +117,7 @@
                     Descripcion:
                   </td>
                   <td>
-                    {{productsService.product.descripcion}}
+                    {{productsService.product.description}}
                   </td>
                 </tr>
               </table>

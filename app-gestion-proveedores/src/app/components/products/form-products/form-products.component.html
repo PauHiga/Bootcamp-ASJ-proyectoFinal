@@ -19,7 +19,7 @@
           <div class="col-sm-8">
             <div class="form-group">
               <label for="nombreProducto">Nombre del Producto</label>
-              <input type="text" class="form-control form-control-sm" id="nombreProducto" name="nombreProducto" [(ngModel)]="productsService.product.nombreProducto" #nombreProducto="ngModel" required>
+              <input type="text" class="form-control form-control-sm" id="nombreProducto" name="nombreProducto" [(ngModel)]="productsService.product.name" #nombreProducto="ngModel" required>
               <div *ngIf="nombreProducto.errors?.['required']" class="col-auto">
                 <span class="form-text text-danger">
                     Este campo es requerido
@@ -30,7 +30,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="SKUProducto">SKU Producto</label>
-              <input type="text" (keyup)="skuIsUnique($event)" class="form-control form-control-sm" id="SKUProducto" name="SKUProducto" [(ngModel)]="productsService.product.SKUProducto" #SKUProducto="ngModel" [disabled]="disabledInEdit" required>
+              <input type="text" (keyup)="skuIsUnique($event)" class="form-control form-control-sm" id="SKUProducto" name="SKUProducto" [(ngModel)]="productsService.product.sku" #SKUProducto="ngModel" [disabled]="disabledInEdit" required>
               <div *ngIf="SKUProducto.errors?.['required']" class="col-auto">
                 <span class="form-text text-danger">
                     Este campo es requerido
@@ -48,8 +48,8 @@
           <div class="col-sm-8">
             <div class="form-group">
               <label for="idProveedor">Proveedor</label>
-              <select class="form-select form-select-sm" aria-label="Default select example" id="idProveedor" name="idProveedor" [(ngModel)]="productsService.product.idProveedor" #idProveedor="ngModel" [disabled]="disabledInEdit" required>
-                <option *ngFor="let supplier of suppliersList" value="{{supplier.id}}">{{supplier.business_name}} &nbsp;&nbsp;-&nbsp;&nbsp; CUIT: {{supplier.CUIT}}</option>
+              <select class="form-select form-select-sm" aria-label="Default select example" id="idProveedor" name="idProveedor" [(ngModel)]="productsService.product.supplier.id" #idProveedor="ngModel" [disabled]="disabledInEdit" required>
+                <option *ngFor="let supplier of suppliersList" value="{{supplier.id}}">{{supplier.business_name}} &nbsp;&nbsp;-&nbsp;&nbsp; Codigo de empresa: {{supplier.code}}</option>
               </select>
               <div *ngIf="idProveedor.errors?.['required']" class="col-auto">
                 <span class="form-text text-danger">
@@ -61,7 +61,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="categoria">Categoría</label>
-              <select class="form-select form-select-sm" aria-label="Default select example" id="categoria" name="categoria" [(ngModel)]="productsService.product.categoria" #category="ngModel" required>
+              <select class="form-select form-select-sm" aria-label="Default select example" id="categoria" name="categoria" [(ngModel)]="productsService.product.category.name" #category="ngModel" required>
                 <option *ngFor="let category of categories" value="{{category.name}}">{{category.name}}</option>
               </select>
               <div *ngIf="category.errors?.['required']" class="col-auto">
@@ -78,7 +78,7 @@
         <div class="row">
           <div class="form-group">
             <label for="descripcion">Descripción</label>
-            <textarea class="form-control form-control-sm" id="descripcion" name="descripcion" [(ngModel)]="productsService.product.descripcion"></textarea>
+            <textarea class="form-control form-control-sm" id="descripcion" name="descripcion" [(ngModel)]="productsService.product.description"></textarea>
           </div>
         </div>
     
@@ -86,7 +86,7 @@
           <div class="col-sm-3">
             <div class="form-group">
               <label for="precio">Precio</label>
-              <input type="number" min="1" max="10000000" class="form-control form-control-sm" id="precio" name="precio" [(ngModel)]="productsService.product.precio" #precio="ngModel" required>
+              <input type="number" min="1" max="10000000" class="form-control form-control-sm" id="precio" name="precio" [(ngModel)]="productsService.product.price" #precio="ngModel" required>
               <div *ngIf="precio.errors?.['min']" class="col-auto">
                 <span class="form-text text-danger">
                     El precio mínimo es $1
@@ -99,7 +99,7 @@
           <div class="col-sm-8">
             <div class="form-group">
               <label for="precio">URL imagen</label>
-              <input type="text" maxlength="1500" class="form-control form-control-sm" id="URLImagen" name="URLImagen" [(ngModel)]="productsService.product.URLimage" >
+              <input type="text" maxlength="1500" class="form-control form-control-sm" id="URLImagen" name="URLImagen" [(ngModel)]="productsService.product.url_image" >
             </div>
           </div>
         </div>

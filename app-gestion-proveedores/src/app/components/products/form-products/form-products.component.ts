@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsServiceService } from '../../../services/products-service.service';
-import { proveedor } from '../../../models/proveedoresVIEJO';
-import { producto } from '../../../models/producto';
+// import { producto } from '../../../models/producto';
 import Swal from 'sweetalert2';
 import { CategoryService } from '../../../services/category.service';
+import { Supplier } from '../../../models/supplier';
+import { Product } from '../../../models/product';
+import { ProductDisplay } from '../../../models/productDisplay';
 
 @Component({
   selector: 'app-form-products',
@@ -21,8 +23,8 @@ export class FormProductsComponent implements OnInit{
 
   product = {};
 
-  suppliersList : proveedor[] = [];
-  productos : producto[] = [];
+  suppliersList : Supplier[] = [];
+  products : ProductDisplay[] = [];
 
   categories : any[] = []
 
@@ -30,12 +32,12 @@ export class FormProductsComponent implements OnInit{
 
   skuRepetido = false;
 
-  categorias : string[] = [ "Art. Oficina", "Catering", "Electrónicos", "Papelería", "Reparaciones", "Servicios"]
+  categorias : string[] = []
 
   ngOnInit(): void {
     this.parametroURL = this.route.snapshot.params['edit'];
-    this.getProveedores();
-    this.getProductos();
+    this.getSuppliers();
+    this.getProducts();
     this.getCategories();
     if(this.parametroURL) {
       this.setEditForm();
@@ -45,16 +47,16 @@ export class FormProductsComponent implements OnInit{
     }
   }
 
-  getProveedores(){
+  getSuppliers(){
     this.productsService.getSuppliersList().subscribe((response)=>{
       this.suppliersList = response;
       this.suppliersList = this.suppliersList.filter(item => item.deleted == false)
     })
   }
 
-  getProductos(){
+  getProducts(){
     this.productsService.getProducts().subscribe((response)=>{
-      this.productos = response;
+      this.products = response;
     })
   }
 
@@ -66,12 +68,12 @@ export class FormProductsComponent implements OnInit{
 
   setEditForm(){
     this.tituloFormulario = "Editar Producto";
-    this.getAProduct(this.parametroURL);
+    this.getAProduct(Number(this.parametroURL));
     this.disabledInEdit = true;
 
   }
 
-  getAProduct(id : string){
+  getAProduct(id : number){
     this.productsService.getAProduct(id).subscribe(
       (response) =>{
         console.log(response)
@@ -99,8 +101,8 @@ export class FormProductsComponent implements OnInit{
 
   skuIsUnique(event : Event){
     const currentSku = (event.target as HTMLSelectElement).value;
-    const productosSKUs = this.productos.map(item=> item.SKUProducto)
-    this.skuRepetido = productosSKUs.includes(currentSku);
+    const productsSKUs = this.products.map(item=> item.sku)
+    this.skuRepetido = productsSKUs.includes(currentSku);
   }
 
   cancelar(objetivo: string){
