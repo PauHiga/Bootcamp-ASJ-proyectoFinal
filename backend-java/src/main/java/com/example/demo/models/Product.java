@@ -31,7 +31,7 @@ public class Product {
 	
 	@Column(unique = true, length = 20, nullable = false)
 	@NotNull(message = "The SKU cannot be null")
-	private String SKU;
+	private String sku;
 	
 	@Column(length = 50, nullable = false)
 	@NotNull(message = "The name cannot be null")

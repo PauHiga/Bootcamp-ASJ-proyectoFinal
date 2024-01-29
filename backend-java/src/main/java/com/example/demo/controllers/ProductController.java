@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ProductDTO;
+import com.example.demo.dto.ProductUpdateDTO;
+import com.example.demo.dto.SupplierUpdateDTO;
 import com.example.demo.models.Product;
+import com.example.demo.models.Supplier;
 import com.example.demo.services.ProductService;
 
 @RestController
@@ -49,6 +53,18 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating supplier: " + e.getMessage());			
 		}
 	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updateProduct(@PathVariable Integer id, @RequestBody ProductUpdateDTO productUpdateDTO) {
+	    try {
+	        Product updatedProduct = productService.updateSupplier(id, productUpdateDTO);
+	        return ResponseEntity.ok(updatedProduct);
+	    } catch (RuntimeException e) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found with ID: " + id);
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating product");
+	    }
+	}	
 
 	
 }

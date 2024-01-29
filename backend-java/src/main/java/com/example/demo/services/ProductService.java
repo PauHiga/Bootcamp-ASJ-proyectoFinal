@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.ProductDTO;
+import com.example.demo.dto.ProductUpdateDTO;
+import com.example.demo.dto.SupplierUpdateDTO;
 import com.example.demo.models.Category;
 import com.example.demo.models.Product;
 import com.example.demo.models.Sector;
@@ -15,6 +17,7 @@ import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ProductRepository;
 import com.example.demo.repositories.SupplierRepository;
 import com.example.demo.models.Supplier;
+import com.example.demo.models.Vat_condition;
 
 @Service
 public class ProductService {
@@ -63,4 +66,59 @@ public class ProductService {
 		productRepository.save(newProduct);
 		return newProduct;
 	}
+	
+    public Product updateSupplier(Integer id, ProductUpdateDTO productUpdateDTO) {
+        Optional<Product> existingProduct = productRepository.findById(id);
+        	if(existingProduct.isEmpty()) {
+        		throw new RuntimeException("Product not found with ID: " + id);
+        	} 
+       	Product updatedProduct = existingProduct.get();
+        
+        if (productUpdateDTO.getSku() != null) {
+        	updatedProduct.setSku(productUpdateDTO.getSku());
+        }
+
+        if (productUpdateDTO.getName() != null) {
+        	updatedProduct.setName(productUpdateDTO.getName());
+        }
+        if (productUpdateDTO.getDescription() != null) {
+        	updatedProduct.setDescription(productUpdateDTO.getDescription());
+        }
+        if (productUpdateDTO.getPrice() != null) {
+        	updatedProduct.setPrice(productUpdateDTO.getPrice());
+        }
+        
+        if (productUpdateDTO.getUrl_image() != null) {
+        	updatedProduct.setUrl_image(productUpdateDTO.getUrl_image());
+        }
+        
+        if (productUpdateDTO.getDeleted() != null) {
+        	updatedProduct.setDeleted(productUpdateDTO.getDeleted());
+        }
+        
+        updatedProduct.setUpdatedAt(LocalDate.now());
+
+		
+		Optional<Supplier> supplier = supplierRepository.findById(productUpdateDTO.getSupplier_id());
+	    if (supplier.isEmpty()) {
+	        throw new RuntimeException("Supplier not found with id: " + productUpdateDTO.getSupplier_id());
+	    }
+		
+		Category category = categoryRepository.findActiveCategoryByName(productUpdateDTO.getCategory())
+			.orElseGet(()->{
+			Category newCategory =  new Category();
+			newCategory.setName(productUpdateDTO.getCategory());
+			newCategory.setCreatedAt(LocalDate.now());
+			newCategory.setDeleted(false);
+			return categoryRepository.save(newCategory);
+		});
+		updatedProduct.setCategory(category);
+		
+		productRepository.save(updatedProduct);
+		return updatedProduct;
+    }
+        
+        
+
+	
 }
