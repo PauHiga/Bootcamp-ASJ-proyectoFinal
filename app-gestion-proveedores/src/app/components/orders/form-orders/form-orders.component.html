@@ -71,7 +71,7 @@
         <div class="form-group">
           <label for="proveedor">Proveedor</label>
           <select (change)="onSelect($event)" class="form-control" id="proveedor" name="proveedor" [(ngModel)]="orden.proveedor" #Proveedor="ngModel" required>
-            <option *ngFor="let proveedor of suppliers" value="{{proveedor.id}}">{{proveedor.razonSocial}}</option>
+            <option *ngFor="let proveedor of suppliers" value="{{proveedor.id}}">{{proveedor.business_name}}</option>
           </select>
           <div *ngIf="Proveedor.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">

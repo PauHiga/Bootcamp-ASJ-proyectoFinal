@@ -4,11 +4,11 @@ import { contacto } from "./contacto";
 export interface proveedor {
     id: string,
     codigo: string,
-    razonSocial: string,
+    business_name: string,
     rubro: string,
     URLlogo: string,
     CUIT: string,
-    condicionIva: string,
+    vat_condition: string,
     email: string,
     telefono: string,
     web: string,

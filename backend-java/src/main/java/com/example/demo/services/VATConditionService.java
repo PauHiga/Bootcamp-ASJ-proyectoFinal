@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.demo.models.VATCondition;
+import com.example.demo.models.Vat_condition;
 import com.example.demo.repositories.VATConditionRepository;
 
 @Service
@@ -15,18 +15,18 @@ public class VATConditionService {
 	VATConditionRepository vatConditionRepository;
 	
 	public List<String> getVATConditions(){
-		List<VATCondition> listOfVAT = vatConditionRepository.findAll();
+		List<Vat_condition> listOfVAT = vatConditionRepository.findAll();
         List<String> namesList = listOfVAT.stream()
-                .map(VATCondition::getName)
+                .map(Vat_condition::getName)
                 .collect(Collectors.toList());
         return namesList;
 	}
 	
-	public Optional<VATCondition> getVATConditionesById(int id) {
+	public Optional<Vat_condition> getVATConditionesById(int id) {
 		return vatConditionRepository.findById(id);
 	}
 	
-	public VATCondition createVATCondition(VATCondition vatCondition) {
+	public Vat_condition createVATCondition(Vat_condition vatCondition) {
 		vatConditionRepository.save(vatCondition);
 		return vatCondition;
 	}

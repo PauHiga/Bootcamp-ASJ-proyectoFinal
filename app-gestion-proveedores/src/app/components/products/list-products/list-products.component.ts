@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsServiceService } from '../../../services/products-service.service';
 import { producto } from '../../../models/producto';
-import { proveedor } from '../../../models/proveedores';
+import { proveedor } from '../../../models/proveedoresVIEJO';
 import Swal from 'sweetalert2';
 import { CategoryService } from '../../../services/category.service';
 
@@ -30,7 +30,7 @@ export class ListProductsComponent implements OnInit{
         this.productsToDisplay = response.map((item: producto) => {
           const proveedordelItem = this.suppliersList.find(supplier => supplier.id == item.idProveedor)
           if(proveedordelItem && proveedordelItem.deleted == false){
-            item.idProveedor = proveedordelItem.razonSocial            
+            item.idProveedor = proveedordelItem.business_name            
           } else{
             item.idProveedor = "Proveedor dado de baja"
           }

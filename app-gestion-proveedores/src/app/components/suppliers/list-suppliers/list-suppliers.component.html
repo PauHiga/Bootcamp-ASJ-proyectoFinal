@@ -8,7 +8,7 @@
   </nav>
   <h1>Proveedores</h1>
   
-  <div class="container" *ngIf="(seeDeleted || proveedores.length>0)">
+  <div class="container" *ngIf="(seeDeleted || suppliers.length>0)">
     <div class="d-flex justify-content-between">
       <button class="btn btn-primary my-2" routerLink="/proveedores/formulario-proveedores">Añadir Proveedor</button>
       <button class="btn btn-outline-secondary my-2" *ngIf="!seeDeleted" (click)="showDeletedSuppliers()">List removed suppliers</button>
@@ -26,27 +26,27 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let proveedor of proveedores">
-          <td><div class="imgContainer"><img src="{{proveedor.URLlogo}}" alt="{{proveedor.razonSocial}}" height=80 (error)="imageError($event)"></div></td>
-          <th scope="row">{{proveedor.codigo}}</th>
-          <td>{{proveedor.razonSocial}}</td>
+        <tr *ngFor="let supplier of suppliers">
+          <td><div class="imgContainer"><img src="{{supplier.url_logo}}" alt="{{supplier.business_name}}" height=80 (error)="imageError($event)"></div></td>
+          <th scope="row">{{supplier.code}}</th>
+          <td>{{supplier.business_name}}</td>
           <td>
             <ul>
-              <li>E-mail: {{proveedor.email}}</li>
-              <li>Teléfono: {{proveedor.telefono}}</li>
-              <li *ngIf="proveedor.web">Web: {{proveedor.web}}</li>
+              <li>E-mail: {{supplier.email}}</li>
+              <li>Teléfono: {{supplier.phone}}</li>
+              <li *ngIf="supplier.web">Web: {{supplier.web}}</li>
             </ul>  
           </td>
-          <td>{{proveedor.contacto.apellido}}, {{proveedor.contacto.nombre}}</td>
-          <td (click)="editSupplier(proveedor.id)"><img src="/assets/icons/pencil-square.svg" alt="editar proveedor" width="25" height="25"></td>
-          <td *ngIf="!seeDeleted" (click)="logicalDeleteSupplier(proveedor.id)"><img src="/assets/icons/trash.svg" alt="borrar proveedor" width="25" height="25"></td>
-          <td (click)="getASupplier(proveedor.id)" data-bs-toggle="modal" data-bs-target="#detalleProductoModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del proveedor" width="25" height="25"></td>
+          <td>{{supplier.contact.last_name}}, {{supplier.contact.first_name}}</td>
+          <td (click)="editSupplier(supplier.id)"><img src="/assets/icons/pencil-square.svg" alt="editar proveedor" width="25" height="25"></td>
+          <td *ngIf="!seeDeleted" (click)="logicalDeleteSupplier(supplier.id)"><img src="/assets/icons/trash.svg" alt="borrar proveedor" width="25" height="25"></td>
+          <td (click)="getASupplier(supplier.id)" data-bs-toggle="modal" data-bs-target="#detalleProductoModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del proveedor" width="25" height="25"></td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="(!seeDeleted && proveedores.length<=0)">
+  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="(!seeDeleted && suppliers.length<=0)">
     <p>No hay proveedores registrados activos</p>
     <p>Comience <b>añadiendo un proveedor</b></p>
     <button class="btn btn-primary" routerLink="/proveedores/formulario-proveedores">Añadir Proveedor</button>
@@ -58,7 +58,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title w-100 text-center" id="detalleProductoModalLabel">{{modalSupplier.razonSocial}}</h5>
+          <h5 class="modal-title w-100 text-center" id="detalleProductoModalLabel">{{modalSupplier.business_name}}</h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -66,9 +66,9 @@
         <div class="modal-body">
           <div class="container">
             <div class="d-flex justify-content-center ">
-              <div *ngIf="modalSupplier.URLlogo != ''" class="w-50">
+              <div *ngIf="modalSupplier.url_logo != ''" class="w-50">
                 <div class="imgContainerModal">
-                  <img src="{{modalSupplier.URLlogo}}" alt="{{modalSupplier.URLlogo}}">
+                  <img src="{{modalSupplier.url_logo}}" alt="{{modalSupplier.url_logo}}">
                 </div>
               </div>
               <div class="w-75">
@@ -87,7 +87,7 @@
                       Codigo:
                     </td>
                     <td>
-                      {{modalSupplier.codigo}}
+                      {{modalSupplier.code}}
                     </td>
                   </tr>
                   <tr>
@@ -95,7 +95,7 @@
                       Razón social:
                     </td>
                     <td>
-                      {{modalSupplier.razonSocial}}
+                      {{modalSupplier.business_name}}
                     </td>
                   </tr>
                   <tr>
@@ -103,7 +103,7 @@
                       Rubro:
                     </td>
                     <td>
-                      {{modalSupplier.rubro}}
+                      {{modalSupplier.sector}}
                     </td>
                   </tr>
                   <tr>
@@ -111,7 +111,7 @@
                       Cuit:
                     </td>
                     <td>
-                      {{modalSupplier.CUIT}}
+                      {{modalSupplier.cuit}}
                     </td>
                   </tr>
                   <tr>
@@ -119,7 +119,7 @@
                       Condicion IVA:
                     </td>
                     <td>
-                      {{modalSupplier.condicionIva}}
+                      {{modalSupplier.vat_condition}}
                     </td>
                   </tr>
                 </table>
@@ -131,7 +131,7 @@
                       Calle:
                     </td>
                     <td>
-                      {{modalSupplier.direccion.calle}}
+                      {{modalSupplier.address.street}}
                     </td>
                   </tr>
                   <tr>
@@ -139,7 +139,7 @@
                       Altura:
                     </td>
                     <td>
-                      {{modalSupplier.direccion.altura}}
+                      {{modalSupplier.address.number}}
                     </td>
                   </tr>
                   <tr>
@@ -147,7 +147,7 @@
                       Código Postal
                     </td>
                     <td>
-                      {{modalSupplier.direccion.CP}}
+                      {{modalSupplier.address.postal_code}}
                     </td>
                   </tr>
                   <tr>
@@ -155,7 +155,7 @@
                       Pais:
                     </td>
                     <td>
-                      {{modalSupplier.direccion.pais}}
+                      {{modalSupplier.address.country}}
                     </td>
                   </tr>
                   <tr>
@@ -163,7 +163,7 @@
                       Provincia:
                     </td>
                     <td>
-                      {{modalSupplier.direccion.provincia}}
+                      {{modalSupplier.address.province}}
                     </td>
                   </tr>
                   <tr>
@@ -171,7 +171,7 @@
                       Localidad:
                     </td>
                     <td>
-                      {{modalSupplier.direccion.localidad}}
+                      {{modalSupplier.address.locality}}
                     </td>
                   </tr>
                 </table>
@@ -183,7 +183,7 @@
                       Contacto:
                     </td>
                     <td>
-                      {{modalSupplier.contacto.apellido}}, {{modalSupplier.contacto.nombre}}
+                      {{modalSupplier.contact.last_name}}, {{modalSupplier.contact.first_name}}
                     </td>
                   </tr>
                   <tr>
@@ -191,7 +191,7 @@
                       Email:
                     </td>
                     <td>
-                      {{modalSupplier.contacto.email}}
+                      {{modalSupplier.contact.email}}
                     </td>
                   </tr>
                   <tr>
@@ -199,7 +199,7 @@
                       Teléfono:
                     </td>
                     <td>
-                      {{modalSupplier.contacto.telefono}}
+                      {{modalSupplier.contact.phone}}
                     </td>
                   </tr>
                   <tr>
@@ -207,7 +207,7 @@
                       Rol:
                     </td>
                     <td>
-                      {{modalSupplier.contacto.rol}}
+                      {{modalSupplier.contact.role}}
                     </td>
                   </tr>
                 </table>

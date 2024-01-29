@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { orden } from '../models/orden';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { ProductsServiceService } from './products-service.service';
-import { proveedor } from '../models/proveedores';
 import { SupplierServiceService } from './supplier-service.service';
-import { producto } from '../models/producto';
+import { Supplier } from '../models/supplier';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +26,7 @@ export class OrdersServiceService {
   }
 
   getSuppliersAmount(): Observable<number>{
-    return this.suppliersService.getSuppliers().pipe(map(suppliers => suppliers.filter((supplier : proveedor)=> supplier.deleted == false).length
+    return this.suppliersService.getSuppliers().pipe(map(suppliers => suppliers.filter((supplier : Supplier)=> supplier.deleted == false).length
     ))
   }
 

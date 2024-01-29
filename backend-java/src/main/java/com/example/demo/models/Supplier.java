@@ -72,7 +72,7 @@ public class Supplier {
     
 	@ManyToOne
 	@JoinColumn(name = "VATCondition_id", referencedColumnName = "id", nullable=false)
-	private VATCondition VATCondition;
+	private Vat_condition vat_condition;
     
 	@ManyToOne
 	@JoinColumn(name = "address_id", referencedColumnName = "id", nullable=false)

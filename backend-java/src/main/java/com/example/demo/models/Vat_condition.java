@@ -19,7 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "VAT_conditions")
-public class VATCondition {
+public class Vat_condition {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;

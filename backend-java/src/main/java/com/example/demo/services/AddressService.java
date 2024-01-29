@@ -12,7 +12,7 @@ import com.example.demo.models.Country;
 import com.example.demo.models.Locality;
 import com.example.demo.models.Province;
 import com.example.demo.models.Supplier;
-import com.example.demo.models.VATCondition;
+import com.example.demo.models.Vat_condition;
 import com.example.demo.repositories.AddressRepository;
 import com.example.demo.repositories.CountryRepository;
 import com.example.demo.repositories.LocalityRepository;

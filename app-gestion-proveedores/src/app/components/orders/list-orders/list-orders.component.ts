@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OrdersServiceService } from '../../../services/orders-service.service';
 import { orden } from '../../../models/orden';
 import { forkJoin } from 'rxjs';
-import { proveedor } from '../../../models/proveedores';
+import { proveedor } from '../../../models/proveedoresVIEJO';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -54,7 +54,7 @@ export class ListOrdersComponent implements OnInit{
           const proveedor = suppliers.find((supplier : proveedor) => supplier.id == item.proveedor)
           let itemConProveedor = {...item, proveedor: "Proveedor dado de baja"}
           if(proveedor){
-            itemConProveedor = {...item, proveedor: proveedor.razonSocial}
+            itemConProveedor = {...item, proveedor: proveedor.business_name}
           } 
           return itemConProveedor 
         })

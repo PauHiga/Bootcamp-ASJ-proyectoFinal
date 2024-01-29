@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { orden } from '../../../models/orden';
 import { OrdersFormServiceService } from '../../../services/orders-form-service.service';
 import { producto } from '../../../models/producto';
-import { proveedor } from '../../../models/proveedores';
+import { proveedor } from '../../../models/proveedoresVIEJO';
 import { forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2'

@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { SupplierServiceService } from '../../../services/supplier-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { proveedor } from '../../../models/proveedores';
 import { CountryStateCityService } from '../../../services/country-state-city.service';
 import Swal from 'sweetalert2'
 import { SectorService } from '../../../services/sector.service';
+import { Supplier } from '../../../models/supplier';
 
 @Component({
   selector: 'app-form-suppliers',
@@ -19,40 +19,40 @@ export class FormSuppliersComponent implements OnInit{
   parametroURL : string = this.route.snapshot.params['edit'] || false;
   tituloFormulario = "Agregar Proveedor"
 
-  supplier: proveedor = {
-    id: '',
-    codigo: '',
-    razonSocial: '',
-    rubro: '',
-    URLlogo: '',
-    CUIT: '',
-    condicionIva: '',
+  supplier: Supplier = {
+    id: 0,
+    code: '',
+    business_name: '',
+    sector: '',
+    url_logo: '',
+    cuit: '',
+    vat_condition: '',
     email: '',
-    telefono: '',
+    phone: '',
     web: '',
-    direccion : {
-      calle: '',
-      altura: '',
-      CP: '',
-      pais: '',
-      provincia: '',
-      localidad: '',
+    address : {
+      street: '',
+      number: '',
+      postal_code: '',
+      country: '',
+      province: '',
+      locality: '',
     },
-    contacto: {
-      nombre: '',
-      apellido: '',
+    contact: {
+      first_name: '',
+      last_name: '',
       email: '',
-      telefono: '',
-      rol: ''
+      phone: '',
+      role: ''
     },
     deleted: false,
   }
 
   //To check if the supplier code is unique:
-  suppliersList : proveedor[] = [];
+  suppliersList : Supplier[] = [];
 
   sectors : any[] = []
-  vatConditions : String[] = []
+  vat_conditions : String[] = []
 
   countries : any[] = []
   states : any[] = []
@@ -72,10 +72,10 @@ export class FormSuppliersComponent implements OnInit{
     this.getCountries()
     this.getSectors();
     // this.getProveedores();
-    this.getVatCondition();
+    this.getvat_condition();
     if(this.parametroURL) {
       this.tituloFormulario = "Editar Proveedor";
-      this.getASupplier(this.parametroURL);
+      this.getASupplier(Number(this.parametroURL));
       this.disabledInEdit = true;
     }
     else{
@@ -96,13 +96,13 @@ export class FormSuppliersComponent implements OnInit{
     })
   }
 
-  getVatCondition(){
-    this.supplierService.getVatCondition().subscribe((response)=>{
-      this.vatConditions = response;
+  getvat_condition(){
+    this.supplierService.getvat_condition().subscribe((response)=>{
+      this.vat_conditions = response;
     })
   }
 
-  getASupplier(id : string){
+  getASupplier(id : number){
     this.supplierService.getASupplier(id).subscribe(
       (response) =>{
         console.log(response);
@@ -120,7 +120,7 @@ export class FormSuppliersComponent implements OnInit{
   }
 
   filterState(){
-    const selectedCountry = this.countries.find(item => item.name == this.supplier.direccion.pais);
+    const selectedCountry = this.countries.find(item => item.name == this.supplier.address.country);
     this.states = selectedCountry.states;
   }
 
@@ -145,12 +145,12 @@ export class FormSuppliersComponent implements OnInit{
   }
 
   validarFormulario() : boolean{
-    const codigoValido = this.validarCodigo(this.supplier.codigo) 
+    const codigoValido = this.validarCodigo(this.supplier.code) 
     const emailValido = this.validarEmail(this.supplier.email)
-    const emailContactoValido = this.validarEmailContacto(this.supplier.contacto.email)
-    const validarCUIT = this.validarCUIT(this.supplier.CUIT);
-    const validarTelefono =  this.validarTelefono(this.supplier.telefono)
-    const validarTelefonoContacto =  this.validarTelefonoContacto(this.supplier.contacto.telefono)
+    const emailContactoValido = this.validarEmailContacto(this.supplier.contact.email)
+    const validarCUIT = this.validarCUIT(this.supplier.cuit);
+    const validarTelefono =  this.validarTelefono(this.supplier.phone)
+    const validarTelefonoContacto =  this.validarTelefonoContacto(this.supplier.contact.phone)
     return(codigoValido && emailValido && emailContactoValido && validarCUIT && validarTelefono && validarTelefonoContacto)
   }
 
@@ -208,7 +208,7 @@ export class FormSuppliersComponent implements OnInit{
 
   onCUITChange(newValue: string): void {
     const formattedValue = this.formatCUIT(newValue);
-    this.supplier.CUIT = formattedValue;
+    this.supplier.cuit = formattedValue;
   }
 
   // Method to format the CUIT
@@ -225,42 +225,41 @@ export class FormSuppliersComponent implements OnInit{
   //Check if the supplier code is unique
   supplierCodeIsUnique(event : Event){
     const currentSupplierCode = (event.target as HTMLSelectElement).value;
-    const suppliersCodeArray = this.suppliersList.map(item=> item.codigo)
+    const suppliersCodeArray = this.suppliersList.map(item=> item.code)
     this.codigoProveedorRepetido = suppliersCodeArray.includes(currentSupplierCode);
   }
 
   //Clear the form
   clearSupplierData(){
     this.supplier = {
-      id: '',
-      codigo: '',
-      razonSocial: '',
-      rubro: '',
-      URLlogo: '',
-      CUIT: '',
-      condicionIva: '',
+      id: 0,
+      code: '',
+      business_name: '',
+      sector: '',
+      url_logo: '',
+      cuit: '',
+      vat_condition: '',
       email: '',
-      telefono: '',
+      phone: '',
       web: '',
-      direccion : {
-        calle: '',
-        altura: '',
-        CP: '',
-        pais: '',
-        provincia: '',
-        localidad: '',
+      address : {
+        street: '',
+        number: '',
+        postal_code: '',
+        country: '',
+        province: '',
+        locality: '',
       },
-      contacto: {
-        nombre: '',
-        apellido: '',
+      contact: {
+        first_name: '',
+        last_name: '',
         email: '',
-        telefono: '',
-        rol: ''
+        phone: '',
+        role: ''
       },
       deleted: false,
     }
   }
-
 
   //Add a new sector
   addSectorModal(){
@@ -328,3 +327,5 @@ export class FormSuppliersComponent implements OnInit{
     }
 
 }
+
+

@@ -8,7 +8,7 @@ export interface Supplier {
     sector: string,
     url_logo: string,
     cuit: string,
-    vatCondition: string,
+    vat_condition: string,
     email: string,
     phone: string,
     web: string,

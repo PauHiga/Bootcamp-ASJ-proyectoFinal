@@ -1,7 +1,7 @@
 package com.example.demo.dto;
 
 import com.example.demo.models.Sector;
-import com.example.demo.models.VATCondition;
+import com.example.demo.models.Vat_condition;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +19,7 @@ public class SupplierUpdateDTO {
     private String sector;
     private String url_logo;
     private String cuit;
-    private String vatCondition;
+    private String vat_condition;
     private String email;
     private String phone;
     private String web;

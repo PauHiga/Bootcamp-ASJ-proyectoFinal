@@ -22,7 +22,7 @@ public class SupplierDTO {
 	@NotNull(message = "The cuit cannot be null")
     private String cuit;
 	@NotNull(message = "The vat condition cannot be null")
-    private String vatCondition;
+    private String vat_condition;
 	@NotNull(message = "The email cannot be null")
     private String email;
 	@NotNull(message = "The phone cannot be null")

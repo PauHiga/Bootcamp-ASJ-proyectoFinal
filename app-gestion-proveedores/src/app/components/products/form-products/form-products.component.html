@@ -49,7 +49,7 @@
             <div class="form-group">
               <label for="idProveedor">Proveedor</label>
               <select class="form-select form-select-sm" aria-label="Default select example" id="idProveedor" name="idProveedor" [(ngModel)]="productsService.product.idProveedor" #idProveedor="ngModel" [disabled]="disabledInEdit" required>
-                <option *ngFor="let supplier of suppliersList" value="{{supplier.id}}">{{supplier.razonSocial}} &nbsp;&nbsp;-&nbsp;&nbsp; CUIT: {{supplier.CUIT}}</option>
+                <option *ngFor="let supplier of suppliersList" value="{{supplier.id}}">{{supplier.business_name}} &nbsp;&nbsp;-&nbsp;&nbsp; CUIT: {{supplier.CUIT}}</option>
               </select>
               <div *ngIf="idProveedor.errors?.['required']" class="col-auto">
                 <span class="form-text text-danger">

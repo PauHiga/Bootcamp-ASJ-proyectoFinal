@@ -12,7 +12,7 @@ import com.example.demo.models.Address;
 import com.example.demo.models.Contact;
 import com.example.demo.models.Sector;
 import com.example.demo.models.Supplier;
-import com.example.demo.models.VATCondition;
+import com.example.demo.models.Vat_condition;
 import com.example.demo.repositories.CountryRepository;
 import com.example.demo.repositories.SectorRepository;
 import com.example.demo.repositories.SupplierRepository;
@@ -71,10 +71,10 @@ public class SupplierService {
 					return sectorRepository.save(newSector);
 				});
 		
-		VATCondition vatCondition = vatConditionRepository.findByName(supplierDTO.getVatCondition())
+		Vat_condition vatCondition = vatConditionRepository.findByName(supplierDTO.getVat_condition())
 				.orElseGet(()->{
-					VATCondition newVatCondition =  new VATCondition();
-					newVatCondition.setName(supplierDTO.getVatCondition());
+					Vat_condition newVatCondition =  new Vat_condition();
+					newVatCondition.setName(supplierDTO.getVat_condition());
 					return vatConditionRepository.save(newVatCondition);
 				});
 		
@@ -113,10 +113,10 @@ public class SupplierService {
 					return sectorRepository.save(newSector);
 				});
 		
-		VATCondition vatCondition = vatConditionRepository.findByName(supplierDTO.getVatCondition())
+		Vat_condition vatCondition = vatConditionRepository.findByName(supplierDTO.getVat_condition())
 				.orElseGet(()->{
-					VATCondition newVatCondition =  new VATCondition();
-					newVatCondition.setName(supplierDTO.getVatCondition());
+					Vat_condition newVatCondition =  new Vat_condition();
+					newVatCondition.setName(supplierDTO.getVat_condition());
 					return vatConditionRepository.save(newVatCondition);
 				});
 		
@@ -221,14 +221,14 @@ public class SupplierService {
         	contactService.editContact(updatedSupplier.getContact().getId(), supplierUpdateDTO.getContact());
         }
         
-        if (supplierUpdateDTO.getVatCondition() != null) {
-    		VATCondition vatCondition = vatConditionRepository.findByName(supplierUpdateDTO.getVatCondition())
+        if (supplierUpdateDTO.getVat_condition() != null) {
+    		Vat_condition vatCondition = vatConditionRepository.findByName(supplierUpdateDTO.getVat_condition())
 			.orElseGet(()->{
-				VATCondition newVatCondition =  new VATCondition();
-				newVatCondition.setName(supplierUpdateDTO.getVatCondition());
+				Vat_condition newVatCondition =  new Vat_condition();
+				newVatCondition.setName(supplierUpdateDTO.getVat_condition());
 				return vatConditionRepository.save(newVatCondition);
 			});
-            updatedSupplier.setVATCondition(vatCondition);
+            updatedSupplier.setVat_condition(vatCondition);
         }
         
         if (supplierUpdateDTO.getSector() != null) {
