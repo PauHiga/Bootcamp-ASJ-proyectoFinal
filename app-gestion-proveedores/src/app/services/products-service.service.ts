@@ -59,7 +59,6 @@ export class ProductsServiceService implements OnInit {
   }
 
   setProductForEdit(productForEdit : any){
-    console.log(this.product);
     this.product = productForEdit;
   }
 
@@ -75,7 +74,6 @@ export class ProductsServiceService implements OnInit {
       supplier_id: this.product.supplier.id,
       category: this.product.category.name
     }
-    console.log(productToEdit);
     return this.http.put(this.URL_API + "/" + id, productToEdit);
   }
 
