@@ -64,7 +64,19 @@ export class ProductsServiceService implements OnInit {
   }
 
   editProduct(id: string){
-    return this.http.put(this.URL_API + "/" + id, this.product);
+    const productToEdit : Product = {
+      id : this.product.id, 
+      sku: this.product.sku,
+      name: this.product.name,
+      description: this.product.description,
+      price: this.product.price,
+      url_image: this.product.url_image,
+      deleted: false,
+      supplier_id: this.product.supplier.id,
+      category: this.product.category.name
+    }
+    console.log(productToEdit);
+    return this.http.put(this.URL_API + "/" + id, productToEdit);
   }
 
   deleteProduct(id:number){
