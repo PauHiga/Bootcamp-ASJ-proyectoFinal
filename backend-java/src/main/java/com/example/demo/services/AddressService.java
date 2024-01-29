@@ -11,6 +11,7 @@ import com.example.demo.models.Address;
 import com.example.demo.models.Country;
 import com.example.demo.models.Locality;
 import com.example.demo.models.Province;
+import com.example.demo.models.Supplier;
 import com.example.demo.models.VATCondition;
 import com.example.demo.repositories.AddressRepository;
 import com.example.demo.repositories.CountryRepository;
@@ -75,6 +76,57 @@ public class AddressService {
 		
 		addressRepository.save(newAddress);
 		return newAddress;
+	}
+	
+	public Address editAddress(Integer id, AddressDTO addressDTO) {
+        Optional<Address> existingAddress = addressRepository.findById(id);
+    	if(existingAddress.isEmpty()) {
+    		throw new RuntimeException("Address not found with ID: " + id);
+    	} 
+    	Address updatedAddress = existingAddress.get();
+		
+        if (addressDTO.getStreet() != null) {
+        	updatedAddress.setStreet(addressDTO.getStreet());
+        } 
+    	
+        if (addressDTO.getNumber() != null) {
+        	updatedAddress.setNumber(addressDTO.getNumber());
+        } 
+        if (addressDTO.getPostal_code() != null) {
+        	updatedAddress.setPostal_code(addressDTO.getPostal_code());
+        } 
+        if (addressDTO.getCountry() != null && addressDTO.getProvince() != null && addressDTO.getLocality() != null) {
+    		Country country = countryRepository.findByName(addressDTO.getCountry())
+    				.orElseGet(()->{
+    					Country newCountry =  new Country();
+    					newCountry.setName(addressDTO.getCountry());
+    					return countryRepository.save(newCountry);
+    				});
+		
+		Province province = provinceRepository.findByName(addressDTO.getProvince())
+				.orElseGet(()->{
+					Province newProvince =  new Province();
+					newProvince.setName(addressDTO.getProvince());
+					newProvince.setCountry(country);
+					System.out.println(newProvince.getCountry().getName());
+					return provinceRepository.save(newProvince);
+				});
+		
+		Locality locality = localityRepository.findByName(addressDTO.getLocality())
+				.orElseGet(()->{
+					Locality newLocality =  new Locality();
+					newLocality.setName(addressDTO.getLocality());
+					newLocality.setProvince(province);
+					return localityRepository.save(newLocality);
+				});
+		
+		updatedAddress.setLocality(locality);
+        } 
+		
+        updatedAddress.setUpdatedAt(LocalDate.now());
+		
+		addressRepository.save(updatedAddress);
+		return updatedAddress;
 	}
 	
 }

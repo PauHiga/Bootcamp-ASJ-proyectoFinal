@@ -209,9 +209,40 @@ public class SupplierService {
         
         updatedSupplier.setUpdatedAt(LocalDate.now());
         
-        //Hacer service de edición de address, contact, y unir campos de vat condition y sector
+        if (supplierUpdateDTO.getAddress() != null) {
+        	addressService.editAddress(updatedSupplier.getAddress().getId(), supplierUpdateDTO.getAddress());
+        }
         
+        if (supplierUpdateDTO.getContact() != null) {
+        	contactService.editContact(updatedSupplier.getContact().getId(), supplierUpdateDTO.getContact());
+        }
         
+        if (supplierUpdateDTO.getContact() != null) {
+        	contactService.editContact(updatedSupplier.getContact().getId(), supplierUpdateDTO.getContact());
+        }
+        
+        if (supplierUpdateDTO.getVatCondition() != null) {
+    		VATCondition vatCondition = vatConditionRepository.findByName(supplierUpdateDTO.getVatCondition())
+			.orElseGet(()->{
+				VATCondition newVatCondition =  new VATCondition();
+				newVatCondition.setName(supplierUpdateDTO.getVatCondition());
+				return vatConditionRepository.save(newVatCondition);
+			});
+            updatedSupplier.setVATCondition(vatCondition);
+        }
+        
+        if (supplierUpdateDTO.getSector() != null) {
+    		Sector sector = sectorRepository.findActiveSectorByName(supplierUpdateDTO.getSector())
+			.orElseGet(()->{
+				Sector newSector =  new Sector();
+				newSector.setName(supplierUpdateDTO.getSector());
+				newSector.setCreatedAt(LocalDate.now());
+				newSector.setDeleted(false);
+				return sectorRepository.save(newSector);
+			});
+	
+    		updatedSupplier.setSector(sector);
+        }
 
         return supplierRepository.save(updatedSupplier);
     }

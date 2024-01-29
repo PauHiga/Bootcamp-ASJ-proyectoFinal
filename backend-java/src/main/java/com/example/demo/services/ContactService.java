@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.ContactDTO;
+import com.example.demo.models.Address;
 import com.example.demo.models.Contact;
 import com.example.demo.repositories.ContactRepository;
 
@@ -33,5 +34,33 @@ public class ContactService {
 		newContact.setRole(contactDTO.getRole());
 		newContact.setCreatedAt(LocalDate.now());
 		return contactRepository.save(newContact);
+	}
+	
+	public Contact editContact(Integer id, ContactDTO contactDTO){
+        Optional<Contact> existingContact = contactRepository.findById(id);
+    	if(existingContact.isEmpty()) {
+    		throw new RuntimeException("Contact not found with ID: " + id);
+    	} 
+    	Contact updatedContact = existingContact.get();
+		
+        if (contactDTO.getFirst_name() != null) {
+        	updatedContact.setFirst_name(contactDTO.getFirst_name());
+        } 
+        
+        if (contactDTO.getLast_name() != null) {
+        	updatedContact.setLast_name(contactDTO.getLast_name());
+        } 
+        if (contactDTO.getEmail() != null) {
+        	updatedContact.setEmail(contactDTO.getEmail());
+        } 
+        if (contactDTO.getPhone() != null) {
+        	updatedContact.setPhone(contactDTO.getPhone());
+        } 
+        if (contactDTO.getRole() != null) {
+        	updatedContact.setRole(contactDTO.getRole());
+        } 
+        updatedContact.setUpdatedAt(LocalDate.now());
+        contactRepository.save(updatedContact);
+		return updatedContact;
 	}
 }

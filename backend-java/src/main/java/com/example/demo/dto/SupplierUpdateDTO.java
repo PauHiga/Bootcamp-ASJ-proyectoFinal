@@ -1,5 +1,8 @@
 package com.example.demo.dto;
 
+import com.example.demo.models.Sector;
+import com.example.demo.models.VATCondition;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

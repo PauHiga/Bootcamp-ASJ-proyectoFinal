@@ -48,6 +48,7 @@ export class FormSuppliersComponent implements OnInit{
     deleted: false,
   }
 
+  //To check if the supplier code is unique:
   suppliersList : proveedor[] = [];
 
   sectors : any[] = []
@@ -70,7 +71,7 @@ export class FormSuppliersComponent implements OnInit{
   ngOnInit(): void {
     this.getCountries()
     this.getSectors();
-    this.getProveedores();
+    // this.getProveedores();
     this.getVatCondition();
     if(this.parametroURL) {
       this.tituloFormulario = "Editar Proveedor";
@@ -104,6 +105,7 @@ export class FormSuppliersComponent implements OnInit{
   getASupplier(id : string){
     this.supplierService.getASupplier(id).subscribe(
       (response) =>{
+        console.log(response);
         this.supplier = response;
         this.filterState();
         this.supplier.deleted = false;
@@ -113,7 +115,7 @@ export class FormSuppliersComponent implements OnInit{
 
   getCountries(){
     this.countryService.getCountries().subscribe((response)=>{
-      this.countries = response
+      this.countries = response;
     })
   }
 

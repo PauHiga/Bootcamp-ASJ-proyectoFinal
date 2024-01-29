@@ -39,7 +39,7 @@ export class SupplierServiceService {
               altura: item.address.number,
               CP: item.address.postal_code,
               pais: item.address.country,
-              provincia: item.address.locality,
+              provincia: item.address.province,
               localidad: item.address.locality,
           },
             contacto: {
@@ -130,6 +130,7 @@ export class SupplierServiceService {
   }
 
   editSupplier(supplierToEdit : proveedor, id: string){
+    console.log(supplierToEdit);
     return this.http.put(this.URL_API + "/" + id, supplierToEdit);
   }
 

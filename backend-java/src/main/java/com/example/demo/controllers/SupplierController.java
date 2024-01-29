@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.SupplierDTO;
 import com.example.demo.dto.SupplierUpdateDTO;
-import com.example.demo.models.Category;
 import com.example.demo.models.Supplier;
 import com.example.demo.services.SupplierService;
 
@@ -54,7 +53,7 @@ public class SupplierController {
 		}
 	}
 
-	@PutMapping("/suppliers/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<?> updateSupplier(@PathVariable Integer id, @RequestBody SupplierUpdateDTO supplierUpdateDTO) {
 	    try {
 	        Supplier updatedSupplier = supplierService.updateSupplier(id, supplierUpdateDTO);
@@ -64,6 +63,5 @@ public class SupplierController {
 	    } catch (Exception e) {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating supplier");
 	    }
-	}
-	
+	}	
 }
