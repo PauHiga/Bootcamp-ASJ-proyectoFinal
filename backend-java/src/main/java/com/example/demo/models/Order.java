@@ -1,6 +1,5 @@
 package com.example.demo.models;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -70,9 +69,9 @@ public class Order {
 	@NotNull(message = "The deletion field cannot be null")
 	private Boolean deleted;
     
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-	private List<OrderDetail> order_detail;
-
+//	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+//	private List<OrderDetail> orderDetail;
+	
 	public Order(@NotNull(message = "The order number cannot be null") Integer order_number,
 			@NotNull(message = "The issue date cannot be null") LocalDate issue_date,
 			@NotNull(message = "The delivery date cannot be null") LocalDate delivery_date, String details,
@@ -81,7 +80,6 @@ public class Order {
 			@NotNull(message = "The status cannot be null") Status status,
 			@NotNull(message = "The deletion field cannot be null") Boolean deleted) {
 		super();
-
 		this.order_number = order_number;
 		this.issue_date = issue_date;
 		this.delivery_date = delivery_date;
@@ -92,7 +90,4 @@ public class Order {
 		this.status = status;
 		this.deleted = deleted;
 	}
-	
-	
-	
 }

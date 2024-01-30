@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.OrderCreateDTO;
-import com.example.demo.dto.OrderUpdateDTO;
-import com.example.demo.models.Category;
 import com.example.demo.models.Order;
 import com.example.demo.models.Status;
 import com.example.demo.models.Supplier;

@@ -31,7 +31,7 @@ public class OrderDetail {
 	
 	@Column(columnDefinition = "DECIMAL(10,2)", nullable = false)
 	@NotNull(message = "The unit price cannot be null")
-	private Integer unit_price;
+	private Float unit_price;
 
 	@ManyToOne
 	@JoinColumn(name = "product_id", referencedColumnName = "id", nullable=false)
@@ -42,5 +42,4 @@ public class OrderDetail {
 	@JoinColumn(name = "order_id", referencedColumnName = "id", nullable=false)
 	@NotNull(message = "The order cannot be null")
 	private Order order;
-
 }

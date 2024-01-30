@@ -11,7 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDetailDTO {
-	
     private Integer id;
 	@NotNull(message = "The quantity cannot be null")
     private Integer quantity;
@@ -19,6 +18,6 @@ public class OrderDetailDTO {
     private Float unit_price;
 	@NotNull(message = "The product_id cannot be null")
     private Integer product_id;
-	@NotNull(message = "The cuit cannot be null")
+	@NotNull(message = "The order_id cannot be null")
     private Integer order_id;
 }
