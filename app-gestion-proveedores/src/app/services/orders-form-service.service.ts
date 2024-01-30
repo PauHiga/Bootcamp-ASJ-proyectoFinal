@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { producto } from '../models/producto';
 import { OrderCreate } from '../models/orderCreate';
+import { OrderDetailCreate } from '../models/OrderDetailCreate';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,14 @@ export class OrdersFormServiceService {
     return this.http.get(this.URL_API_ORDERS);
   }
 
+  saveDetails(orderDetails : OrderDetailCreate[]) : void{  
+    orderDetails.forEach(orderDetail => {
+      this.http.post(this.URL_API_ORDERS, order)
+    });
+  }
+
+
   saveOrder(order : OrderCreate) : Observable<any>{  
-    console.log(order); 
     return this.http.post(this.URL_API_ORDERS, order);
   }
 

@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,14 +44,25 @@ public class OrderController {
 	
 	@PostMapping()
 	public ResponseEntity<Object> createSupplier(@RequestBody OrderCreateDTO orderCreateDTO){
+		List<OrderCreateDTO> orderCreateDTOList = List.of(orderCreateDTO);
 		try {
-			return ResponseEntity.ok(orderService.createOrder(orderCreateDTO));
+			return ResponseEntity.ok(orderService.createOrders(orderCreateDTOList));
 		}
 		catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating order: " + e.getMessage());			
 		}
 	}
 
+	@PostMapping("/batch")
+	public ResponseEntity<Object> createOrders(@RequestBody List<OrderCreateDTO> orderCreateDTOList) {
+	    try {
+	        return ResponseEntity.ok(orderService.createOrders(orderCreateDTOList));
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("Error creating orders: " + e.getMessage());
+	    }
+	}
+	
 //	@PutMapping("/{id}")
 //	public ResponseEntity<?> updateOrder(@PathVariable Integer id, @RequestBody OrderUpdateDTO orderUpdateDTO) {
 //	    try {

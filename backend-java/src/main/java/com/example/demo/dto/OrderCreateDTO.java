@@ -30,6 +30,9 @@ public class OrderCreateDTO {
 	private String delivery_date;
 	
 	private String details;
+	
+	@NotNull(message = "The total cannot be null")
+	private Float total;
     
 	@NotNull(message = "The supplier cannot be null")
 	private Integer supplier_id;

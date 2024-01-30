@@ -1,7 +1,7 @@
 package com.example.demo.services;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,8 @@ public class OrderService {
 	@Autowired
 	StatusRepository statusRepository;
 	
+	private List<Order> batchOrderList = new ArrayList<>();
+	
 	public List<Order> getOrders(){
 		return orderRepository.findAll();
 	}
@@ -34,11 +36,33 @@ public class OrderService {
 		return orderRepository.findById(id);
 	}
 	
+    public List<Order> createOrders(List<OrderCreateDTO> orderCreateDTOList) {
+        List<Order> createdOrders = new ArrayList<>();
+
+        for (OrderCreateDTO orderCreateDTO : orderCreateDTOList) {
+            Order createdOrder = createOrder(orderCreateDTO);
+            createdOrders.add(createdOrder);
+        }
+
+        saveBatchOrders(batchOrderList);
+
+        return createdOrders;
+    }
+	
+    // Add a new method for batch insert
+    public void saveBatchOrders(List<Order> orderList) {
+        orderRepository.saveAll(orderList);
+        
+        // Clear the list after batch insert
+        batchOrderList.clear();
+    }
+    
 	public Order createOrder(OrderCreateDTO orderCreateDTO) {
 		Integer order_number = orderCreateDTO.getOrder_number();
 		LocalDate issue_date = LocalDate.parse(orderCreateDTO.getIssue_date());
 		LocalDate delivery_date = LocalDate.parse(orderCreateDTO.getDelivery_date());
 		String details = orderCreateDTO.getDetails();
+		Float total = orderCreateDTO.getTotal();
 		LocalDate createdAt = LocalDate.now();
 		LocalDate updatedAt = null;
 
@@ -67,9 +91,12 @@ public class OrderService {
 	    
 		Boolean deleted = false;
 		
-		Order newOrder = new Order(order_number, issue_date, delivery_date, details, createdAt, updatedAt, supplier, status, deleted);
+		Order newOrder = new Order(order_number, issue_date, delivery_date, details, total, createdAt, updatedAt, supplier, status, deleted);
 		
-		orderRepository.save(newOrder);
+//		orderRepository.save(newOrder);
+		
+        batchOrderList.add(newOrder);
+
 		return newOrder;
 	}
 	

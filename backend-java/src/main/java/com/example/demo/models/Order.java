@@ -46,8 +46,11 @@ public class Order {
 	@NotNull(message = "The delivery date cannot be null")
 	private LocalDate delivery_date;
 	
-	@Column(unique = true, length = 500)
+	@Column(length = 500)
 	private String details;
+	
+	@Column(length = 500)
+	private Float total;
     
 	@Column(name = "created_at", nullable = false)
 	private LocalDate createdAt;
@@ -71,10 +74,10 @@ public class Order {
     
 //	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 //	private List<OrderDetail> orderDetail;
-	
+
 	public Order(@NotNull(message = "The order number cannot be null") Integer order_number,
 			@NotNull(message = "The issue date cannot be null") LocalDate issue_date,
-			@NotNull(message = "The delivery date cannot be null") LocalDate delivery_date, String details,
+			@NotNull(message = "The delivery date cannot be null") LocalDate delivery_date, String details, Float total,
 			LocalDate createdAt, LocalDate updatedAt,
 			@NotNull(message = "The supplier cannot be null") Supplier supplier,
 			@NotNull(message = "The status cannot be null") Status status,
@@ -84,10 +87,16 @@ public class Order {
 		this.issue_date = issue_date;
 		this.delivery_date = delivery_date;
 		this.details = details;
+		this.total = total;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 		this.supplier = supplier;
 		this.status = status;
 		this.deleted = deleted;
 	}
+	
+
+	
+	
+	
 }

@@ -49,13 +49,23 @@ public class OrderDetailController {
 		}
 	}
 	
-	@PostMapping()
-	public ResponseEntity<Object> createOrderDetail(@RequestBody OrderDetailDTO orderDetailDTO){
+//	@PostMapping()
+//	public ResponseEntity<Object> createOrderDetail(@RequestBody OrderDetailDTO orderDetailDTO){
+//		try {
+//			return ResponseEntity.ok(orderDetailService.createOrderDetail(orderDetailDTO));
+//		}
+//		catch(Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating order detail: " + e.getMessage());			
+//		}
+//	}
+	
+	@PostMapping("/batch")
+	public ResponseEntity<Object> createOrderDetails(@RequestBody List<OrderDetailDTO> orderDetailDTOList){
 		try {
-			return ResponseEntity.ok(orderDetailService.createOrderDetail(orderDetailDTO));
+			return ResponseEntity.ok(orderDetailService.createOrderDetails(orderDetailDTOList));
 		}
 		catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating order detail: " + e.getMessage());			
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating order details: " + e.getMessage());			
 		}
 	}
 
