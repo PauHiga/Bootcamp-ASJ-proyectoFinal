@@ -5,5 +5,12 @@ INSERT INTO VAT_conditions (name) VALUES
 ('Responsable Monotributo');
 
 INSERT INTO status (name) VALUES
-('Pendiente'),
-('Entregado');
+('Draft'),
+('Pending Approval'),
+('Approved'),
+('Active'),
+('Partial Delivery'),
+('Complete Delivery'),
+('Pending Payment'),
+('Paid'),
+('Closed');

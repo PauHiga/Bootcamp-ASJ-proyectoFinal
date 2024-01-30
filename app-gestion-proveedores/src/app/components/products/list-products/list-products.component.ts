@@ -87,13 +87,13 @@ export class ListProductsComponent implements OnInit{
     else{
       if(selectedProduct.deleted == true){
         Swal.fire({
-          title: "Este producto se encuentra inactivo",
-          text: "Si lo modifica, será activado nuevamente.",
+          title: "This product is deleted",
+          text: "If you edit this product, it will be activated again.",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
           cancelButtonColor: "#d33",
-          confirmButtonText: "Activar producto y editar"
+          confirmButtonText: "Activate product and edit"
         }).then((result) => {
           if (result.isConfirmed) {
             this.router.navigate([`productos/formulario-productos/${selectedProduct.id}`])

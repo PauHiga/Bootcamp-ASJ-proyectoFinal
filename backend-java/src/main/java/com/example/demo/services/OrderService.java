@@ -76,7 +76,7 @@ public class OrderService {
 	    }
 	    
 	    Status status;
-		Optional<Status> optionalStatus = statusRepository.findById(1);
+		Optional<Status> optionalStatus = statusRepository.findById(2);
 	    if (optionalStatus.isEmpty()) {
 	        throw new RuntimeException("Default status (id: 1) not found");
 	    } else {
