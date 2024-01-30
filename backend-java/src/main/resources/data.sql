@@ -3,3 +3,7 @@ INSERT INTO VAT_conditions (name) VALUES
 ('IVA No Responsable'),
 ('IVA exento'),
 ('Responsable Monotributo');
+
+INSERT INTO status (name) VALUES
+('Pendiente'),
+('Entregado');

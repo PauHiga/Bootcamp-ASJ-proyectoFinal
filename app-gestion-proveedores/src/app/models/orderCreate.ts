@@ -1,4 +1,4 @@
-import { productoCantidad } from "./OrderDetailDisplay"
+// import { productoCantidad } from "./OrderDetailDisplay"
 
 export interface OrderCreate {
     id: number,
@@ -6,7 +6,8 @@ export interface OrderCreate {
     issue_date: string,
     delivery_date: string,
     details: string,
-    supplier: string,
+    total: number,
+    supplier_id: number,
     // productos: productoCantidad[],
     status: string,
     //deleted should be replaced with status

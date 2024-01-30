@@ -49,13 +49,21 @@ public class OrderService {
 	    } else {
 	    	supplier = optionalSupplier.get();
 	    }
+	    
+	    Status status;
+		Optional<Status> optionalStatus = statusRepository.findById(1);
+	    if (optionalStatus.isEmpty()) {
+	        throw new RuntimeException("Default status (id: 1) not found");
+	    } else {
+	    	status = optionalStatus.get();
+	    }
 
-		Status status = statusRepository.findByName(orderCreateDTO.getStatus())
-				.orElseGet(()->{
-					Status newStatus =  new Status();
-					newStatus.setName(orderCreateDTO.getStatus());
-				return statusRepository.save(newStatus);
-			});
+//		Status status = statusRepository.findByName(orderCreateDTO.getStatus())
+//				.orElseGet(()->{
+//					Status newStatus =  new Status();
+//					newStatus.setName(orderCreateDTO.getStatus());
+//				return statusRepository.save(newStatus);
+//			});
 	    
 		Boolean deleted = false;
 		

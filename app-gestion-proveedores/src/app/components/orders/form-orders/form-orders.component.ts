@@ -8,6 +8,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2'
 import { ProductDisplay } from '../../../models/productDisplay';
 import { Supplier } from '../../../models/supplier';
+import { OrderCreate } from '../../../models/orderCreate';
+import { OrderDetailCreate } from '../../../models/OrderDetailCreate';
+import { OrderDetailDisplay } from '../../../models/OrderDetailDisplay';
+import { OrderDisplay } from '../../../models/orderDisplay';
 
 
 @Component({
@@ -19,34 +23,38 @@ export class FormOrdersComponent implements OnInit{
 
   constructor(public orderFormService: OrdersFormServiceService, private router:Router, private modalService: NgbModal){}
 
-  orden : orden = 
+  order : OrderCreate = 
     {
-      id: "0",
-      numeroOrden: 0,
-      fechaEmision: '',
-      fechaEntrega: '',
-      informacionRecepcion: '',
-      proveedor: '',
-      productos: [],
+      id: 0,
+      order_number: 0,
+      issue_date: '',
+      delivery_date: '',
+      details: '',
       total: 0,
-      estado: 'NO CANCELADO'
+      supplier_id: 0,
+      status: '',
+      deleted: false
     }
 
-    suppliers : Supplier[] = []
-    products : ProductDisplay[] = []
-    orders : orden[] = []
-    
-    productsToDisplay : ProductDisplay[] = []
+  orderDetails : OrderDetailCreate[] = []
 
-    productosInProcess : any[] = []  
+  suppliers : Supplier[] = []
+  products : ProductDisplay[] = []
+  orders : OrderDisplay[] = []
+  
+  selectedSupplier = {}
 
-    idProveedorArray : number[] = []
+  productsToDisplay : ProductDisplay[] = []
 
-    totalMayorACeroValido : boolean = true;
-    fechaEmisionValida : boolean = true;
-    fechaEntregaValida : boolean = true;
+  orderDetailProductsSelected : OrderDetailDisplay[] = []  
 
-    search : string = "";
+  idProveedorArray : number[] = []
+
+  totalMayorACeroValido : boolean = true;
+  fechaEmisionValida : boolean = true;
+  fechaEntregaValida : boolean = true;
+
+  search : string = "";
 
   ngOnInit(): void {
     this.getData();
@@ -70,14 +78,15 @@ export class FormOrdersComponent implements OnInit{
   
   setOrderNumber(){
     if (this.orders.length === 0) {
-      this.orden.numeroOrden = 1
+      this.order.order_number = 1
     }
     else{
       const currentLastOrder = this.orders.reduce((maxOrder, currentOrder) => {
-        return currentOrder.numeroOrden > maxOrder ? currentOrder.numeroOrden : maxOrder;
-      }, this.orders[0].numeroOrden);
-      this.orden.numeroOrden = currentLastOrder + 1;
+        return currentOrder.order_number > maxOrder ? currentOrder.order_number : maxOrder;
+      }, this.orders[0].order_number);
+      this.order.order_number = currentLastOrder + 1;
     }
+    console.log("order number: " + this.order.order_number);
   }
 
   getSuppliersWithProducts(){
@@ -87,53 +96,54 @@ export class FormOrdersComponent implements OnInit{
 
   onSelect(event : Event): any
   {
-    this.productosInProcess = [];
-    this.orden.total = 0;
+    this.orderDetailProductsSelected = [];
+    this.order.total = 0;
     const selectedValue = (event.target as HTMLSelectElement).value;
+    this.order.supplier_id = Number(selectedValue);
     this.productsToDisplay = this.products.filter(item => item.id == Number(selectedValue))
   }
 
-  addProductToOrder(event : Event, data:any){
+  addProductToOrder(event : Event, data: ProductDisplay){
     const cantidad = (event.target as HTMLSelectElement).value;
-    const newProductForOrden : any = {
-      id: data.id,
-      nombreProducto: data.nombreProducto,
-      precio: data.precio,
-      cantidad: Number(cantidad)
+    const newProductForOrden : OrderDetailDisplay = {
+      // id: data.id,
+      product: data,
+      unit_price: data.price,
+      quantity: Number(cantidad)
     }
-    const filteredOrdenProducts = this.productosInProcess.filter(item => item.id != data.id)
+    const noRepeatProductsFilter = this.orderDetailProductsSelected.filter(item => item.product.id != data.id)
     if(Number(cantidad) > 0){
-      filteredOrdenProducts.push(newProductForOrden)
+      noRepeatProductsFilter.push(newProductForOrden)
     }
-    this.productosInProcess = filteredOrdenProducts
+    this.orderDetailProductsSelected = noRepeatProductsFilter
     this.getTotal()
     this.validateTotal()
   }
 
   getTotal(){
-    const total = this.productosInProcess.reduce((accumulator, currentObject)=> accumulator + currentObject.precio * currentObject.cantidad, 0)
-    this.orden.total = total.toFixed(2)
+    const total = this.orderDetailProductsSelected.reduce((accumulator, currentObject)=> accumulator + currentObject.unit_price * currentObject.quantity, 0)
+    this.order.total = Number(total.toFixed(2))
   }
 
-  productsInProcessToOrdenProductos(){
-    this.orden.productos = this.productosInProcess.map(item => {
-      const producto = {id:item.id, nombreProducto:item.nombreProducto, cantidad: item.cantidad}
-      return producto
+  orderDetailProductsSelectedToOrdenProductos(){
+    this.orderDetails = this.orderDetailProductsSelected.map(item => {
+      const orderDetail : OrderDetailCreate = {product_id:item.product.id, unit_price:item.unit_price, quantity: item.quantity, order_id:0}
+      return orderDetail
     })
   }
 
   onClickForm(formularioProveedores:NgForm){
-    this.productsInProcessToOrdenProductos()
+    this.orderDetailProductsSelectedToOrdenProductos()
     let productsString = ""
-    for(let product of this.orden.productos){
-      productsString = productsString + "<li>" + product.nombreProducto +"</li>"
+    for(let orderDetailProduct of this.orderDetailProductsSelected){
+      productsString = productsString + "<li>" + orderDetailProduct.product.name +"</li>"
     }
     if(formularioProveedores.valid && this.validacionFormulario()){
       Swal.fire({
         title: "Está a punto de generar una nueva orden. ¿Desea continuar?",
         icon: "info",
         html: `
-        <p>Total: ${this.orden.total}</p>
+        <p>Total: ${this.order.total}</p>
         <ul>
           ${productsString}
         </ul>
@@ -159,22 +169,22 @@ export class FormOrdersComponent implements OnInit{
 
 
   validacionFormulario(){
-    this.totalMayorACeroValido = this.orden.total>0
-    this.fechaEmisionValida =  this.validateStringDatesOnlyForward(this.orden.fechaEmision, this.getCurrentDate())
-    this.fechaEntregaValida =  this.validateStringDatesOnlyForward(this.orden.fechaEntrega, this.orden.fechaEmision)
+    this.totalMayorACeroValido = this.order.total>0
+    this.fechaEmisionValida =  this.validateStringDatesOnlyForward(this.order.issue_date, this.getCurrentDate())
+    this.fechaEntregaValida =  this.validateStringDatesOnlyForward(this.order.delivery_date, this.order.issue_date)
     return this.totalMayorACeroValido && this.fechaEmisionValida && this.fechaEntregaValida
   }
 
   validateTotal(){
-    this.totalMayorACeroValido = this.orden.total>0
+    this.totalMayorACeroValido = this.order.total>0
   }
 
   validateDateFechaEmision(){
-    this.fechaEmisionValida =  this.validateStringDatesOnlyForward(this.orden.fechaEmision, this.getCurrentDate())
+    this.fechaEmisionValida =  this.validateStringDatesOnlyForward(this.order.issue_date, this.getCurrentDate())
   }
 
   validateDateFechaEntrega(){
-    this.fechaEntregaValida =  this.validateStringDatesOnlyForward(this.orden.fechaEntrega, this.orden.fechaEmision)
+    this.fechaEntregaValida =  this.validateStringDatesOnlyForward(this.order.delivery_date, this.order.issue_date)
   }
 
   validateStringDatesOnlyForward(date :string , currentDate : string){
@@ -184,7 +194,7 @@ export class FormOrdersComponent implements OnInit{
   }
 
   confirmarNuevaOrden(){
-    this.orderFormService.saveOrder(this.orden).subscribe((response)=>{
+    this.orderFormService.saveOrder(this.order).subscribe((response)=>{
       console.log(response);
     })
     this.clearData()
@@ -193,17 +203,17 @@ export class FormOrdersComponent implements OnInit{
   }
 
   clearData(){
-    this.orden = 
+    this.order = 
     {
-      id: "",
-      numeroOrden: 0,
-      fechaEmision: '',
-      fechaEntrega: '',
-      informacionRecepcion: '',
-      proveedor: '',
-      productos: [],
+      id: 0,
+      order_number: 0,
+      issue_date: '',
+      delivery_date: '',
+      details: '',
       total: 0,
-      estado: 'NO CANCELADO'
+      supplier_id: 0,
+      status: '',
+      deleted: false
     }
   }
 
@@ -221,7 +231,7 @@ export class FormOrdersComponent implements OnInit{
   }
 
   setCurrentDateOnInputs() : void{
-    this.orden.fechaEmision = this.getCurrentDate();
+    this.order.issue_date = this.getCurrentDate();
   }
 
   cancelar(objetivo: string){

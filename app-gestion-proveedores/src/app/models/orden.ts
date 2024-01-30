@@ -1,4 +1,4 @@
-import { productoCantidad } from "./OrderDetailDisplay"
+// import { productoCantidad } from "./OrderDetailDisplay"
 
 export interface orden {
     id: string,
@@ -7,7 +7,7 @@ export interface orden {
     fechaEntrega: string,
     informacionRecepcion: string,
     proveedor: string,
-    productos: productoCantidad[],
+    // productos: productoCantidad[],
     total: number,
-    estado: boolean
+    estado: string
 }

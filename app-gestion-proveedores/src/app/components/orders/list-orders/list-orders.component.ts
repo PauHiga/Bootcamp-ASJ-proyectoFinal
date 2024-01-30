@@ -5,6 +5,7 @@ import { orden } from '../../../models/orden';
 import { forkJoin } from 'rxjs';
 import { proveedor } from '../../../models/proveedoresVIEJO';
 import Swal from 'sweetalert2';
+import { OrderDisplay } from '../../../models/orderDisplay';
 
 @Component({
   selector: 'app-list-orders',
@@ -15,20 +16,22 @@ export class ListOrdersComponent implements OnInit{
 
   constructor(public ordersService: OrdersServiceService, private route:ActivatedRoute, private router:Router){}
 
-  orders : orden[]= [];
-  ordersToDisplay : orden[]= [{
-    id: "",
-    numeroOrden: 0,
-    fechaEmision: '',
-    fechaEntrega: '',
-    informacionRecepcion: '',
-    proveedor: '',
-    productos: [
-      { id: '', nombreProducto: '', cantidad: 0 },
-    ],
-    total: 0,
-    estado: 'NO CANCELADO'
-  }];
+  orders : OrderDisplay[]= [];
+  ordersToDisplay : OrderDisplay[]= [];
+
+  // ordersToDisplay : orden[]= [{
+  //   id: "",
+  //   numeroOrden: 0,
+  //   fechaEmision: '',
+  //   fechaEntrega: '',
+  //   informacionRecepcion: '',
+  //   proveedor: '',
+  //   productos: [
+  //     { id: '', nombreProducto: '', cantidad: 0 },
+  //   ],
+  //   total: 0,
+  //   estado: 'NO CANCELADO'
+  // }];
 
   ordersAvailable = 0;
   productsAvailable = 0;
@@ -75,7 +78,7 @@ export class ListOrdersComponent implements OnInit{
     })
   }
 
-  markCanceled(id:string, numeroOrden:number){
+  markCanceled(id:number, numeroOrden:number){
     Swal.fire({
       text: `Está por cancelar la orden Nº ${numeroOrden}. ¿Desea continuar?`,
       icon: "warning",

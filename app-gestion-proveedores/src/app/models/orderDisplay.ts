@@ -7,9 +7,9 @@ export interface OrderDisplay {
     issue_date: string,
     delivery_date: string,
     details: string,
+    total: number,
     supplier: Supplier,
     productos?: OrderDetailDisplay[],
-    total: number,
     status: string,
     deleted: boolean
 }
