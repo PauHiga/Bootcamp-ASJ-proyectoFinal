@@ -1,4 +1,4 @@
-import { productoCantidad } from "./productoCantidad"
+import { productoCantidad } from "./OrderDetailDisplay"
 
 export interface orden {
     id: string,
@@ -9,5 +9,5 @@ export interface orden {
     proveedor: string,
     productos: productoCantidad[],
     total: number,
-    estado: 'NO CANCELADO'|'CANCELADO'
+    estado: boolean
 }

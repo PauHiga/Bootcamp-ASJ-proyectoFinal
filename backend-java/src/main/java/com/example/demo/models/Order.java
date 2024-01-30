@@ -2,7 +2,9 @@ package com.example.demo.models;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -37,12 +40,12 @@ public class Order {
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
 	@NotNull(message = "The issue date cannot be null")
-	private Timestamp issue_date;
+	private LocalDate issue_date;
     
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
 	@NotNull(message = "The delivery date cannot be null")
-	private Timestamp delivery_date;
+	private LocalDate delivery_date;
 	
 	@Column(unique = true, length = 500)
 	private String details;
@@ -67,4 +70,29 @@ public class Order {
 	@NotNull(message = "The deletion field cannot be null")
 	private Boolean deleted;
     
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	private List<OrderDetail> order_detail;
+
+	public Order(@NotNull(message = "The order number cannot be null") Integer order_number,
+			@NotNull(message = "The issue date cannot be null") LocalDate issue_date,
+			@NotNull(message = "The delivery date cannot be null") LocalDate delivery_date, String details,
+			LocalDate createdAt, LocalDate updatedAt,
+			@NotNull(message = "The supplier cannot be null") Supplier supplier,
+			@NotNull(message = "The status cannot be null") Status status,
+			@NotNull(message = "The deletion field cannot be null") Boolean deleted) {
+		super();
+
+		this.order_number = order_number;
+		this.issue_date = issue_date;
+		this.delivery_date = delivery_date;
+		this.details = details;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.supplier = supplier;
+		this.status = status;
+		this.deleted = deleted;
+	}
+	
+	
+	
 }

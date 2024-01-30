@@ -3,11 +3,11 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { orden } from '../../../models/orden';
 import { OrdersFormServiceService } from '../../../services/orders-form-service.service';
-import { producto } from '../../../models/producto';
-import { proveedor } from '../../../models/proveedoresVIEJO';
 import { forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2'
+import { ProductDisplay } from '../../../models/productDisplay';
+import { Supplier } from '../../../models/supplier';
 
 
 @Component({
@@ -32,15 +32,15 @@ export class FormOrdersComponent implements OnInit{
       estado: 'NO CANCELADO'
     }
 
-    suppliers : proveedor[] = []
-    products : producto[] = []
+    suppliers : Supplier[] = []
+    products : ProductDisplay[] = []
     orders : orden[] = []
     
-    productsToDisplay : producto[] = []
+    productsToDisplay : ProductDisplay[] = []
 
     productosInProcess : any[] = []  
 
-    idProveedorArray : string[] = []
+    idProveedorArray : number[] = []
 
     totalMayorACeroValido : boolean = true;
     fechaEmisionValida : boolean = true;
@@ -81,8 +81,8 @@ export class FormOrdersComponent implements OnInit{
   }
 
   getSuppliersWithProducts(){
-    this.idProveedorArray = this.products.map(item=> item.idProveedor.toString())
-    this.suppliers = this.suppliers.filter(item => this.idProveedorArray.includes(item.id.toString()) && item.deleted==false)
+    this.idProveedorArray = this.products.map(item=> item.supplier.id)
+    this.suppliers = this.suppliers.filter(item => this.idProveedorArray.includes(item.id) && item.deleted==false)
   }
 
   onSelect(event : Event): any
@@ -90,7 +90,7 @@ export class FormOrdersComponent implements OnInit{
     this.productosInProcess = [];
     this.orden.total = 0;
     const selectedValue = (event.target as HTMLSelectElement).value;
-    this.productsToDisplay = this.products.filter(item => item.idProveedor == selectedValue)
+    this.productsToDisplay = this.products.filter(item => item.id == Number(selectedValue))
   }
 
   addProductToOrder(event : Event, data:any){

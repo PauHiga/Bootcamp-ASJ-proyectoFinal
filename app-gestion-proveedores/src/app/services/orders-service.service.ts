@@ -11,7 +11,7 @@ import { Supplier } from '../models/supplier';
 export class OrdersServiceService {
   constructor(private http:HttpClient, private productService : ProductsServiceService, private suppliersService : SupplierServiceService) { }
 
-  private URL_API = 'http://localhost:3000/orders'
+  private URL_API = 'http://localhost:8080/orders'
 
   getOrders() : Observable<any>{
     return this.http.get(this.URL_API);
