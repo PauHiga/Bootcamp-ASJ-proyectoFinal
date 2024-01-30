@@ -27,7 +27,7 @@ export class ListSuppliersComponent implements OnInit{
 
   getSuppliers(){
     this.supplierService.getSuppliers().subscribe( (response) => {
-      this.suppliers = response;
+      this.suppliers = response.filter((item : Supplier)=> item.deleted == false)
       console.log(response);
     })
     this.seeDeleted = false;
@@ -36,6 +36,7 @@ export class ListSuppliersComponent implements OnInit{
   showDeletedSuppliers(){
     this.supplierService.getSuppliers().pipe(
       map((supplier)=>{
+        console.log(supplier);
         return supplier.filter((item : Supplier)=> item.deleted == true)
       })
     ).subscribe( (response) => {
@@ -50,7 +51,7 @@ export class ListSuppliersComponent implements OnInit{
     //   supplier = supplier.business_name
     // }
     Swal.fire({
-      text: `¿Eliminar proveedor "${supplier}?`,
+      text: `¿Eliminar proveedor "${supplier?.business_name}"?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

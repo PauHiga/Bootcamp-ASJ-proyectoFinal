@@ -18,6 +18,10 @@ export class SupplierServiceService {
   URL_API_VAT = 'http://localhost:8080/vat-conditions'
 
   getSuppliers() : Observable<Supplier[]>{
+    return this.http.get<Supplier[]>(this.URL_API)
+  }
+
+  getSuppliers2() : Observable<Supplier[]>{
     return this.http.get<Supplier[]>(this.URL_API).pipe(
       map((supplier)=>{
         const filteredSupplier = supplier.filter((item : Supplier)=> item.deleted == false)
@@ -118,14 +122,18 @@ export class SupplierServiceService {
   }
 
   logicalDeleteSupplier(id: number) : Observable<Supplier> {
-    return this.http.get<Supplier>(this.URL_API + "/" + id).pipe(
-      map((supplier) => {
-        let modifiedSupplier = { ...supplier, deleted: true };
-        return modifiedSupplier;
-      }),
-      switchMap((modifiedSupplier) => this.http.put <Supplier> (this.URL_API + "/" + id, modifiedSupplier))
-    );
+    return this.http.put<Supplier>(this.URL_API + "/" + id, {deleted: true})
   }
+
+  // logicalDeleteSupplier(id: number) : Observable<Supplier> {
+  //   return this.http.get<Supplier>(this.URL_API + "/" + id).pipe(
+  //     map((supplier) => {
+  //       let modifiedSupplier = { ...supplier, deleted: true };
+  //       return modifiedSupplier;
+  //     }),
+  //     switchMap((modifiedSupplier) => this.http.put <Supplier> (this.URL_API + "/" + id, modifiedSupplier))
+  //   );
+  // }
 
   getvat_condition() : Observable<any>{
     return this.http.get<any>(this.URL_API_VAT);

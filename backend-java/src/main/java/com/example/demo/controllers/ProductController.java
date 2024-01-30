@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.ProductUpdateDTO;
-import com.example.demo.dto.SupplierUpdateDTO;
 import com.example.demo.models.Product;
-import com.example.demo.models.Supplier;
 import com.example.demo.services.ProductService;
 
 @RestController

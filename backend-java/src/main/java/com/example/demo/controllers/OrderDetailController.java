@@ -15,17 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.OrderCreateDTO;
 import com.example.demo.dto.OrderDetailDTO;
-import com.example.demo.dto.SupplierDTO;
-import com.example.demo.dto.SupplierUpdateDTO;
-import com.example.demo.models.Order;
 import com.example.demo.models.OrderDetail;
-import com.example.demo.models.Product;
-import com.example.demo.models.Supplier;
 import com.example.demo.services.OrderDetailService;
-import com.example.demo.services.OrderService;
-import com.example.demo.services.SupplierService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")

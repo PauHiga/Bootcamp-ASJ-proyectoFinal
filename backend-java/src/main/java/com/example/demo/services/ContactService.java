@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.ContactDTO;
-import com.example.demo.models.Address;
 import com.example.demo.models.Contact;
 import com.example.demo.repositories.ContactRepository;
 
