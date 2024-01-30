@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { orden } from '../../../models/orden';
 import { OrdersFormServiceService } from '../../../services/orders-form-service.service';
-import { forkJoin } from 'rxjs';
+import { concatMap, forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2'
 import { ProductDisplay } from '../../../models/productDisplay';
@@ -100,7 +100,7 @@ export class FormOrdersComponent implements OnInit{
     this.order.total = 0;
     const selectedValue = (event.target as HTMLSelectElement).value;
     this.order.supplier_id = Number(selectedValue);
-    this.productsToDisplay = this.products.filter(item => item.id == Number(selectedValue))
+    this.productsToDisplay = this.products.filter(item => item.supplier.id == Number(selectedValue))
   }
 
   addProductToOrder(event : Event, data: ProductDisplay){
@@ -170,7 +170,7 @@ export class FormOrdersComponent implements OnInit{
 
   validacionFormulario(){
     this.totalMayorACeroValido = this.order.total>0
-    this.fechaEmisionValida =  this.validateStringDatesOnlyForward(this.order.issue_date, this.getCurrentDate())
+    this.fechaEmisionValida =  this.validateStringDatesOnlyForward(this.order.issue_date, this.getDate(0))
     this.fechaEntregaValida =  this.validateStringDatesOnlyForward(this.order.delivery_date, this.order.issue_date)
     return this.totalMayorACeroValido && this.fechaEmisionValida && this.fechaEntregaValida
   }
@@ -180,7 +180,7 @@ export class FormOrdersComponent implements OnInit{
   }
 
   validateDateFechaEmision(){
-    this.fechaEmisionValida =  this.validateStringDatesOnlyForward(this.order.issue_date, this.getCurrentDate())
+    this.fechaEmisionValida =  this.validateStringDatesOnlyForward(this.order.issue_date, this.getDate(0))
   }
 
   validateDateFechaEntrega(){
@@ -194,7 +194,7 @@ export class FormOrdersComponent implements OnInit{
   }
 
   confirmarNuevaOrden(){
-    this.orderFormService.saveOrder(this.order).subscribe((response)=>{
+    this.orderFormService.saveOrder(this.order, this.orderDetails).subscribe((response)=>{
       console.log(response);
     })
     this.clearData()
@@ -217,11 +217,16 @@ export class FormOrdersComponent implements OnInit{
     }
   }
 
-  getCurrentDate(): string {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1; // months are zero-based
-    const day = today.getDate();
+  getDate(extraDays : number): string {
+    let date : Date = new Date();
+
+    if(extraDays != 0){
+      date.setDate(date.getDate() + extraDays);
+    }
+
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // months are zero-based
+    const day = date.getDate();
 
     // Ensure two digits for month and day
     const formattedMonth = month < 10 ? `0${month}` : `${month}`;
@@ -231,7 +236,8 @@ export class FormOrdersComponent implements OnInit{
   }
 
   setCurrentDateOnInputs() : void{
-    this.order.issue_date = this.getCurrentDate();
+    this.order.issue_date = this.getDate(0);
+    this.order.delivery_date = this.getDate(1);
   }
 
   cancelar(objetivo: string){

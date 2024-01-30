@@ -31,14 +31,14 @@ public class ProductController {
 
 	@GetMapping()
 	public ResponseEntity<List<Product>> getSupplier(){
-		return ResponseEntity.ok(productService.getProductes());
+		return ResponseEntity.ok(productService.getProducts());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Product> getSectorById(@PathVariable Integer id){
-		Optional<Product> optionalSupplier = productService.getProductesById(id);
-		if (optionalSupplier.isPresent()) {
-			return ResponseEntity.ok(optionalSupplier.get());
+	public ResponseEntity<Product> getProductById(@PathVariable Integer id){
+		Optional<Product> optionalProduct = productService.getProductById(id);
+		if (optionalProduct.isPresent()) {
+			return ResponseEntity.ok(optionalProduct.get());
 		} else {
 			return ResponseEntity.notFound().build();
 		}

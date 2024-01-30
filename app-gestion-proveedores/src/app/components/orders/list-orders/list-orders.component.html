@@ -75,11 +75,11 @@
               <h5>Estado: CANCELADO</h5>
             </div>
             <div class="row">
-              <!-- <div class="col-sm-6">
+              <div class="col-sm-6">
                 <div class="imgContainerModal">
-                  <img src="{{ordersToDisplay[ngForIndex].URLlogo}}" alt="{{ordersToDisplay[ngForIndex].URLlogo}}">
+                  <img src="{{ordersToDisplay[ngForIndex].supplier.url_logo}}" alt="{{ordersToDisplay[ngForIndex].supplier.business_name}}">
                 </div>
-              </div> -->
+              </div>
               <h5>Datos generales</h5>
               <div class="col-sm-3">
               </div>
@@ -134,15 +134,21 @@
                     <th>
                       Cantidad
                     </th>
+                    <th>
+                      Subtotal
+                    </th>
                   </thead>
-                  <!-- <tr *ngFor="let producto of ordersToDisplay[ngForIndex].productos">
+                  <tr *ngFor="let currentOrderDetail of currentOrderDetails">
                     <td>
-                      {{producto.nombreProducto}}
+                      {{currentOrderDetail.product.name}}
                     </td>
                     <td>
-                      {{producto.cantidad}}
+                      {{currentOrderDetail.quantity}}
                     </td>
-                  </tr> -->
+                    <td>
+                      {{currentOrderDetail.quantity * currentOrderDetail.unit_price}}
+                    </td>
+                  </tr>
                 </table>
               </div>
             </div>

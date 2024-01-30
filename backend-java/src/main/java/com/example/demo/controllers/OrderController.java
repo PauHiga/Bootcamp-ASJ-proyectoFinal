@@ -43,10 +43,11 @@ public class OrderController {
 	}
 	
 	@PostMapping()
-	public ResponseEntity<Object> createSupplier(@RequestBody OrderCreateDTO orderCreateDTO){
+	public ResponseEntity<Object> createOrder(@RequestBody OrderCreateDTO orderCreateDTO){
 		List<OrderCreateDTO> orderCreateDTOList = List.of(orderCreateDTO);
 		try {
-			return ResponseEntity.ok(orderService.createOrders(orderCreateDTOList));
+			Order createdOrder = orderService.createOrders(orderCreateDTOList).get(0);
+			return ResponseEntity.ok(createdOrder);
 		}
 		catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating order: " + e.getMessage());			

@@ -29,11 +29,11 @@ public class ProductService {
 	@Autowired
 	CategoryRepository categoryRepository;
 	
-	public List<Product> getProductes(){
+	public List<Product> getProducts(){
 		return productRepository.findAll();
 	}
 	
-	public Optional<Product> getProductesById(int id) {
+	public Optional<Product> getProductById(int id) {
 		return productRepository.findById(id);
 	}
 	

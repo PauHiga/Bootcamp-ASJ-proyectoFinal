@@ -36,7 +36,10 @@ public class OrderDetailService {
 	public Optional<OrderDetail> getOrderDetailById(int id) {
 		return orderDetailRepository.findById(id);
 	}
-		
+	
+	public List<OrderDetail> getOrderDetailByOrderId(int id) {
+		return orderDetailRepository.findByOrderId(id);
+	}
 	
     public List<OrderDetail> createOrderDetails(List<OrderDetailDTO> orderDetailDTOList) {
         List<OrderDetail> createdOrderdetails = new ArrayList<>();

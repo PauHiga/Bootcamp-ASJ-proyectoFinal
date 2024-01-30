@@ -25,7 +25,7 @@
       <div class="col-sm-2">
         <div class="form-group">
           <label for="fechaEmision">Fecha de Emisión</label>
-          <input type="date" (change)="validateDateFechaEmision()" min="{{ getCurrentDate() | date:'yyyy-MM-dd' }}" class="form-control" id="fechaEmision" name="fechaEmision" [(ngModel)]="order.issue_date" #FechaEmision="ngModel" required>
+          <input type="date" (change)="validateDateFechaEmision()" min="{{ getDate(0) | date:'yyyy-MM-dd' }}" class="form-control" id="fechaEmision" name="fechaEmision" [(ngModel)]="order.issue_date" #FechaEmision="ngModel" required>
           <div *ngIf="FechaEmision.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
                 Este campo es requerido
@@ -41,7 +41,7 @@
       <div class="col-sm-2">
         <div class="form-group">
           <label for="fechaEntrega">Fecha de Entrega</label>
-          <input type="date" (change)="validateDateFechaEntrega()" min="{{ getCurrentDate() | date:'yyyy-MM-dd' }}" class="form-control" id="fechaEntrega" name="fechaEntrega" [(ngModel)]="order.delivery_date" #FechaEntrega="ngModel" required>
+          <input type="date" (change)="validateDateFechaEntrega()" min="{{ getDate(0) | date:'yyyy-MM-dd' }}" class="form-control" id="fechaEntrega" name="fechaEntrega" [(ngModel)]="order.delivery_date" #FechaEntrega="ngModel" required>
           <div *ngIf="FechaEntrega.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
                 Este campo es requerido

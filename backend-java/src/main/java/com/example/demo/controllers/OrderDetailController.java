@@ -21,6 +21,7 @@ import com.example.demo.dto.SupplierDTO;
 import com.example.demo.dto.SupplierUpdateDTO;
 import com.example.demo.models.Order;
 import com.example.demo.models.OrderDetail;
+import com.example.demo.models.Product;
 import com.example.demo.models.Supplier;
 import com.example.demo.services.OrderDetailService;
 import com.example.demo.services.OrderService;
@@ -67,6 +68,11 @@ public class OrderDetailController {
 		catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating order details: " + e.getMessage());			
 		}
+	}
+	
+	@GetMapping("/order/{id}")
+	public ResponseEntity<List<OrderDetail>> getOrderDetailByOrderId(@PathVariable Integer id){
+		return ResponseEntity.ok(orderDetailService.getOrderDetailByOrderId(id));
 	}
 
 }

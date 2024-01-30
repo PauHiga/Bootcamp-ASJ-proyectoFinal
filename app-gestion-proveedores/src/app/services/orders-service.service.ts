@@ -4,6 +4,8 @@ import { Observable, map } from 'rxjs';
 import { ProductsServiceService } from './products-service.service';
 import { SupplierServiceService } from './supplier-service.service';
 import { Supplier } from '../models/supplier';
+import { ProductDisplay } from '../models/productDisplay';
+import { OrderDetailDisplay } from '../models/OrderDetailDisplay';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,7 @@ export class OrdersServiceService {
   constructor(private http:HttpClient, private productService : ProductsServiceService, private suppliersService : SupplierServiceService) { }
 
   private URL_API = 'http://localhost:8080/orders'
+  private URL_API_ORDER_DETAILS = 'http://localhost:8080/order-details'
 
   getOrders() : Observable<any>{
     return this.http.get(this.URL_API);
@@ -23,6 +26,10 @@ export class OrdersServiceService {
 
   getProductsAmount(): Observable<number>{
     return this.productService.getProducts().pipe(map(products => products.length))
+  }
+
+  getOrderDetailByOrderId(id : number): Observable<OrderDetailDisplay[]>{
+    return this.http.get<OrderDetailDisplay[]>(this.URL_API_ORDER_DETAILS + "/order/" + id);
   }
 
   getSuppliersAmount(): Observable<number>{

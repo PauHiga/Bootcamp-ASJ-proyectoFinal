@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrdersServiceService } from '../../../services/orders-service.service';
-import { orden } from '../../../models/orden';
 import { forkJoin } from 'rxjs';
-import { proveedor } from '../../../models/proveedoresVIEJO';
 import Swal from 'sweetalert2';
 import { OrderDisplay } from '../../../models/orderDisplay';
+import { Supplier } from '../../../models/supplier';
+import { ProductDisplay } from '../../../models/productDisplay';
+import { OrderDetailDisplay } from '../../../models/OrderDetailDisplay';
 
 @Component({
   selector: 'app-list-orders',
@@ -18,6 +19,7 @@ export class ListOrdersComponent implements OnInit{
 
   orders : OrderDisplay[]= [];
   ordersToDisplay : OrderDisplay[]= [];
+  currentOrderDetails : OrderDetailDisplay[]= [];
 
   // ordersToDisplay : orden[]= [{
   //   id: "",
@@ -53,11 +55,31 @@ export class ListOrdersComponent implements OnInit{
       this.orders = orders;
       if(orders.length >0){
         this.ordersAvailable = orders.length;
-        this.ordersToDisplay = orders.map((item:orden) => {
-          const proveedor = suppliers.find((supplier : proveedor) => supplier.id == item.proveedor)
-          let itemConProveedor = {...item, proveedor: "Proveedor dado de baja"}
-          if(proveedor){
-            itemConProveedor = {...item, proveedor: proveedor.business_name}
+        this.ordersToDisplay = orders.map((item:OrderDisplay) => {
+          console.log(item);
+          const supplier = suppliers.find((supplier : Supplier) => supplier.id == item.supplier.id)
+          let itemConProveedor = {...item, supplier: "Proveedor dado de baja"}
+          if(supplier){
+            itemConProveedor = {...item, supplier: supplier.business_name}
+          } 
+          return itemConProveedor 
+        })
+      }
+    });
+
+    forkJoin([
+      this.ordersService.getOrders(),
+      this.ordersService.getSuppliers()
+    ]).subscribe(([orders, suppliers]) => {
+      this.orders = orders;
+      if(orders.length >0){
+        this.ordersAvailable = orders.length;
+        this.ordersToDisplay = orders.map((item:OrderDisplay) => {
+          console.log(item);
+          const supplier = suppliers.find((supplier : Supplier) => supplier.id == item.supplier.id)
+          let itemConProveedor = {...item, supplier: "Proveedor dado de baja"}
+          if(supplier){
+            itemConProveedor = {...item, supplier: supplier.business_name}
           } 
           return itemConProveedor 
         })
@@ -74,7 +96,6 @@ export class ListOrdersComponent implements OnInit{
   getAvailableSuppliers(){
     this.ordersService.getSuppliersAmount().subscribe((response)=>{
       this.suppliersAvailable = response;
-      console.log(response)
     })
   }
 
@@ -100,5 +121,9 @@ export class ListOrdersComponent implements OnInit{
 
   setIndex(index : number){
     this.ngForIndex = index;
+    this.ordersService.getOrderDetailByOrderId(index+1).subscribe((response)=>{
+      console.log(response);
+      this.currentOrderDetails = response;
+    })
   }
 }
