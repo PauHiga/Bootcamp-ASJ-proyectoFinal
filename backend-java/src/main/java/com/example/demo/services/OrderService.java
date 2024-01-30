@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.OrderCreateDTO;
+import com.example.demo.dto.OrderUpdateDTO;
 import com.example.demo.models.Order;
 import com.example.demo.models.Status;
 import com.example.demo.models.Supplier;
@@ -82,12 +83,7 @@ public class OrderService {
 	    	status = optionalStatus.get();
 	    }
 
-//		Status status = statusRepository.findByName(orderCreateDTO.getStatus())
-//				.orElseGet(()->{
-//					Status newStatus =  new Status();
-//					newStatus.setName(orderCreateDTO.getStatus());
-//				return statusRepository.save(newStatus);
-//			});
+
 	    
 		Boolean deleted = false;
 		
@@ -99,9 +95,54 @@ public class OrderService {
 
 		return newOrder;
 	}
+
 	
-//	public Order updateOrder(Integer id, OrderCreateDTO orderCreateDTO) {
-//		orderRepository.save(order);
-//		return order;
-//	}
+	public Order updateOrder(Integer id, OrderUpdateDTO orderUpdateDTO) {
+        Optional<Order> existingOrder = orderRepository.findById(id);
+    	if(existingOrder.isEmpty()) {
+    		throw new RuntimeException("Order not found with ID: " + id);
+    	} 
+    	Order updatedOrder = existingOrder.get();
+    	
+		if(orderUpdateDTO.getOrder_number() != null) {
+			updatedOrder.setOrder_number(orderUpdateDTO.getOrder_number());		
+		}
+		if(orderUpdateDTO.getIssue_date() != null) {
+			updatedOrder.setIssue_date(LocalDate.parse(orderUpdateDTO.getIssue_date()));		
+		}
+		if(orderUpdateDTO.getDelivery_date() != null) {
+			updatedOrder.setDelivery_date(LocalDate.parse(orderUpdateDTO.getDelivery_date()));		
+		}
+		if(orderUpdateDTO.getDetails() != null) {
+			updatedOrder.setDetails(orderUpdateDTO.getDetails());		
+		}
+		if(orderUpdateDTO.getTotal() != null) {
+			updatedOrder.setTotal(orderUpdateDTO.getTotal());		
+		}
+		if(orderUpdateDTO.getSupplier_id() != null) {
+			Supplier supplier;
+			Optional<Supplier> optionalSupplier = supplierRepository.findById(orderUpdateDTO.getSupplier_id());
+		    if (optionalSupplier.isEmpty()) {
+		        throw new RuntimeException("Supplier not found with id: " + orderUpdateDTO.getSupplier_id());
+		    } else {
+		    	supplier = optionalSupplier.get();
+		    }	
+		    updatedOrder.setSupplier(supplier);	
+		}
+		if(orderUpdateDTO.getStatus() != null) {
+			Status status = statusRepository.findByName(orderUpdateDTO.getStatus())
+			.orElseGet(()->{
+				Status newStatus =  new Status();
+				newStatus.setName(orderUpdateDTO.getStatus());
+			return statusRepository.save(newStatus);
+		});
+			updatedOrder.setStatus(status);	
+		}
+		if(orderUpdateDTO.getDeleted() != null) {
+			updatedOrder.setDeleted(orderUpdateDTO.getDeleted());		
+		}
+		updatedOrder.setUpdatedAt(LocalDate.now());
+		orderRepository.save(updatedOrder);
+		return updatedOrder;
+	}
 }

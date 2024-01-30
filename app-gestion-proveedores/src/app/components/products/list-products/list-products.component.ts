@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsServiceService } from '../../../services/products-service.service';
 import Swal from 'sweetalert2';
-import { CategoryService } from '../../../services/category.service';
-import { Product } from '../../../models/product';
 import { Supplier } from '../../../models/supplier';
 import { ProductDisplay } from '../../../models/productDisplay';
+import { map } from 'rxjs';
 
 
 @Component({
@@ -17,35 +16,44 @@ export class ListProductsComponent implements OnInit{
 
   constructor(public productsService: ProductsServiceService, private route:ActivatedRoute, private router:Router){}
 
-  productsToDisplay : ProductDisplay[]= [];
+  products : ProductDisplay[]= [];
+  
   suppliersList : Supplier[] = [];
 
+  seeDeleted : boolean = false;
+
+  search : string = ""
+
   ngOnInit(): void {
-    this.getProveedores();
-    this.createProductsList();
+    this.getSuppliers();
+    this.getProducts();
   }
 
-  createProductsList(){
+  getProducts(){
     this.productsService.getProducts().subscribe(
       (response)=>{
-
-        this.productsToDisplay = response.map((item: ProductDisplay) => {
-          const proveedordelItem = this.suppliersList.find(supplier => supplier.id == item.supplier.id)
-          // if(proveedordelItem && proveedordelItem.deleted == false){
-          //   item.idProveedor = proveedordelItem.business_name            
-          // } else{
-          //   item.idProveedor = "Proveedor dado de baja"
-          // }
-          return item
-        });
-        // this.productsToDisplay = this.productsToDisplay.filter(item=> item.supplier_id != "Proveedor dado de baja")
-        this.sortByProductName(this.productsToDisplay)
-        console.log(this.productsToDisplay);
+        this.products = response.filter((item : ProductDisplay)=> item.deleted == false)
+        console.log(response);
+        this.sortByProductName(this.products)
+        console.log(this.products);
       }
     )
+    this.seeDeleted = false;
   }
 
-  getProveedores(){
+  getDeletedProducts(){
+    this.productsService.getProducts().pipe(
+      map((products)=>{
+        console.log(products);
+        return products.filter((item : ProductDisplay)=> item.deleted == true)
+      })
+    ).subscribe( (response) => {
+      this.products = response;
+    })
+    this.seeDeleted = true;
+  }
+
+  getSuppliers(){
     this.productsService.getSuppliersList().subscribe((response)=>{
       this.suppliersList = response;
     })
@@ -64,7 +72,7 @@ export class ListProductsComponent implements OnInit{
       if (result.isConfirmed) {
         this.productsService.deleteProduct(id).subscribe(
           (response) => {
-            this.createProductsList();
+            this.getProducts();
           }
         )
       }
@@ -72,11 +80,29 @@ export class ListProductsComponent implements OnInit{
   }
 
   editProduct(id:number){
-    const selectedProduct = this.productsToDisplay.find(item => item.id == id)
+    const selectedProduct = this.products.find(item => item.id == id)
     if(!selectedProduct){
       console.log("Error! No supplier found to be edited!")
-    } else{
-      this.router.navigate([`productos/formulario-productos/${id}`])
+    } 
+    else{
+      if(selectedProduct.deleted == true){
+        Swal.fire({
+          title: "Este producto se encuentra inactivo",
+          text: "Si lo modifica, será activado nuevamente.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Activar producto y editar"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigate([`productos/formulario-productos/${selectedProduct.id}`])
+          }
+        });
+      }    
+      else{
+        this.router.navigate([`productos/formulario-productos/${id}`])
+      }
     }
   }
 

@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.OrderCreateDTO;
+import com.example.demo.dto.OrderUpdateDTO;
 import com.example.demo.models.Order;
 import com.example.demo.services.OrderService;
 
@@ -63,15 +65,15 @@ public class OrderController {
 	    }
 	}
 	
-//	@PutMapping("/{id}")
-//	public ResponseEntity<?> updateOrder(@PathVariable Integer id, @RequestBody OrderUpdateDTO orderUpdateDTO) {
-//	    try {
-//	        Supplier updatedOrder = orderService.updateOrder(id, orderUpdateDTO);
-//	        return ResponseEntity.ok(updatedOrder);
-//	    } catch (RuntimeException e) {
-//	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found with ID: " + id);
-//	    } catch (Exception e) {
-//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating order");
-//	    }
-//	}	
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updateOrder(@PathVariable Integer id, @RequestBody OrderUpdateDTO orderUpdateDTO) {
+	    try {
+	        Order updatedOrder = orderService.updateOrder(id, orderUpdateDTO);
+	        return ResponseEntity.ok(updatedOrder);
+	    } catch (RuntimeException e) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found with ID: " + id);
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating order");
+	    }
+	}	
 }

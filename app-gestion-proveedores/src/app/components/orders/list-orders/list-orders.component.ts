@@ -121,7 +121,8 @@ export class ListOrdersComponent implements OnInit{
 
   setIndex(index : number){
     this.ngForIndex = index;
-    this.ordersService.getOrderDetailByOrderId(index+1).subscribe((response)=>{
+    this.ordersService.getOrderDetailByOrderId(this.ordersToDisplay[index].id).subscribe((response)=>{
+      console.log(this.ordersToDisplay[index].id);
       console.log(response);
       this.currentOrderDetails = response;
     })

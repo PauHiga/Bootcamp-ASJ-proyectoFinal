@@ -9,15 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.ProductUpdateDTO;
-import com.example.demo.dto.SupplierUpdateDTO;
 import com.example.demo.models.Category;
 import com.example.demo.models.Product;
-import com.example.demo.models.Sector;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ProductRepository;
 import com.example.demo.repositories.SupplierRepository;
 import com.example.demo.models.Supplier;
-import com.example.demo.models.Vat_condition;
 
 @Service
 public class ProductService {
@@ -98,12 +95,14 @@ public class ProductService {
         
         updatedProduct.setUpdatedAt(LocalDate.now());
 
-		
-		Optional<Supplier> supplier = supplierRepository.findById(productUpdateDTO.getSupplier_id());
-	    if (supplier.isEmpty()) {
-	        throw new RuntimeException("Supplier not found with id: " + productUpdateDTO.getSupplier_id());
-	    }
-		
+		if(productUpdateDTO.getSupplier_id() != null) {
+			Optional<Supplier> supplier = supplierRepository.findById(productUpdateDTO.getSupplier_id());
+		    if (supplier.isEmpty()) {
+		        throw new RuntimeException("Supplier not found with id: " + productUpdateDTO.getSupplier_id());
+		    }			
+		}
+
+		if(productUpdateDTO.getCategory() != null) {
 		Category category = categoryRepository.findActiveCategoryByName(productUpdateDTO.getCategory())
 			.orElseGet(()->{
 			Category newCategory =  new Category();
@@ -113,6 +112,7 @@ public class ProductService {
 			return categoryRepository.save(newCategory);
 		});
 		updatedProduct.setCategory(category);
+		}
 		
 		productRepository.save(updatedProduct);
 		return updatedProduct;

@@ -11,7 +11,7 @@
   <div class="container" *ngIf="(seeDeleted || suppliers.length>0)">
     <div class="d-flex justify-content-between">
       <button class="btn btn-primary my-2" routerLink="/proveedores/formulario-proveedores">Añadir Proveedor</button>
-      <button class="btn btn-outline-secondary my-2" *ngIf="!seeDeleted" (click)="showDeletedSuppliers()">List removed suppliers</button>
+      <button class="btn btn-outline-secondary my-2" *ngIf="!seeDeleted" (click)="getDeletedSuppliers()">List removed suppliers</button>
       <button class="btn btn-primary my-2" *ngIf="seeDeleted" (click)="getSuppliers()">List active suppliers</button>
     </div>
     <table class="table table-striped ">

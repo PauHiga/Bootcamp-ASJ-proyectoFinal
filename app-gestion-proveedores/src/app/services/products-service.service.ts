@@ -78,7 +78,7 @@ export class ProductsServiceService implements OnInit {
   }
 
   deleteProduct(id:number){
-    return this.http.delete(this.URL_API + "/" + id)
+    return this.http.put(this.URL_API + "/" + id, {deleted: true})
   }
 
   clearProductData(){
