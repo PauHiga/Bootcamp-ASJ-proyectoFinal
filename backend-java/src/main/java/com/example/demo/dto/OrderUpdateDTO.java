@@ -1,4 +1,4 @@
-//TODO EN DESUSO
+//TODO I am using OrderCreateDTO instead of this version
 package com.example.demo.dto;
 
 import java.sql.Timestamp;

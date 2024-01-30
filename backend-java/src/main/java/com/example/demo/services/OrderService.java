@@ -38,8 +38,8 @@ public class OrderService {
 	
 	public Order createOrder(OrderCreateDTO orderCreateDTO) {
 		Integer order_number = orderCreateDTO.getOrder_number();
-		LocalDate issue_date = orderCreateDTO.getIssue_date();
-		LocalDate delivery_date = orderCreateDTO.getDelivery_date();
+		LocalDate issue_date = LocalDate.parse(orderCreateDTO.getIssue_date());
+		LocalDate delivery_date = LocalDate.parse(orderCreateDTO.getDelivery_date());
 		String details = orderCreateDTO.getDetails();
 		LocalDate createdAt = LocalDate.now();
 		LocalDate updatedAt = null;

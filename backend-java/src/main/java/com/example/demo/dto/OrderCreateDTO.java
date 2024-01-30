@@ -24,10 +24,10 @@ public class OrderCreateDTO {
 	private Integer order_number;
 
 	@NotNull(message = "The issue date cannot be null")
-	private LocalDate issue_date;
+	private String issue_date;
 
 	@NotNull(message = "The delivery date cannot be null")
-	private LocalDate delivery_date;
+	private String delivery_date;
 	
 	private String details;
     
