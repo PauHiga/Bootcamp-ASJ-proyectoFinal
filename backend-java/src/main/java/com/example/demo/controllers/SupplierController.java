@@ -55,7 +55,6 @@ public class SupplierController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateSupplier(@PathVariable Integer id, @RequestBody SupplierUpdateDTO supplierUpdateDTO) {
-		System.out.println(supplierUpdateDTO);
 	    try {
 	        Supplier updatedSupplier = supplierService.updateSupplier(id, supplierUpdateDTO);
 	        return ResponseEntity.ok(updatedSupplier);

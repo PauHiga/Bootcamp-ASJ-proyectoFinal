@@ -179,6 +179,10 @@ public class SupplierService {
         	} 
         Supplier updatedSupplier = existingSupplier.get();
         
+        if (supplierUpdateDTO.getCode() != null) {
+        	updatedSupplier.setCode(supplierUpdateDTO.getCode());
+        }
+        
         if (supplierUpdateDTO.getBusiness_name() != null) {
         	updatedSupplier.setBusiness_name(supplierUpdateDTO.getBusiness_name());
         }

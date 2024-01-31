@@ -66,8 +66,6 @@ export class FormSuppliersComponent implements OnInit{
   validTelefono : boolean = true;
   validTelefonoContacto : boolean = true
 
-  disabledInEdit : boolean = false;
-
   ngOnInit(): void {
     this.getCountries()
     this.getSectors();
@@ -76,7 +74,6 @@ export class FormSuppliersComponent implements OnInit{
     if(this.parametroURL) {
       this.tituloFormulario = "Editar Proveedor";
       this.getASupplier(Number(this.parametroURL));
-      this.disabledInEdit = true;
     }
     else{
       this.clearSupplierData()
@@ -200,13 +197,14 @@ export class FormSuppliersComponent implements OnInit{
 
   cancelar(objetivo: string){
     Swal.fire({
-      text: "¿Seguro desea salir? Los datos se perderán",
+      text: "Are you sure you want to exit? The modifications won't be saved",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Salir",
-      cancelButtonText: "Cancelar"
+      cancelButtonColor: "#3085d6",
+      // cancelButtonColor: "#d33",
+      confirmButtonText: "Leave this page",
+      cancelButtonText: "Stay in this page"
     }).then((result) => {
       if (result.isConfirmed) {
         this.router.navigate([objetivo])
@@ -293,6 +291,7 @@ export class FormSuppliersComponent implements OnInit{
       if (result.isConfirmed && !exists) {
         this.sectorService.saveSector(result.value).subscribe((result)=> {
           this.getSectors();
+          this.supplier.sector = result.name;
         })
         Swal.fire({
           text: `The sector "${result.value}" has been saved`,
@@ -333,7 +332,6 @@ export class FormSuppliersComponent implements OnInit{
         }
       });
     }
-
 }
 
 

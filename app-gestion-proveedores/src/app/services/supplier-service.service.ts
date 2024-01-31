@@ -2,9 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, switchMap } from 'rxjs';
 import { Supplier } from '../models/supplier';
-import { Address } from '../models/address';
-import { Contact } from '../models/contact';
-import { SupplierCreate } from '../models/supplierCreate';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +52,7 @@ export class SupplierServiceService {
   }
 
   editSupplier(supplierToEdit : Supplier, id: string){
+    console.log("supplierToEdit");
     console.log(supplierToEdit);
     return this.http.put(this.URL_API + "/" + id, supplierToEdit);
   }

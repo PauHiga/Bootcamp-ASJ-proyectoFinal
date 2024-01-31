@@ -25,6 +25,19 @@ export class ListSuppliersComponent implements OnInit{
   showDeletedButtonMessage = "Show inactive suppliers"
 
   search : string = "";
+  sortBy : string = "code";
+  sortByDesc : boolean = false;
+  sortByCountryDesc : boolean = true;
+
+  setSortByCode(sortby : string){
+    this.sortBy = sortby;
+    this.sortByDesc = !this.sortByDesc;
+  }
+
+  setSortByCountry(){
+    this.sortBy = "";
+    this.sortByCountryDesc = !this.sortByCountryDesc;
+  }
 
   toggleShowDeleted(){
     this.showDeleted = !this.showDeleted

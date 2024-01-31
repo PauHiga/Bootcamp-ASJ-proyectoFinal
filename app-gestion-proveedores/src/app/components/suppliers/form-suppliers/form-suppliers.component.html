@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col-md-2">
           <label for="codigo"  class="form-label">Codigo:</label>
-          <input type="text" id="codigo" (keyup)="supplierCodeIsUnique($event)" [disabled]="disabledInEdit" class="form-control form-control-sm" name="codigo" [(ngModel)]="supplier.code" #codigo="ngModel" minlength="4" required>  
+          <input type="text" id="codigo" (keyup)="supplierCodeIsUnique($event)" class="form-control form-control-sm" name="codigo" [(ngModel)]="supplier.code" #codigo="ngModel" minlength="4" required>  
           <div *ngIf="(!validCode  || codigo.errors?.['minlength']) && !codigo.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
                 Debe tener al menos 4 caracteres alfanuméricos
@@ -34,6 +34,7 @@
             </span>
           </div>    
         </div>
+
         <div class="col-md-3">
           <label for="business_name" class="form-label">Razon Social:</label>
           <input type="text" class="form-control form-control-sm" id="business_name" name="business_name" [(ngModel)]="supplier.business_name"  #business_name="ngModel" required>
@@ -67,7 +68,7 @@
         <div class="col-md-6">
           <label for="CUIT" class="form-label">CUIT:</label>
           <input type="text" (keyup)="validarCUIT(supplier.cuit)" maxlength="13" class="form-control form-control-sm" id="CUIT" name="CUIT" [(ngModel)]="supplier.cuit" (ngModelChange)="onCUITChange($event)"
-          #cuit="ngModel" required [disabled]="disabledInEdit">
+          #cuit="ngModel" required>
           <div *ngIf="cuit.errors?.['required']" class="col-auto">
             <span class="form-text text-primary">
                 Este campo es requerido

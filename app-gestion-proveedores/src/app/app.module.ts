@@ -21,6 +21,8 @@ import { FilterDeletedPipe } from './pipes/filter-deleted.pipe';
 import { FilterSuppliersPipe } from './pipes/filter-suppliers.pipe';
 import { FilterProductsPipe } from './pipes/filter-products.pipe';
 import { FilterOrdersPipe } from './pipes/filter-orders.pipe';
+import { OrderByPipe } from './pipes/order-by.pipe';
+import { OrderByCountryPipe } from './pipes/order-by-country.pipe';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { FilterOrdersPipe } from './pipes/filter-orders.pipe';
     FilterSuppliersPipe,
     FilterProductsPipe,
     FilterOrdersPipe,
+    OrderByPipe,
+    OrderByCountryPipe,
   ],
   imports: [
     BrowserModule,

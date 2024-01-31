@@ -101,14 +101,17 @@ public class AddressService {
     					return countryRepository.save(newCountry);
     				});
 		
-		Province province = provinceRepository.findByName(addressDTO.getProvince())
+		System.out.println(addressDTO.getProvince());
+		Province province = provinceRepository.findByName(addressDTO.getProvince())			
 				.orElseGet(()->{
 					Province newProvince =  new Province();
 					newProvince.setName(addressDTO.getProvince());
 					newProvince.setCountry(country);
+					System.out.println(newProvince.getName());
 					System.out.println(newProvince.getCountry().getName());
 					return provinceRepository.save(newProvince);
 				});
+
 		
 		Locality locality = localityRepository.findByName(addressDTO.getLocality())
 				.orElseGet(()->{
@@ -118,6 +121,8 @@ public class AddressService {
 					return localityRepository.save(newLocality);
 				});
 		
+		province.setCountry(country);
+		locality.setProvince(province);
 		updatedAddress.setLocality(locality);
         } 
 		

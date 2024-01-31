@@ -1,7 +1,7 @@
 import { Contact } from "./contact";
-import { Address } from "./address";
+import { AddressDisplay } from "./addressDisplay";
 
-export interface SupplierCreate {
+export interface SupplierDisplay {
     id?: number,
     code: string,
     business_name: string,
@@ -12,7 +12,7 @@ export interface SupplierCreate {
     email: string,
     phone: string,
     web: string,
-    address: Address,
+    address: AddressDisplay,
     contact: Contact,
     deleted?: boolean
 }
