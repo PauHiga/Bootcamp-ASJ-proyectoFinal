@@ -55,16 +55,36 @@ export class ListProductsComponent implements OnInit{
 
   deleteProduct(id:number, nombreProducto : string){
     Swal.fire({
-      text: `¿Eliminar producto ${nombreProducto}?`,
+      text: `¿Eliminate product "${nombreProducto}"?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Eliminar producto",
-      cancelButtonText: "No eliminar el producto"
+      confirmButtonText: "Eliminate this product",
+      cancelButtonText: "Do not eliminate this product"
     }).then((result) => {
       if (result.isConfirmed) {
         this.productsService.deleteProduct(id).subscribe(
+          (response) => {
+            this.getProducts();
+          }
+        )
+      }
+    });
+  }
+
+  activateProduct(id:number, nombreProducto : string){
+    Swal.fire({
+      text: `Activate product "${nombreProducto}"?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Activate this product",
+      cancelButtonText: "Do not activate this product"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productsService.activateProduct(id).subscribe(
           (response) => {
             this.getProducts();
           }

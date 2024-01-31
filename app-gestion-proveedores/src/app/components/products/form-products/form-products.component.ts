@@ -85,13 +85,21 @@ export class FormProductsComponent implements OnInit{
   onClickForm(formularioProveedores:NgForm){
     if(formularioProveedores.valid && !this.skuRepetido){
       if(this.parametroURL){
-        this.productsService.editProduct(this.parametroURL).subscribe((response)=> console.log(response))
+        this.productsService.editProduct(this.parametroURL).subscribe((response)=> {
+          console.log(response)
+          this.productsService.clearProductData()
+          this.router.navigate(["productos"])
+          Swal.fire("Los datos del producto fueron cargados exitosamente");
+        })
       } else {
-        this.productsService.saveProduct().subscribe((response)=> console.log(response))
+        this.productsService.saveProduct().subscribe((response)=> {
+          console.log(response)
+          this.productsService.clearProductData()
+          this.router.navigate(["productos"])
+          Swal.fire("Los datos del producto fueron cargados exitosamente");
+        })
       }
-      this.productsService.clearProductData()
-      this.router.navigate(["productos"])
-      Swal.fire("Los datos del producto fueron cargados exitosamente");
+
     } else {
       Swal.fire({
         text: "Hay campos incompletos o erróneos. Por favor, revise el formulario",

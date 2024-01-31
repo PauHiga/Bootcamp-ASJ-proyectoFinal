@@ -30,7 +30,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="SKUProducto">SKU Producto</label>
-              <input type="text" (keyup)="skuIsUnique($event)" class="form-control form-control-sm" id="SKUProducto" name="SKUProducto" [(ngModel)]="productsService.product.sku" #SKUProducto="ngModel" [disabled]="disabledInEdit" required>
+              <input type="text" (keyup)="skuIsUnique($event)" class="form-control form-control-sm" id="SKUProducto" name="SKUProducto" [(ngModel)]="productsService.product.sku" #SKUProducto="ngModel" required>
               <div *ngIf="SKUProducto.errors?.['required']" class="col-auto">
                 <span class="form-text text-danger">
                     Este campo es requerido
@@ -48,7 +48,7 @@
           <div class="col-sm-8">
             <div class="form-group">
               <label for="idProveedor">Proveedor</label>
-              <select class="form-select form-select-sm" aria-label="Default select example" id="idProveedor" name="idProveedor" [(ngModel)]="productsService.product.supplier.id" #idProveedor="ngModel" [disabled]="disabledInEdit" required>
+              <select class="form-select form-select-sm" aria-label="Default select example" id="idProveedor" name="idProveedor" [(ngModel)]="productsService.product.supplier.id" #idProveedor="ngModel" required>
                 <option *ngFor="let supplier of suppliersList" value="{{supplier.id}}">{{supplier.business_name}} &nbsp;&nbsp;-&nbsp;&nbsp; Codigo de empresa: {{supplier.code}}</option>
               </select>
               <div *ngIf="idProveedor.errors?.['required']" class="col-auto">

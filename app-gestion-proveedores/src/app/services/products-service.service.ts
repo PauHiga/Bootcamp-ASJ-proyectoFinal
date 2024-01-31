@@ -80,6 +80,10 @@ export class ProductsServiceService implements OnInit {
     return this.http.put(this.URL_API + "/" + id, {deleted: true})
   }
 
+  activateProduct(id:number){
+    return this.http.put(this.URL_API + "/" + id, {deleted: false})
+  }
+
   clearProductData(){
     this.product = {
       id : 0, 

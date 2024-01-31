@@ -100,8 +100,10 @@ public class ProductService {
 		    if (supplier.isEmpty()) {
 		        throw new RuntimeException("Supplier not found with id: " + productUpdateDTO.getSupplier_id());
 		    }			
+			updatedProduct.setSupplier(supplier.get());
 		}
 
+		
 		if(productUpdateDTO.getCategory() != null) {
 		Category category = categoryRepository.findActiveCategoryByName(productUpdateDTO.getCategory())
 			.orElseGet(()->{
