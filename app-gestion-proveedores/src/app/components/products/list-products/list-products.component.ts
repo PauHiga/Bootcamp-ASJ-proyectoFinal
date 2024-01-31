@@ -17,10 +17,19 @@ export class ListProductsComponent implements OnInit{
   constructor(public productsService: ProductsServiceService, private route:ActivatedRoute, private router:Router){}
 
   products : ProductDisplay[]= [];
-  
   suppliersList : Supplier[] = [];
 
-  seeDeleted : boolean = false;
+  showDeleted = false
+  showDeletedButtonMessage = "Mostrar productos eliminados"
+
+  toggleShowDeleted(){
+    this.showDeleted = !this.showDeleted
+    if (this.showDeleted){
+      this.showDeletedButtonMessage = "Mostrar productos activos"
+    } else{
+      this.showDeletedButtonMessage = "Mostrar productos eliminados"
+    }
+  }
 
   search : string = ""
 
@@ -32,25 +41,10 @@ export class ListProductsComponent implements OnInit{
   getProducts(){
     this.productsService.getProducts().subscribe(
       (response)=>{
-        this.products = response.filter((item : ProductDisplay)=> item.deleted == false)
-        console.log(response);
+        this.products = response
         this.sortByProductName(this.products)
-        console.log(this.products);
       }
     )
-    this.seeDeleted = false;
-  }
-
-  getDeletedProducts(){
-    this.productsService.getProducts().pipe(
-      map((products)=>{
-        console.log(products);
-        return products.filter((item : ProductDisplay)=> item.deleted == true)
-      })
-    ).subscribe( (response) => {
-      this.products = response;
-    })
-    this.seeDeleted = true;
   }
 
   getSuppliers(){

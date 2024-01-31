@@ -17,6 +17,7 @@ import { ListOrdersComponent } from './components/orders/list-orders/list-orders
 import { ModalConfirmComponent } from './components/orders/modal-confirm/modal-confirm.component';
 import { MainWelcomeComponent } from './components/welcome/main-welcome/main-welcome.component';
 import { OrdersProductSearchPipe } from './pipes/orders-product-search.pipe';
+import { FilterDeletedPipe } from './pipes/filter-deleted.pipe';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { OrdersProductSearchPipe } from './pipes/orders-product-search.pipe';
     ModalConfirmComponent,
     MainWelcomeComponent,
     OrdersProductSearchPipe,
+    FilterDeletedPipe,
   ],
   imports: [
     BrowserModule,

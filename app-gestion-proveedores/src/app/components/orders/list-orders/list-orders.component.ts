@@ -21,26 +21,23 @@ export class ListOrdersComponent implements OnInit{
   ordersToDisplay : OrderDisplay[]= [];
   currentOrderDetails : OrderDetailDisplay[]= [];
 
-  // ordersToDisplay : orden[]= [{
-  //   id: "",
-  //   numeroOrden: 0,
-  //   fechaEmision: '',
-  //   fechaEntrega: '',
-  //   informacionRecepcion: '',
-  //   proveedor: '',
-  //   productos: [
-  //     { id: '', nombreProducto: '', cantidad: 0 },
-  //   ],
-  //   total: 0,
-  //   estado: 'NO CANCELADO'
-  // }];
-
   ordersAvailable = 0;
   productsAvailable = 0;
   suppliersAvailable = 0;
   
   ngForIndex = 0
+  showDeleted = false
+  showDeletedButtonMessage = "Mostrar productos eliminados"
 
+  toggleShowDeleted(){
+    this.showDeleted = !this.showDeleted
+    if (this.showDeleted){
+      this.showDeletedButtonMessage = "Mostrar productos activos"
+    } else{
+      this.showDeletedButtonMessage = "Mostrar productos eliminados"
+    }
+  }
+  
   ngOnInit(): void {
     this.getData();
     this.getAvailableProducts();

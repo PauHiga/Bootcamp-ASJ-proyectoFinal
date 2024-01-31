@@ -8,7 +8,11 @@
   </nav>
   <h1>Ordenes</h1>
   <div class="container" *ngIf="ordersAvailable>0">
-    <button *ngIf="productsAvailable>0 && suppliersAvailable>0" class="btn btn-primary my-2" routerLink="/ordenes/formulario-ordenes">Añadir Orden</button>
+    <div class="d-flex justify-content-between">
+      <button *ngIf="productsAvailable>0 && suppliersAvailable>0" class="btn btn-primary my-2" routerLink="/ordenes/formulario-ordenes">Añadir Orden</button>    
+      <button class="btn btn-outline-secondary my-2" (click)="toggleShowDeleted()">{{showDeletedButtonMessage}}</button>
+    </div>
+
   
     <table class="table table-striped ">
       <thead>
@@ -23,7 +27,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of ordersToDisplay, let i = index" [ngClass]="(order.deleted==true)?'canceled':''" >
+        <tr *ngFor="let order of ordersToDisplay | filterDeleted: showDeleted, let i = index" [ngClass]="(order.deleted==true)?'canceled':''" >
           <td>{{order.order_number}}</td>
           <td>{{order.issue_date}}</td>
           <td>{{order.delivery_date}}</td>
@@ -61,7 +65,7 @@
 
   <!-- Modal -->
   <div class="modal fade" id="detalleOrdenModal" tabindex="-1" role="dialog" aria-labelledby="detalleOrdenModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div *ngIf="ordersToDisplay.length>0" class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title w-100 text-center" id="detalleOrdenModalLabel">Orden Nº {{ordersToDisplay[ngForIndex].order_number}}</h5>

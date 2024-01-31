@@ -11,8 +11,7 @@
   <div class="container" *ngIf="(seeDeleted || suppliers.length>0)">
     <div class="d-flex justify-content-between">
       <button class="btn btn-primary my-2" routerLink="/proveedores/formulario-proveedores">Añadir Proveedor</button>
-      <button class="btn btn-outline-secondary my-2" *ngIf="!seeDeleted" (click)="getDeletedSuppliers()">List removed suppliers</button>
-      <button class="btn btn-primary my-2" *ngIf="seeDeleted" (click)="getSuppliers()">List active suppliers</button>
+      <button class="btn btn-outline-secondary my-2" (click)="toggleShowDeleted()">{{showDeletedButtonMessage}}</button>
     </div>
     <table class="table table-striped ">
       <thead>
@@ -22,11 +21,11 @@
           <th scope="col">Razon Social</th>
           <th scope="col">Medios de contacto</th>
           <th scope="col">Representante</th>
-          <th *ngIf="!seeDeleted" colspan="3" scope="col" class="text-center">Opciones</th>
+          <th colspan="3" scope="col" class="text-center">Opciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let supplier of suppliers">
+        <tr *ngFor="let supplier of suppliers | filterDeleted: showDeleted">
           <td><div class="imgContainer"><img src="{{supplier.url_logo}}" alt="{{supplier.business_name}}" height=80 (error)="imageError($event)"></div></td>
           <th scope="row">{{supplier.code}}</th>
           <td>{{supplier.business_name}}</td>
@@ -39,7 +38,7 @@
           </td>
           <td>{{supplier.contact.last_name}}, {{supplier.contact.first_name}}</td>
           <td (click)="editSupplier(supplier.id)"><img src="/assets/icons/pencil-square.svg" alt="editar proveedor" width="25" height="25"></td>
-          <td *ngIf="!seeDeleted" (click)="logicalDeleteSupplier(supplier.id)"><img src="/assets/icons/trash.svg" alt="borrar proveedor" width="25" height="25"></td>
+          <td *ngIf="!showDeleted" (click)="logicalDeleteSupplier(supplier.id)"><img src="/assets/icons/trash.svg" alt="borrar proveedor" width="25" height="25"></td>
           <td (click)="getASupplier(supplier.id)" data-bs-toggle="modal" data-bs-target="#detalleProductoModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del proveedor" width="25" height="25"></td>
         </tr>
       </tbody>

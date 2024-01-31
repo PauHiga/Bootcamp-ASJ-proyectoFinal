@@ -1,5 +1,4 @@
 import { Injectable, OnInit } from '@angular/core';
-import { producto } from '../models/producto';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, switchMap } from 'rxjs';
 import { SupplierServiceService } from './supplier-service.service';

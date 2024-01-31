@@ -21,29 +21,40 @@ export class ListSuppliersComponent implements OnInit{
 
   search : string = ""
 
+  showDeleted = false
+  showDeletedButtonMessage = "Mostrar productos eliminados"
+
+  toggleShowDeleted(){
+    this.showDeleted = !this.showDeleted
+    if (this.showDeleted){
+      this.showDeletedButtonMessage = "Mostrar productos activos"
+    } else{
+      this.showDeletedButtonMessage = "Mostrar productos eliminados"
+    }
+  }
+
   ngOnInit(): void {
     this.getSuppliers();
   }
 
   getSuppliers(){
     this.supplierService.getSuppliers().subscribe( (response) => {
-      this.suppliers = response.filter((item : Supplier)=> item.deleted == false)
-      console.log(response);
+      this.suppliers = response
     })
     this.seeDeleted = false;
   } 
 
-  getDeletedSuppliers(){
-    this.supplierService.getSuppliers().pipe(
-      map((supplier)=>{
-        console.log(supplier);
-        return supplier.filter((item : Supplier)=> item.deleted == true)
-      })
-    ).subscribe( (response) => {
-      this.suppliers = response;
-    })
-    this.seeDeleted = true;
-  }
+  // getDeletedSuppliers(){
+  //   this.supplierService.getSuppliers().pipe(
+  //     map((supplier)=>{
+  //       console.log(supplier);
+  //       return supplier.filter((item : Supplier)=> item.deleted == true)
+  //     })
+  //   ).subscribe( (response) => {
+  //     this.suppliers = response;
+  //   })
+  //   this.seeDeleted = true;
+  // }
 
   logicalDeleteSupplier(id:number){
     let supplier : Supplier | undefined | number = this.suppliers.find(item => item.id == id)
