@@ -28,3 +28,7 @@
     height: 50vh;
     width: 75vw;
 }
+
+.vertical-align {
+    vertical-align: middle; /* Adjust the value as needed */
+}

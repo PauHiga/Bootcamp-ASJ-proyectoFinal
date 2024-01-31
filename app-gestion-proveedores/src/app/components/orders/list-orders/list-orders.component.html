@@ -58,21 +58,21 @@
 
 
   <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="orders.length<=0 && productsAvailable>0 && suppliersAvailable>0">
-    <p>No hay órdenes registradas</p>
-    <p>Cree una orden nueva</p>
-    <button class="btn btn-primary" routerLink="/ordenes/formulario-ordenes">Crear Orden</button>
+    <p>There are no registered orders</p>
+    <p>Create a new order</p>
+    <button class="btn btn-primary" routerLink="/ordenes/formulario-ordenes">Create Orden</button>
   </div>
 
   <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="productsAvailable==0 && suppliersAvailable>0">
-    <p>No hay productos registrados en el sistema</p>
-    <p>Añada al menos un producto para poder crear una orden</p>
-    <button class="btn btn-primary" routerLink="/productos/formulario-productos">Añadir Producto</button>
+    <p>There are no registered active products</p>
+    <p>Start <b>creating a new Product</b></p>
+    <button class="btn btn-primary" routerLink="/productos/formulario-productos">Create a Product</button>
   </div>
 
   <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="suppliersAvailable==0">
-    <p>No hay proveedores registrados en el sistema</p>
-    <p>Comience <b>añadiendo un proveedor</b> para poder luego registrar productos y crear órdenes</p>
-    <button class="btn btn-primary" routerLink="/proveedores/formulario-proveedores">Agregar un proveedor</button>
+    <p>There are no registered active suppliers</p>
+    <p>Start <b>creating a new supplier</b></p>
+    <button class="btn btn-primary" routerLink="/proveedores/formulario-proveedores">Create a Supplier</button>
   </div>
 
 </section>

@@ -3,13 +3,13 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a (click)="cancelar('')">Home</a></li>
-      <li class="breadcrumb-item"><a (click)="cancelar('productos')">Productos</a></li>
-      <li class="breadcrumb-item active" aria-current="page">{{tituloFormulario}}</li>
+      <li class="breadcrumb-item"><a (click)="cancelar('productos')">Products</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{formTitle}}</li>
     </ol>
   </nav>
 
 
-  <h2>{{tituloFormulario}}</h2>  
+  <h2>{{formTitle}}</h2>  
 
   <div class="container mt-4">
     <form (ngSubmit)="onClickForm(formularioProductos)" #formularioProductos="ngForm" class="p-4">
@@ -18,27 +18,27 @@
         <div class="row">
           <div class="col-sm-8">
             <div class="form-group">
-              <label for="nombreProducto">Nombre del Producto</label>
+              <label for="nombreProducto">Product name</label>
               <input type="text" class="form-control form-control-sm" id="nombreProducto" name="nombreProducto" [(ngModel)]="productsService.product.name" #nombreProducto="ngModel" required>
               <div *ngIf="nombreProducto.errors?.['required']" class="col-auto">
                 <span class="form-text text-danger">
-                    Este campo es requerido
+                    This field is required
                 </span>
               </div>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="SKUProducto">SKU Producto</label>
+              <label for="SKUProducto">SKU</label>
               <input type="text" (keyup)="skuIsUnique($event)" class="form-control form-control-sm" id="SKUProducto" name="SKUProducto" [(ngModel)]="productsService.product.sku" #SKUProducto="ngModel" required>
               <div *ngIf="SKUProducto.errors?.['required']" class="col-auto">
                 <span class="form-text text-danger">
-                    Este campo es requerido
+                    This field is required
                 </span>
               </div> 
               <div *ngIf="skuRepetido" class="col-auto">
                 <span class="form-text text-danger">
-                    Hay otro producto con este código
+                    There is another product using this code
                 </span>
               </div> 
             </div>
@@ -47,26 +47,26 @@
         <div class="row">              
           <div class="col-sm-8">
             <div class="form-group">
-              <label for="idProveedor">Proveedor</label>
+              <label for="idProveedor">Supplier</label>
               <select class="form-select form-select-sm" aria-label="Default select example" id="idProveedor" name="idProveedor" [(ngModel)]="productsService.product.supplier.id" #idProveedor="ngModel" required>
-                <option *ngFor="let supplier of suppliersList" value="{{supplier.id}}">{{supplier.business_name}} &nbsp;&nbsp;-&nbsp;&nbsp; Codigo de empresa: {{supplier.code}}</option>
+                <option *ngFor="let supplier of suppliersList" value="{{supplier.id}}">{{supplier.business_name}} &nbsp;&nbsp;-&nbsp;&nbsp; Supplier code: {{supplier.code}}</option>
               </select>
               <div *ngIf="idProveedor.errors?.['required']" class="col-auto">
                 <span class="form-text text-danger">
-                    Este campo es requerido
+                    This field is required
                 </span>
               </div> 
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="categoria">Categoría</label>
+              <label for="categoria">Category</label>
               <select class="form-select form-select-sm" aria-label="Default select example" id="categoria" name="categoria" [(ngModel)]="productsService.product.category.name" #category="ngModel" required>
                 <option *ngFor="let category of categories" value="{{category.name}}">{{category.name}}</option>
               </select>
               <div *ngIf="category.errors?.['required']" class="col-auto">
                 <span class="form-text text-danger">
-                    Este campo es requerido
+                    This field is required
                 </span>
               </div> 
               <div (click)="addCategoryModal()" class="btn btn btn-outline-secondary btn-sm m-2">Add a category</div>
@@ -77,7 +77,7 @@
     
         <div class="row">
           <div class="form-group">
-            <label for="descripcion">Descripción</label>
+            <label for="descripcion">Description</label>
             <textarea class="form-control form-control-sm" id="descripcion" name="descripcion" [(ngModel)]="productsService.product.description"></textarea>
           </div>
         </div>
@@ -85,11 +85,11 @@
         <div class="row mt-3">
           <div class="col-sm-3">
             <div class="form-group">
-              <label for="precio">Precio</label>
+              <label for="precio">Price</label>
               <input type="number" min="1" max="10000000" class="form-control form-control-sm" id="precio" name="precio" [(ngModel)]="productsService.product.price" #precio="ngModel" required>
               <div *ngIf="precio.errors?.['min']" class="col-auto">
                 <span class="form-text text-danger">
-                    El precio mínimo es $1
+                    The price can not be less than $1
                 </span>
               </div>
             </div>
@@ -98,14 +98,14 @@
           </div>
           <div class="col-sm-8">
             <div class="form-group">
-              <label for="precio">URL imagen</label>
+              <label for="precio">URL image</label>
               <input type="text" maxlength="1500" class="form-control form-control-sm" id="URLImagen" name="URLImagen" [(ngModel)]="productsService.product.url_image" >
             </div>
           </div>
         </div>
       
-      <button type="submit" class="btn btn-primary my-4">Guardar</button>
-      <div (click)="cancelar('productos')" class="btn btn-secondary my-4 mx-2">Cancelar</div>
+      <button type="submit" class="btn btn-primary my-4">Save</button>
+      <div (click)="cancelar('productos')" class="btn btn-secondary my-4 mx-2">Cancel</div>
     </form>
   </div>   
 

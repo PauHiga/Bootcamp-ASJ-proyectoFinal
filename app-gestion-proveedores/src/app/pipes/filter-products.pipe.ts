@@ -15,8 +15,9 @@ export class FilterProductsPipe implements PipeTransform {
         const lowercaseName = item.name.toLowerCase();
         const lowercaseDescription = item.description.toLowerCase();
         const lowercaseCategory = item.category.name.toLowerCase();
+        const lowercaseBusinessName = item.supplier.business_name.toLowerCase();
         const lowerCaseArgs = args.toLowerCase();
-        return lowercaseName.includes(lowerCaseArgs) || lowercaseDescription.includes(lowerCaseArgs) || lowercaseCategory.includes(lowerCaseArgs);
+        return lowercaseBusinessName.includes(lowerCaseArgs) || lowercaseName.includes(lowerCaseArgs) || lowercaseDescription.includes(lowerCaseArgs) || lowercaseCategory.includes(lowerCaseArgs);
     });
   }
 }

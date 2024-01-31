@@ -3,11 +3,11 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Productos</li>
+      <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
     </ol>
   </nav>
   
-  <h1>Productos</h1>
+  <h1>{{title}}</h1>
 
   <div class="container" *ngIf="(!showDeleted || products.length>0)">
     <div class="d-flex justify-content-between">
@@ -22,17 +22,17 @@
     <table class="table table-striped ">
       <thead>
         <tr>
-          <th scope="col">Imagen</th>
-          <th scope="col">SKU</th>
-          <th scope="col">Producto</th>
-          <th scope="col">Categoría</th>
-          <th scope="col">Proveedor</th>
-          <th scope="col">Precio</th>
-          <th *ngIf="!showDeleted" colspan="3" scope="col" class="text-center">Opciones</th>
+          <th scope="col">Image</th>
+          <th (click)="setSortByCode('sku')" scope="col-2">SKU<span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <th scope="col-2">Product</th>
+          <th scope="col">Category</th>
+          <th scope="col">Supplier</th>
+          <th (click)="setSortByCode('price')" scope="col-2">Price<span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <th *ngIf="!showDeleted" colspan="3" scope="col" class="text-center">Options</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let product of products | filterDeleted: showDeleted | filterProducts: search">
+        <tr *ngFor="let product of products | filterDeleted: showDeleted | filterProducts: search | orderBy: sortBy : sortByDesc">
           <td><div class="imgContainer"><img src="{{product.url_image}}" alt="{{product.name}}" height=80 (error)="imageError($event)"></div></td>
           <td>{{product.sku}}</td>
           <td>{{product.name}}</td>
@@ -49,13 +49,13 @@
     
   <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="(!showDeleted && products.length<=0)">
     <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="suppliersList.length>0">
-    <p>No hay productos registrados en el sistema</p>
-    <button class="btn btn-primary" routerLink="/productos/formulario-productos">Añadir Producto</button>
+    <p>There are no registered active products</p>
+    <button class="btn btn-primary" routerLink="/productos/formulario-productos">Create a product</button>
   </div>
   <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="suppliersList.length<=0">
-      <p>No hay proveedores registrados en el sistema</p>
-      <p>Comience <b>añadiendo un proveedor</b> para poder luego registrar productos</p>
-      <button class="btn btn-primary" routerLink="/proveedores/formulario-proveedores">Agregar un proveedor</button>
+      <p>There are no registered active suppliers</p>
+      <p>Start <b>creating a new supplier</b></p>
+      <button class="btn btn-primary" routerLink="/proveedores/formulario-proveedores">Create a supplier</button>
     </div>
   </div>
   

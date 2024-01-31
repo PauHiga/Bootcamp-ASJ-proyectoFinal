@@ -19,7 +19,7 @@ export class FormProductsComponent implements OnInit{
   constructor(public productsService: ProductsServiceService, private categoryService: CategoryService, private route:ActivatedRoute, private router:Router){}
 
   parametroURL : string = ''
-  tituloFormulario : string = "Agregar Producto"
+  formTitle : string = "Create product"
 
   product = {};
 
@@ -67,7 +67,7 @@ export class FormProductsComponent implements OnInit{
   }
 
   setEditForm(){
-    this.tituloFormulario = "Editar Producto";
+    this.formTitle = "Edit Product";
     this.getAProduct(Number(this.parametroURL));
     this.disabledInEdit = true;
 
@@ -86,14 +86,12 @@ export class FormProductsComponent implements OnInit{
     if(formularioProveedores.valid && !this.skuRepetido){
       if(this.parametroURL){
         this.productsService.editProduct(this.parametroURL).subscribe((response)=> {
-          console.log(response)
           this.productsService.clearProductData()
           this.router.navigate(["productos"])
           Swal.fire("Los datos del producto fueron cargados exitosamente");
         })
       } else {
         this.productsService.saveProduct().subscribe((response)=> {
-          console.log(response)
           this.productsService.clearProductData()
           this.router.navigate(["productos"])
           Swal.fire("Los datos del producto fueron cargados exitosamente");

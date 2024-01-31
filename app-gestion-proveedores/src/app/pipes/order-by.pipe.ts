@@ -10,8 +10,8 @@ export class OrderByPipe implements PipeTransform {
     }
     
     return value.slice().sort((a, b) => {
-      const nameA = a[propertyName].toLowerCase();
-      const nameB = b[propertyName].toLowerCase();
+      const nameA = String(a[propertyName]).toLowerCase();
+      const nameB = String(b[propertyName]).toLowerCase();
 
       let comparison = 0;
       if (nameA > nameB) {

@@ -20,18 +20,28 @@ export class ListProductsComponent implements OnInit{
   suppliersList : Supplier[] = [];
 
   showDeleted = false
-  showDeletedButtonMessage = "Mostrar productos eliminados"
+  showDeletedButtonMessage = "Show deleted products"
+  title : String = "Products"
 
   toggleShowDeleted(){
     this.showDeleted = !this.showDeleted
     if (this.showDeleted){
-      this.showDeletedButtonMessage = "Mostrar productos activos"
+      this.showDeletedButtonMessage = "Show active products"
+      this.title = "Products Eliminated"
     } else{
-      this.showDeletedButtonMessage = "Mostrar productos eliminados"
+      this.showDeletedButtonMessage = "Show deleted products"
+      this.title = "Products"
     }
   }
 
   search : string = ""
+  sortBy : string = "sku";
+  sortByDesc : boolean = false;
+
+  setSortByCode(sortby : string){
+    this.sortBy = sortby;
+    this.sortByDesc = !this.sortByDesc;
+  }
 
   ngOnInit(): void {
     this.getSuppliers();
