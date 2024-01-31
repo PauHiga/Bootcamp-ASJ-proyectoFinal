@@ -10,6 +10,6 @@ export interface OrderDisplay {
     total: number,
     supplier: Supplier,
     productos?: OrderDetailDisplay[],
-    status: string,
+    status: {id: number, name: string},
     deleted: boolean
 }

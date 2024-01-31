@@ -15,6 +15,7 @@ export class OrdersServiceService {
 
   private URL_API = 'http://localhost:8080/orders'
   private URL_API_ORDER_DETAILS = 'http://localhost:8080/order-details'
+  private URL_API_STATUS = 'http://localhost:8080/status'
 
   getOrders() : Observable<any>{
     return this.http.get(this.URL_API);
@@ -28,6 +29,15 @@ export class OrdersServiceService {
     return this.productService.getProducts().pipe(map(products => products.length))
   }
 
+  getStatus() : Observable<any>{
+    return this.http.get(this.URL_API_STATUS);
+  }
+
+  saveNewStatus(idOrder : number, newStatus : string) : Observable<any>{
+    console.log(newStatus);
+    return this.http.put(this.URL_API + "/" + idOrder, {status: newStatus});
+  }
+
   getOrderDetailByOrderId(id : number): Observable<OrderDetailDisplay[]>{
     return this.http.get<OrderDetailDisplay[]>(this.URL_API_ORDER_DETAILS + "/order/" + id);
   }
@@ -37,9 +47,8 @@ export class OrdersServiceService {
     ))
   }
 
-  markAsCanceled(supplierForEdit : any){
-    const canceledOrder = {...supplierForEdit, estado: "CANCELADO"}
-    return this.http.put(this.URL_API + "/" + canceledOrder.id, canceledOrder);
+  markAsCanceled(id : number){
+    return this.http.put(this.URL_API + "/" + id, {deleted: true});
   }
 }
 

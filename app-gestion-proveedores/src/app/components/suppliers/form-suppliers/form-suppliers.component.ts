@@ -129,13 +129,21 @@ export class FormSuppliersComponent implements OnInit{
     console.log(formularioProveedores.valid)
     if(formularioProveedores.valid && this.validarFormulario()){
       if(this.parametroURL){
-        this.supplierService.editSupplier(this.supplier, this.parametroURL).subscribe((response)=> console.log(response))
+        this.supplierService.editSupplier(this.supplier, this.parametroURL).subscribe((response)=>{
+          console.log(response)
+          this.clearSupplierData()
+          Swal.fire("Los datos del proveedor fueron cargados exitosamente");
+          this.router.navigate(["proveedores"])
+
+        })
       } else {
-        this.supplierService.saveSupplier(this.supplier).subscribe((response)=> console.log(response))
+        this.supplierService.saveSupplier(this.supplier).subscribe((response)=> {
+          console.log(response)
+          this.clearSupplierData()
+          Swal.fire("Los datos del proveedor fueron cargados exitosamente");
+          this.router.navigate(["proveedores"])
+        })
       }
-      this.clearSupplierData()
-      Swal.fire("Los datos del proveedor fueron cargados exitosamente");
-      this.router.navigate(["proveedores"])
     } else{
       Swal.fire({
         text: "Hay campos incompletos o erróneos. Por favor, revise el formulario",

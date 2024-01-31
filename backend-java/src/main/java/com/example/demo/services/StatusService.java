@@ -13,11 +13,12 @@ public class StatusService {
 	@Autowired
 	StatusRepository statusRepository;
 	
-	public List<String> getStatus(){
-		List<Status> listOfStatus = statusRepository.findAll();
-        List<String> namesList = listOfStatus.stream()
-                .map(Status::getName)
-                .collect(Collectors.toList());
-        return namesList;
+	public List<Status> getStatus(){
+		return statusRepository.findAll();
+//		List<Status> listOfStatus = statusRepository.findAll();
+//        List<String> namesList = listOfStatus.stream()
+//                .map(Status::getName)
+//                .collect(Collectors.toList());
+//        return namesList;
 	}
 }

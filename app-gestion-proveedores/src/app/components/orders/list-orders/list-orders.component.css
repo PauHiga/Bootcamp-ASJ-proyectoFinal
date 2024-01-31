@@ -7,3 +7,12 @@
     height: 50vh;
     width: 75vw;
 }
+
+.imgContainerModal{
+    width: 100%;
+    overflow: hidden;
+}
+
+.imgContainerModal img{
+    width: 100%;
+}

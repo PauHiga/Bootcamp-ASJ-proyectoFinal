@@ -11,7 +11,11 @@
 
   <div class="container" *ngIf="(!showDeleted || products.length>0)">
     <div class="d-flex justify-content-between">
-      <button class="btn btn-primary my-2" routerLink="/productos/formulario-productos">Añadir Producto</button>      
+      <button class="btn btn-primary my-2" routerLink="/productos/formulario-productos">Create a product</button>   
+      <div class="my-3">
+        <label for="">Search product</label>
+        <input type="text" class="mx-3" name="search" [(ngModel)]="search">
+      </div>   
       <button class="btn btn-outline-secondary my-2" (click)="toggleShowDeleted()">{{showDeletedButtonMessage}}</button>
     </div>
 
@@ -27,7 +31,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let product of products | filterDeleted: showDeleted">
+        <tr *ngFor="let product of products | filterDeleted: showDeleted | filterProducts: search">
           <td><div class="imgContainer"><img src="{{product.url_image}}" alt="{{product.name}}" height=80 (error)="imageError($event)"></div></td>
           <td>{{product.name}}</td>
           <td>{{product.category.name}}</td>
@@ -58,7 +62,7 @@
   <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div class="modal-content">
+    <div [ngClass]="productsService.product.deleted ? 'modal-content bg-secondary text-light' : 'modal-content'">
       <div class="modal-header">
         <h5 class="modal-title w-100 text-center" id="exampleModalLabel">{{productsService.product.name}}</h5>
         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -67,6 +71,9 @@
       </div>
       <div class="modal-body">
         <div class="container">
+          <div *ngIf="productsService.product.deleted == true" class="d-flex justify-content-center">
+            <h5>PRODUCT INACTIVE</h5>
+          </div>
           <div class="row">
             <div class="col-sm-6">
               <div class="imgContainerModal">
@@ -77,7 +84,7 @@
               <table>
                 <tr>
                   <td>
-                    ID del producto:
+                    Product ID:
                   </td>
                   <td>
                     {{productsService.product.id}}
@@ -85,7 +92,7 @@
                 </tr>
                 <tr>
                   <td>
-                    Proveedor:
+                    Supplier:
                   </td>
                   <td>
                     {{productsService.product.supplier.business_name}}
@@ -93,7 +100,7 @@
                 </tr>
                 <tr>
                   <td>
-                    SKU producto:
+                    SKU:
                   </td>
                   <td>
                     {{productsService.product.sku}}
@@ -101,7 +108,7 @@
                 </tr>
                 <tr>
                   <td>
-                    Categoria:
+                    Category:
                   </td>
                   <td>
                     {{productsService.product.category.name}}
@@ -109,7 +116,7 @@
                 </tr>
                 <tr>
                   <td>
-                    Precio:
+                    Price:
                   </td>
                   <td>
                     {{productsService.product.price}}
@@ -117,7 +124,7 @@
                 </tr>
                 <tr>
                   <td>
-                    Descripcion:
+                    Description:
                   </td>
                   <td>
                     {{productsService.product.description}}
@@ -130,7 +137,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" (click)="editProduct(productsService.product.id)" class="btn btn-primary" data-bs-dismiss="modal">Editar</button>
+        <button type="button" (click)="editProduct(productsService.product.id)" [ngClass]="productsService.product.deleted ? 'btn btn-secondary' : 'btn btn-primary'" data-bs-dismiss="modal">Editar</button>
+        <button type="button" *ngIf="productsService.product.deleted == true" (click)="editProduct(productsService.product.id)" class="btn btn-primary" data-bs-dismiss="modal">Activate product</button>
       </div>
     </div>
   </div>

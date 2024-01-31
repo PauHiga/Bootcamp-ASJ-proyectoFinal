@@ -3,13 +3,20 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Ordenes</li>
+      <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
     </ol>
   </nav>
-  <h1>Ordenes</h1>
-  <div class="container" *ngIf="ordersAvailable>0">
+  <h1>{{title}}</h1>
+
+  <div class="container" *ngIf="orders.length>0">
     <div class="d-flex justify-content-between">
-      <button *ngIf="productsAvailable>0 && suppliersAvailable>0" class="btn btn-primary my-2" routerLink="/ordenes/formulario-ordenes">Añadir Orden</button>    
+      <button *ngIf="productsAvailable>0 && suppliersAvailable>0" class="btn btn-primary my-2" routerLink="/ordenes/formulario-ordenes">Create new order</button>    
+      <div class="my-3 d-flex">
+        <label for="supplier">Status</label>
+        <select (change)="onSelect($event)" class="form-select form-select-sm" id="supplier" name="supplier" [(ngModel)]="searchByStatus" #Supplier="ngModel" required>
+          <option *ngFor="let status of statusList" value="{{status.name}}">{{status.name}}</option>
+        </select>
+      </div>   
       <button class="btn btn-outline-secondary my-2" (click)="toggleShowDeleted()">{{showDeletedButtonMessage}}</button>
     </div>
 
@@ -17,33 +24,40 @@
     <table class="table table-striped ">
       <thead>
         <tr>
-          <th scope="col">Nº Orden</th>
-          <th scope="col">Fecha emisión</th>
-          <th scope="col">Entrega Estimada</th>
-          <th scope="col">Proveedor</th>
-          <th scope="col">Total</th>
-          <th class="text-center" scope="col-1">Cancelar</th>
-          <th class="text-center" scope="col-1">Ver detalles</th>
+          <th scope="col-1">Nº Order</th>
+          <th scope="col-2">Issue Date</th>
+          <th scope="col-2">Delivery Date</th>
+          <th scope="col-2">Supplier</th>
+          <th scope="col-2">Total</th>
+          <th class="text-center" scope="col-1">Order Status</th>
+          <th *ngIf="!showDeleted" class="text-center" scope="col-1">Cancel</th>
+          <th class="text-center" scope="col-1">Order Details</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of ordersToDisplay | filterDeleted: showDeleted, let i = index" [ngClass]="(order.deleted==true)?'canceled':''" >
+        <tr *ngFor="let order of orders | filterDeleted: showDeleted | filterOrders: searchByStatus, let i = index" [ngClass]="(order.deleted==true)?'canceled':''" >
           <td>{{order.order_number}}</td>
           <td>{{order.issue_date}}</td>
           <td>{{order.delivery_date}}</td>
           <td>{{order.supplier.business_name}}</td>
           <td>{{order.total | currency}}</td>
-          <td class="text-center" (click)="markCanceled(order.id, order.order_number)"><img src="/assets/icons/x-square.svg" alt="mark as canceled" width="25" height="25" [ngClass]="(order.deleted==true)?'d-none':''"><p [ngClass]="(order.deleted==true)?'':'d-none'">CANCELADO</p></td>
-          <td class="text-center" (click)="setIndex(i)" data-bs-toggle="modal" data-bs-target="#detalleOrdenModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del proveedor" width="25" height="25"></td>
-
-
+          <td class="text-center row">
+            <div class="col-8">
+              <p>{{order.status.name}}</p>
+            </div>
+              <div class="col-4" *ngIf="!showDeleted">
+              <img (click)="changeStatus(order.id, order.status.name)"src="/assets/icons/pencil-square.svg" alt="change order status" width="25" height="25">
+            </div>
+          </td>
+          <td *ngIf="!showDeleted" class="text-center" (click)="markCanceled(order.id, order.order_number)"><img src="/assets/icons/trash.svg" alt="mark as canceled" width="25" height="25" [ngClass]="(order.deleted==true)?'d-none':''"></td>
+          <td class="text-center" (click)="setOrderId(order)" data-bs-toggle="modal" data-bs-target="#detalleOrdenModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del proveedor" width="25" height="25"></td>
         </tr>
       </tbody>
     </table>
   </div>
 
 
-  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="ordersAvailable==0 && productsAvailable>0 && suppliersAvailable>0">
+  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="orders.length<=0 && productsAvailable>0 && suppliersAvailable>0">
     <p>No hay órdenes registradas</p>
     <p>Cree una orden nueva</p>
     <button class="btn btn-primary" routerLink="/ordenes/formulario-ordenes">Crear Orden</button>
@@ -64,28 +78,28 @@
 </section>
 
   <!-- Modal -->
-  <div class="modal fade" id="detalleOrdenModal" tabindex="-1" role="dialog" aria-labelledby="detalleOrdenModalLabel" aria-hidden="true">
-    <div *ngIf="ordersToDisplay.length>0" class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
+  <div class ="modal fade" id="detalleOrdenModal" tabindex="-1" role="dialog" aria-labelledby="detalleOrdenModalLabel" aria-hidden="true">
+    <div *ngIf="orders.length>0" class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div [ngClass]="currentOrder?.deleted ? 'modal-content bg-secondary text-light' : 'modal-content'">
         <div class="modal-header">
-          <h5 class="modal-title w-100 text-center" id="detalleOrdenModalLabel">Orden Nº {{ordersToDisplay[ngForIndex].order_number}}</h5>
+          <h5 class="modal-title w-100 text-center" id="detalleOrdenModalLabel">Orden Nº {{currentOrder?.order_number}}</h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="container">
-            <div *ngIf="ordersToDisplay[ngForIndex].deleted == true">
-              <h5>Estado: CANCELADO</h5>
+            <div *ngIf="currentOrder?.deleted == true" class="d-flex justify-content-center">
+              <h5>ORDER CANCELLED</h5>
             </div>
             <div class="row">
-              <div class="col-sm-6">
-                <div class="imgContainerModal">
-                  <img src="{{ordersToDisplay[ngForIndex].supplier.url_logo}}" alt="{{ordersToDisplay[ngForIndex].supplier.business_name}}">
-                </div>
-              </div>
+              <h5>Order status: {{currentOrder?.status?.name}}</h5>
+            <hr>
               <h5>Datos generales</h5>
               <div class="col-sm-3">
+                <div class="imgContainerModal">
+                  <img src="{{currentOrder?.supplier?.url_logo}}" alt="{{currentOrder?.supplier?.business_name}}">
+                </div>
               </div>
               <div class="col-sm-6">
                 <table class="table">
@@ -94,7 +108,7 @@
                       Proveedor:
                     </td>
                     <td>
-                      {{ordersToDisplay[ngForIndex].supplier.business_name}}
+                      {{currentOrder?.supplier?.business_name}}
                     </td>
                   </tr>
                   <tr>
@@ -102,7 +116,7 @@
                       Fecha de emisión:
                     </td>
                     <td>
-                      {{ordersToDisplay[ngForIndex].issue_date}}
+                      {{currentOrder?.issue_date}}
                     </td>
                   </tr>
                   <tr>
@@ -110,7 +124,7 @@
                       Fecha estimada de entrega:
                     </td>
                     <td>
-                      {{ordersToDisplay[ngForIndex].delivery_date}}
+                      {{currentOrder?.delivery_date}}
                     </td>
                   </tr>
                   <tr>
@@ -118,7 +132,7 @@
                       Comentarios sobre entrega:
                     </td>
                     <td>
-                      {{ordersToDisplay[ngForIndex].details}}
+                      {{currentOrder?.details}}
                     </td>
                   </tr>
                 </table>
@@ -160,14 +174,14 @@
               <div class="col-sm-8">                
               </div>
               <div class="col-sm-4">
-                <h5>Total: {{ordersToDisplay[ngForIndex].total | currency}}</h5>
+                <h5>Total: {{currentOrder?.total | currency}}</h5>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button *ngIf="ordersToDisplay[ngForIndex].deleted == false" type="button" (click)="markCanceled(ordersToDisplay[ngForIndex].id, ordersToDisplay[ngForIndex].order_number)" class="btn btn-primary" data-bs-dismiss="modal">Cancelar orden</button>
+          <button *ngIf="!showDeleted" type="button" (click)="markCanceled(currentOrder?.id, currentOrder?.order_number)" class="btn btn-primary" data-bs-dismiss="modal">Cancel order</button>
         </div>
       </div>
     </div>

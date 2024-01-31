@@ -18,6 +18,9 @@ import { ModalConfirmComponent } from './components/orders/modal-confirm/modal-c
 import { MainWelcomeComponent } from './components/welcome/main-welcome/main-welcome.component';
 import { OrdersProductSearchPipe } from './pipes/orders-product-search.pipe';
 import { FilterDeletedPipe } from './pipes/filter-deleted.pipe';
+import { FilterSuppliersPipe } from './pipes/filter-suppliers.pipe';
+import { FilterProductsPipe } from './pipes/filter-products.pipe';
+import { FilterOrdersPipe } from './pipes/filter-orders.pipe';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,9 @@ import { FilterDeletedPipe } from './pipes/filter-deleted.pipe';
     MainWelcomeComponent,
     OrdersProductSearchPipe,
     FilterDeletedPipe,
+    FilterSuppliersPipe,
+    FilterProductsPipe,
+    FilterOrdersPipe,
   ],
   imports: [
     BrowserModule,
