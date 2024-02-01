@@ -3,7 +3,7 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a (click)="cancelar('')">Home</a></li>
-      <li class="breadcrumb-item"><a (click)="cancelar('proveedores')">Suppliers</a></li>
+      <li class="breadcrumb-item"><a (click)="cancelar('suppliers')">Suppliers</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
     </ol>
   </nav>
@@ -11,7 +11,7 @@
 
   <h2>{{title}}</h2>  
 
-  <form (ngSubmit)="onClickForm(formularioProveedores)" #formularioProveedores="ngForm" class="p-4">
+  <form (ngSubmit)="onClickForm(supplierForm)" #supplierForm="ngForm" class="p-4">
     <input type="hidden" class="form-control form-control-sm" name="id" [(ngModel)]="supplier.id">        
     <h3>General data</h3>
       <div class="row">
@@ -262,7 +262,7 @@
       <div class="row mt-3">
         <div class="col-md-12">
           <button type="submit" class="btn btn-primary my-3">{{title}}</button>
-          <div (click)="cancelar('proveedores')" class="btn btn-secondary m-3">Cancelar</div>
+          <div (click)="cancelar('suppliers')" class="btn btn-secondary m-3">Cancelar</div>
         </div>
       </div>
     </form>

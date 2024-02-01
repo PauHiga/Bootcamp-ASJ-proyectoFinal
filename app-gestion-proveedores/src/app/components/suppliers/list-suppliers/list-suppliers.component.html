@@ -8,9 +8,9 @@
   </nav>
   <h1>{{title}}</h1>
   
-  <div class="container" *ngIf="(seeDeleted || suppliers.length>0)">
+  <div class="container" *ngIf="(showDeleted || suppliers.length>0)">
     <div class="d-flex justify-content-between">
-      <button class="btn btn-primary my-2" routerLink="/proveedores/formulario-proveedores">Create a Supplier</button>
+      <button class="btn btn-primary my-2" routerLink="supplier-form/">Create a Supplier</button>
       <div class="my-3">
         <label for="">Search code / business name</label>
         <input type="text" class="mx-3" name="search" [(ngModel)]="search">
@@ -51,10 +51,10 @@
     </table>
   </div>
 
-  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="(!seeDeleted && suppliers.length<=0)">
+  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="(!showDeleted && suppliers.length<=0)">
     <p>There are no registered active suppliers</p>
-    <p>Start <b>adding a new supplier</b></p>
-    <button class="btn btn-primary" routerLink="/proveedores/formulario-proveedores">Add a new supplier</button>
+    <p>Start <b>creating a new supplier</b></p>
+    <button class="btn btn-primary" routerLink="supplier-form">Create a supplier</button>
   </div>
 </section>
 

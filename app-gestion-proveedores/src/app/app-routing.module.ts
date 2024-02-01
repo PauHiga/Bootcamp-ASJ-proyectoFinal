@@ -11,23 +11,23 @@ import { MainWelcomeComponent } from './components/welcome/main-welcome/main-wel
 
 const routes: Routes = [
   {path: "", component:MainWelcomeComponent},
-  {path: 'proveedores', children:[
+  {path: 'suppliers', children:[
     {path: '', component:ListSuppliersComponent},
-    {path: 'formulario-proveedores', children:[
+    {path: 'supplier-form', children:[
       {path:'', component:FormSuppliersComponent},
       {path:':edit', component:FormSuppliersComponent}
     ]}
   ]},
-  {path: 'productos', children:[
+  {path: 'products', children:[
     {path: '', component:ListProductsComponent},
-    {path: 'formulario-productos', children:[
+    {path: 'product-form', children:[
       {path:'', component:FormProductsComponent},
       {path:':edit', component:FormProductsComponent}
     ]}
   ]},
-  {path: 'ordenes', children:[
+  {path: 'orders', children:[
     {path: '', component:ListOrdersComponent},
-    {path: 'formulario-ordenes', children:[
+    {path: 'order-form', children:[
       {path:'', component:FormOrdersComponent},
       {path:':edit', component:FormOrdersComponent}
     ]}

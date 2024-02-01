@@ -10,7 +10,7 @@
 
   <div class="container" *ngIf="orders.length>0">
     <div class="d-flex justify-content-between">
-      <button *ngIf="productsAvailable>0 && suppliersAvailable>0" class="btn btn-primary my-2" routerLink="/ordenes/formulario-ordenes">Create new order</button>    
+      <button *ngIf="productsAvailable>0 && suppliersAvailable>0" class="btn btn-primary my-2" routerLink="/orders/order-form">Create new order</button>    
       <div class="my-3 d-flex">
         <label for="supplier">Status</label>
         <select (change)="onSelect($event)" class="form-select form-select-sm" id="supplier" name="supplier" [(ngModel)]="searchByStatus" #Supplier="ngModel" required>
@@ -61,19 +61,19 @@
   <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="orders.length<=0 && productsAvailable>0 && suppliersAvailable>0">
     <p>There are no registered orders</p>
     <p>Create a new order</p>
-    <button class="btn btn-primary" routerLink="/ordenes/formulario-ordenes">Create Orden</button>
+    <button class="btn btn-primary" routerLink="/orders/order-form">Create Orden</button>
   </div>
 
   <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="productsAvailable==0 && suppliersAvailable>0">
     <p>There are no registered active products</p>
     <p>Start <b>creating a new Product</b></p>
-    <button class="btn btn-primary" routerLink="/productos/formulario-productos">Create a Product</button>
+    <button class="btn btn-primary" routerLink="/products/product-form">Create a Product</button>
   </div>
 
   <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="suppliersAvailable==0">
     <p>There are no registered active suppliers</p>
     <p>Start <b>creating a new supplier</b></p>
-    <button class="btn btn-primary" routerLink="/proveedores/formulario-proveedores">Create a Supplier</button>
+    <button class="btn btn-primary" routerLink="/suppliers/supplier-form">Create a Supplier</button>
   </div>
 
 </section>

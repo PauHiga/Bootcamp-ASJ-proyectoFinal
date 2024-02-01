@@ -120,12 +120,12 @@ export class ListProductsComponent implements OnInit{
           confirmButtonText: "Activate product and edit"
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate([`productos/formulario-productos/${selectedProduct.id}`])
+            this.router.navigate([`products/product-form/${selectedProduct.id}`])
           }
         });
       }    
       else{
-        this.router.navigate([`productos/formulario-productos/${id}`])
+        this.router.navigate([`products/product-form/${id}`])
       }
     }
   }

@@ -202,7 +202,7 @@ export class FormOrdersComponent implements OnInit{
     this.orderFormService.saveOrder(this.order, this.orderDetails).subscribe((response)=>{
       console.log(response);
       this.clearData()
-      this.router.navigate(["ordenes"])
+      this.router.navigate(["orders"])
       Swal.fire("Orden creada exitosamente");
     })
   }
@@ -245,15 +245,15 @@ export class FormOrdersComponent implements OnInit{
     this.order.delivery_date = this.getDate(1);
   }
 
-  cancelar(objetivo: string){
+  cancel(objetivo: string){
     Swal.fire({
-      text: "¿Seguro desea salir? Los datos se perderán",
+      text: "Are you sure you want to exit? The modifications won't be saved",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Salir",
-      cancelButtonText: "Cancelar"
+      confirmButtonText: "Leave this page",
+      cancelButtonText: "Stay in this page"
     }).then((result) => {
       if (result.isConfirmed) {
         this.router.navigate([objetivo])

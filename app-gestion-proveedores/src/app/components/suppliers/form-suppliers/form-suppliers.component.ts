@@ -120,14 +120,14 @@ export class FormSuppliersComponent implements OnInit{
     this.states = selectedCountry.states;
   }
 
-  onClickForm(formularioProveedores:NgForm){
+  onClickForm(supplierForm:NgForm){
     this.validarFormulario();
-    if(formularioProveedores.valid && this.validarFormulario()){
+    if(supplierForm.valid && this.validarFormulario()){
       if(this.parametroURL){
         this.supplierService.editSupplier(this.supplier, this.parametroURL).subscribe((response)=>{
           this.clearSupplierData()
           Swal.fire("Los datos del proveedor fueron cargados exitosamente");
-          this.router.navigate(["proveedores"])
+          this.router.navigate(["suppliers"])
         },
         (error)=>{
           console.log(error);
@@ -141,7 +141,7 @@ export class FormSuppliersComponent implements OnInit{
         this.supplierService.saveSupplier(this.supplier).subscribe((response)=> {
           this.clearSupplierData()
           Swal.fire("Los datos del proveedor fueron cargados exitosamente");
-          this.router.navigate(["proveedores"])
+          this.router.navigate(["suppliers"])
         },
         (error)=>{
           console.log(error);

@@ -87,13 +87,13 @@ export class FormProductsComponent implements OnInit{
       if(this.parametroURL){
         this.productsService.editProduct(this.parametroURL).subscribe((response)=> {
           this.productsService.clearProductData()
-          this.router.navigate(["productos"])
+          this.router.navigate(["products"])
           Swal.fire("Los datos del producto fueron cargados exitosamente");
         })
       } else {
         this.productsService.saveProduct().subscribe((response)=> {
           this.productsService.clearProductData()
-          this.router.navigate(["productos"])
+          this.router.navigate(["products"])
           Swal.fire("Los datos del producto fueron cargados exitosamente");
         })
       }
@@ -111,15 +111,15 @@ export class FormProductsComponent implements OnInit{
     this.skuRepetido = productsSKUs.includes(currentSku);
   }
 
-  cancelar(objetivo: string){
+  cancel(objetivo: string){
     Swal.fire({
-      text: "¿Seguro desea salir? Los datos se perderán",
+      text: "Are you sure you want to exit? The modifications won't be saved",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Salir",
-      cancelButtonText: "Cancelar"
+      confirmButtonText: "Leave this page",
+      cancelButtonText: "Stay in this page"
     }).then((result) => {
       if (result.isConfirmed) {
         this.router.navigate([objetivo])

@@ -17,11 +17,10 @@ export class ListSuppliersComponent implements OnInit{
   suppliers : Supplier[] = []
   selectedSupplier : Supplier | undefined = undefined
 
-  seeDeleted : boolean = false;
+  showDeleted : boolean = false;
 
   title : String = "Suppliers"
 
-  showDeleted = false
   showDeletedButtonMessage = "Show inactive suppliers"
 
   search : string = "";
@@ -58,7 +57,7 @@ export class ListSuppliersComponent implements OnInit{
     this.supplierService.getSuppliers().subscribe( (response) => {
       this.suppliers = response
     })
-    this.seeDeleted = false;
+    this.showDeleted = false;
   } 
 
   logicalDeleteSupplier(id:number){
@@ -97,12 +96,12 @@ export class ListSuppliersComponent implements OnInit{
           confirmButtonText: "Activate supplier and edit"
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate([`proveedores/formulario-proveedores/${selectedSupplier.id}`])
+            this.router.navigate([`suppliers/supplier-form/${selectedSupplier.id}`])
           }
         });
       }
       else{
-        this.router.navigate([`proveedores/formulario-proveedores/${selectedSupplier.id}`])
+        this.router.navigate([`suppliers/supplier-form/${selectedSupplier.id}`])
       }
     }
   }
