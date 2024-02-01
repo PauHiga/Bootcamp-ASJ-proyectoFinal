@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsServiceService } from '../../../services/products-service.service';
-// import { producto } from '../../../models/producto';
 import Swal from 'sweetalert2';
 import { CategoryService } from '../../../services/category.service';
 import { Supplier } from '../../../models/supplier';
-import { Product } from '../../../models/product';
 import { ProductDisplay } from '../../../models/productDisplay';
 
 @Component({
