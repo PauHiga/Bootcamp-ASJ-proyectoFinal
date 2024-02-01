@@ -292,46 +292,127 @@ export class FormSuppliersComponent implements OnInit{
         this.sectorService.saveSector(result.value).subscribe((result)=> {
           this.getSectors();
           this.supplier.sector = result.name;
+          Swal.fire({
+            text: `The sector "${result.value}" has been saved`,
+          });
         })
-        Swal.fire({
-          text: `The sector "${result.value}" has been saved`,
-        });
+
 
       }
     });
   }
 
-    //Delete a sector
-    deleteSectorModal(){
+    //Edit or delete a sector
+    editSectorModal(){
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          denyButton: "btn btn-danger",
+          cancelButton: "btn btn-secondary",
+        },
+        buttonsStyling: true
+      });
+      
       const options = Object.fromEntries(this.sectors.map(item => [item.id, item.name]))
-      Swal.fire({
-        title: "Delete Sector",
-        text: "Select a sector to delete",
+      swalWithBootstrapButtons.fire({
+        title: "Edit or Delete Sector",
+        text: "Select a sector to edit or delete",
         input: "select",
         inputOptions: options,
-        inputPlaceholder: "Select a sector",
+        inputPlaceholder: "Select a sector to edit or delete",
+        showDenyButton: true,
+        returnInputValueOnDeny: true,
         showCancelButton: true,
-        confirmButtonText: "Delete sector",
+        confirmButtonText: "Edit sector",
+        denyButtonText: "Delete sector",
         allowOutsideClick: () => !Swal.isLoading(),
         inputValidator: (value): any => {
           if (value == '') {
-            return "You need to choose something!";
+            return "You need to choose a sector!";
           }
         }
       }).then((result) => {
-        if (result.isConfirmed && result.value != '') {
-          const chosenOption = this.sectors.find(item => item.id == result.value).name
-          this.sectorService.logicalDeleteSector(result.value).subscribe((result)=> {
-            console.log(result);
-          })
-          Swal.fire({
-            text: `Sector "${chosenOption}" has been deleted`,
+        const chosenOption = this.sectors.find(item => item.id == result.value).name
+        const chosenOptionId = result.value
+        if (result.isConfirmed) {
+          swalWithBootstrapButtons.fire({
+            title: "Edit sector name",
+            text: "Write a new name for the sector: " + chosenOption,
+            showCancelButton: true,
+            confirmButtonText: "Accept new name",
+            input: "text",
+            inputAttributes: {
+              autocapitalize: "off"
+            },
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.sectorService.changeSectorName(chosenOptionId, result.value).subscribe((result)=> 
+              {
+                console.log(result);
+                Swal.fire({
+                  title: "Sector edited",
+                  text: "The sector has been edited",
+                  icon: "success"
+                });
+                this.getSectors();
+              })
+            }
           });
-          //No alcanza con llamar de nuevo a los sectores para refrescar. Se ve que se tarda mucho en actualizar todo. Voy a hacer el cambio en el front en paralelo.
-          this.sectors = this.sectors.filter(item => item.id !=result.value)
         }
-      });
+        else if (result.isDenied) {
+          swalWithBootstrapButtons.fire({
+            title: `Are you sure you want to delete "${chosenOption}"?`,
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d63043",
+            confirmButtonText: "Yes, delete it!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.sectorService.logicalDeleteSector(chosenOptionId).subscribe((result)=> 
+              {
+                Swal.fire({
+                  text: `Category "${result.name}" has been deleted`,
+                });
+                this.getSectors();
+              })
+            }
+          })
+        };
+      })
     }
+
+    //Edit or Delete a sector
+    // editSectorModal(){
+    //   const options = Object.fromEntries(this.sectors.map(item => [item.id, item.name]))
+    //   Swal.fire({
+    //     title: "Delete Sector",
+    //     text: "Select a sector to delete",
+    //     input: "select",
+    //     inputOptions: options,
+    //     inputPlaceholder: "Select a sector",
+    //     showCancelButton: true,
+    //     confirmButtonText: "Delete sector",
+    //     allowOutsideClick: () => !Swal.isLoading(),
+    //     inputValidator: (value): any => {
+    //       if (value == '') {
+    //         return "You need to choose something!";
+    //       }
+    //     }
+    //   }).then((result) => {
+    //     if (result.isConfirmed && result.value != '') {
+    //       const chosenOption = this.sectors.find(item => item.id == result.value).name
+    //       this.sectorService.logicalDeleteSector(result.value).subscribe((result)=> {
+    //         console.log(result);
+    //       })
+    //       Swal.fire({
+    //         text: `Sector "${chosenOption}" has been deleted`,
+    //       });
+    //       //No alcanza con llamar de nuevo a los sectores para refrescar. Se ve que se tarda mucho en actualizar todo. Voy a hacer el cambio en el front en paralelo.
+    //       this.sectors = this.sectors.filter(item => item.id !=result.value)
+    //     }
+    //   });
+    // }
 }
 
 

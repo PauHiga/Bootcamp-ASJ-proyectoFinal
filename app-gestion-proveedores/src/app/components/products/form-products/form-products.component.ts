@@ -218,7 +218,6 @@ export class FormProductsComponent implements OnInit{
         });
       }
       else if (result.isDenied) {
-
         swalWithBootstrapButtons.fire({
           title: `Are you sure you want to delete "${chosenOption}"?`,
           text: "You won't be able to revert this!",

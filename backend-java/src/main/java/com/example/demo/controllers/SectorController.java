@@ -52,9 +52,9 @@ public class SectorController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> editSector(@PathVariable Integer id, @RequestBody SectorDTO sectorDTO){
+	public ResponseEntity<Object> updateSector(@PathVariable Integer id, @RequestBody SectorDTO sectorDTO){
 		try {
-			return ResponseEntity.ok(sectorService.editSector(id, sectorDTO));
+			return ResponseEntity.ok(sectorService.updateSector(id, sectorDTO));
 		}
 		catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error editing sector: " + e.getMessage());			
