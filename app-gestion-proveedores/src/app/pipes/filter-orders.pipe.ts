@@ -7,7 +7,7 @@ import { OrderDisplay } from '../models/orderDisplay';
 export class FilterOrdersPipe implements PipeTransform {
 
   transform(value: OrderDisplay[], args?: string): any {
-    if (args === "" || args === undefined){
+    if (args === "" || args === undefined || args === "Display all"){
       return value;
     }
 

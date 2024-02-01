@@ -57,7 +57,6 @@ public class AddressService {
 					Province newProvince =  new Province();
 					newProvince.setName(addressDTO.getProvince());
 					newProvince.setCountry(country);
-					System.out.println(newProvince.getCountry().getName());
 					return provinceRepository.save(newProvince);
 				});
 		

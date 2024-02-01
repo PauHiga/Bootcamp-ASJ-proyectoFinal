@@ -3,12 +3,12 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a (click)="cancelar('')">Home</a></li>
-        <li class="breadcrumb-item"><a (click)="cancelar('ordenes')">Ordenes</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Nueva Orden</li>
+        <li class="breadcrumb-item"><a (click)="cancelar('ordenes')">Orders</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Create new Order</li>
       </ol>
     </nav>
     
-    <h2>Nueva Orden</h2>  
+    <h2>Create new Order</h2>  
   
 <!-- orden-form.component.html -->
 
@@ -18,38 +18,38 @@
     <div class="row">
       <div class="col-sm-2">
         <div class="form-group">
-          <label for="numeroOrden">Número de Orden</label>
+          <label for="numeroOrden">Order Number</label>
           <input type="number" class="form-control" id="numeroOrden" name="numeroOrden" [(ngModel)]="order.order_number" disabled>
         </div>
       </div>
       <div class="col-sm-2">
         <div class="form-group">
-          <label for="fechaEmision">Fecha de Emisión</label>
+          <label for="fechaEmision">Issue Date</label>
           <input type="date" (change)="validateDateFechaEmision()" min="{{ getDate(0) | date:'yyyy-MM-dd' }}" class="form-control" id="fechaEmision" name="fechaEmision" [(ngModel)]="order.issue_date" #FechaEmision="ngModel" required>
           <div *ngIf="FechaEmision.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
-                Este campo es requerido
+                This field is required
             </span>
           </div>
           <div *ngIf="!fechaEmisionValida" class="col-auto">
             <span class="form-text text-danger">
-                La fecha de emisión no puede ser previa a la fecha actual
+              Issue date must be today or later.
             </span>
           </div>
         </div>
       </div>
       <div class="col-sm-2">
         <div class="form-group">
-          <label for="fechaEntrega">Fecha de Entrega</label>
+          <label for="fechaEntrega">Delivery Date</label>
           <input type="date" (change)="validateDateFechaEntrega()" min="{{ getDate(0) | date:'yyyy-MM-dd' }}" class="form-control" id="fechaEntrega" name="fechaEntrega" [(ngModel)]="order.delivery_date" #FechaEntrega="ngModel" required>
           <div *ngIf="FechaEntrega.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
-                Este campo es requerido
+                This field is required
             </span>
           </div>
           <div *ngIf="!fechaEntregaValida" class="col-auto">
             <span class="form-text text-danger">
-                La fecha de entrega no puede ser previa a la fecha de emisión
+              Delivery date can't be before issue date.
             </span>
           </div>
         </div>
@@ -60,8 +60,8 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="form-group">
-          <label for="informacionRecepcion">Información de Recepción</label>
-          <textarea class="form-control" id="informacionRecepcion" name="informacionRecepcion" [(ngModel)]="order.details"></textarea>
+          <label for="informacionRecepcion">Information for reception</label>
+          <textarea class="form-control" id="informacionRecepcion" name="informacionRecepcion" [(ngModel)]="order.details" maxlength="2000"></textarea>
         </div>
       </div>
     </div>
@@ -69,14 +69,19 @@
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
-          <label for="supplier">Proveedor</label>
+          <label for="supplier">Supplier</label>
           <select (change)="onSelect($event)" class="form-control" id="supplier" name="supplier" [(ngModel)]="selectedSupplier" #Supplier="ngModel" required>
             <option *ngFor="let supplier of suppliers" value="{{supplier.id}}">{{supplier.business_name}}</option>
           </select>
           <div *ngIf="Supplier.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
-                Este campo es requerido
+                This field is required
             </span>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <div class="img_container m-1">
+            <img src="{{selectedSupplierImageUrl}}" alt="">
           </div>
         </div>
         <div class="form-group mt-2">
@@ -84,32 +89,32 @@
           <input type="number" class="form-control" id="total" name="total" [(ngModel)]="order.total" disabled>
           <div *ngIf="!totalMayorACeroValido" class="col-auto">
             <span class="form-text text-danger">
-                El total no puede ser cero. Por favor, agregue al menos un producto
+                The total can't be 0. Please add at least one product.
             </span>
           </div>
         </div>
           
-        <button type="submit" class="btn btn-primary my-4">Crear Nueva Orden</button>
-        <div (click)="cancelar('ordenes')" class="btn btn-secondary my-4 mx-2">Cancelar</div>
+        <button type="submit" class="btn btn-primary my-4">Create new Order</button>
+        <div (click)="cancelar('ordenes')" class="btn btn-secondary my-4 mx-2">Cancel</div>
       </div>
       <div class="col-md-8">
         <div class="form-group d-flex flex-column justify-content-center my-3 " *ngIf="productsToDisplay.length > 0">
           <div class="my-3">
-            <label for="">Buscar Producto</label>
+            <label for="">Find products</label>
             <input type="text" class="mx-3" name="search" [(ngModel)]="search">
           </div>
           <!-- <label for="productos">Productos</label> -->
             <table class="table w-75 ">
               <thead>
-                <th>Producto</th>
-                <th>Precio unitario</th>
-                <th>Cantidad</th>
+                <th>Product</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
               </thead>
               <tbody>
                 <tr *ngFor="let productToDisplay of productsToDisplay | ordersProductSearch : search">
                   <td>{{productToDisplay.name}}</td>
                   <td>{{productToDisplay.price}}</td>
-                  <td><input type="number" min="0" placeholder="Seleccione Cantidad" (change)="addProductToOrder($event, productToDisplay)"></td>
+                  <td><input type="number" min="0" placeholder="Select Quantity" (change)="addProductToOrder($event, productToDisplay)"></td>
                 </tr>
               </tbody>
             </table>

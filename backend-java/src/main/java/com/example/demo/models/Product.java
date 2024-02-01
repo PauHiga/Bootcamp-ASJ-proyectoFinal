@@ -28,15 +28,15 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(unique = true, length = 20, nullable = false)
+	@Column(unique = true, length = 50, nullable = false)
 	@NotNull(message = "The SKU cannot be null")
 	private String sku;
 	
-	@Column(length = 50, nullable = false)
+	@Column(length = 100, nullable = false)
 	@NotNull(message = "The name cannot be null")
 	private String name;
 	
-	@Column(length = 1000)
+	@Column(length = 2000)
 	private String description;
 	
 	@Column(columnDefinition = "DECIMAL(10,2)", nullable = false)

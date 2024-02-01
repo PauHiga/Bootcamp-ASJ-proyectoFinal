@@ -1,0 +1,15 @@
+.img_container{
+    width:40%;
+    overflow: hidden;
+}
+.img_container img{
+    width:100%;
+}
+
+ul{
+    list-style-type: none;
+}
+
+li{
+    list-style-type: none;
+}

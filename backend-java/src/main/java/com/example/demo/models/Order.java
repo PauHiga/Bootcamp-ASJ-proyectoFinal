@@ -43,10 +43,9 @@ public class Order {
 	@NotNull(message = "The delivery date cannot be null")
 	private LocalDate delivery_date;
 	
-	@Column(length = 500)
+	@Column(length = 2000)
 	private String details;
 	
-	@Column(length = 500)
 	private Float total;
     
 	@Column(name = "created_at", nullable = false)

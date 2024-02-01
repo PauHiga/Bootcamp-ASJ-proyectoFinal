@@ -41,7 +41,9 @@ export class FormOrdersComponent implements OnInit{
   products : ProductDisplay[] = []
   orders : OrderDisplay[] = []
   
-  selectedSupplier = {}
+  selectedSupplier : string = ""
+  selectedSupplierImageUrl : string | undefined = ""
+
 
   productsToDisplay : ProductDisplay[] = []
 
@@ -100,6 +102,8 @@ export class FormOrdersComponent implements OnInit{
     const selectedValue = (event.target as HTMLSelectElement).value;
     this.order.supplier_id = Number(selectedValue);
     this.productsToDisplay = this.products.filter(item => item.supplier.id == Number(selectedValue))
+    const selectedSupplier = this.suppliers.find(item=> item.id == Number(selectedValue))
+    this.selectedSupplierImageUrl = selectedSupplier?.url_logo
   }
 
   addProductToOrder(event : Event, data: ProductDisplay){
@@ -135,23 +139,25 @@ export class FormOrdersComponent implements OnInit{
     this.orderDetailProductsSelectedToOrdenProductos()
     let productsString = ""
     for(let orderDetailProduct of this.orderDetailProductsSelected){
-      productsString = productsString + "<li>" + orderDetailProduct.product.name +"</li>"
+      productsString = productsString + '<table class="w-100 my-4"><tr class="mb-0 mt-4"><td colspan="2">' + orderDetailProduct.product.name + ' </td><tr class="mt-0"><td>Unit price: ' + orderDetailProduct.unit_price + " </td><td> Quantity: " + orderDetailProduct.quantity + "</td><tr></table>"
     }
     if(formularioProveedores.valid && this.validacionFormulario()){
       Swal.fire({
-        title: "Está a punto de generar una nueva orden. ¿Desea continuar?",
+        title: "You are about to generate a new order. Do you want to continue?",
         icon: "info",
         html: `
-        <p>Total: ${this.order.total}</p>
-        <ul>
-          ${productsString}
-        </ul>
+        <div class="w-80">
+          <h5>Total: $${this.order.total}</h5>
+          
+            ${productsString}
+          
+        </div>
       `,
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Generar orden",
-        cancelButtonText: "Cancelar"
+        confirmButtonText: "Generate new order",
+        cancelButtonText: "Cancel"
         
       }).then((result) => {
         if (result.isConfirmed) {
@@ -160,7 +166,7 @@ export class FormOrdersComponent implements OnInit{
       });
     } else {
       Swal.fire({
-        text: "Hay campos incompletos o erróneos. Por favor, revise el formulario",
+        text: "There are incomplete or incorrect fields. Please review the form.",
         icon: "warning"
       });  
     }
@@ -195,10 +201,10 @@ export class FormOrdersComponent implements OnInit{
   confirmarNuevaOrden(){
     this.orderFormService.saveOrder(this.order, this.orderDetails).subscribe((response)=>{
       console.log(response);
+      this.clearData()
+      this.router.navigate(["ordenes"])
+      Swal.fire("Orden creada exitosamente");
     })
-    this.clearData()
-    this.router.navigate(["ordenes"])
-    Swal.fire("Orden creada exitosamente");
   }
 
   clearData(){

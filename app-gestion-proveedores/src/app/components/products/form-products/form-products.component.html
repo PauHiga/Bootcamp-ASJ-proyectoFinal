@@ -19,7 +19,7 @@
           <div class="col-sm-8">
             <div class="form-group">
               <label for="nombreProducto">Product name</label>
-              <input type="text" class="form-control form-control-sm" id="nombreProducto" name="nombreProducto" [(ngModel)]="productsService.product.name" #nombreProducto="ngModel" required>
+              <input type="text" class="form-control form-control-sm" id="nombreProducto" name="nombreProducto" [(ngModel)]="productsService.product.name" #nombreProducto="ngModel" maxlength="100" required>
               <div *ngIf="nombreProducto.errors?.['required']" class="col-auto">
                 <span class="form-text text-danger">
                     This field is required
@@ -30,7 +30,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="SKUProducto">SKU</label>
-              <input type="text" (keyup)="skuIsUnique($event)" class="form-control form-control-sm" id="SKUProducto" name="SKUProducto" [(ngModel)]="productsService.product.sku" #SKUProducto="ngModel" required>
+              <input type="text" (keyup)="skuIsUnique($event)" class="form-control form-control-sm" id="SKUProducto" name="SKUProducto" [(ngModel)]="productsService.product.sku" #SKUProducto="ngModel" maxlength="50" required>
               <div *ngIf="SKUProducto.errors?.['required']" class="col-auto">
                 <span class="form-text text-danger">
                     This field is required
@@ -78,7 +78,7 @@
         <div class="row">
           <div class="form-group">
             <label for="descripcion">Description</label>
-            <textarea class="form-control form-control-sm" id="descripcion" name="descripcion" [(ngModel)]="productsService.product.description"></textarea>
+            <textarea class="form-control form-control-sm" id="descripcion" name="descripcion" [(ngModel)]="productsService.product.description" maxlength="2000"></textarea>
           </div>
         </div>
     

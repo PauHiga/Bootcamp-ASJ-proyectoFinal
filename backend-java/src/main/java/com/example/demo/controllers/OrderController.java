@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -49,6 +50,8 @@ public class OrderController {
 		try {
 			Order createdOrder = orderService.createOrders(orderCreateDTOList).get(0);
 			return ResponseEntity.ok(createdOrder);
+		} catch (DataIntegrityViolationException e) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error creating order: Duplicate order number");
 		}
 		catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating order: " + e.getMessage());			

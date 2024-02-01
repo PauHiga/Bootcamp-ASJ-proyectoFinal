@@ -69,7 +69,6 @@ export class FormSuppliersComponent implements OnInit{
   ngOnInit(): void {
     this.getCountries()
     this.getSectors();
-    // this.getProveedores();
     this.getvat_condition();
     if(this.parametroURL) {
       this.tituloFormulario = "Editar Proveedor";
@@ -80,12 +79,11 @@ export class FormSuppliersComponent implements OnInit{
     }
   }
 
-  getProveedores(){
-    this.supplierService.getSuppliers().subscribe((response)=>{
-      console.log(response);
-      this.suppliersList = response;
-    })
-  }
+  // getProveedores(){
+  //   this.supplierService.getSuppliers().subscribe((response)=>{
+  //     this.suppliersList = response;
+  //   })
+  // }
 
   getSectors(){
     this.sectorService.getSectors().subscribe((response)=>{
@@ -102,7 +100,6 @@ export class FormSuppliersComponent implements OnInit{
   getASupplier(id : number){
     this.supplierService.getASupplier(id).subscribe(
       (response) =>{
-        console.log(response);
         this.supplier = response;
         this.filterState();
         this.supplier.deleted = false;
@@ -123,11 +120,9 @@ export class FormSuppliersComponent implements OnInit{
 
   onClickForm(formularioProveedores:NgForm){
     this.validarFormulario();
-    console.log(formularioProveedores.valid)
     if(formularioProveedores.valid && this.validarFormulario()){
       if(this.parametroURL){
         this.supplierService.editSupplier(this.supplier, this.parametroURL).subscribe((response)=>{
-          console.log(response)
           this.clearSupplierData()
           Swal.fire("Los datos del proveedor fueron cargados exitosamente");
           this.router.navigate(["proveedores"])
@@ -135,7 +130,6 @@ export class FormSuppliersComponent implements OnInit{
         })
       } else {
         this.supplierService.saveSupplier(this.supplier).subscribe((response)=> {
-          console.log(response)
           this.clearSupplierData()
           Swal.fire("Los datos del proveedor fueron cargados exitosamente");
           this.router.navigate(["proveedores"])

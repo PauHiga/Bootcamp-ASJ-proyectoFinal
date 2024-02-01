@@ -14,6 +14,7 @@
       <div class="my-3 d-flex">
         <label for="supplier">Status</label>
         <select (change)="onSelect($event)" class="form-select form-select-sm" id="supplier" name="supplier" [(ngModel)]="searchByStatus" #Supplier="ngModel" required>
+          <option value="Display all">Display all</option>
           <option *ngFor="let status of statusList" value="{{status.name}}">{{status.name}}</option>
         </select>
       </div>   

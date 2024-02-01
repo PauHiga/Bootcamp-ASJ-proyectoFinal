@@ -38,6 +38,7 @@ public class OrderService {
 	}
 	
     public List<Order> createOrders(List<OrderCreateDTO> orderCreateDTOList) {
+    	batchOrderList.clear();
         List<Order> createdOrders = new ArrayList<>();
 
         for (OrderCreateDTO orderCreateDTO : orderCreateDTOList) {
@@ -83,17 +84,11 @@ public class OrderService {
 	    } else {
 	    	status = optionalStatus.get();
 	    }
-
-
-	    
+  
 		Boolean deleted = false;
 		
 		Order newOrder = new Order(order_number, issue_date, delivery_date, details, total, createdAt, updatedAt, supplier, status, deleted);
-		
-//		orderRepository.save(newOrder);
-		
         batchOrderList.add(newOrder);
-
 		return newOrder;
 	}
 

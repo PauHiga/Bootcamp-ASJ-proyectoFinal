@@ -65,7 +65,9 @@ public class ProductService {
 	}
 	
     public Product updateSupplier(Integer id, ProductUpdateDTO productUpdateDTO) {
-        Optional<Product> existingProduct = productRepository.findById(id);
+    	System.out.println(id);
+    	System.out.println(productUpdateDTO.getId());
+    	Optional<Product> existingProduct = productRepository.findById(id);
         	if(existingProduct.isEmpty()) {
         		throw new RuntimeException("Product not found with ID: " + id);
         	} 

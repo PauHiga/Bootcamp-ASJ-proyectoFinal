@@ -41,6 +41,7 @@ public class OrderDetailService {
 	}
 	
     public List<OrderDetail> createOrderDetails(List<OrderDetailDTO> orderDetailDTOList) {
+    	batchOrderDetailList.clear();
         List<OrderDetail> createdOrderdetails = new ArrayList<>();
 
         for (OrderDetailDTO orderDetailDTO : orderDetailDTOList) {
