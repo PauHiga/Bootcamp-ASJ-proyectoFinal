@@ -31,7 +31,7 @@ public class CategoryController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Category> getSectorById(@PathVariable Integer id){
+	public ResponseEntity<Category> getCategoryById(@PathVariable Integer id){
 		Optional<Category> optionalCategory = categoryService.getCategoryById(id);
 		if (optionalCategory.isPresent()) {
 			return ResponseEntity.ok(optionalCategory.get());
@@ -41,7 +41,7 @@ public class CategoryController {
 	}
 	
 	@PostMapping()
-	public ResponseEntity<Object> createSector(@RequestBody CategoryDTO categoryDTO){
+	public ResponseEntity<Object> createCategory(@RequestBody CategoryDTO categoryDTO){
 		try {
 			return ResponseEntity.ok(categoryService.createCategory(categoryDTO));
 		}
@@ -51,9 +51,9 @@ public class CategoryController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> editSector(@PathVariable Integer id, @RequestBody CategoryDTO categoryDTO){
+	public ResponseEntity<Object> updateCategory(@PathVariable Integer id, @RequestBody CategoryDTO categoryDTO){
 		try {
-			return ResponseEntity.ok(categoryService.editCategory(id, categoryDTO));
+			return ResponseEntity.ok(categoryService.updateCategory(id, categoryDTO));
 		}
 		catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error editing sector: " + e.getMessage());			

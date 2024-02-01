@@ -62,7 +62,7 @@ export class FormProductsComponent implements OnInit{
 
   getCategories(){
     this.categoryService.getCategories().subscribe((response)=>{
-      this.categories = response.filter((item: any)=> item.deleted == 0);
+      this.categories = response.filter((item: any)=> item.deleted == false);
     })
   }
 
@@ -149,45 +149,97 @@ export class FormProductsComponent implements OnInit{
     }).then((result) => {
       const exists = this.categories.some(item => item.name === result.value);
       if (result.isConfirmed && !exists) {
-        this.categoryService.saveCategory(result.value).subscribe((result)=> console.log(result))
-        Swal.fire({
-          text: `The Category "${result.value}" has been saved`,
-        });
-        this.getCategories();
+        this.categoryService.saveCategory(result.value).subscribe((result)=> {
+          Swal.fire({
+            text: `The Category "${result.name}" has been saved`,
+          });
+          this.productsService.product.category.name = result.name;
+          this.getCategories();})
+
       }
     });
   }
 
-    //Delete a category
-    deleteCategoryModal(){
-      const options = Object.fromEntries(this.categories.map(item => [item.id, item.name]))
-      Swal.fire({
-        title: "Delete Category",
-        text: "Select a category to delete",
-        input: "select",
-        inputOptions: options,
-        inputPlaceholder: "Select a category",
-        showCancelButton: true,
-        confirmButtonText: "Delete category",
-        allowOutsideClick: () => !Swal.isLoading(),
-        inputValidator: (value): any => {
-          if (value == '') {
-            return "You need to choose something!";
+  //Edit or delete a category
+  EditCategoryModal(){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        denyButton: "btn btn-danger",
+        cancelButton: "btn btn-secondary",
+      },
+      buttonsStyling: true
+    });
+    
+    const options = Object.fromEntries(this.categories.map(item => [item.id, item.name]))
+    swalWithBootstrapButtons.fire({
+      title: "Edit or Delete Category",
+      text: "Select a category to delete",
+      input: "select",
+      inputOptions: options,
+      inputPlaceholder: "Select a category to edit or delete",
+      showDenyButton: true,
+      returnInputValueOnDeny: true,
+      showCancelButton: true,
+      confirmButtonText: "Edit category",
+      denyButtonText: "Delete category",
+      allowOutsideClick: () => !Swal.isLoading(),
+      inputValidator: (value): any => {
+        if (value == '') {
+          return "You need to choose something!";
+        }
+      }
+    }).then((result) => {
+      const chosenOption = this.categories.find(item => item.id == result.value).name
+      const chosenOptionId = result.value
+      if (result.isConfirmed) {
+        swalWithBootstrapButtons.fire({
+          title: "Edit category name",
+          text: "Write a new name for the category: " + chosenOption,
+          showCancelButton: true,
+          confirmButtonText: "Accept new name",
+          input: "text",
+          inputAttributes: {
+            autocapitalize: "off"
+          },
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.categoryService.changeCategoryName(chosenOptionId, result.value).subscribe((result)=> 
+            {
+              console.log(result);
+              Swal.fire({
+                title: "Category edited",
+                text: "The category has been edited",
+                icon: "success"
+              });
+              this.getCategories();
+            })
           }
-        }
-      }).then((result) => {
-        if (result.isConfirmed && result.value != '') {
-          const chosenOption = this.categories.find(item => item.id == result.value).name
-          this.categoryService.logicalDeleteCategory(result.value).subscribe((result)=> console.log(result))
-          Swal.fire({
-            text: `Category "${chosenOption}" has been deleted`,
-          });
+        });
+      }
+      else if (result.isDenied) {
 
-          //No alcanza con llamar de nuevo a las categorías para refrescar. Se ve que se tarda mucho en actualizar todo. Voy a hacer el cambio en el front en paralelo.
-          this.categories = this.categories.filter(item => item.id !=result.value)
-        }
-      });
-    }
-
+        swalWithBootstrapButtons.fire({
+          title: `Are you sure you want to delete "${chosenOption}"?`,
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#d63043",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.categoryService.logicalDeleteCategory(chosenOptionId).subscribe((result)=> 
+            {
+              Swal.fire({
+                text: `Category "${result.name}" has been deleted`,
+              });
+              this.getCategories();
+            })
+          }
+        })
+      };
+    })
+  }
 }
+
 

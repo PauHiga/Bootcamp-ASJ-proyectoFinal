@@ -9,10 +9,10 @@ export class CategoryService {
 
   constructor(private http:HttpClient) { }
 
-  URL_API_CATEGORY = 'http://localhost:8080/categories'
+  URL_API = 'http://localhost:8080/categories'
 
   getCategories() : Observable<any>{
-    return this.http.get<any>(this.URL_API_CATEGORY);
+    return this.http.get<any>(this.URL_API);
   }
 
   saveCategory(categoryToSave : any) : Observable<any>{
@@ -20,16 +20,14 @@ export class CategoryService {
       name: categoryToSave,
       deleted: 0
     }
-    return this.http.post<any>(this.URL_API_CATEGORY, category);
+    return this.http.post<any>(this.URL_API, category);
   }
 
-  logicalDeleteCategory(id: string) : Observable<any> {
-    return this.http.get<any>(this.URL_API_CATEGORY + "/" + id).pipe(
-      map((category) => {
-        let modifiedCategory = { ...category, deleted: true };
-        return modifiedCategory;
-      }),
-      switchMap((modifiedCategory) => this.http.put <any> (this.URL_API_CATEGORY + "/" + id, modifiedCategory))
-    );
+  logicalDeleteCategory(id: number) : Observable<any> {
+    return this.http.put<any>(this.URL_API + "/" + id, {deleted: true})
+  }
+
+  changeCategoryName(id: number, newName : string) : Observable<any> {
+    return this.http.put<any>(this.URL_API + "/" + id, {name: newName})
   }
 }

@@ -32,16 +32,44 @@ public class CategoryService {
 			return categoryRepository.save(newCategory);
 	}
 	
-	public Category editCategory(Integer id, CategoryDTO categoryDTO) {
-		Category category = categoryRepository.findById(id).get();
-		if (category != null) {
-			category.setUpdatedAt(LocalDate.now());
-			category.setDeleted(categoryDTO.getDeleted());
-			category.setName(categoryDTO.getName());
-			categoryRepository.save(category);
-			return category;
-		}
-		return category;
-	}
+//	public Category editCategory(Integer id, CategoryDTO categoryDTO) {
+//		Category category = categoryRepository.findById(id).get();
+//		System.out.println("getDeleted: " + categoryDTO.getDeleted());
+//		if (category != null) {
+//			category.setUpdatedAt(LocalDate.now());
+//			if(categoryDTO.getDeleted() != null) {
+//				category.setDeleted(categoryDTO.getDeleted());				
+//			}
+//			if(category.getName() != null) {
+//				category.setName(categoryDTO.getName());				
+//			}
+//			categoryRepository.save(category);
+//			return category;
+//		}
+//		return category;
+//	}
+	
+	public Category updateCategory(Integer id, CategoryDTO categoryDTO) {
+	    Optional<Category> existingCategory = categoryRepository.findById(id);
+	    if(existingCategory.isEmpty()) {
+	    	throw new RuntimeException("Category not found with ID: " + id);
+	    };
+	    
+	    Category updatedCategory = existingCategory.get();
+    	updatedCategory.setUpdatedAt(LocalDate.now());
+
+        if (categoryDTO.getDeleted() != null) {
+        	updatedCategory.setDeleted(categoryDTO.getDeleted());
+        }
+
+        if (categoryDTO.getName() != null) {
+        	updatedCategory.setName(categoryDTO.getName());
+        }
+
+        categoryRepository.save(updatedCategory);
+        return updatedCategory;
+    }
 }
+
+
 
