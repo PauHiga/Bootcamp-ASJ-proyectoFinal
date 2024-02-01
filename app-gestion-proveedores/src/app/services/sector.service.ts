@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, switchMap } from 'rxjs';
+import { Observable, catchError, map, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,26 +18,30 @@ export class SectorService {
   saveSector(sectorToSave : any) : Observable<any>{
     const sector = {
       name: sectorToSave,
-      deleted: 0
+      deleted: false
     }
-    return this.http.post<any>(this.URL_API, sector);
+    return this.http.post<any>(this.URL_API, sector).pipe(
+      catchError((error: any) => {
+        throw error; 
+      })
+    );
   }
 
   logicalDeleteSector(id: number) : Observable<any> {
-    return this.http.put<any>(this.URL_API + "/" + id, {deleted: true})
+    return this.http.put<any>(this.URL_API + "/" + id, {deleted: true}).pipe(
+      catchError((error: any) => {
+        throw error; 
+      })
+    );
   }
 
   changeSectorName(id: number, newName : string) : Observable<any> {
-    return this.http.put<any>(this.URL_API + "/" + id, {name: newName})
+    return this.http.put<any>(this.URL_API + "/" + id, {name: newName}).pipe(
+      catchError((error: any) => {
+        throw error; 
+      })
+    );
   }
 
-  // logicalDeleteSector(id: string) : Observable<any> {
-  //   return this.http.get<any>(this.URL_API + "/" + id).pipe(
-  //     map((sector) => {
-  //       let modifiedSector = { ...sector, deleted: true };
-  //       return modifiedSector;
-  //     }),
-  //     switchMap((modifiedSector) => this.http.put <any> (this.URL_API + "/" + id, modifiedSector))
-  //   );
-  // }
+
 }

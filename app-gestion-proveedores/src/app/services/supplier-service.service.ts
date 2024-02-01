@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, switchMap } from 'rxjs';
+import { Observable, catchError, map, switchMap } from 'rxjs';
 import { Supplier } from '../models/supplier';
 
 @Injectable({
@@ -18,14 +18,14 @@ export class SupplierServiceService {
     return this.http.get<Supplier[]>(this.URL_API)
   }
 
-  getSuppliers2() : Observable<Supplier[]>{
-    return this.http.get<Supplier[]>(this.URL_API).pipe(
-      map((supplier)=>{
-        const filteredSupplier = supplier.filter((item : Supplier)=> item.deleted == false)
-        return filteredSupplier;
-      })
-    );
-  }
+  // getSuppliers2() : Observable<Supplier[]>{
+  //   return this.http.get<Supplier[]>(this.URL_API).pipe(
+  //     map((supplier)=>{
+  //       const filteredSupplier = supplier.filter((item : Supplier)=> item.deleted == false)
+  //       return filteredSupplier;
+  //     })
+  //   );
+  // }
 
   getASupplier(id:number) : Observable<Supplier>{
     return this.http.get<any>(this.URL_API + "/" + id).pipe(
@@ -48,17 +48,27 @@ export class SupplierServiceService {
     }
     
   saveSupplier(supplierToSave : Supplier) : Observable<Supplier>{  
-    return this.http.post<Supplier>(this.URL_API, supplierToSave);
+    return this.http.post<Supplier>(this.URL_API, supplierToSave).pipe(
+      catchError((error: any) => {
+        throw error; 
+      })
+    );
   }
 
   editSupplier(supplierToEdit : Supplier, id: string){
-    console.log("supplierToEdit");
-    console.log(supplierToEdit);
-    return this.http.put(this.URL_API + "/" + id, supplierToEdit);
+    return this.http.put(this.URL_API + "/" + id, supplierToEdit).pipe(
+      catchError((error: any) => {
+        throw error; 
+      })
+    );
   }
 
   logicalDeleteSupplier(id: number) : Observable<Supplier> {
-    return this.http.put<Supplier>(this.URL_API + "/" + id, {deleted: true})
+    return this.http.put<Supplier>(this.URL_API + "/" + id, {deleted: true}).pipe(
+      catchError((error: any) => {
+        throw error; 
+      })
+    );
   }
 
   getvat_condition() : Observable<any>{
