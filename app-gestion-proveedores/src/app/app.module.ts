@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,7 +29,6 @@ import { OrderByCountryPipe } from './pipes/order-by-country.pipe';
     AppComponent,
     HeaderComponent,
     MainComponent,
-    ListSuppliersComponent,
     FormSuppliersComponent,
     FormProductsComponent,
     ListProductsComponent,
@@ -42,13 +42,15 @@ import { OrderByCountryPipe } from './pipes/order-by-country.pipe';
     FilterOrdersPipe,
     OrderByPipe,
     OrderByCountryPipe,
+    ListSuppliersComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

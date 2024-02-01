@@ -39,9 +39,9 @@
           <td>{{product.category.name}}</td>
           <td>{{product.supplier.business_name}}</td>
           <td>{{product.price}}</td>
-          <td (click)="editProduct(product.id)"><img src="/assets/icons/pencil-square.svg" alt="editar producto" width="25" height="25"></td>
-          <td *ngIf="!showDeleted" (click)="deleteProduct(product.id, product.name)"><img src="/assets/icons/trash.svg" alt="borrar producto" width="25" height="25"></td>
-          <td (click)="getAProduct(product.id)" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del producto" width="25" height="25"></td>
+          <td class="pointer" (click)="editProduct(product.id)"><img src="/assets/icons/pencil-square.svg" alt="editar producto" width="25" height="25"></td>
+          <td class="pointer" *ngIf="!showDeleted" (click)="deleteProduct(product.id, product.name)"><img src="/assets/icons/trash.svg" alt="borrar producto" width="25" height="25"></td>
+          <td class="pointer" (click)="getAProduct(product.id)" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del producto" width="25" height="25"></td>
         </tr>
       </tbody>
     </table>

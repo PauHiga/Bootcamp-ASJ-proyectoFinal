@@ -7,7 +7,6 @@
     </ol>
   </nav>
   <h1>{{title}}</h1>
-  
   <div class="container" *ngIf="(showDeleted || suppliers.length>0)">
     <div class="d-flex justify-content-between">
       <button class="btn btn-primary my-2" routerLink="supplier-form/">Create a Supplier</button>
@@ -23,8 +22,7 @@
           <th scope="col-2"></th>
           <th (click)="setSortByCode('code')" scope="col-2">Code <span class="material-icons vertical-align">arrow_drop_down</span></th>
           <th (click)="setSortByCode('business_name')" scope="col-2">Business name <span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th (click)="setSortByCountry()" scope="col-2">Country <span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th scope="col-2">Contact</th>
+          <th (click)="setSortByCountry()" scope="col-2">Location<span class="material-icons vertical-align">arrow_drop_down</span></th>
           <th scope="col-2">Representative</th>
           <th colspan="3" scope="col" class="text-center">Options</th>
         </tr>
@@ -33,19 +31,14 @@
         <tr *ngFor="let supplier of suppliers | filterDeleted: showDeleted | filterSuppliers: search | orderByCountry: sortByCountryDesc | orderBy: sortBy : sortByDesc">
           <td><div class="imgContainer"><img src="{{supplier.url_logo}}" alt="{{supplier.business_name}}" height=80 (error)="imageError($event)"></div></td>
           <th scope="row">{{supplier.code}}</th>
-          <td>{{supplier.business_name}}</td>
-          <td>{{supplier.address.locality.province.country.name}} - {{supplier.address.locality.province.name}}</td>
-          <td>
-            <ul>
-              <li>E-mail: {{supplier.email}}</li>
-              <li>Phone: {{supplier.phone}}</li>
-              <li *ngIf="supplier.web">Web: {{supplier.web}}</li>
-            </ul>  
-          </td>
-          <td>{{supplier.contact?.last_name}}, {{supplier.contact?.first_name}}</td>
-          <td (click)="editSupplier(supplier.id)"><img src="/assets/icons/pencil-square.svg" alt="editar proveedor" width="25" height="25"></td>
-          <td *ngIf="!showDeleted" (click)="logicalDeleteSupplier(supplier.id)"><img src="/assets/icons/trash.svg" alt="borrar proveedor" width="25" height="25"></td>
-          <td (click)="getASupplier(supplier.id)" data-bs-toggle="modal" data-bs-target="#detalleProductoModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del proveedor" width="25" height="25"></td>
+          <ng-template #ContactMethods ><b>{{supplier.business_name}}</b><br>Phone: {{supplier.phone}}<br>E-mail: {{supplier.email}}<br><span *ngIf="supplier.web">Web: {{supplier.web}}</span></ng-template>
+          <td>{{supplier.business_name}} <span class="material-icons-outlined vertical-align h-25 pointer" placement="top" [ngbTooltip]="ContactMethods" html=true triggers="click" [autoClose]="'outside'">info</span></td>
+          <td> {{supplier.address.locality.province.name}}, {{supplier.address.locality.province.country.name}}</td>
+          <ng-template #ContactRepresentative ><b>{{supplier.contact?.last_name}}, {{supplier.contact?.first_name}}, </b><br>Phone: {{supplier.contact?.phone}}<br>E-mail: {{supplier.contact?.email}}</ng-template>
+          <td>{{supplier.contact?.last_name}}, {{supplier.contact?.first_name}} <span class="material-icons-outlined vertical-align h-25 pointer" placement="top" [ngbTooltip]="ContactRepresentative" html=true triggers="click" [autoClose]="'outside'">info</span></td>
+          <td class="pointer" (click)="editSupplier(supplier.id)"><img src="/assets/icons/pencil-square.svg" alt="editar proveedor" width="25" height="25"></td>
+          <td class="pointer" *ngIf="!showDeleted" (click)="logicalDeleteSupplier(supplier.id)"><img src="/assets/icons/trash.svg" alt="borrar proveedor" width="25" height="25"></td>
+          <td class="pointer" (click)="getASupplier(supplier.id)" data-bs-toggle="modal" data-bs-target="#detalleProductoModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del proveedor" width="25" height="25"></td>
         </tr>
       </tbody>
     </table>
