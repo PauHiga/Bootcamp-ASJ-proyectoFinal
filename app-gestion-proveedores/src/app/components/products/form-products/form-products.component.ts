@@ -80,25 +80,43 @@ export class FormProductsComponent implements OnInit{
     )
   }
 
+  //Create product clicked
   onClickForm(formularioProveedores:NgForm){
     if(formularioProveedores.valid && !this.skuRepetido){
       if(this.parametroURL){
         this.productsService.editProduct(this.parametroURL).subscribe((response)=> {
           this.productsService.clearProductData()
           this.router.navigate(["products"])
-          Swal.fire("Los datos del producto fueron cargados exitosamente");
+          Swal.fire("The product data was edited successfully");
+        },
+        (error)=>{
+          console.log(error);
+          Swal.fire({
+            title: "Product not edited",
+            text: "There was an error! The product data could not be edited",
+            icon: "error"
+          })
         })
       } else {
         this.productsService.saveProduct().subscribe((response)=> {
           this.productsService.clearProductData()
           this.router.navigate(["products"])
-          Swal.fire("Los datos del producto fueron cargados exitosamente");
-        })
+          Swal.fire("The product data was saved successfully");
+        },
+        (error)=>{
+          console.log(error);
+          Swal.fire({
+            title: "Product not saved",
+            text: "There was an error! The product could not be saved",
+            icon: "error"
+          })
+        }
+        )
       }
 
     } else {
       Swal.fire({
-        text: "Hay campos incompletos o erróneos. Por favor, revise el formulario",
+        text: "There are incomplete or incorrect fields. Please check the form.",
         icon: "warning"
       });    }
   }
@@ -152,8 +170,16 @@ export class FormProductsComponent implements OnInit{
             text: `The Category "${result.name}" has been saved`,
           });
           this.productsService.product.category.name = result.name;
-          this.getCategories();})
-
+          this.getCategories();
+        },
+        (error)=>{
+          console.log(error);
+          Swal.fire({
+            title: "Category not created",
+            text: "There was an error! The category could not be created",
+            icon: "error"
+          })
+        })
       }
     });
   }
@@ -211,7 +237,15 @@ export class FormProductsComponent implements OnInit{
                 icon: "success"
               });
               this.getCategories();
-            })
+            },
+            (error)=>{
+              console.log(error);
+              Swal.fire({
+                title: "Category not edited",
+                text: "There was an error! The category could not be edited",
+                icon: "error"
+              })
+          })
           }
         });
       }
@@ -231,7 +265,15 @@ export class FormProductsComponent implements OnInit{
                 text: `Category "${result.name}" has been deleted`,
               });
               this.getCategories();
-            })
+            },
+            (error)=>{
+              console.log(error);
+              Swal.fire({
+                title: "Category not deleted",
+                text: "There was an error! The category could not be deleted",
+                icon: "error"
+              })
+          })
           }
         })
       };

@@ -126,7 +126,7 @@ export class FormSuppliersComponent implements OnInit{
       if(this.parametroURL){
         this.supplierService.editSupplier(this.supplier, this.parametroURL).subscribe((response)=>{
           this.clearSupplierData()
-          Swal.fire("Los datos del proveedor fueron cargados exitosamente");
+          Swal.fire("The supplier's data was successfully loaded.");
           this.router.navigate(["suppliers"])
         },
         (error)=>{
@@ -140,7 +140,23 @@ export class FormSuppliersComponent implements OnInit{
       } else {
         this.supplierService.saveSupplier(this.supplier).subscribe((response)=> {
           this.clearSupplierData()
-          Swal.fire("Los datos del proveedor fueron cargados exitosamente");
+          Swal.fire({
+            text: "The supplier's data was successfully loaded",
+            icon: "success",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Create a product",
+            cancelButtonText: "Return to suppliers list"
+          }).then((result) => {
+            console.log(result);
+            if (result.isConfirmed) {
+              this.router.navigate(["products/product-form"])
+            } else{
+              this.router.navigate(["suppliers"])
+            }
+          });
+
           this.router.navigate(["suppliers"])
         },
         (error)=>{
@@ -154,7 +170,7 @@ export class FormSuppliersComponent implements OnInit{
       )}
     } else{
       Swal.fire({
-        text: "Hay campos incompletos o erróneos. Por favor, revise el formulario",
+        text: "There are incomplete or incorrect fields. Please check the form.",
         icon: "warning"
       });
     }
