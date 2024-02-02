@@ -105,6 +105,13 @@ export class ProductsServiceService implements OnInit {
 
   getSuppliersList(): Observable<any> {
     return this.suppliersService.getSuppliers();
-    }  
+  }  
 
+  getProductsCount(deleted? : boolean): Observable<number> {
+    return this.http.get<number>(this.URL_API + "/" + `count${deleted !== undefined? `?deleted=${deleted}` : ''}`)
+  }  
+
+  getSuppliersCount(deleted? : boolean){
+    return this.suppliersService.getSuppliersCount(deleted);
+  }
 }

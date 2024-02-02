@@ -44,8 +44,8 @@
     </table>
   </div>
 
-  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="(!showDeleted && suppliers.length<=0)">
-    <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="(!showDeleted && suppliers.length<=0)">
+  <div class="container d-flex flex-column justify-content-center align-items-center" *ngIf="!showDeleted">
+    <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="(activeSuppliers<=0)">
       <p>There are no registered active suppliers</p>
       <p>Start <b class="pointer" routerLink="supplier-form">creating a new supplier</b></p>
       <button class="btn btn-primary" routerLink="supplier-form">Create a supplier</button>
@@ -56,7 +56,7 @@
   <!-- Modal -->
   <div class="modal fade" id="detalleProductoModal" tabindex="-1" role="dialog" aria-labelledby="detalleProductoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
+      <div [ngClass]="showDeleted ? 'modal-content bg-secondary text-light' : 'modal-content'">
         <div class="modal-header">
           <h5 class="modal-title w-100 text-center" id="detalleProductoModalLabel">{{selectedSupplier?.business_name}}</h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -65,6 +65,10 @@
         </div>
         <div class="modal-body">
           <div class="container">
+            <div *ngIf="selectedSupplier?.deleted" class="d-flex justify-content-center">
+              <h5>SUPPLIER INACTIVE</h5>
+              
+            </div>
             <div class="d-flex justify-content-center ">
               <div *ngIf="selectedSupplier?.url_logo != ''" class="w-50">
                 <div class="imgContainerModal">
@@ -217,7 +221,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" (click)="editSupplier(selectedSupplier?.id)" class="btn btn-primary" data-bs-dismiss="modal">Edit</button>
+          <button type="button" (click)="editSupplier(selectedSupplier?.id)" [ngClass]="showDeleted ? 'btn btn-secondary' : 'btn btn-primary'" data-bs-dismiss="modal">Edit</button>
           <button type="button" *ngIf="showDeleted" (click)="logicalActivateSupplier(selectedSupplier?.id)" class="btn btn-primary" data-bs-dismiss="modal">Activate supplier</button>
         </div>
       </div>

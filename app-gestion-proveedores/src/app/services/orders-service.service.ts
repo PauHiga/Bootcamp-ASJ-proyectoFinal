@@ -25,10 +25,6 @@ export class OrdersServiceService {
     return this.suppliersService.getSuppliers();
   }
 
-  getProductsAmount(): Observable<number>{
-    return this.productService.getProducts().pipe(map(products => products.length))
-  }
-
   getStatus() : Observable<any>{
     return this.http.get(this.URL_API_STATUS);
   }
@@ -42,14 +38,22 @@ export class OrdersServiceService {
     return this.http.get<OrderDetailDisplay[]>(this.URL_API_ORDER_DETAILS + "/order/" + id);
   }
 
-  getSuppliersAmount(): Observable<number>{
-    return this.suppliersService.getSuppliers().pipe(map(suppliers => suppliers.filter((supplier : Supplier)=> supplier.deleted == false).length
-    ))
-  }
-
   markAsCanceled(id : number){
     return this.http.put(this.URL_API + "/" + id, {deleted: true});
   }
+
+  getOrdersCount(deleted? : boolean): Observable<number> {
+    return this.http.get<number>(this.URL_API + "/" + `count${deleted !== undefined? `?deleted=${deleted}` : ''}`)
+  }  
+
+  getSuppliersCount(deleted? : boolean){
+    return this.suppliersService.getSuppliersCount(deleted);
+  }
+
+  getProductsCount(deleted? : boolean){
+    return this.productService.getProductsCount(deleted);
+  }
+
 }
 
 

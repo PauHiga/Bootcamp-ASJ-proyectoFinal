@@ -14,7 +14,14 @@ export class ListSuppliersComponent implements OnInit{
 
   constructor(public supplierService: SupplierServiceService, private router:Router){}
 
+  ngOnInit(): void {
+    this.getSuppliers();
+    this.getActiveSuppliers();
+  }
+
   suppliers : Supplier[] = []
+  activeSuppliers : number = 0
+
   selectedSupplier : Supplier | undefined = undefined
 
   showDeleted : boolean = false;
@@ -49,9 +56,7 @@ export class ListSuppliersComponent implements OnInit{
     }
   }
 
-  ngOnInit(): void {
-    this.getSuppliers();
-  }
+
 
   getSuppliers(){
     this.supplierService.getSuppliers().subscribe( (response) => {
@@ -59,6 +64,13 @@ export class ListSuppliersComponent implements OnInit{
     })
     this.showDeleted = false;
   } 
+
+  getActiveSuppliers(){
+    this.supplierService.getSuppliersCount(false).subscribe((response)=>{
+      console.log(response);
+      this.activeSuppliers = response;
+    })
+  };
 
   logicalDeleteSupplier(id:number){
     let supplier : Supplier | undefined | number = this.suppliers.find(item => item.id == id)
@@ -75,6 +87,7 @@ export class ListSuppliersComponent implements OnInit{
         this.supplierService.logicalDeleteSupplier(id).subscribe((response)=>{
           console.log(response)
           this.getSuppliers()
+          this.getActiveSuppliers();
         },
         (error)=>{
           console.log(error);
@@ -102,6 +115,7 @@ export class ListSuppliersComponent implements OnInit{
             console.log(response)
             this.getSuppliers()
             this.showDeleted = true;
+            this.getActiveSuppliers();
           },
           (error)=>{
             console.log(error);

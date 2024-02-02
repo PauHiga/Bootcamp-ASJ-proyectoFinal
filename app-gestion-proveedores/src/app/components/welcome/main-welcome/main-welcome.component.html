@@ -15,8 +15,20 @@
                         </div>
                         <div class="col-sm-8 col-md-9 col-lg-10">
                             <h5>Suppliers</h5>
-                            <a routerLink="suppliers" class="btn btn-primary m-1">Show suppliers</a>
-                            <a routerLink="suppliers/supplier-form" class="btn btn-primary m-1">Create a new supplier</a>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p>Total Suppliers = {{suppliersTotal}}</p>
+                                </div>
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-3">
+                                    <p>Active Suppliers = {{suppliersActive}}</p>
+                                </div>
+                                <div class="col-sm-3">
+                                    <p>Inactive Suppliers = {{suppliersInactive}}</p>
+                                </div>
+                            </div>
+                            <button routerLink="suppliers" class="btn btn-primary m-1">Show suppliers</button>
+                            <button routerLink="suppliers/supplier-form" class="btn btn-primary m-1">Create a new supplier</button>
                         </div>
                     </div>
                 </div>
@@ -27,8 +39,27 @@
                         </div>
                         <div class="col-sm-8 col-md-9 col-lg-10">
                             <h5>Products</h5>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p>Total Products = {{productsTotal}}</p>
+                                </div>
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-3">
+                                    <p>Active Products = {{productsActive}}</p>
+                                </div>
+                                <div class="col-sm-3">
+                                    <p>Inactive Products = {{productsInactive}}</p>
+                                </div>
+                            </div>
                             <a routerLink="products" class="btn btn-primary m-1">Show products</a>
-                            <a routerLink="products/product-form" class="btn btn-primary m-1">Create a new product</a>
+                            <ng-template #TooltipCreateProductsDisabled>To create a new product, you need at least one active Supplier!</ng-template>        
+                            <a [ngClass]="{'disabled-link': suppliersActive<=0}" 
+                            [routerLink]="suppliersActive<=0 ? null : ['products/product-form']" 
+                            class="btn btn-primary m-1" 
+                            placement="top" 
+                            html=true 
+                            [ngbTooltip]="suppliersActive<=0 ? TooltipCreateProductsDisabled : null"
+                            >Create a new product</a>             
                         </div>
                     </div>
                 </div>
@@ -39,13 +70,30 @@
                         </div>
                         <div class="col-sm-8 col-md-9 col-lg-10">
                             <h5>Orders</h5>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p>Total Orders = {{ordersTotal}}</p>
+                                </div>
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-3">
+                                    <p>Active Orders = {{ordersActive}}</p>
+                                </div>
+                                <div class="col-sm-3">
+                                    <p>Inactive Orders = {{ordersInactive}}</p>
+                                </div>
+                            </div>
                             <a routerLink="orders" class="btn btn-primary m-1">Show orders</a>
-                            <a routerLink="orders/order-form" class="btn btn-primary m-1">Create a new order</a>
+                            <ng-template #TooltipCreateOrderDisabled>To create a new order, you need at least one active Supplier with one active Product!</ng-template>        
+                            <a [ngClass]="{'disabled-link': suppliersActive<=0 || productsActive<=0}" 
+                            [routerLink]="suppliersActive<=0 || productsActive<=0 ? null : ['orders/order-form']" 
+                            class="btn btn-primary m-1" 
+                            placement="top" 
+                            html=true 
+                            [ngbTooltip]="suppliersActive<=0 || productsActive<=0 ? TooltipCreateOrderDisabled : null"
+                            >Create a new order</a>      
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>

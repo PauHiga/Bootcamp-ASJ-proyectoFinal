@@ -46,6 +46,18 @@ public class SupplierService {
 		return supplierRepository.findById(id);
 	}
 	
+	public long count() {
+		return supplierRepository.count();
+	}
+	
+	public long countByDeletedTrue() {
+		return supplierRepository.countByDeletedTrue();
+	}
+	
+	public long countByDeletedFalse() {
+		return supplierRepository.countByDeletedFalse();
+	}
+	
 	public SupplierDTO returnSupplier(SupplierDTO supplierDTO) {
 		return supplierDTO;
 	}

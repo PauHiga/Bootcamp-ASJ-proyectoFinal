@@ -5,5 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.models.Order;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
-
+	int countByDeletedFalse();
+	int countByDeletedTrue();
+	long count();
 }

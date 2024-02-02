@@ -37,6 +37,18 @@ public class OrderService {
 		return orderRepository.findById(id);
 	}
 	
+	public long count() {
+		return orderRepository.count();
+	}
+	
+	public long countByDeletedTrue() {
+		return orderRepository.countByDeletedTrue();
+	}
+	
+	public long countByDeletedFalse() {
+		return orderRepository.countByDeletedFalse();
+	}
+	
     public List<Order> createOrders(List<OrderCreateDTO> orderCreateDTOList) {
     	batchOrderList.clear();
         List<Order> createdOrders = new ArrayList<>();

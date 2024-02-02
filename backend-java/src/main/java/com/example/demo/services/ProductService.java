@@ -34,6 +34,18 @@ public class ProductService {
 		return productRepository.findById(id);
 	}
 	
+	public long count() {
+		return productRepository.count();
+	}
+	
+	public long countByDeletedTrue() {
+		return productRepository.countByDeletedTrue();
+	}
+	
+	public long countByDeletedFalse() {
+		return productRepository.countByDeletedFalse();
+	}
+	
 	public Product createProduct(ProductDTO productDTO) {
 		String SKU = productDTO.getSku();
 		String name = productDTO.getName();

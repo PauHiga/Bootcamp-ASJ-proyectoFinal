@@ -11,7 +11,6 @@ export class SupplierServiceService {
   constructor(private http:HttpClient) { }
 
   URL_API = 'http://localhost:8080/suppliers'
-  URL_API_SECTOR = 'http://localhost:8080/sectors'
   URL_API_VAT = 'http://localhost:8080/vat-conditions'
 
   getSuppliers() : Observable<Supplier[]>{
@@ -73,4 +72,8 @@ export class SupplierServiceService {
   getvat_condition() : Observable<any>{
     return this.http.get<any>(this.URL_API_VAT);
   }
+
+  getSuppliersCount(deleted? : boolean): Observable<number> {
+    return this.http.get<number>(this.URL_API + "/" + `count${deleted !== undefined? `?deleted=${deleted}` : ''}`)
+  }  
 }

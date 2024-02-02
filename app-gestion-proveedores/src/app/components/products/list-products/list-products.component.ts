@@ -19,8 +19,11 @@ export class ListProductsComponent implements OnInit{
   products : ProductDisplay[]= [];
   suppliersList : Supplier[] = [];
 
+  activeProducts : number = 0
+  activeSuppliers : number = 0
+
   showDeleted = false
-  showDeletedButtonMessage = "Show deleted products"
+  showDeletedButtonMessage = "Show inactive products"
   title : String = "Products"
 
   toggleShowDeleted(){
@@ -46,6 +49,8 @@ export class ListProductsComponent implements OnInit{
   ngOnInit(): void {
     this.getSuppliers();
     this.getProducts();
+    this.getActiveProducts();
+    this.getActiveSuppliers();
   }
 
   getProducts(){
@@ -63,6 +68,18 @@ export class ListProductsComponent implements OnInit{
     })
   }
 
+  getActiveProducts(){
+    this.productsService.getProductsCount(false).subscribe((response)=>{
+      this.activeProducts = response;
+    })
+  }
+
+  getActiveSuppliers(){
+    this.productsService.getSuppliersCount(false).subscribe((response)=>{
+      this.activeSuppliers = response;
+    })
+  }
+
   deleteProduct(id:number, nombreProducto : string){
     Swal.fire({
       text: `¿Eliminate product "${nombreProducto}"?`,
@@ -77,6 +94,7 @@ export class ListProductsComponent implements OnInit{
         this.productsService.deleteProduct(id).subscribe(
           (response) => {
             this.getProducts();
+            this.getActiveProducts();
           },
           (error)=>{
             console.log(error);
@@ -104,6 +122,7 @@ export class ListProductsComponent implements OnInit{
         this.productsService.activateProduct(id).subscribe(
           (response) => {
             this.getProducts();
+            this.getActiveProducts();
           },
           (error)=>{
             console.log(error);

@@ -20,9 +20,9 @@ export class ListOrdersComponent implements OnInit{
   currentOrder : OrderDisplay | null = null;
   statusList : {id: number, name: string}[] = []
 
-  ordersAvailable = 0;
-  productsAvailable = 0;
-  suppliersAvailable = 0;
+  ordersActive : number = 0;
+  productsActive :  number = 0;
+  suppliersActive : number = 0;
   
   ngForIndex = 0
   showDeleted = false
@@ -45,8 +45,9 @@ export class ListOrdersComponent implements OnInit{
   
   ngOnInit(): void {
     this.getData();
-    this.getAvailableProducts();
-    this.getAvailableSuppliers();
+    this.getActiveOrders();
+    this.getActiveProducts();
+    this.getActiveSuppliers();
     this.getStatus();
   }
 
@@ -72,15 +73,21 @@ export class ListOrdersComponent implements OnInit{
     })
   }
 
-  getAvailableProducts(){
-    this.ordersService.getProductsAmount().subscribe((response)=>{
-      this.productsAvailable = response;
+  getActiveOrders(){
+    this.ordersService.getOrdersCount(false).subscribe((response)=>{
+      this.ordersActive = response;
     })
   }
 
-  getAvailableSuppliers(){
-    this.ordersService.getSuppliersAmount().subscribe((response)=>{
-      this.suppliersAvailable = response;
+  getActiveProducts(){
+    this.ordersService.getProductsCount(false).subscribe((response)=>{
+      this.productsActive = response;
+    })
+  }
+
+  getActiveSuppliers(){
+    this.ordersService.getSuppliersCount(false).subscribe((response)=>{
+      this.suppliersActive = response;
     })
   }
 
@@ -99,6 +106,7 @@ export class ListOrdersComponent implements OnInit{
         if (result.isConfirmed) {
           this.ordersService.markAsCanceled(id).subscribe((response)=>{
             this.getData();
+            this.getActiveOrders();
           },
           (error)=>{
             console.log(error);

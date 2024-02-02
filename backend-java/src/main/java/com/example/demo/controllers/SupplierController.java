@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.SupplierDTO;
@@ -42,6 +43,20 @@ public class SupplierController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+	
+    @GetMapping("/count")
+    public ResponseEntity<Long> countEntities(
+    	@RequestParam(name = "deleted", required = false) Boolean deleted) {
+        long count;
+        if (deleted != null && deleted) {
+            count = supplierService.countByDeletedTrue();
+        } else if (deleted != null && !deleted) {
+            count = supplierService.countByDeletedFalse();
+        } else {
+            count = supplierService.count();
+        }
+        return ResponseEntity.ok(count);
+    }
 	
 	@PostMapping()
 	public ResponseEntity<Object> createSupplier(@RequestBody SupplierDTO supplierDTO){

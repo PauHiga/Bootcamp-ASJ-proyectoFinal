@@ -11,4 +11,7 @@ import com.example.demo.models.Sector;
 public interface SectorRepository extends JpaRepository<Sector, Integer> {
     @Query("SELECT s FROM Sector s WHERE s.name = :name AND s.deleted = false")
     Optional<Sector> findActiveSectorByName(@Param("name") String name);
+	int countByDeletedFalse();
+	int countByDeletedTrue();
+	long count();
 }

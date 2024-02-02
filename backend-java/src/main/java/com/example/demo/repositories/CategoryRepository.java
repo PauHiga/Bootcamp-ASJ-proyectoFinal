@@ -11,5 +11,8 @@ import com.example.demo.models.Category;
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
     @Query("SELECT c FROM Category c WHERE c.name = :name AND c.deleted = false")
     Optional<Category> findActiveCategoryByName(@Param("name") String name);
+	int countByDeletedFalse();
+	int countByDeletedTrue();
+	long count();
 
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.OrderCreateDTO;
@@ -43,6 +44,20 @@ public class OrderController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+	
+    @GetMapping("/count")
+    public ResponseEntity<Long> countEntities(
+    	@RequestParam(name = "deleted", required = false, defaultValue = "false") Boolean deleted) {
+        long count;
+        if (deleted != null && deleted) {
+            count = orderService.countByDeletedTrue();
+        } else if (deleted != null && !deleted) {
+            count = orderService.countByDeletedFalse();
+        } else {
+            count = orderService.count();
+        }
+        return ResponseEntity.ok(count);
+    }
 	
 	@PostMapping()
 	public ResponseEntity<Object> createOrder(@RequestBody OrderCreateDTO orderCreateDTO){

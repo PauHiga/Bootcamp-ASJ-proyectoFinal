@@ -46,16 +46,17 @@
     </table>
   </div>
     
-  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="(!showDeleted && products.length<=0)">
-    <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="suppliersList.length>0">
-    <p>There are no registered active products</p>
-    <p>Start <b class="pointer" routerLink="product-form">creating a new Product</b></p>
-    <button class="btn btn-primary" routerLink="product-form">Create a product</button>
+  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="!showDeleted">
+    <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="activeSuppliers>0">
+      <p>There are no registered active products</p>
+      <p>Start <b class="pointer" routerLink="product-form">creating a new Product</b></p>
+      <button class="btn btn-primary" routerLink="product-form">Create a product</button>
     </div>
-    <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="suppliersList.length<=0">
-    <p>There are no registered active suppliers</p>
-    <p>Start <b class="pointer" routerLink="/suppliers/supplier-form/">creating a new supplier</b></p>
-      <button class="btn btn-primary" routerLink="/suppliers/supplier-form/">Create a supplier</button>
+
+    <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="activeSuppliers<=0">
+      <p>There are no registered active suppliers</p>
+      <p>Start <b class="pointer" routerLink="/suppliers/supplier-form/">creating a new supplier</b></p>
+        <button class="btn btn-primary" routerLink="/suppliers/supplier-form/">Create a supplier</button>
     </div>
   </div>
   
@@ -64,7 +65,7 @@
   <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    <div [ngClass]="productsService.product.deleted ? 'modal-content bg-secondary text-light' : 'modal-content'">
+    <div [ngClass]="showDeleted ? 'modal-content bg-secondary text-light' : 'modal-content'">
       <div class="modal-header">
         <h5 class="modal-title w-100 text-center" id="exampleModalLabel">{{productsService.product.name}}</h5>
         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
