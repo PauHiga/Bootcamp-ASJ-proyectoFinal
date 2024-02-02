@@ -136,6 +136,36 @@ export class ListProductsComponent implements OnInit{
     });
   }
 
+  activateSupplier(id:number, supplierName : string){
+    Swal.fire({
+      title: "Activate supplier",
+      html: `<p>Do you want to activate the supplier "${supplierName}"?</p> This will affect all of "${supplierName}"'s products`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Activate this supplier",
+      cancelButtonText: "Do not activate this supplier"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productsService.activateSupplier(id).subscribe(
+          (response) => {
+            this.getProducts();
+            this.getActiveProducts();
+            this.getActiveSuppliers()
+          },
+          (error)=>{
+            console.log(error);
+            Swal.fire({
+              title: "Supplier not activated",
+              text: "There was an error! The supplier could not be activated",
+              icon: "error"
+            })
+        })
+      }
+    });
+  }
+
   editProduct(id:number){
     const selectedProduct = this.products.find(item => item.id == id)
     if(!selectedProduct){

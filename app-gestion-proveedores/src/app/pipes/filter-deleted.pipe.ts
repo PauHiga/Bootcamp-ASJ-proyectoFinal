@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { OrderDisplay } from '../models/orderDisplay';
 
 @Pipe({
   name: 'filterDeleted'

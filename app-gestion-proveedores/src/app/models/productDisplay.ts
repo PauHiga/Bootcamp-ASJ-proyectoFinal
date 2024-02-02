@@ -7,6 +7,7 @@ export interface ProductDisplay {
     url_image: string,
     supplier: {
         business_name: string,
+        deleted: boolean,
         id: number
     },
     category: {

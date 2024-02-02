@@ -25,6 +25,7 @@ export class ProductsServiceService implements OnInit {
     url_image: '',
     supplier: {
         business_name: '',
+        deleted: false,
         id: 0
     },
     category: {
@@ -84,6 +85,10 @@ export class ProductsServiceService implements OnInit {
     return this.http.put(this.URL_API + "/" + id, {deleted: false})
   }
 
+  activateSupplier(id:number){
+    return this.suppliersService.logicalActivateSupplier(id)
+  }
+
   clearProductData(){
     this.product = {
       id : 0, 
@@ -94,6 +99,7 @@ export class ProductsServiceService implements OnInit {
       url_image: '',
       supplier: {
           business_name: '',
+          deleted: false,
           id: 0
       },
       category: {

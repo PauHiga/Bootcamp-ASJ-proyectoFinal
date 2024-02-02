@@ -75,13 +75,14 @@ export class ListSuppliersComponent implements OnInit{
   logicalDeleteSupplier(id:number){
     let supplier : Supplier | undefined | number = this.suppliers.find(item => item.id == id)
     Swal.fire({
-      text: `¿Eliminate supplier "${supplier?.business_name}"?`,
+      title: "Eliminate Supplier",
+      html: `<p>Are you sure you want to eliminate supplier "${supplier?.business_name}"?</p> This will mark all of "${supplier?.business_name}"'s products as "inactive"`,
       icon: "warning",
       showCancelButton: true,
       cancelButtonColor: "#3085d6",
       confirmButtonColor: "#d33",
-      confirmButtonText: "Elimninate this supplier",
-      cancelButtonText: "Do not eliminate this supplier"
+      confirmButtonText: "Yes, eliminate this supplier",
+      cancelButtonText: "No, do not eliminate this supplier"
     }).then((result) => {
       if (result.isConfirmed) {
         this.supplierService.logicalDeleteSupplier(id).subscribe((response)=>{

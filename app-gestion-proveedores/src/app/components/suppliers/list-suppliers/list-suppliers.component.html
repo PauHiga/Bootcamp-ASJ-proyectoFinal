@@ -16,20 +16,20 @@
       </div>
       <button [ngClass]="showDeleted? 'btn btn-primary my-2' : 'btn btn-outline-secondary my-2'" (click)="toggleShowDeleted()">{{showDeletedButtonMessage}}</button>
     </div>
-    <table class="table table-striped ">
+    <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col-2"></th>
-          <th (click)="setSortByCode('code')" scope="col-2">Code <span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th (click)="setSortByCode('business_name')" scope="col-2">Business name <span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th (click)="setSortByCountry()" scope="col-2">Location<span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th scope="col-2">Representative</th>
-          <th colspan="3" scope="col" class="text-center">Options</th>
+          <th class="col-2"></th>
+          <th class="col-1"(click)="setSortByCode('code')" scope="col-2">Code <span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <th class="col-2"(click)="setSortByCode('business_name')" scope="col-2">Business name <span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <th class="col-2"(click)="setSortByCountry()" scope="col-2">Location<span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <th class="col-2"scope="col-2">Representative</th>
+          <th class="col-3 text-center"colspan="3">Options</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let supplier of suppliers | filterDeleted: showDeleted | filterSuppliers: search | orderByCountry: sortByCountryDesc | orderBy: sortBy : sortByDesc">
-          <td><div class="imgContainer"><img src="{{supplier.url_logo}}" alt="{{supplier.business_name}}" height=80 (error)="imageError($event)"></div></td>
+          <td><div class="imgContainer" (click)="getASupplier(supplier.id)" data-bs-toggle="modal" data-bs-target="#detalleProductoModal"><img src="{{supplier.url_logo}}" alt="{{supplier.business_name}}" height=80 (error)="imageError($event)"></div></td>
           <th scope="row">{{supplier.code}}</th>
           <ng-template #ContactMethods ><b>{{supplier.business_name}}</b><br>Phone: {{supplier.phone}}<br>E-mail: {{supplier.email}}<br><span *ngIf="supplier.web">Web: <a href="{{supplier.web}}" target=”_blank”>{{supplier.web}}</a></span></ng-template>
           <td>{{supplier.business_name}} <span class="material-icons-outlined vertical-align h-25 pointer" placement="top" [ngbTooltip]="ContactMethods" html=true triggers="click" [autoClose]="'outside'">info</span></td>
@@ -70,7 +70,7 @@
               
             </div>
             <div class="d-flex justify-content-center ">
-              <div *ngIf="selectedSupplier?.url_logo != ''" class="w-50">
+              <div *ngIf="selectedSupplier?.url_logo != ''" class="w-25">
                 <div class="imgContainerModal">
                   <img src="{{selectedSupplier?.url_logo}}" alt="{{selectedSupplier?.url_logo}}">
                 </div>

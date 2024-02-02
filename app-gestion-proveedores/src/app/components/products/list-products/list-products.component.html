@@ -31,12 +31,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let product of products | filterDeleted: showDeleted | filterProducts: search | orderBy: sortBy : sortByDesc">
-          <td><div class="imgContainer"><img src="{{product.url_image}}" alt="{{product.name}}" height=80 (error)="imageError($event)"></div></td>
+        <tr *ngFor="let product of products | filterProductsInactive: showDeleted | filterProducts: search | orderBy: sortBy : sortByDesc">
+          <td><div class="imgContainer" (click)="getAProduct(product.id)" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="{{product.url_image}}" alt="{{product.name}}" height=80 (error)="imageError($event)"></div></td>
           <td>{{product.sku}}</td>
           <td>{{product.name}}</td>
           <td>{{product.category.name}}</td>
-          <td>{{product.supplier.business_name}}</td>
+          <td>{{product.supplier.business_name}} <span *ngIf="product.supplier.deleted">(Supplier inactive)</span></td>
           <td>{{product.price}}</td>
           <td class="pointer" (click)="editProduct(product.id)"><img src="/assets/icons/pencil-square.svg" alt="editar producto" width="25" height="25"></td>
           <td class="pointer" *ngIf="!showDeleted" (click)="deleteProduct(product.id, product.name)"><img src="/assets/icons/trash.svg" alt="borrar producto" width="25" height="25"></td>
@@ -47,7 +47,7 @@
   </div>
     
   <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="!showDeleted">
-    <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="activeSuppliers>0">
+    <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="activeSuppliers>0 && activeProducts==0">
       <p>There are no registered active products</p>
       <p>Start <b class="pointer" routerLink="product-form">creating a new Product</b></p>
       <button class="btn btn-primary" routerLink="product-form">Create a product</button>
@@ -77,14 +77,16 @@
           <div *ngIf="productsService.product.deleted == true" class="d-flex justify-content-center">
             <h5>PRODUCT INACTIVE</h5>
           </div>
-          <div class="row">
-            <div class="col-sm-5">
-              <div class="imgContainerModal">
-                <img src="{{productsService.product.url_image}}" alt="{{productsService.product.name}}">
-              </div>
+          <div *ngIf="productsService.product.supplier.deleted == true" class="d-flex justify-content-center">
+            <h5>This product's supplier has been discontinued</h5>
+          </div>
+          <div class="row d-flex justify-content-center ">
+            <div class="imgContainerModal d-flex justify-content-center">
+              <img src="{{productsService.product.url_image}}" alt="{{productsService.product.name}}">
             </div>
-            <div class="col-sm-7">
-              <table class="w-75">
+            <hr>
+            <div class="row d-flex justify-content-center table-responsive">
+              <table class="w-75 table">
                 <tr>
                   <td>
                     Product ID:
@@ -98,7 +100,14 @@
                     Supplier:
                   </td>
                   <td>
-                    {{productsService.product.supplier.business_name}}
+                    {{productsService.product.supplier.business_name}} 
+                  </td>
+                </tr>
+                <tr *ngIf="productsService.product.supplier.deleted == true">
+                  <td>
+                  </td>
+                  <td>
+                    <p>This supplier has been discontinued</p>
                   </td>
                 </tr>
                 <tr>
@@ -127,7 +136,7 @@
                 </tr>
               </table>
             </div>
-            <div class="row mt-4">
+            <div class="row mt-4 w-75">
               <p class="my-0"> Description:</p>
               <p class="my-0">{{productsService.product.description}}</p>
             </div>
@@ -136,8 +145,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" (click)="editProduct(productsService.product.id)" [ngClass]="productsService.product.deleted ? 'btn btn-secondary' : 'btn btn-primary'" data-bs-dismiss="modal">Editar</button>
+        <button type="button" *ngIf="productsService.product.supplier.deleted == false" (click)="editProduct(productsService.product.id)" [ngClass]="productsService.product.deleted ? 'btn btn-secondary' : 'btn btn-primary'" data-bs-dismiss="modal">Editar</button>
         <button type="button" *ngIf="productsService.product.deleted == true" (click)="activateProduct(productsService.product.id, productsService.product.name)" class="btn btn-primary" data-bs-dismiss="modal">Activate product</button>
+        <button type="button" *ngIf="productsService.product.supplier.deleted == true" (click)="activateSupplier(productsService.product.id, productsService.product.supplier.business_name)" class="btn btn-primary" data-bs-dismiss="modal">Activate supplier "{{productsService.product.supplier.business_name}}"</button>
       </div>
     </div>
   </div>

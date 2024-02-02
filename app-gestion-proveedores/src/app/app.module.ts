@@ -23,6 +23,7 @@ import { FilterProductsPipe } from './pipes/filter-products.pipe';
 import { FilterOrdersPipe } from './pipes/filter-orders.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { OrderByCountryPipe } from './pipes/order-by-country.pipe';
+import { FilterProductsInactivePipe } from './pipes/filter-products-inactive.pipe';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { OrderByCountryPipe } from './pipes/order-by-country.pipe';
     FilterOrdersPipe,
     OrderByPipe,
     OrderByCountryPipe,
-    ListSuppliersComponent
+    ListSuppliersComponent,
+    FilterProductsInactivePipe
   ],
   imports: [
     BrowserModule,
