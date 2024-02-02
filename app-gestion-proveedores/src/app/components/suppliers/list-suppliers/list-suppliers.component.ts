@@ -67,7 +67,6 @@ export class ListSuppliersComponent implements OnInit{
 
   getActiveSuppliers(){
     this.supplierService.getSuppliersCount(false).subscribe((response)=>{
-      console.log(response);
       this.activeSuppliers = response;
     })
   };

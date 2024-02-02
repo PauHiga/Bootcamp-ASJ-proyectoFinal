@@ -26,7 +26,6 @@ export class MainWelcomeComponent implements OnInit{
 
   getCounts(){
     this.welcomeService.getSuppliersCount().subscribe((response)=>{
-      console.log(response);
       this.suppliersTotal = response
     })
     this.welcomeService.getSuppliersCount(false).subscribe((response)=>{

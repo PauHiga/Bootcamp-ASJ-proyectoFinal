@@ -7,31 +7,34 @@ import { FormProductsComponent } from './components/products/form-products/form-
 import { ListOrdersComponent } from './components/orders/list-orders/list-orders.component';
 import { FormOrdersComponent } from './components/orders/form-orders/form-orders.component';
 import { MainWelcomeComponent } from './components/welcome/main-welcome/main-welcome.component';
+import { LoginComponent } from './auth/login/login.component';
+import { authGuard } from './auth/auth.guard';
 
 
 const routes: Routes = [
-  {path: "", component:MainWelcomeComponent},
-  {path: 'suppliers', children:[
+  {path: "", component:MainWelcomeComponent, canActivate: [authGuard]},
+  {path: 'suppliers', canActivate: [authGuard], children:[
     {path: '', component:ListSuppliersComponent},
-    {path: 'supplier-form', children:[
+    {path: 'supplier-form', canActivate: [authGuard], children:[
       {path:'', component:FormSuppliersComponent},
       {path:':edit', component:FormSuppliersComponent}
     ]}
   ]},
-  {path: 'products', children:[
+  {path: 'products', canActivate: [authGuard], children:[
     {path: '', component:ListProductsComponent},
     {path: 'product-form', children:[
       {path:'', component:FormProductsComponent},
       {path:':edit', component:FormProductsComponent}
     ]}
   ]},
-  {path: 'orders', children:[
+  {path: 'orders', canActivate: [authGuard],  children:[
     {path: '', component:ListOrdersComponent},
     {path: 'order-form', children:[
       {path:'', component:FormOrdersComponent},
       {path:':edit', component:FormOrdersComponent}
     ]}
-  ]}
+  ]},
+  {path: 'login', component:LoginComponent}
 ];
 
 @NgModule({
