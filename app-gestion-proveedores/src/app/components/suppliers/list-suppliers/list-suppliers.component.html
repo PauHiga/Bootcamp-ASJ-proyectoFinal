@@ -28,9 +28,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let supplier of suppliers | filterDeleted: showDeleted | filterSuppliers: search | orderByCountry: sortByCountryDesc | orderBy: sortBy : sortByDesc">
+        <tr *ngFor="let supplier of suppliers | filterDeleted: showDeleted | filterSuppliers: search | orderByCountry: sortByCountryDesc | orderBy: sortBy : sortByDesc" [ngClass]="showDeleted?'canceled':''">
           <td><div class="imgContainer" (click)="getASupplier(supplier.id)" data-bs-toggle="modal" data-bs-target="#detalleProductoModal"><img src="{{supplier.url_logo}}" alt="{{supplier.business_name}}" height=80 (error)="imageError($event)"></div></td>
-          <th scope="row">{{supplier.code}}</th>
+          <td>{{supplier.code}}</td>
           <ng-template #ContactMethods ><b>{{supplier.business_name}}</b><br>Phone: {{supplier.phone}}<br>E-mail: {{supplier.email}}<br><span *ngIf="supplier.web">Web: <a href="{{supplier.web}}" target=”_blank”>{{supplier.web}}</a></span></ng-template>
           <td>{{supplier.business_name}} <span class="material-icons-outlined vertical-align h-25 pointer" placement="top" [ngbTooltip]="ContactMethods" html=true triggers="click" [autoClose]="'outside'">info</span></td>
           <td> {{supplier.address.locality.province.name}}, {{supplier.address.locality.province.country.name}}</td>
