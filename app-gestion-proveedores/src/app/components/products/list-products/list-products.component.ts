@@ -77,8 +77,15 @@ export class ListProductsComponent implements OnInit{
         this.productsService.deleteProduct(id).subscribe(
           (response) => {
             this.getProducts();
-          }
-        )
+          },
+          (error)=>{
+            console.log(error);
+            Swal.fire({
+              title: "Product not eliminated",
+              text: "There was an error! The product could not be eliminated",
+              icon: "error"
+            })
+        })
       }
     });
   }
@@ -97,8 +104,15 @@ export class ListProductsComponent implements OnInit{
         this.productsService.activateProduct(id).subscribe(
           (response) => {
             this.getProducts();
-          }
-        )
+          },
+          (error)=>{
+            console.log(error);
+            Swal.fire({
+              title: "Product not activated",
+              text: "There was an error! The product could not be activated",
+              icon: "error"
+            })
+        })
       }
     });
   }

@@ -100,6 +100,11 @@
             <div class="form-group">
               <label for="precio">URL image</label>
               <input type="text" maxlength="1500" class="form-control form-control-sm" id="URLImagen" name="URLImagen" [(ngModel)]="productsService.product.url_image" >
+              <div class="d-flex justify-content-center mt-3">
+                <div *ngIf="productsService.product.url_image" class="img-container">
+                  <img src="{{productsService.product.url_image}}" alt="supplier url_logo">
+                </div>
+              </div>
             </div>
           </div>
         </div>

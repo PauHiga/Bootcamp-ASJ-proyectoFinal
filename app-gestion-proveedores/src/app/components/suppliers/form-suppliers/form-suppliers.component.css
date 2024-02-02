@@ -7,3 +7,12 @@
 .cuit3{
     width: 10%;
 }
+
+.img-container{
+    width: 100px;
+    overflow: hidden;
+}
+
+.img-container img{
+    width: 100px;
+}

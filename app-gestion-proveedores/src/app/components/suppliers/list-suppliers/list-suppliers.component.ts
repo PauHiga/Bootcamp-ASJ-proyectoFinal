@@ -63,21 +63,57 @@ export class ListSuppliersComponent implements OnInit{
   logicalDeleteSupplier(id:number){
     let supplier : Supplier | undefined | number = this.suppliers.find(item => item.id == id)
     Swal.fire({
-      text: `¿Eliminar proveedor "${supplier?.business_name}"?`,
+      text: `¿Eliminate supplier "${supplier?.business_name}"?`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Eliminar el proveedor",
-      cancelButtonText: "No eliminar el proveedor"
+      cancelButtonColor: "#3085d6",
+      confirmButtonColor: "#d33",
+      confirmButtonText: "Elimninate this supplier",
+      cancelButtonText: "Do not eliminate this supplier"
     }).then((result) => {
       if (result.isConfirmed) {
         this.supplierService.logicalDeleteSupplier(id).subscribe((response)=>{
           console.log(response)
           this.getSuppliers()
-        })
-      }
-    });
+        },
+        (error)=>{
+          console.log(error);
+          Swal.fire({
+            title: "Supplier not eliminated",
+            text: "There was an error! The supplier could not be eliminated",
+            icon: "info"
+          })
+      })
+    }});
+  }
+
+  logicalActivateSupplier(id?:number){
+    if(id){
+      let supplier : Supplier | undefined | number = this.suppliers.find(item => item.id == id)
+      Swal.fire({
+        text: `Activate supplier "${supplier?.business_name}"?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Activate supplier",
+        cancelButtonText: "Do not activate supplier"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.supplierService.logicalActivateSupplier(id).subscribe((response)=>{
+            console.log(response)
+            this.getSuppliers()
+            this.showDeleted = true;
+          },
+          (error)=>{
+            console.log(error);
+            Swal.fire({
+              title: "Supplier not activated",
+              text: "There was an error! The supplier could not be activated",
+              icon: "info"
+            })
+          })
+        }
+      });
+    }
   }
 
   editSupplier(id:number | undefined){

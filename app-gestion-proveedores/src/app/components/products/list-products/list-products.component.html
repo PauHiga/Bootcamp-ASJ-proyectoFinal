@@ -6,17 +6,16 @@
       <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
     </ol>
   </nav>
-  
   <h1>{{title}}</h1>
 
   <div class="container" *ngIf="(showDeleted || products.length>0)">
     <div class="d-flex justify-content-between">
-      <button class="btn btn-primary my-2" routerLink="product-form">Create a product</button>   
+      <button [ngClass]="showDeleted? 'btn btn-secondary my-2' : 'btn btn-primary my-2'" routerLink="product-form">Create a product</button>   
       <div class="my-3">
         <label for="">Search product</label>
         <input type="text" class="mx-3" name="search" [(ngModel)]="search">
       </div>   
-      <button class="btn btn-outline-secondary my-2" (click)="toggleShowDeleted()">{{showDeletedButtonMessage}}</button>
+      <button [ngClass]="showDeleted? 'btn btn-primary my-2' : 'btn btn-outline-secondary my-2'" (click)="toggleShowDeleted()">{{showDeletedButtonMessage}}</button>
     </div>
 
     <table class="table table-striped ">
@@ -50,11 +49,12 @@
   <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="(!showDeleted && products.length<=0)">
     <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="suppliersList.length>0">
     <p>There are no registered active products</p>
+    <p>Start <b class="pointer" routerLink="product-form">creating a new Product</b></p>
     <button class="btn btn-primary" routerLink="product-form">Create a product</button>
-  </div>
-  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="suppliersList.length<=0">
-      <p>There are no registered active suppliers</p>
-      <p>Start <b>creating a new supplier</b></p>
+    </div>
+    <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="suppliersList.length<=0">
+    <p>There are no registered active suppliers</p>
+    <p>Start <b class="pointer" routerLink="/suppliers/supplier-form/">creating a new supplier</b></p>
       <button class="btn btn-primary" routerLink="/suppliers/supplier-form/">Create a supplier</button>
     </div>
   </div>
@@ -77,13 +77,13 @@
             <h5>PRODUCT INACTIVE</h5>
           </div>
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-5">
               <div class="imgContainerModal">
                 <img src="{{productsService.product.url_image}}" alt="{{productsService.product.name}}">
               </div>
             </div>
-            <div class="col-sm-6">
-              <table>
+            <div class="col-sm-7">
+              <table class="w-75">
                 <tr>
                   <td>
                     Product ID:
@@ -124,15 +124,11 @@
                     {{productsService.product.price}}
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    Description:
-                  </td>
-                  <td>
-                    {{productsService.product.description}}
-                  </td>
-                </tr>
               </table>
+            </div>
+            <div class="row mt-4">
+              <p class="my-0"> Description:</p>
+              <p class="my-0">{{productsService.product.description}}</p>
             </div>
           </div>
         </div>

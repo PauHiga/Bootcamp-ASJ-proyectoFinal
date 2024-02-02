@@ -61,6 +61,11 @@
         <div class="col-md-3">
           <label for="URLlogo" class="form-label">Logo (url):</label>
           <input type="text" maxlength="1500" class="form-control form-control-sm" id="URLlogo" name="URLlogo" [(ngModel)]="supplier.url_logo" maxlength="1500">
+          <div class="d-flex justify-content-center mt-3">
+            <div *ngIf="supplier.url_logo != ''" class="img-container">
+              <img src="{{supplier.url_logo}}" alt="supplier url_logo">
+            </div>
+          </div>
         </div>
       </div>
     

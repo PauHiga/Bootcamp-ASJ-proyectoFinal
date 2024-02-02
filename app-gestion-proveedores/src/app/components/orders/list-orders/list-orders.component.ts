@@ -87,19 +87,27 @@ export class ListOrdersComponent implements OnInit{
   markCanceled(id?:number, numeroOrden?:number){
     if(id){
       Swal.fire({
-        text: `Está por cancelar la orden Nº ${numeroOrden}. ¿Desea continuar?`,
+        title: `The order ${numeroOrden} will be cancelled.`,
+        text:  `This operation cannot be undone ¿Do you wish to continue?`,
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Cancelar orden",
-        cancelButtonText: "No cancelar la orden"
+        cancelButtonColor: "#3085d6",
+        confirmButtonColor: "#d33",
+        confirmButtonText: "Cancel this order",
+        cancelButtonText: "Do not cancel this order"
       }).then((result) => {
         if (result.isConfirmed) {
-          // const orderToCancel = this.orders.find(item=> item.id == id)
           this.ordersService.markAsCanceled(id).subscribe((response)=>{
             this.getData();
-          });
+          },
+          (error)=>{
+            console.log(error);
+            Swal.fire({
+              title: "Order not eliminated",
+              text: "There was an error! The order could not be eliminated",
+              icon: "error"
+            })
+        });
         }
       });
     }
@@ -137,8 +145,21 @@ export class ListOrdersComponent implements OnInit{
         if(result.value != '' && result.value != status){
           this.ordersService.saveNewStatus(orderId, result.value).subscribe((response)=>{
             console.log(response);
+            Swal.fire({
+              title: "Status changed",
+              text: `The status was successfully changed to ${response.status.name}`,
+              icon: "info"
+            })
             this.getData();
-          });
+          },
+          (error)=>{
+            console.log(error);
+            Swal.fire({
+              title: "Status not changed",
+              text: "There was an error! The status could not be changed",
+              icon: "error"
+            })
+        });
         }
       }
     });

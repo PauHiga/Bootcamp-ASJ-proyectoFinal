@@ -18,15 +18,6 @@ export class SupplierServiceService {
     return this.http.get<Supplier[]>(this.URL_API)
   }
 
-  // getSuppliers2() : Observable<Supplier[]>{
-  //   return this.http.get<Supplier[]>(this.URL_API).pipe(
-  //     map((supplier)=>{
-  //       const filteredSupplier = supplier.filter((item : Supplier)=> item.deleted == false)
-  //       return filteredSupplier;
-  //     })
-  //   );
-  // }
-
   getASupplier(id:number) : Observable<Supplier>{
     return this.http.get<any>(this.URL_API + "/" + id).pipe(
       map((supplier)=>{
@@ -65,6 +56,14 @@ export class SupplierServiceService {
 
   logicalDeleteSupplier(id: number) : Observable<Supplier> {
     return this.http.put<Supplier>(this.URL_API + "/" + id, {deleted: true}).pipe(
+      catchError((error: any) => {
+        throw error; 
+      })
+    );
+  }
+
+  logicalActivateSupplier(id: number) : Observable<Supplier> {
+    return this.http.put<Supplier>(this.URL_API + "/" + id, {deleted: false}).pipe(
       catchError((error: any) => {
         throw error; 
       })

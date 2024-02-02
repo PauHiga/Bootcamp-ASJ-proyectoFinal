@@ -9,12 +9,12 @@
   <h1>{{title}}</h1>
   <div class="container" *ngIf="(showDeleted || suppliers.length>0)">
     <div class="d-flex justify-content-between">
-      <button class="btn btn-primary my-2" routerLink="supplier-form/">Create a Supplier</button>
+      <button [ngClass]="showDeleted? 'btn btn-secondary my-2' : 'btn btn-primary my-2'" routerLink="supplier-form/">Create a Supplier</button>
       <div class="my-3">
         <label for="">Search code / business name</label>
         <input type="text" class="mx-3" name="search" [(ngModel)]="search">
       </div>
-      <button class="btn btn-outline-secondary my-2" (click)="toggleShowDeleted()">{{showDeletedButtonMessage}}</button>
+      <button [ngClass]="showDeleted? 'btn btn-primary my-2' : 'btn btn-outline-secondary my-2'" (click)="toggleShowDeleted()">{{showDeletedButtonMessage}}</button>
     </div>
     <table class="table table-striped ">
       <thead>
@@ -31,7 +31,7 @@
         <tr *ngFor="let supplier of suppliers | filterDeleted: showDeleted | filterSuppliers: search | orderByCountry: sortByCountryDesc | orderBy: sortBy : sortByDesc">
           <td><div class="imgContainer"><img src="{{supplier.url_logo}}" alt="{{supplier.business_name}}" height=80 (error)="imageError($event)"></div></td>
           <th scope="row">{{supplier.code}}</th>
-          <ng-template #ContactMethods ><b>{{supplier.business_name}}</b><br>Phone: {{supplier.phone}}<br>E-mail: {{supplier.email}}<br><span *ngIf="supplier.web">Web: {{supplier.web}}</span></ng-template>
+          <ng-template #ContactMethods ><b>{{supplier.business_name}}</b><br>Phone: {{supplier.phone}}<br>E-mail: {{supplier.email}}<br><span *ngIf="supplier.web">Web: <a href="{{supplier.web}}" target=”_blank”>{{supplier.web}}</a></span></ng-template>
           <td>{{supplier.business_name}} <span class="material-icons-outlined vertical-align h-25 pointer" placement="top" [ngbTooltip]="ContactMethods" html=true triggers="click" [autoClose]="'outside'">info</span></td>
           <td> {{supplier.address.locality.province.name}}, {{supplier.address.locality.province.country.name}}</td>
           <ng-template #ContactRepresentative ><b>{{supplier.contact?.last_name}}, {{supplier.contact?.first_name}}, </b><br>Phone: {{supplier.contact?.phone}}<br>E-mail: {{supplier.contact?.email}}</ng-template>
@@ -45,9 +45,11 @@
   </div>
 
   <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="(!showDeleted && suppliers.length<=0)">
-    <p>There are no registered active suppliers</p>
-    <p>Start <b>creating a new supplier</b></p>
-    <button class="btn btn-primary" routerLink="supplier-form">Create a supplier</button>
+    <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="(!showDeleted && suppliers.length<=0)">
+      <p>There are no registered active suppliers</p>
+      <p>Start <b class="pointer" routerLink="supplier-form">creating a new supplier</b></p>
+      <button class="btn btn-primary" routerLink="supplier-form">Create a supplier</button>
+    </div>
   </div>
 </section>
 
@@ -216,6 +218,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="button" (click)="editSupplier(selectedSupplier?.id)" class="btn btn-primary" data-bs-dismiss="modal">Edit</button>
+          <button type="button" *ngIf="showDeleted" (click)="logicalActivateSupplier(selectedSupplier?.id)" class="btn btn-primary" data-bs-dismiss="modal">Activate supplier</button>
         </div>
       </div>
     </div>
