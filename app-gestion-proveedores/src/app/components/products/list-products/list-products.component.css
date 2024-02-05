@@ -4,9 +4,12 @@
 }
 
 .imgContainer{
-    width:100%;
-    aspect-ratio: 2/1;
+    width:70px;
+    height: 70px;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .imgContainer img{

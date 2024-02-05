@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.ProductDTO;
+import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.ProductUpdateDTO;
 import com.example.demo.models.Category;
+import com.example.demo.models.Product;
 import com.example.demo.models.Product;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ProductRepository;
@@ -25,6 +28,8 @@ public class ProductService {
 	
 	@Autowired
 	CategoryRepository categoryRepository;
+	
+	private List<Product> batchProductList = new ArrayList<>();
 	
 	public List<Product> getProducts(){
 		return productRepository.findAll();
@@ -46,7 +51,31 @@ public class ProductService {
 		return productRepository.countByDeletedFalse();
 	}
 	
-	public Product createProduct(ProductDTO productDTO) {
+	
+    public List<Product> createProducts(List<ProductDTO> productDTOList) {
+    	batchProductList.clear();
+        List<Product> createdProducts = new ArrayList<>();
+
+        for (ProductDTO productDTO : productDTOList) {
+            Product createdProduct = createProduct(productDTO);
+            createdProducts.add(createdProduct);
+        }
+
+        saveBatchOrders(batchProductList);
+
+        return createdProducts;
+    }
+	
+    // Add a new method for batch insert
+    private void saveBatchOrders(List<Product> productList) {
+    	productRepository.saveAll(productList);
+        
+        // Clear the list after batch insert
+        batchProductList.clear();
+    }
+	
+	
+	private Product createProduct(ProductDTO productDTO) {
 		String SKU = productDTO.getSku();
 		String name = productDTO.getName();
 		String description = productDTO.getDescription();

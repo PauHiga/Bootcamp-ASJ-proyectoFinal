@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.OrderCreateDTO;
 import com.example.demo.dto.SupplierDTO;
 import com.example.demo.dto.SupplierUpdateDTO;
+import com.example.demo.models.Order;
 import com.example.demo.models.Supplier;
 import com.example.demo.services.SupplierService;
 
@@ -58,16 +61,41 @@ public class SupplierController {
         return ResponseEntity.ok(count);
     }
 	
+//	@PostMapping()
+//	public ResponseEntity<Object> createSupplier(@RequestBody SupplierDTO supplierDTO){
+//		try {
+//			return ResponseEntity.ok(supplierService.createSupplier(supplierDTO));
+//		}
+//		catch(Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating supplier: " + e.getMessage());			
+//		}
+//	}
+
 	@PostMapping()
 	public ResponseEntity<Object> createSupplier(@RequestBody SupplierDTO supplierDTO){
+		List<SupplierDTO> supplierCreateDTOList = List.of(supplierDTO);
 		try {
-			return ResponseEntity.ok(supplierService.createSupplier(supplierDTO));
+			Supplier createdSupplier = supplierService.createSuppliers(supplierCreateDTOList).get(0);
+			return ResponseEntity.ok(createdSupplier);
+		} catch (DataIntegrityViolationException e) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error creating supplier");
 		}
 		catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating supplier: " + e.getMessage());			
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating order: " + e.getMessage());			
 		}
 	}
 
+	@PostMapping("/batch")
+	public ResponseEntity<Object> createOrders(@RequestBody List<SupplierDTO> supplierCreateDTOList) {
+	    try {
+	        return ResponseEntity.ok(supplierService.createSuppliers(supplierCreateDTOList));
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("Error creating suppliers: " + e.getMessage());
+	    }
+	}
+	
+	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateSupplier(@PathVariable Integer id, @RequestBody SupplierUpdateDTO supplierUpdateDTO) {
 	    try {

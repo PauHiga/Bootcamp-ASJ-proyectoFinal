@@ -72,7 +72,6 @@ public class OrderService {
     }
     
 	public Order createOrder(OrderCreateDTO orderCreateDTO) {
-		System.out.println(orderCreateDTO.getOrder_number());
 		Integer order_number = orderCreateDTO.getOrder_number();
 		LocalDate issue_date = LocalDate.parse(orderCreateDTO.getIssue_date());
 		LocalDate delivery_date = LocalDate.parse(orderCreateDTO.getDelivery_date());

@@ -21,13 +21,13 @@
     <table class="table table-striped ">
       <thead>
         <tr>
-          <th scope="col">Image</th>
-          <th (click)="setSortByCode('sku')" scope="col-2">SKU<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
-          <th (click)="setSortByCode('name')" scope="col-2">Product <span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
-          <th (click)="setSortBySubpropertyCode('category', 'name')"scope="col">Category<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
-          <th (click)="setSortBySubpropertyCode('supplier', 'business')" scope="col">Supplier<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
-          <th (click)="setSortByCode('price')" scope="col-2">Price<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
-          <th *ngIf="!showDeleted" colspan="3" scope="col" class="text-center">Options</th>
+          <th class="col-1" scope="col">Image</th>
+          <th class="col-1" (click)="setSortByCode('sku')" scope="col">SKU<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
+          <th class="col-2" (click)="setSortByCode('name')" scope="col">Product <span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
+          <th class="col-2" (click)="setSortBySubpropertyCode('category', 'name')"scope="col">Category<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
+          <th class="col-2" (click)="setSortBySubpropertyCode('supplier', 'business')" scope="col">Supplier<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
+          <th class="col-2" (click)="setSortByCode('price')" scope="col-2">Price<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
+          <th class="col-2" *ngIf="!showDeleted" colspan="3" scope="col" class="text-center">Options</th>
         </tr>
       </thead>
       <tbody>
@@ -81,10 +81,10 @@
             <h5>This product's supplier has been discontinued</h5>
           </div>
           <div class="row d-flex justify-content-center ">
-            <div class="imgContainerModal d-flex justify-content-center">
+            <div *ngIf="productsService.product.url_image != ''" class="imgContainerModal d-flex justify-content-center">
               <img src="{{productsService.product.url_image}}" alt="{{productsService.product.name}}">
             </div>
-            <hr>
+            <hr *ngIf="productsService.product.url_image != ''">
             <div class="row d-flex justify-content-center table-responsive">
               <table class="w-75 table">
                 <tr>

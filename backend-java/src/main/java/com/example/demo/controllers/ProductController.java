@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ProductDTO;
+import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.ProductUpdateDTO;
+import com.example.demo.models.Order;
 import com.example.demo.models.Product;
 import com.example.demo.services.ProductService;
 
@@ -57,15 +60,40 @@ public class ProductController {
         return ResponseEntity.ok(count);
     }
 	
+//	@PostMapping()
+//	public ResponseEntity<Object> createSupplier(@RequestBody ProductDTO productDTO){
+//		try {
+//			return ResponseEntity.ok(productService.createProduct(productDTO));
+//		}
+//		catch(Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating supplier: " + e.getMessage());			
+//		}
+//	}
+	
 	@PostMapping()
-	public ResponseEntity<Object> createSupplier(@RequestBody ProductDTO productDTO){
+	public ResponseEntity<Object> createProduct(@RequestBody ProductDTO ProductDTO){
+		List<ProductDTO> productDTOList = List.of(ProductDTO);
 		try {
-			return ResponseEntity.ok(productService.createProduct(productDTO));
+			Product createdProduct = productService.createProducts(productDTOList).get(0);
+			return ResponseEntity.ok(createdProduct);
+		} catch (DataIntegrityViolationException e) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error creating product");
 		}
 		catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating supplier: " + e.getMessage());			
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating product: " + e.getMessage());			
 		}
 	}
+
+	@PostMapping("/batch")
+	public ResponseEntity<Object> createProducts(@RequestBody List<ProductDTO> productDTOList) {
+	    try {
+	        return ResponseEntity.ok(productService.createProducts(productDTOList));
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("Error creating products: " + e.getMessage());
+	    }
+	}
+	
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateProduct(@PathVariable Integer id, @RequestBody ProductUpdateDTO productUpdateDTO) {

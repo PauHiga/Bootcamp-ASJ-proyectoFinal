@@ -1,15 +1,18 @@
 package com.example.demo.services;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.OrderCreateDTO;
 import com.example.demo.dto.SupplierDTO;
 import com.example.demo.dto.SupplierUpdateDTO;
 import com.example.demo.models.Address;
 import com.example.demo.models.Contact;
+import com.example.demo.models.Order;
 import com.example.demo.models.Sector;
 import com.example.demo.models.Supplier;
 import com.example.demo.models.Vat_condition;
@@ -38,6 +41,8 @@ public class SupplierService {
 	@Autowired
 	ContactService contactService;
 	
+	private List<Supplier> batchSupplierList = new ArrayList<>();
+	
 	public List<Supplier> getSupplieres(){
 		return supplierRepository.findAll();
 	}
@@ -62,6 +67,25 @@ public class SupplierService {
 		return supplierDTO;
 	}
 	
+    public List<Supplier> createSuppliers(List<SupplierDTO> supplierCreateDTOList) {
+    	batchSupplierList.clear();
+        List<Supplier> createdSuppliers = new ArrayList<>();
+        for (SupplierDTO supplierDTO : supplierCreateDTOList) {
+            Supplier createdSupplier = createSupplier(supplierDTO);
+            createdSuppliers.add(createdSupplier);
+        }
+        saveBatchSuppliers(batchSupplierList);
+        return createdSuppliers;
+    }
+	
+    // Add a new method for batch insert
+    public void saveBatchSuppliers(List<Supplier> supplierList) {
+        supplierRepository.saveAll(supplierList);
+        
+        // Clear the list after batch insert
+        batchSupplierList.clear();
+    }
+    
 	public Supplier createSupplier(SupplierDTO supplierDTO) {
 		String code = supplierDTO.getCode();
 		String business_name = supplierDTO.getBusiness_name();
