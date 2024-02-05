@@ -203,7 +203,7 @@ export class FormOrdersComponent implements OnInit{
       console.log(response);
       this.clearData()
       this.router.navigate(["orders"])
-      Swal.fire("Orden creada exitosamente");
+      Swal.fire("Order successfully placed");
     })
   }
 

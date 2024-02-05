@@ -2,17 +2,23 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, delay, map, of, tap } from 'rxjs';
 import { UserLogin } from '../models/userLogin';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private router: Router){
+    if(localStorage.getItem("password") != null){
+      this.isLoggedIn = true;
+      this.username = String(localStorage.getItem("user"))
+    }
+  }
 
   URL_API = 'http://localhost:8080/login'
 
-  isLoggedIn = false;
+  isLoggedIn : boolean = false;
   username = "";
 
   login(userLogin: UserLogin): Observable<any> {
@@ -21,6 +27,9 @@ export class AuthenticationService {
         console.log(response);
         this.isLoggedIn = true;
         this.username = response.username;
+        localStorage.setItem("user", response.username);
+        localStorage.setItem("email", userLogin.email);
+        localStorage.setItem("password", userLogin.password);
         return response;
       }),
       catchError((error) => {
@@ -48,6 +57,9 @@ export class AuthenticationService {
   // }
 
   logout(): void {
+    localStorage.removeItem("user");
+    localStorage.removeItem("email");
+    localStorage.removeItem("password");
     this.isLoggedIn = false;
   }
 }
