@@ -18,7 +18,6 @@ import com.example.demo.dto.CategoryDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.models.Category;
 import com.example.demo.models.User;
-import com.example.demo.services.CategoryService;
 import com.example.demo.services.UserService;
 
 @RestController

@@ -26,6 +26,7 @@ import { OrderByCountryPipe } from './pipes/order-by-country.pipe';
 import { FilterProductsInactivePipe } from './pipes/filter-products-inactive.pipe';
 import { LoginComponent } from './auth/login/login.component';
 import { NotFoundComponent } from './components/shared/not-found/not-found.component';
+import { OrderBySubpropertyPipe } from './pipes/order-by-subproperty.pipe';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { NotFoundComponent } from './components/shared/not-found/not-found.compo
     ListSuppliersComponent,
     FilterProductsInactivePipe,
     LoginComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    OrderBySubpropertyPipe
   ],
   imports: [
     BrowserModule,

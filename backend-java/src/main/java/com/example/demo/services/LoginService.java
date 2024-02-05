@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.UserDTO;
-import com.example.demo.models.LoginResponse;
 import com.example.demo.models.User;
 import com.example.demo.repositories.UserRepository;
 

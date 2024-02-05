@@ -32,6 +32,26 @@ export class ListOrdersComponent implements OnInit{
 
   searchByStatus :  string = ""
 
+  search : string = ""
+  sortByProperty : string = "sku";
+  sortByPropertyActivated : boolean = false;
+  sortBySubproperty : string = "";
+  sortBySubpropertyActivated : boolean = false;
+  sortByDesc : boolean = false;
+
+  setSortByCode(property : string){
+    this.sortByPropertyActivated = true;
+    this.sortByProperty = property;
+    this.sortByDesc = !this.sortByDesc;
+  }
+
+  setSortBySubpropertyCode(property : string, subproperty : string){
+    this.sortBySubpropertyActivated = true;
+    this.sortByProperty = property;
+    this.sortBySubproperty = subproperty;
+    this.sortByDesc = !this.sortByDesc;
+  }
+
   toggleShowDeleted(){
     this.showDeleted = !this.showDeleted
     if (this.showDeleted){

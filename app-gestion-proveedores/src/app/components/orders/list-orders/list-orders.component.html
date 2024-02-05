@@ -25,28 +25,28 @@
     <table class="table table-striped ">
       <thead>
         <tr>
-          <th scope="col-1">Nº Order</th>
-          <th scope="col-2">Issue Date</th>
-          <th scope="col-2">Delivery Date</th>
-          <th scope="col-2">Supplier</th>
-          <th scope="col-2">Total</th>
-          <th class="text-center" scope="col-1">Order Status</th>
+          <th class="col-1"(click)="setSortByCode('order_number')" scope="col-1">Nº Order<span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <th class="col-2"(click)="setSortByCode('issue_date')" scope="col-1">Issue Date<span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <th class="col-2"(click)="setSortByCode('delivery_date')" scope="col-1">Delivery Date<span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <th class="col-2"(click)="setSortBySubpropertyCode('supplier', 'business_name')" scope="col-1">Supplier<span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <th class="col-1"(click)="setSortByCode('total')" scope="col-1">Total<span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <th class="col-2 text-center"(click)="setSortBySubpropertyCode('status', 'name')" scope="col-1">Order Status<span class="material-icons vertical-align">arrow_drop_down</span></th>
           <th *ngIf="!showDeleted" class="text-center" scope="col-1">Cancel</th>
-          <th class="text-center" scope="col-1">Order Details</th>
+          <th class="col-1 text-center" scope="col-2">Order Details</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of orders | filterDeleted: showDeleted | filterOrders: searchByStatus, let i = index" [ngClass]="(order.deleted==true)?'canceled':''" >
+        <tr *ngFor="let order of orders | filterDeleted: showDeleted | filterOrders: searchByStatus | orderBy: sortByProperty : sortByDesc : sortByPropertyActivated | orderBySubproperty: sortByProperty : sortBySubproperty : sortByDesc : sortBySubpropertyActivated, let i = index" [ngClass]="(order.deleted==true)?'canceled':''" >
           <td>{{order.order_number}}</td>
           <td>{{order.issue_date}}</td>
           <td>{{order.delivery_date}}</td>
           <td>{{order.supplier.business_name}}</td>
           <td>{{order.total | currency}}</td>
           <td class="text-center row">
-            <div class="col-8">
+            <div class="col-7">
               <p>{{order.status.name}}</p>
             </div>
-              <div class="col-4" *ngIf="!showDeleted">
+            <div class="col-4" *ngIf="!showDeleted">
               <img class="pointer" (click)="changeStatus(order.id, order.status.name)"src="/assets/icons/pencil-square.svg" alt="change order status" width="25" height="25">
             </div>
           </td>

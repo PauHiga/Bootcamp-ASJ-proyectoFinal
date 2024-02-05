@@ -38,11 +38,22 @@ export class ListProductsComponent implements OnInit{
   }
 
   search : string = ""
-  sortBy : string = "sku";
+  sortByProperty : string = "sku";
+  sortByPropertyActivated : boolean = false;
+  sortBySubproperty : string = "";
+  sortBySubpropertyActivated : boolean = false;
   sortByDesc : boolean = false;
 
-  setSortByCode(sortby : string){
-    this.sortBy = sortby;
+  setSortByCode(property : string){
+    this.sortByPropertyActivated = true;
+    this.sortByProperty = property;
+    this.sortByDesc = !this.sortByDesc;
+  }
+
+  setSortBySubpropertyCode(property : string, subproperty : string){
+    this.sortBySubpropertyActivated = true;
+    this.sortByProperty = property;
+    this.sortBySubproperty = subproperty;
     this.sortByDesc = !this.sortByDesc;
   }
 
@@ -56,6 +67,7 @@ export class ListProductsComponent implements OnInit{
   getProducts(){
     this.productsService.getProducts().subscribe(
       (response)=>{
+        console.log(response);
         this.products = response
         this.sortByProductName(this.products)
       }

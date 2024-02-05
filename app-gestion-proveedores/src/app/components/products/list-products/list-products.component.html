@@ -22,20 +22,20 @@
       <thead>
         <tr>
           <th scope="col">Image</th>
-          <th (click)="setSortByCode('sku')" scope="col-2">SKU<span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th scope="col-2">Product</th>
-          <th scope="col">Category</th>
-          <th scope="col">Supplier</th>
-          <th (click)="setSortByCode('price')" scope="col-2">Price<span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <th (click)="setSortByCode('sku')" scope="col-2">SKU<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
+          <th (click)="setSortByCode('name')" scope="col-2">Product <span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
+          <th (click)="setSortBySubpropertyCode('category', 'name')"scope="col">Category<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
+          <th (click)="setSortBySubpropertyCode('supplier', 'business')" scope="col">Supplier<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
+          <th (click)="setSortByCode('price')" scope="col-2">Price<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
           <th *ngIf="!showDeleted" colspan="3" scope="col" class="text-center">Options</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let product of products | filterProductsInactive: showDeleted | filterProducts: search | orderBy: sortBy : sortByDesc" [ngClass]="showDeleted?'canceled':''">
+        <tr *ngFor="let product of products | filterProductsInactive: showDeleted | filterProducts: search | orderBy: sortByProperty : sortByDesc : sortByPropertyActivated | orderBySubproperty: sortByProperty : sortBySubproperty : sortByDesc : sortBySubpropertyActivated" [ngClass]="showDeleted?'canceled':''">
           <td><div class="imgContainer" (click)="getAProduct(product.id)" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="{{product.url_image}}" alt="{{product.name}}" height=80 (error)="imageError($event)"></div></td>
           <td>{{product.sku}}</td>
           <td>{{product.name}}</td>
-          <td>{{product.category.name}}</td>
+          <td>{{product.category.name}} <span *ngIf="product.category.deleted">(category deactivated)</span></td>
           <td>{{product.supplier.business_name}} <span *ngIf="product.supplier.deleted">(Supplier inactive)</span></td>
           <td>{{product.price}}</td>
           <td class="pointer" (click)="editProduct(product.id)"><img src="/assets/icons/pencil-square.svg" alt="editar producto" width="25" height="25"></td>
