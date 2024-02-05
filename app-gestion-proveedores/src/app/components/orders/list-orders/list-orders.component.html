@@ -94,8 +94,9 @@
             </div>
             <div class="row">
               <h5>Order status: {{currentOrder?.status?.name}}</h5>
+            </div>
             <hr>
-              <h5>Datos generales</h5>
+            <div class="row my-3">
               <div class="col-sm-3">
                 <div class="imgContainerModal">
                   <img src="{{currentOrder?.supplier?.url_logo}}" alt="{{currentOrder?.supplier?.business_name}}">
@@ -105,7 +106,7 @@
                 <table class="table">
                   <tr>
                     <td>
-                      Proveedor:
+                      Supplier:
                     </td>
                     <td>
                       {{currentOrder?.supplier?.business_name}}
@@ -113,7 +114,7 @@
                   </tr>
                   <tr>
                     <td>
-                      Fecha de emisión:
+                      Issue date:
                     </td>
                     <td>
                       {{currentOrder?.issue_date}}
@@ -121,7 +122,7 @@
                   </tr>
                   <tr>
                     <td>
-                      Fecha estimada de entrega:
+                      Delivery date:
                     </td>
                     <td>
                       {{currentOrder?.delivery_date}}
@@ -129,7 +130,7 @@
                   </tr>
                   <tr>
                     <td>
-                      Comentarios sobre entrega:
+                      Delivery details:
                     </td>
                     <td>
                       {{currentOrder?.details}}
@@ -139,36 +140,38 @@
               </div>
             </div>
             <hr>
-            <div class="row">
-              <h5>Productos</h5>
-              <div class="col-sm-3">
-              </div>
-              <div class="col-sm-7">
-                <table class="table">
-                  <thead>
-                    <th>
-                      Producto
-                    </th>
-                    <th>
-                      Cantidad
-                    </th>
-                    <th>
-                      Subtotal
-                    </th>
-                  </thead>
-                  <tr *ngFor="let currentOrderDetail of currentOrderDetails">
-                    <td>
-                      {{currentOrderDetail.product.name}}
-                    </td>
-                    <td>
-                      {{currentOrderDetail.quantity}}
-                    </td>
-                    <td>
-                      {{currentOrderDetail.quantity * currentOrderDetail.unit_price}}
-                    </td>
-                  </tr>
-                </table>
-              </div>
+            <div class="row d-flex align-items-center flex-column">
+              <h5>Products</h5>
+              <table class="table w-75">
+                <thead>
+                  <th>
+                    Product
+                  </th>
+                  <th>
+                    Quantity
+                  </th>
+                  <th>
+                    Unit Price
+                  </th>
+                  <th>
+                    Subtotal
+                  </th>
+                </thead>
+                <tr *ngFor="let currentOrderDetail of currentOrderDetails">
+                  <td>
+                    {{currentOrderDetail.product.name}}
+                  </td>
+                  <td>
+                    {{currentOrderDetail.quantity}}
+                  </td>
+                  <td>
+                    {{currentOrderDetail.unit_price}}
+                  </td>
+                  <td>
+                    {{currentOrderDetail.quantity * currentOrderDetail.unit_price}}
+                  </td>
+                </tr>
+              </table>
             </div>
             <div class="row">
               <div class="col-sm-8">                

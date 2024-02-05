@@ -67,7 +67,6 @@ export class ListProductsComponent implements OnInit{
   getProducts(){
     this.productsService.getProducts().subscribe(
       (response)=>{
-        console.log(response);
         this.products = response
         this.sortByProductName(this.products)
       }

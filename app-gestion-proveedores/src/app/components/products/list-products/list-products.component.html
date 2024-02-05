@@ -25,7 +25,7 @@
           <th class="col-1" (click)="setSortByCode('sku')" scope="col">SKU<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
           <th class="col-2" (click)="setSortByCode('name')" scope="col">Product <span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
           <th class="col-2" (click)="setSortBySubpropertyCode('category', 'name')"scope="col">Category<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
-          <th class="col-2" (click)="setSortBySubpropertyCode('supplier', 'business')" scope="col">Supplier<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
+          <th class="col-2" (click)="setSortBySubpropertyCode('supplier', 'business_name')" scope="col">Supplier<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
           <th class="col-2" (click)="setSortByCode('price')" scope="col-2">Price<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
           <th class="col-2" *ngIf="!showDeleted" colspan="3" scope="col" class="text-center">Options</th>
         </tr>

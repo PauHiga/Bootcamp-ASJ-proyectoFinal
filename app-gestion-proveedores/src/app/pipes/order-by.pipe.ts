@@ -9,31 +9,25 @@ export class OrderByPipe implements PipeTransform {
       return value;
     }
     
-    console.log(value.slice().sort((a, b) => {
-      const nameA = String(a[propertyName]).toLowerCase();
-      const nameB = String(b[propertyName]).toLowerCase();
-
-      let comparison = 0;
-      if (nameA > nameB) {
-        comparison = 1;
-      } else if (nameA < nameB) {
-        comparison = -1;
-      }
-
-      return descending ? comparison * -1 : comparison;
-    }));
     return value.slice().sort((a, b) => {
-      const nameA = String(a[propertyName]).toLowerCase();
-      const nameB = String(b[propertyName]).toLowerCase();
-
-      let comparison = 0;
-      if (nameA > nameB) {
-        comparison = 1;
-      } else if (nameA < nameB) {
-        comparison = -1;
+      const numberA = parseInt(a[propertyName])
+      const numberB = parseInt(b[propertyName])
+      if(isNaN(numberA)){
+        const nameA = String(a[propertyName]).toLowerCase();
+        const nameB = String(b[propertyName]).toLowerCase();
+  
+        let comparison = 0;
+        if (nameA > nameB) {
+          comparison = 1;
+        } else if (nameA < nameB) {
+          comparison = -1;
+        }
+  
+        return descending ? comparison * -1 : comparison;
       }
-
-      return descending ? comparison * -1 : comparison;
-    });
+      else{
+        return descending ? numberA- numberB * -1 : numberA- numberB;
+      }
+    })
   }
 }
