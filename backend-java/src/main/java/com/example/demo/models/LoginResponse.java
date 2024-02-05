@@ -6,17 +6,12 @@ import lombok.Data;
 public class LoginResponse {
     private boolean status;
     private String message;
+    private String username;
     
-    public LoginResponse(boolean status, String message) {
+    public LoginResponse(boolean status, String message, String username) {
 		super();
 		this.status = status;
 		this.message = message;
-	}
-
-    public void setStatusMessage(boolean status, String message) {
-        this.status = status;
-		this.message = message;
-    }
-    
-    
+		this.username = username;
+	} 
 }

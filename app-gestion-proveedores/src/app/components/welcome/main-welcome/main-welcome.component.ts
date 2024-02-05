@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WelcomeService } from '../../../services/welcome.service';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-welcome',
@@ -8,7 +10,7 @@ import { WelcomeService } from '../../../services/welcome.service';
 })
 export class MainWelcomeComponent implements OnInit{
 
-  constructor(public welcomeService: WelcomeService){}
+  constructor(private welcomeService: WelcomeService, private authenticationService :  AuthenticationService, private router: Router){}
 
   suppliersTotal : number = 0;
   suppliersActive : number = 0;
@@ -20,8 +22,15 @@ export class MainWelcomeComponent implements OnInit{
   ordersActive : number = 0;
   ordersInactive : number = 0;
 
+  username : String = "";
+
   ngOnInit(): void {
     this.getCounts();
+    this.getUsername();
+  }
+
+  getUsername(){
+    this.username = this.authenticationService.username;
   }
 
   getCounts(){
@@ -52,5 +61,10 @@ export class MainWelcomeComponent implements OnInit{
     this.welcomeService.getOrdersCount(true).subscribe((response)=>{
       this.ordersInactive = response
     })
+  }
+
+  logout(){
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
   }
 }

@@ -23,11 +23,11 @@ public class LoginController {
 	public ResponseEntity<LoginResponse> login(@RequestBody UserDTO userDTO) {
 	    try {
 	        if (loginService.login(userDTO)) {
-	            return ResponseEntity.ok(new LoginResponse(true, "Login Successful"));
+	            return ResponseEntity.ok(new LoginResponse(true, "Login Successful", "Admin"));
 	        }
-	        return ResponseEntity.status(403).body(new LoginResponse(false, "Wrong username or password"));
+	        return ResponseEntity.status(403).body(new LoginResponse(false, "Wrong username or password", "Unauthorized user"));
 	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new LoginResponse(false, "Error in login: " + e.getMessage()));
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new LoginResponse(false, "Error in login: " + e.getMessage(), "Unauthorized user"));
 	    }
 	}
 }

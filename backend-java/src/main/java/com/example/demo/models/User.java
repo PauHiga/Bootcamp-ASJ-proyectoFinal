@@ -27,6 +27,10 @@ public class User {
 	@Column(unique = true, length = 50, nullable = false)
 	@NotNull(message = "The user cannot be null")
 	private String name;	
+	
+	@Column(unique = true, length = 50, nullable = false)
+	@NotNull(message = "The email cannot be null")
+	private String email;
 
 	@Column(unique = true, length = 255, nullable = false)
 	@NotNull(message = "The password cannot be null")

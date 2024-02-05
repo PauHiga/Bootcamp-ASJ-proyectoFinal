@@ -12,29 +12,27 @@ import { NgForm } from '@angular/forms';
 export class LoginComponent {
 
   loginData : UserLogin = {
+    email: "",
     name: "",
     password: ""
   }
 
-  message: String =""
+  message: String = ""
 
-  constructor(public authService: AuthenticationService, public router: Router) {}
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
   onClickForm(loginForm:NgForm){
     console.log('click');
     this.message = 'Trying to log in ...';
 
     if(!loginForm.valid){
-      this.message = "Please complete Username and Password";
+      this.message = "Please complete Email and Password";
     }else{
-      this.authService.login(this.loginData).subscribe((response) => {
-        console.log(response);
-        this.authService.isLoggedIn = true;
-        this.router.navigate(['']);
-      },
-      (error)=>{
-        console.log(error);
-        this.message = error.error.message;
+      this.authService.login(this.loginData).subscribe((response)=>{
+        this.message = response.message;
+        if(response.status){
+          this.router.navigate(['']);
+        }
       });
     }
   }

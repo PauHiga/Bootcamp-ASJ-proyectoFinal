@@ -15,5 +15,5 @@ INSERT INTO status (name) VALUES
 ('Paid'),
 ('Closed');
 
-INSERT INTO users (name, password) VALUES
-('Admin', 'Admin');
+INSERT INTO users (name, email, password) VALUES
+('Admin', 'admin@manager.com', 'Admin');

@@ -3,7 +3,8 @@
         <div class="col-sm-3 bg-light vh-100 p-3 pt-5">
             <div class="mt-5 d-flex flex-column justify-content-center align-items-center" >
                 <img src="/assets/icons/person-circle.svg" alt="user" width="100" height="100">
-                <h2 class="text-center m-3">Welcome User</h2>
+                <h2 class="text-center m-3">Welcome {{username}}</h2>
+                <button (click)="logout()" class="btn btn-secondary">Logout</button>
             </div>
         </div>
         <div class="col-sm-9">

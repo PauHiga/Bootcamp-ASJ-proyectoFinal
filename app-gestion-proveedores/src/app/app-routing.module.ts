@@ -9,6 +9,7 @@ import { FormOrdersComponent } from './components/orders/form-orders/form-orders
 import { MainWelcomeComponent } from './components/welcome/main-welcome/main-welcome.component';
 import { LoginComponent } from './auth/login/login.component';
 import { authGuard } from './auth/auth.guard';
+import { NotFoundComponent } from './components/shared/not-found/not-found.component';
 
 
 const routes: Routes = [
@@ -34,7 +35,8 @@ const routes: Routes = [
       {path:':edit', component:FormOrdersComponent}
     ]}
   ]},
-  {path: 'login', component:LoginComponent}
+  {path: 'login', component:LoginComponent},
+  { path: '**', canActivate: [authGuard], component: NotFoundComponent }
 ];
 
 @NgModule({
