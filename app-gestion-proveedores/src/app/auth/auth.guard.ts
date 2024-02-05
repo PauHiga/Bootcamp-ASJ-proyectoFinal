@@ -13,14 +13,3 @@ export const authGuard = () => {
   // Redirect to the login page
   return router.parseUrl('/login');
 };
-
-// export const authGuard = () => {
-//   console.log('authGuard#canActivate called');
-//   return true;
-// };
-
-// import { CanActivateFn } from '@angular/router';
-
-// export const authGuard: CanActivateFn = (route, state) => {
-//   return true;
-// };

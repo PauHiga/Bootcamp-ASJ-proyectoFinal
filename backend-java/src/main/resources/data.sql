@@ -14,3 +14,6 @@ INSERT INTO status (name) VALUES
 ('Pending Payment'),
 ('Paid'),
 ('Closed');
+
+INSERT INTO users (name, password) VALUES
+('Admin', 'Admin');

@@ -1,46 +1,24 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, delay, of, tap } from 'rxjs';
+import { UserLogin } from '../models/userLogin';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
 
+  constructor(private http: HttpClient){}
+
+  URL_API = 'http://localhost:8080/login'
+
   isLoggedIn = false;
 
-  // store the URL so we can redirect after logging in
-  redirectUrl: string | null = null;
-
-  login(): Observable<boolean> {
-    
-    return of(true).pipe(
-      delay(1000),
-      tap(() => this.isLoggedIn = true)
-    );
+  login(userLogin: UserLogin): Observable<String> {
+    return this.http.post<String>(this.URL_API, userLogin)
   }
 
   logout(): void {
     this.isLoggedIn = false;
   }
 }
-
-
-//   private loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-//   public isLoggedIn$: Observable<boolean> = this.loggedInSubject.asObservable();
-
-//   constructor() {}
-
-//   login(token: string): void {
-//     localStorage.setItem('token', token);
-//     this.loggedInSubject.next(true);
-//   }
-
-//   logout(): void {
-//     localStorage.removeItem('token');
-//     this.loggedInSubject.next(false);
-//   }
-
-//   isAuthenticated(): boolean {
-//     return !!localStorage.getItem('token');
-//   }
-// }
