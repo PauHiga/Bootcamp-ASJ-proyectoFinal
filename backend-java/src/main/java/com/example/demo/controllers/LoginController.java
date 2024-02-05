@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.CategoryDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.models.LoginResponse;
-import com.example.demo.services.CategoryService;
 import com.example.demo.services.LoginService;
 
 @RestController
@@ -22,14 +20,14 @@ public class LoginController {
 	LoginService loginService;
 	
 	@PostMapping
-	public ResponseEntity<Object> login(@RequestBody UserDTO userDTO) {
+	public ResponseEntity<LoginResponse> login(@RequestBody UserDTO userDTO) {
 	    try {
 	        if (loginService.login(userDTO)) {
-	            return ResponseEntity.ok(new LoginResponse(true));
+	            return ResponseEntity.ok(new LoginResponse(true, "Login Successful"));
 	        }
-	        return ResponseEntity.status(403).body(new LoginResponse(false));
+	        return ResponseEntity.status(403).body(new LoginResponse(false, "Wrong username or password"));
 	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in login: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new LoginResponse(false, "Error in login: " + e.getMessage()));
 	    }
 	}
 }

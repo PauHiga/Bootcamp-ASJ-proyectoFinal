@@ -1,14 +1,8 @@
 <section class="container">
-  <!-- <p>
-    <button type="button" (click)="login()"  *ngIf="!authService.isLoggedIn">Login</button>
-    <button type="button" (click)="logout()" *ngIf="authService.isLoggedIn">Logout</button>
-  </p> -->
-  
-  <section class="vh-100 fixed-top">
+  <section class="vh-100 fixed-top bg-light">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col col-xl-10">
-          <div class="card" style="border-radius: 1rem;">
+          <div class="card w-75" style="border-radius: 1rem;">
             <div class="row g-0">
                 <div class="card-body p-4 p-lg-5 text-black">
   
@@ -16,12 +10,12 @@
                     <h1 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign in</h1>
   
                     <div class="form-outline mb-4">
-                      <input id="form2Example17" class="form-control form-control-lg" name="name" [(ngModel)]="loginData.name"/>
+                      <input id="form2Example17" class="form-control form-control-lg" name="name" [(ngModel)]="loginData.name" required/>
                       <label class="form-label" for="form2Example17">Username</label>
                     </div>
   
                     <div class="form-outline mb-4">
-                      <input type="password" id="form2Example27" class="form-control form-control-lg" name="password" [(ngModel)]="loginData.password" />
+                      <input type="password" id="form2Example27" class="form-control form-control-lg" name="password" [(ngModel)]="loginData.password" required/>
                       <label class="form-label" for="form2Example27">Password</label>
                     </div>
   
@@ -33,10 +27,8 @@
                   </form>
   
                 </div>
-              <!-- </div> -->
             </div>
           </div>
-        </div>
       </div>
     </div>
   </section>

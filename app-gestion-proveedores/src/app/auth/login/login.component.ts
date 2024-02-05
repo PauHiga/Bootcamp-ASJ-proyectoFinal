@@ -16,35 +16,26 @@ export class LoginComponent {
     password: ""
   }
 
-  message: string;
+  message: String =""
 
-  constructor(public authService: AuthenticationService, public router: Router) {
-    this.message = this.getMessage();
-  }
-
-  getMessage() {
-    return 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
-  }
+  constructor(public authService: AuthenticationService, public router: Router) {}
 
   onClickForm(loginForm:NgForm){
     console.log('click');
     this.message = 'Trying to log in ...';
-    if(loginForm.valid){
+
+    if(!loginForm.valid){
+      this.message = "Please complete Username and Password";
+    }else{
       this.authService.login(this.loginData).subscribe((response) => {
         console.log(response);
         this.authService.isLoggedIn = true;
-        this.message = this.getMessage();
         this.router.navigate(['']);
       },
       (error)=>{
         console.log(error);
-        this.message = this.getMessage();
+        this.message = error.error.message;
       });
     }
-  }
-
-  logout() {
-    this.authService.logout();
-    this.message = this.getMessage();
   }
 }

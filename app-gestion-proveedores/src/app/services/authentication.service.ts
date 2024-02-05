@@ -14,8 +14,8 @@ export class AuthenticationService {
 
   isLoggedIn = false;
 
-  login(userLogin: UserLogin): Observable<String> {
-    return this.http.post<String>(this.URL_API, userLogin)
+  login(userLogin: UserLogin): Observable<any> {
+    return this.http.post<any>(this.URL_API, userLogin)
   }
 
   logout(): void {
