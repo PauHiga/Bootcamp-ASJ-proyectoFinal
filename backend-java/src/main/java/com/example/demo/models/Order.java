@@ -90,9 +90,4 @@ public class Order {
 		this.status = status;
 		this.deleted = deleted;
 	}
-	
-
-	
-	
-	
 }

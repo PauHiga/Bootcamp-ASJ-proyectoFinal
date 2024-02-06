@@ -33,15 +33,19 @@ export class OrdersFormServiceService {
   }
 
 
-  saveOrder(newOrder : OrderCreate, orderDetails : OrderDetailCreate[]) : Observable<any>{  
-    return this.http.post<OrderDisplay>(this.URL_API_ORDERS, newOrder).pipe(
-      concatMap((response)=> {
-        const orderDetailsWithOrderId = orderDetails.map((orderDetail: OrderDetailCreate) => {
-          const orderDetailsWithOrderId = {...orderDetail, order_id:response.id}
-          return orderDetailsWithOrderId;
-        })
-        return this.saveDetails(orderDetailsWithOrderId);
-      })
-    )
+  saveOrder(newOrder : OrderCreate, orderDetails : OrderDetailCreate[]) : Observable<any>{
+    return this.http.post<OrderDisplay>(this.URL_API_ORDERS, {...newOrder, orderDetails: orderDetails})
   }
+
+  // saveOrder(newOrder : OrderCreate, orderDetails : OrderDetailCreate[]) : Observable<any>{  
+  //   return this.http.post<OrderDisplay>(this.URL_API_ORDERS, newOrder).pipe(
+  //     concatMap((response)=> {
+  //       const orderDetailsWithOrderId = orderDetails.map((orderDetail: OrderDetailCreate) => {
+  //         const orderDetailsWithOrderId = {...orderDetail, order_id:response.id}
+  //         return orderDetailsWithOrderId;
+  //       })
+  //       return this.saveDetails(orderDetailsWithOrderId);
+  //     })
+  //   )
+  // }
 }

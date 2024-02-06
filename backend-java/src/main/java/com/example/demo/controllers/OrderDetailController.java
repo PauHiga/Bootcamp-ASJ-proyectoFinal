@@ -41,10 +41,10 @@ public class OrderDetailController {
 		}
 	}
 	
-	@PostMapping("/batch")
+	@PostMapping("/testbatch")
 	public ResponseEntity<Object> createOrderDetails(@RequestBody List<OrderDetailDTO> orderDetailDTOList){
 		try {
-			return ResponseEntity.ok(orderDetailService.createOrderDetails(orderDetailDTOList));
+			return ResponseEntity.ok(orderDetailService.createOrderDetails(orderDetailDTOList, 1));
 		}
 		catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating order details: " + e.getMessage());			
@@ -55,5 +55,4 @@ public class OrderDetailController {
 	public ResponseEntity<List<OrderDetail>> getOrderDetailByOrderId(@PathVariable Integer id){
 		return ResponseEntity.ok(orderDetailService.getOrderDetailByOrderId(id));
 	}
-
 }

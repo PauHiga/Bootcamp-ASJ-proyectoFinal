@@ -40,12 +40,12 @@ public class OrderDetailService {
 		return orderDetailRepository.findByOrderId(id);
 	}
 	
-    public List<OrderDetail> createOrderDetails(List<OrderDetailDTO> orderDetailDTOList) {
+    public List<OrderDetail> createOrderDetails(List<OrderDetailDTO> orderDetailDTOList, Integer orderId) {
     	batchOrderDetailList.clear();
         List<OrderDetail> createdOrderdetails = new ArrayList<>();
 
         for (OrderDetailDTO orderDetailDTO : orderDetailDTOList) {
-        	OrderDetail createdOrderDetail = createOrderDetail(orderDetailDTO);
+        	OrderDetail createdOrderDetail = createOrderDetail(orderDetailDTO, orderId);
             createdOrderdetails.add(createdOrderDetail);
         }
 
@@ -54,16 +54,15 @@ public class OrderDetailService {
         return createdOrderdetails;
     }
     
-    // Add a new method for batch insert
+
     public void saveBatchOrderDetails(List<OrderDetail> orderDetailList) {
     	orderDetailRepository.saveAll(orderDetailList);
-        
-        // Clear the list after batch insert
+
     	batchOrderDetailList.clear();
     }
     
 	
-	public OrderDetail createOrderDetail(OrderDetailDTO orderDetailDTO) {
+	public OrderDetail createOrderDetail(OrderDetailDTO orderDetailDTO, Integer orderId) {
 			
 	    OrderDetail newOrderDetail = new OrderDetail();
 		
@@ -83,9 +82,9 @@ public class OrderDetailService {
 	    newOrderDetail.setProduct(product);
 		
 	    Order order;
-		Optional<Order> optionalOrder = orderRepository.findById(orderDetailDTO.getOrder_id());
+		Optional<Order> optionalOrder = orderRepository.findById(orderId);
 	    if (optionalOrder.isEmpty()) {
-	        throw new RuntimeException("Order not found with id: " + orderDetailDTO.getOrder_id());
+	        throw new RuntimeException("Order not found with id: " + orderId);
 	    } else {
 	    	order = optionalOrder.get();
 	    }

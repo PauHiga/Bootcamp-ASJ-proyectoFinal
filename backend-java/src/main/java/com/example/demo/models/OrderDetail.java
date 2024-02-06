@@ -25,21 +25,21 @@ public class OrderDetail {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(nullable = false)
-	@NotNull(message = "The quantity cannot be null")
+//	@Column(nullable = false)
+//	@NotNull(message = "The quantity cannot be null")
 	private Integer quantity;
 	
-	@Column(columnDefinition = "DECIMAL(10,2)", nullable = false)
-	@NotNull(message = "The unit price cannot be null")
+//	@Column(columnDefinition = "DECIMAL(10,2)", nullable = false)
+//	@NotNull(message = "The unit price cannot be null")
 	private Float unit_price;
 
 	@ManyToOne
-	@JoinColumn(name = "product_id", referencedColumnName = "id", nullable=false)
-	@NotNull(message = "The product cannot be null")
+//	@JoinColumn(name = "product_id", referencedColumnName = "id", nullable=false)
+//	@NotNull(message = "The product cannot be null")
 	private Product product;
 
 	@ManyToOne
-	@JoinColumn(name = "order_id", referencedColumnName = "id", nullable=false)
-	@NotNull(message = "The order cannot be null")
+//	@JoinColumn(name = "order_id", referencedColumnName = "id", nullable=false)
+//	@NotNull(message = "The order cannot be null")
 	private Order order;
 }

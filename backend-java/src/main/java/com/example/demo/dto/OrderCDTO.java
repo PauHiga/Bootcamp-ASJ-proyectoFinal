@@ -1,7 +1,5 @@
 package com.example.demo.dto;
 
-import java.util.List;
-
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderCreateDTO {
+public class OrderCDTO {
 
 	private Integer id;
 
@@ -38,8 +36,4 @@ public class OrderCreateDTO {
 
 	@NotNull(message = "The deletion field cannot be null")
 	private Boolean deleted;
-	
-	@NotNull(message = "The details list cannot be null")
-	private List<OrderDetailDTO> orderDetails;
-
 }

@@ -27,8 +27,9 @@ public class OrderService {
 	@Autowired
 	StatusRepository statusRepository;
 	
-	private List<Order> batchOrderList = new ArrayList<>();
-	
+	@Autowired
+	OrderDetailService orderDetailService;
+		
 	public List<Order> getOrders(){
 		return orderRepository.findAll();
 	}
@@ -50,7 +51,6 @@ public class OrderService {
 	}
 	
     public List<Order> createOrders(List<OrderCreateDTO> orderCreateDTOList) {
-    	batchOrderList.clear();
         List<Order> createdOrders = new ArrayList<>();
 
         for (OrderCreateDTO orderCreateDTO : orderCreateDTOList) {
@@ -58,20 +58,11 @@ public class OrderService {
             createdOrders.add(createdOrder);
         }
 
-        saveBatchOrders(batchOrderList);
-
         return createdOrders;
-    }
-	
-    // Add a new method for batch insert
-    public void saveBatchOrders(List<Order> orderList) {
-        orderRepository.saveAll(orderList);
-        
-        // Clear the list after batch insert
-        batchOrderList.clear();
     }
     
 	public Order createOrder(OrderCreateDTO orderCreateDTO) {
+		
 		Integer order_number = orderCreateDTO.getOrder_number();
 		LocalDate issue_date = LocalDate.parse(orderCreateDTO.getIssue_date());
 		LocalDate delivery_date = LocalDate.parse(orderCreateDTO.getDelivery_date());
@@ -99,7 +90,12 @@ public class OrderService {
 		Boolean deleted = false;
 		
 		Order newOrder = new Order(order_number, issue_date, delivery_date, details, total, createdAt, updatedAt, supplier, status, deleted);
-        batchOrderList.add(newOrder);
+
+		Order SavedOrder = orderRepository.save(newOrder);
+		
+		orderDetailService.createOrderDetails(orderCreateDTO.getOrderDetails(), SavedOrder.getId());
+        
+		
 		return newOrder;
 	}
 
