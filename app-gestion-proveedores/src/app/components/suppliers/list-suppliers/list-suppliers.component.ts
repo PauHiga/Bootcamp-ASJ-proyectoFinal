@@ -94,7 +94,7 @@ export class ListSuppliersComponent implements OnInit{
           Swal.fire({
             title: "Supplier not eliminated",
             text: "There was an error! The supplier could not be eliminated",
-            icon: "info"
+            icon: "error"
           })
       })
     }});
@@ -122,7 +122,7 @@ export class ListSuppliersComponent implements OnInit{
             Swal.fire({
               title: "Supplier not activated",
               text: "There was an error! The supplier could not be activated",
-              icon: "info"
+              icon: "error"
             })
           })
         }

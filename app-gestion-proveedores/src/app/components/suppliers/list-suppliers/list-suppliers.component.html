@@ -20,11 +20,11 @@
       <thead>
         <tr>
           <th class="col-1" scope="col"></th>
-          <th class="col-2"(click)="setSortByCode('code')" scope="col">Code <span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <th class="col-1"(click)="setSortByCode('code')" scope="col">Code <span class="material-icons vertical-align">arrow_drop_down</span></th>
           <th class="col-2"(click)="setSortByCode('business_name')" scope="col">Business name <span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th class="col-2"(click)="setSortByCountry()" scope="col">Location<span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th class="col-2"scope="col">Representative</th>
-          <th class="col-3 text-center"colspan="3">Options</th>
+          <th class="col-3"(click)="setSortByCountry()" scope="col">Location<span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <th class="col-3"scope="col">Representative</th>
+          <th class="col-2 text-center"colspan="3">Options</th>
         </tr>
       </thead>
       <tbody>
@@ -36,9 +36,9 @@
           <td> {{supplier.address.locality.province.name}}, {{supplier.address.locality.province.country.name}}</td>
           <ng-template #ContactRepresentative ><b>{{supplier.contact?.last_name}}, {{supplier.contact?.first_name}}, </b><br>Phone: {{supplier.contact?.phone}}<br>E-mail: {{supplier.contact?.email}}</ng-template>
           <td>{{supplier.contact?.last_name}}, {{supplier.contact?.first_name}} <span class="material-icons-outlined vertical-align h-25 pointer" placement="top" [ngbTooltip]="ContactRepresentative" html=true triggers="click" [autoClose]="'outside'">info</span></td>
-          <td class="pointer" (click)="editSupplier(supplier.id)"><img src="/assets/icons/pencil-square.svg" alt="editar proveedor" width="25" height="25"></td>
-          <td class="pointer" *ngIf="!showDeleted" (click)="logicalDeleteSupplier(supplier.id)"><img src="/assets/icons/trash.svg" alt="borrar proveedor" width="25" height="25"></td>
-          <td class="pointer" (click)="getASupplier(supplier.id)" data-bs-toggle="modal" data-bs-target="#detalleProductoModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del proveedor" width="25" height="25"></td>
+          <td class="pointer text-center" (click)="editSupplier(supplier.id)"><img src="/assets/icons/pencil-square.svg" alt="editar proveedor" width="25" height="25"></td>
+          <td class="pointer text-center" *ngIf="!showDeleted" (click)="logicalDeleteSupplier(supplier.id)"><img src="/assets/icons/trash.svg" alt="borrar proveedor" width="25" height="25"></td>
+          <td class="pointer text-center" (click)="getASupplier(supplier.id)" data-bs-toggle="modal" data-bs-target="#detalleProductoModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del proveedor" width="25" height="25"></td>
         </tr>
       </tbody>
     </table>

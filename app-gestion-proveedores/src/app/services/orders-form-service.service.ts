@@ -40,7 +40,6 @@ export class OrdersFormServiceService {
           const orderDetailsWithOrderId = {...orderDetail, order_id:response.id}
           return orderDetailsWithOrderId;
         })
-        console.log(orderDetailsWithOrderId);
         return this.saveDetails(orderDetailsWithOrderId);
       })
     )

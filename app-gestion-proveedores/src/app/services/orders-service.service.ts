@@ -30,7 +30,6 @@ export class OrdersServiceService {
   }
 
   saveNewStatus(idOrder : number, newStatus : string) : Observable<any>{
-    console.log(newStatus);
     return this.http.put(this.URL_API + "/" + idOrder, {status: newStatus});
   }
 

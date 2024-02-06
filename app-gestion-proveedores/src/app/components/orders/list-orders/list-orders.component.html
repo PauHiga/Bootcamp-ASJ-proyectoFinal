@@ -43,11 +43,11 @@
           <td>{{order.supplier.business_name}}</td>
           <td>{{order.total | currency}}</td>
           <td class="text-center row">
-            <div class="col-7">
+            <div [ngClass]="showDeleted? 'col-12' : 'col-6'">
               <p>{{order.status.name}}</p>
             </div>
-            <div class="col-4" *ngIf="!showDeleted">
-              <img class="pointer" (click)="changeStatus(order.id, order.status.name)"src="/assets/icons/pencil-square.svg" alt="change order status" width="25" height="25">
+            <div [ngClass]="showDeleted? 'col-0' : 'col-6'" *ngIf="!showDeleted">
+              <img class="pointer float-start" (click)="changeStatus(order.id, order.status.name)"src="/assets/icons/pencil-square.svg" alt="change order status" width="25" height="25">
             </div>
           </td>
           <td *ngIf="!showDeleted" class="text-center pointer" (click)="markCanceled(order.id, order.order_number)"><img src="/assets/icons/trash.svg" alt="mark as canceled" width="25" height="25" [ngClass]="(order.deleted==true)?'d-none':''"></td>

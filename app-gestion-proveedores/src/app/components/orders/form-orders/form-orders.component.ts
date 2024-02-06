@@ -200,11 +200,18 @@ export class FormOrdersComponent implements OnInit{
 
   confirmarNuevaOrden(){
     this.orderFormService.saveOrder(this.order, this.orderDetails).subscribe((response)=>{
-      console.log(response);
       this.clearData()
       this.router.navigate(["orders"])
       Swal.fire("Order successfully placed");
-    })
+    },
+    (error)=>{
+      Swal.fire({
+        title: "Order not created",
+        text: "There was an error! The order could not be created",
+        icon: "error"
+      })
+    }
+    )
   }
 
   clearData(){

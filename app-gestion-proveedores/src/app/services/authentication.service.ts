@@ -35,7 +35,11 @@ export class AuthenticationService {
       catchError((error) => {
         console.log(error);
         this.isLoggedIn = false;
-        return of(error.error); // Wrapping the error in an observable
+        if(error.status == 403){
+          return of(error.error); // Wrapping the error in an observable
+        } else {
+          return of({message: "An error has occurred, and the login process is currently unavailable."})
+        }
       })
     );
   }

@@ -164,7 +164,7 @@ export class FormSuppliersComponent implements OnInit{
           Swal.fire({
             title: "Supplier not saved",
             text: "There was an error! The supplier could not be saved",
-            icon: "info"
+            icon: "error"
           }
         )}
       )}
@@ -328,7 +328,7 @@ export class FormSuppliersComponent implements OnInit{
           Swal.fire({
             title: "Sector not saved",
             text: "There was an error! The sector could not be saved",
-            icon: "info"
+            icon: "error"
           });
         })
       }
@@ -394,7 +394,7 @@ export class FormSuppliersComponent implements OnInit{
                 Swal.fire({
                   title: "Sector not edited",
                   text: "There was an error! The sector could not be edited",
-                  icon: "info"
+                  icon: "error"
                 });
               })
             }
@@ -421,7 +421,7 @@ export class FormSuppliersComponent implements OnInit{
                 Swal.fire({
                   title: "Sector not deleted",
                   text: "There was an error! The sector could not be deleted.",
-                  icon: "info"
+                  icon: "error"
                 });
               }
               )
