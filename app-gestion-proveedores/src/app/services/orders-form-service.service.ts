@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, concatMap, switchMap } from 'rxjs';
 import { OrderCreate } from '../models/orderCreate';
 import { OrderDetailCreate } from '../models/OrderDetailCreate';
 import { OrderDisplay } from '../models/orderDisplay';
@@ -29,13 +29,13 @@ export class OrdersFormServiceService {
   }
 
   saveDetails(orderDetails : OrderDetailCreate[]) : Observable<any>{  
-      return this.http.post(this.URL_API_ORDERS_DETAILS, orderDetails)
+      return this.http.post(this.URL_API_ORDERS_DETAILS +1, orderDetails)
   }
 
 
   saveOrder(newOrder : OrderCreate, orderDetails : OrderDetailCreate[]) : Observable<any>{  
     return this.http.post<OrderDisplay>(this.URL_API_ORDERS, newOrder).pipe(
-      switchMap((response)=> {
+      concatMap((response)=> {
         const orderDetailsWithOrderId = orderDetails.map((orderDetail: OrderDetailCreate) => {
           const orderDetailsWithOrderId = {...orderDetail, order_id:response.id}
           return orderDetailsWithOrderId;

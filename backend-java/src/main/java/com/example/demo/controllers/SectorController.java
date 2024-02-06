@@ -19,7 +19,7 @@ import com.example.demo.models.Sector;
 import com.example.demo.services.SectorService;
 
 @RestController
-@RequestMapping("/8sectors")
+@RequestMapping("/sectors")
 public class SectorController {
 	
 	@Autowired
