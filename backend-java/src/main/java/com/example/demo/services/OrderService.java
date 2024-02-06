@@ -16,6 +16,8 @@ import com.example.demo.repositories.OrderRepository;
 import com.example.demo.repositories.StatusRepository;
 import com.example.demo.repositories.SupplierRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class OrderService {
 	@Autowired
@@ -50,6 +52,7 @@ public class OrderService {
 		return orderRepository.countByDeletedFalse();
 	}
 	
+	@Transactional
     public List<Order> createOrders(List<OrderCreateDTO> orderCreateDTOList) {
         List<Order> createdOrders = new ArrayList<>();
 
