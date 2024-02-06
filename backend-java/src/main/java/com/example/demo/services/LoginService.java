@@ -16,7 +16,7 @@ public class LoginService {
 	
 	public boolean login(UserDTO userDTO) {
 		Optional<User> user = userRepository.findByPassword(userDTO.getPassword());
-		if(user.isPresent()) {
+		if(user.isPresent() && user.get().getEmail() == userDTO.getEmail()) {
 			return true;
 		} else {
 			return false;		

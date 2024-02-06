@@ -19,6 +19,8 @@ export class LoginComponent {
 
   message: String = ""
 
+  inputType : "text" | "password" = "password"
+
   constructor(private authService: AuthenticationService, private router: Router) {}
 
   onClickForm(loginForm:NgForm){
@@ -36,4 +38,9 @@ export class LoginComponent {
       });
     }
   }
+
+  toggleInputType() {
+    this.inputType = (this.inputType === 'text') ? 'password' : 'text';
+  }
+
 }

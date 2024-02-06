@@ -15,17 +15,19 @@
                     </div>
   
                     <div class="form-outline mb-4">
-                      <input type="password" id="form2Example27" class="form-control form-control-lg" name="password" [(ngModel)]="loginData.password" required/>
+                      <div class="d-flex">
+                        <input [type]="inputType" id="form2Example27" class="form-control form-control-lg" name="password" [(ngModel)]="loginData.password" required/>
+                        <span (click)="toggleInputType()" *ngIf="inputType ==  'password'" class="material-icons-outlined eye-password">visibility</span>
+                        <span (click)="toggleInputType()" *ngIf="inputType ==  'text'" class="material-icons-outlined eye-password">visibility_off</span>
+                      </div>
                       <label class="form-label" for="form2Example27">Password</label>
                     </div>
-  
                     <div class="pt-1 mb-4">
                       <button type="submit" class="btn btn-dark btn-lg btn-block">Login</button>
                     </div>
   
                     <p>{{message}}</p>
                   </form>
-  
                 </div>
             </div>
           </div>
