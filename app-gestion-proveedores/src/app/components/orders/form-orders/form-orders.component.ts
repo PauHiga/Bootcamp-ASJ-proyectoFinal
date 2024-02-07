@@ -32,7 +32,7 @@ export class FormOrdersComponent implements OnInit{
       details: '',
       total: 0,
       supplier_id: 0,
-      status: '',
+      status: 'Pending Approval',
       deleted: false
     }
 
@@ -77,7 +77,7 @@ export class FormOrdersComponent implements OnInit{
       this.setOrderNumber();
     });
   }
-  
+
   setOrderNumber(){
     if (this.orders.length === 0) {
       this.order.order_number = 1
@@ -140,7 +140,7 @@ export class FormOrdersComponent implements OnInit{
     this.orderDetailProductsSelectedToOrdenProductos()
     let productsString = ""
     for(let orderDetailProduct of this.orderDetailProductsSelected){
-      productsString = productsString + '<table class="w-100 my-4"><tr class="mb-0 mt-4"><td colspan="2">' + orderDetailProduct.product.name + ' </td><tr class="mt-0"><td>Unit price: ' + orderDetailProduct.unit_price + " </td><td> Quantity: " + orderDetailProduct.quantity + "</td><tr></table>"
+      productsString = productsString + '<table class="w-100 my-4"><tr class="mb-0 mt-4"><td colspan="2"><b>' + orderDetailProduct.product.name + '</b> </td><tr class="mt-0"><td>Unit price: ' + orderDetailProduct.unit_price + " </td><td> Quantity: " + orderDetailProduct.quantity + "</td><tr></table>"
     }
     if(formularioProveedores.valid && this.validacionFormulario()){
       Swal.fire({
@@ -225,7 +225,7 @@ export class FormOrdersComponent implements OnInit{
       details: '',
       total: 0,
       supplier_id: 0,
-      status: '',
+      status: 'Pending Approval',
       deleted: false
     }
   }

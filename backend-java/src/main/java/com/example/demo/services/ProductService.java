@@ -28,6 +28,9 @@ public class ProductService {
 	
 	@Autowired
 	CategoryRepository categoryRepository;
+
+	@Autowired
+	CategoryService categoryServiceRepository;
 	
 	private List<Product> batchProductList = new ArrayList<>();
 	

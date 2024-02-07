@@ -20,7 +20,6 @@ export class SupplierServiceService {
   getASupplier(id:number) : Observable<Supplier>{
     return this.http.get<any>(this.URL_API + "/" + id).pipe(
       map((supplier)=>{
-        console.log(supplier);
           const adaptedItem : Supplier  = {
             ...supplier,
             vat_condition: supplier.vat_condition.name,

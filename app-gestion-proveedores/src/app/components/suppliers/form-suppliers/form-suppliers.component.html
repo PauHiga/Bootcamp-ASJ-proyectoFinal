@@ -46,17 +46,16 @@
         </div>
         <div class="col-md-4">
           <label for="rubro" class="form-label">Sector:</label>
-
-              <select class="form-select form-select-sm" aria-label="Default select example" id="rubro" name="rubro" [(ngModel)]="supplier.sector" #rubro="ngModel" required>
-                <option *ngFor="let sector of sectors" value={{sector.name}}>{{sector.name}}</option>
-              </select>
-              <div *ngIf="rubro.errors?.['required']" class="col-auto">
-                <span class="form-text text-primary">
-                    This field is required
-                </span>
-              </div>   
-              <div (click)="addSectorModal()" class="btn btn btn-outline-secondary btn-sm m-2">Add a sector</div>
-              <div (click)="editSectorModal()" class="btn btn btn-outline-secondary btn-sm">Edit or Delete a sector</div>
+          <select class="form-select form-select-sm" aria-label="Default select example" id="rubro" name="rubro" [(ngModel)]="supplier.sector" #rubro="ngModel" required>
+            <option *ngFor="let sector of sectors" value={{sector.name}}>{{sector.name}}</option>
+          </select>
+          <div *ngIf="rubro.errors?.['required']" class="col-auto">
+            <span class="form-text text-primary">
+                This field is required
+            </span>
+          </div>   
+          <div (click)="addSectorModal()" class="btn btn btn-outline-secondary btn-sm m-2">Add a sector</div>
+          <div (click)="editSectorModal()" class="btn btn btn-outline-secondary btn-sm">Edit or Delete a sector</div>
         </div>
         <div class="col-md-3">
           <label for="URLlogo" class="form-label">Logo (url):</label>

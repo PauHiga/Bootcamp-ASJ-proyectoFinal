@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 export class AuthenticationService {
 
   constructor(private http: HttpClient, private router: Router){
-    if(localStorage.getItem("password") != null){
+    if(sessionStorage.getItem("password") != null){
       this.isLoggedIn = true;
-      this.username = String(localStorage.getItem("user"))
+      this.username = String(sessionStorage.getItem("user"))
     }
   }
 
@@ -27,9 +27,9 @@ export class AuthenticationService {
         console.log(response);
         this.isLoggedIn = true;
         this.username = response.username;
-        localStorage.setItem("user", response.username);
-        localStorage.setItem("email", userLogin.email);
-        localStorage.setItem("password", userLogin.password);
+        sessionStorage.setItem("user", response.username);
+        sessionStorage.setItem("email", userLogin.email);
+        sessionStorage.setItem("password", userLogin.password);
         return response;
       }),
       catchError((error) => {
@@ -44,26 +44,10 @@ export class AuthenticationService {
     );
   }
 
-
-
-  // login(userLogin: UserLogin): any {
-  //   this.http.post<any>(this.URL_API, userLogin).subscribe((response)=>{
-  //     console.log(response);
-  //     this.isLoggedIn = true;
-  //     this.username = response.username;
-  //     return response;
-  //   }, 
-  //   (error)=>{
-  //     console.log(error);
-  //     this.isLoggedIn = false;
-  //     return error;
-  //   })
-  // }
-
   logout(): void {
-    localStorage.removeItem("user");
-    localStorage.removeItem("email");
-    localStorage.removeItem("password");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("email");
+    sessionStorage.removeItem("password");
     this.isLoggedIn = false;
   }
 }

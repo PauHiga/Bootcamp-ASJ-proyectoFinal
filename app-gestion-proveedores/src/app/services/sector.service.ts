@@ -9,7 +9,7 @@ export class SectorService {
 
   constructor(private http:HttpClient) { }
 
-  URL_API = 'http://localhost:8080/8sectors'
+  URL_API = 'http://localhost:8080/sectors'
 
   getSectors() : Observable<any>{
     return this.http.get<any>(this.URL_API);

@@ -6,6 +6,7 @@ import { CountryStateCityService } from '../../../services/country-state-city.se
 import Swal from 'sweetalert2'
 import { SectorService } from '../../../services/sector.service';
 import { Supplier } from '../../../models/supplier';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-form-suppliers',
@@ -94,7 +95,6 @@ export class FormSuppliersComponent implements OnInit{
 
   getSuppliers(){
     this.supplierService.getSuppliers().subscribe((response)=>{
-      console.log(response);
       this.suppliersList = response;
     })
   }

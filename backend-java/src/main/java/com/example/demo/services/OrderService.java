@@ -83,9 +83,9 @@ public class OrderService {
 	    }
 	    
 	    Status status;
-		Optional<Status> optionalStatus = statusRepository.findById(2);
+		Optional<Status> optionalStatus = statusRepository.findByName(orderCreateDTO.getStatus());
 	    if (optionalStatus.isEmpty()) {
-	        throw new RuntimeException("Default status (id: 1) not found");
+	        throw new RuntimeException("Status not found");
 	    } else {
 	    	status = optionalStatus.get();
 	    }
