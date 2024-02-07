@@ -25,12 +25,12 @@
     <table class="table table-striped ">
       <thead>
         <tr>
-          <th class="col-1"(click)="setSortByCode('order_number')" scope="col-1">Nº Order<span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th class="col-2"(click)="setSortByCode('issue_date')" scope="col-1">Issue Date<span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th class="col-2"(click)="setSortByCode('delivery_date')" scope="col-1">Delivery Date<span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th class="col-2"(click)="setSortBySubpropertyCode('supplier', 'business_name')" scope="col-1">Supplier<span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th class="col-1"(click)="setSortByCode('total')" scope="col-1">Total<span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th class="col-2 text-center"(click)="setSortBySubpropertyCode('status', 'name')" scope="col-1">Order Status<span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <th class="col-1"(click)="setSortByCode('order_number')" scope="col-1">Nº<span class="material-icons vertical-align pointer" ngbTooltip="Sort by order number" tooltipClass="custom-tooltip" [openDelay]="350">arrow_drop_down</span></th>
+          <th class="col-2"(click)="setSortByCode('issue_date')" scope="col-1">Issue Date<span class="material-icons vertical-align pointer" ngbTooltip="Sort by issue date" tooltipClass="custom-tooltip" [openDelay]="350">arrow_drop_down</span></th>
+          <th class="col-2"(click)="setSortByCode('delivery_date')" scope="col-1">Delivery Date<span class="material-icons vertical-align pointer" ngbTooltip="Sort by delivey date" tooltipClass="custom-tooltip" [openDelay]="350">arrow_drop_down</span></th>
+          <th class="col-2"(click)="setSortBySubpropertyCode('supplier', 'business_name')" scope="col-1">Supplier<span class="material-icons vertical-align pointer" ngbTooltip="Sort by supplier" tooltipClass="custom-tooltip" [openDelay]="350">arrow_drop_down</span></th>
+          <th class="col-1"(click)="setSortByCode('total')" scope="col-1">Total<span class="material-icons vertical-align pointer" ngbTooltip="Sort by total" tooltipClass="custom-tooltip" [openDelay]="350">arrow_drop_down</span></th>
+          <th class="col-2 text-center"(click)="setSortBySubpropertyCode('status', 'name')" scope="col-1">Order Status<span class="material-icons vertical-align pointer" ngbTooltip="Sort by order status" tooltipClass="custom-tooltip" [openDelay]="350">arrow_drop_down</span></th>
           <th *ngIf="!showDeleted" class="text-center" scope="col-1">Cancel</th>
           <th class="col-1 text-center" scope="col-2">Order Details</th>
         </tr>
@@ -47,11 +47,11 @@
               <p>{{order.status.name}}</p>
             </div>
             <div [ngClass]="showDeleted? 'col-0' : 'col-6'" *ngIf="!showDeleted">
-              <img class="pointer float-start" (click)="changeStatus(order.id, order.status.name)"src="/assets/icons/pencil-square.svg" alt="change order status" width="25" height="25">
+              <img class="pointer float-start" (click)="changeStatus(order.id, order.status.name)"src="/assets/icons/pencil-square.svg" alt="change order status" ngbTooltip="Change order status" placement="top" tooltipClass="custom-tooltip" [openDelay]="350" width="25" height="25">
             </div>
           </td>
-          <td *ngIf="!showDeleted" class="text-center pointer" (click)="markCanceled(order.id, order.order_number)"><span class="material-icons-outlined"  style="font-size: 30px">disabled_by_default</span></td>
-          <td class="text-center pointer" (click)="setOrderId(order)" data-bs-toggle="modal" data-bs-target="#detalleOrdenModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del proveedor" width="25" height="25"></td>
+          <td *ngIf="!showDeleted" class="text-center pointer" (click)="markCanceled(order.id, order.order_number)"><span class="material-icons-outlined" ngbTooltip="Cancel order" placement="top" tooltipClass="custom-tooltip" [openDelay]="350" style="font-size: 30px">disabled_by_default</span></td>
+          <td class="text-center pointer" (click)="setOrderId(order)" data-bs-toggle="modal" data-bs-target="#detalleOrdenModal"><img src="/assets/icons/info-circle.svg" ngbTooltip="Order details" placement="top" tooltipClass="custom-tooltip" [openDelay]="350" alt="Order details" width="25" height="25"></td>
         </tr>
       </tbody>
     </table>

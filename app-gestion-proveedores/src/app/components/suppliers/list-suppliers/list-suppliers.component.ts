@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SupplierServiceService } from '../../../services/supplier-service.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -8,7 +8,15 @@ import { Supplier } from '../../../models/supplier';
 @Component({
   selector: 'app-list-suppliers',
   templateUrl: './list-suppliers.component.html',
-  styleUrl: './list-suppliers.component.css'
+  styleUrl: './list-suppliers.component.css',
+  encapsulation: ViewEncapsulation.None,
+    styles: `
+    .custom-tooltip .tooltip-inner {
+    background-color: grey;
+    color: white;
+    font-size: 100%;
+    padding: 5px;
+  }`,
 })
 export class ListSuppliersComponent implements OnInit{
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsServiceService } from '../../../services/products-service.service';
 import Swal from 'sweetalert2';
@@ -10,7 +10,15 @@ import { map } from 'rxjs';
 @Component({
   selector: 'app-list-products',
   templateUrl: './list-products.component.html',
-  styleUrl: './list-products.component.css'
+  styleUrl: './list-products.component.css',
+  encapsulation: ViewEncapsulation.None,
+    styles: `
+    .custom-tooltip .tooltip-inner {
+    background-color: grey;
+    color: white;
+    font-size: 100%;
+    padding: 5px;
+  }`,
 })
 export class ListProductsComponent implements OnInit{
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrdersServiceService } from '../../../services/orders-service.service';
 import { forkJoin } from 'rxjs';
@@ -9,7 +9,15 @@ import { OrderDetailDisplay } from '../../../models/OrderDetailDisplay';
 @Component({
   selector: 'app-list-orders',
   templateUrl: './list-orders.component.html',
-  styleUrl: './list-orders.component.css'
+  styleUrl: './list-orders.component.css',
+  encapsulation: ViewEncapsulation.None,
+    styles: `
+    .custom-tooltip .tooltip-inner {
+    background-color: grey;
+    color: white;
+    font-size: 100%;
+    padding: 5px;
+  }`,
 })
 export class ListOrdersComponent implements OnInit{
 

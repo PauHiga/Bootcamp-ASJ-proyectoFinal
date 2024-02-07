@@ -22,11 +22,11 @@
       <thead>
         <tr>
           <th class="col-1" scope="col">Image</th>
-          <th class="col-1" (click)="setSortByCode('sku')" scope="col">SKU<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
-          <th class="col-2" (click)="setSortByCode('name')" scope="col">Product <span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
-          <th class="col-2" (click)="setSortBySubpropertyCode('category', 'name')"scope="col">Category<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
-          <th class="col-2" (click)="setSortBySubpropertyCode('supplier', 'business_name')" scope="col">Supplier<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
-          <th class="col-2" (click)="setSortByCode('price')" scope="col-2">Price<span class="material-icons vertical-align pointer">arrow_drop_down</span></th>
+          <th class="col-1" (click)="setSortByCode('sku')" scope="col">SKU<span class="material-icons vertical-align pointer" ngbTooltip="Sort by SKU" tooltipClass="custom-tooltip" [openDelay]="350">arrow_drop_down</span></th>
+          <th class="col-2" (click)="setSortByCode('name')" scope="col">Product <span class="material-icons vertical-align pointer" ngbTooltip="Sort by Product" tooltipClass="custom-tooltip" [openDelay]="350">arrow_drop_down</span></th>
+          <th class="col-2" (click)="setSortBySubpropertyCode('category', 'name')"scope="col">Category<span class="material-icons vertical-align pointer" ngbTooltip="Sort by Category" tooltipClass="custom-tooltip" [openDelay]="350">arrow_drop_down</span></th>
+          <th class="col-2" (click)="setSortBySubpropertyCode('supplier', 'business_name')" scope="col">Supplier<span class="material-icons vertical-align pointer" ngbTooltip="Sort by Supplier" tooltipClass="custom-tooltip" [openDelay]="350">arrow_drop_down</span></th>
+          <th class="col-2" (click)="setSortByCode('price')" scope="col-2">Price<span class="material-icons vertical-align pointer" ngbTooltip="Sort by Price" tooltipClass="custom-tooltip" [openDelay]="350">arrow_drop_down</span></th>
           <th class="col-2" colspan="3" scope="col" class="text-center">Options</th>
         </tr>
       </thead>
@@ -38,11 +38,11 @@
           <td>{{product.category.name}} <span *ngIf="product.category.deleted">(category deactivated)</span></td>
           <td>{{product.supplier.business_name}} <span *ngIf="product.supplier.deleted">(Supplier inactive)</span></td>
           <td>{{product.price}}</td>
-          <td class="pointer" (click)="editProduct(product.id)"><img src="/assets/icons/pencil-square.svg" alt="editar producto" width="25" height="25"></td>
-          <td class="pointer" *ngIf="!showDeleted" (click)="deleteProduct(product.id, product.name)"><img src="/assets/icons/trash.svg" alt="borrar producto" width="25" height="25"></td>
-          <td class="pointer" *ngIf="showDeleted && product.supplier.deleted == false" (click)="activateProduct(product.id, product.supplier.business_name)"><span class="material-icons vertical-align"  style="font-size: 30px">restore_from_trash</span></td>
-          <td class="pointer" *ngIf="product.supplier.deleted == true" (click)="activateSupplier(product.supplier.id, product.supplier.business_name)"><span class="material-icons vertical-align"  style="font-size: 30px">restore_from_trash</span></td>
-          <td class="pointer" (click)="getAProduct(product.id)" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del producto" width="25" height="25"></td>
+          <td class="pointer" (click)="editProduct(product.id)"><img src="/assets/icons/pencil-square.svg" alt="edit product" width="25" height="25" ngbTooltip="Edit product" placement="top" tooltipClass="custom-tooltip" [openDelay]="350"></td>
+          <td class="pointer" *ngIf="!showDeleted" (click)="deleteProduct(product.id, product.name)"><img src="/assets/icons/trash.svg" alt="inactivate product" ngbTooltip="Inactivate product" placement="top" tooltipClass="custom-tooltip" [openDelay]="350" width="25" height="25"></td>
+          <td class="pointer" *ngIf="showDeleted && product.supplier.deleted == false" (click)="activateProduct(product.id, product.supplier.business_name)"><span class="material-icons vertical-align" aria-label="Restore product" ngbTooltip="Restore product" placement="top" tooltipClass="custom-tooltip" [openDelay]="350" style="font-size: 30px">restore_from_trash</span></td>
+          <td class="pointer" *ngIf="product.supplier.deleted == true" (click)="activateSupplier(product.supplier.id, product.supplier.business_name)"><span class="material-icons vertical-align" aria-label="Restore supplier" ngbTooltip="Restore supplier" placement="top" tooltipClass="custom-tooltip" [openDelay]="350" style="font-size: 30px">restore_from_trash</span></td>
+          <td class="pointer" (click)="getAProduct(product.id)" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="/assets/icons/info-circle.svg" alt="product information" width="25" height="25" ngbTooltip="Product information" placement="top" tooltipClass="custom-tooltip" [openDelay]="350"></td>
         </tr>
       </tbody>
     </table>

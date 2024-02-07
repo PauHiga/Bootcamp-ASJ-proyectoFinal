@@ -16,3 +16,7 @@
 .imgContainerModal img{
     width: 100%;
 }
+
+.vertical-align {
+    vertical-align: middle;
+}

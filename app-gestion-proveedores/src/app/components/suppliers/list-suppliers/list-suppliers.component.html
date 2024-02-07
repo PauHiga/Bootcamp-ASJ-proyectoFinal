@@ -17,12 +17,13 @@
       <button [ngClass]="showDeleted? 'btn btn-primary my-2' : 'btn btn-outline-secondary my-2'" (click)="toggleShowDeleted()">{{showDeletedButtonMessage}}</button>
     </div>
     <table class="table table-striped">
-      <thead>
+      <thead>   
         <tr>
           <th class="col-1" scope="col"></th>
-          <th class="col-1"(click)="setSortByCode('code')" scope="col">Code <span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th class="col-2"(click)="setSortByCode('business_name')" scope="col">Business name <span class="material-icons vertical-align">arrow_drop_down</span></th>
-          <th class="col-3"(click)="setSortByCountry()" scope="col">Location<span class="material-icons vertical-align">arrow_drop_down</span></th>
+          <ng-template #SortByCode >Sort suppliers by Supplier Code</ng-template>
+          <th class="col-1"(click)="setSortByCode('code')" scope="col">Code <span class="material-icons vertical-align pointer" ngbTooltip="Sort by Code" tooltipClass="custom-tooltip" [openDelay]="350">arrow_drop_down</span></th>
+          <th class="col-2"(click)="setSortByCode('business_name')" scope="col">Business name <span class="material-icons vertical-align pointer" ngbTooltip="Sort by Business Name" tooltipClass="custom-tooltip" [openDelay]="350">arrow_drop_down</span></th>
+          <th class="col-3"(click)="setSortByCountry()" scope="col">Location<span class="material-icons vertical-align pointer" ngbTooltip="Sort by country" tooltipClass="custom-tooltip" [openDelay]="350">arrow_drop_down</span></th>
           <th class="col-3"scope="col">Representative</th>
           <th class="col-2 text-center"colspan="3">Options</th>
         </tr>
@@ -36,10 +37,10 @@
           <td> {{supplier.address.locality.province.name}}, {{supplier.address.locality.province.country.name}}</td>
           <ng-template #ContactRepresentative ><b>{{supplier.contact?.last_name}}, {{supplier.contact?.first_name}}, </b><br>Phone: {{supplier.contact?.phone}}<br>E-mail: {{supplier.contact?.email}}</ng-template>
           <td>{{supplier.contact?.last_name}}, {{supplier.contact?.first_name}} <span class="material-icons-outlined vertical-align h-25 pointer" placement="top" [ngbTooltip]="ContactRepresentative" html=true triggers="click" [autoClose]="'outside'">info</span></td>
-          <td class="pointer text-center" (click)="editSupplier(supplier.id)"><img src="/assets/icons/pencil-square.svg" alt="editar proveedor" width="25" height="25"></td>
-          <td class="pointer text-center" *ngIf="!showDeleted" (click)="logicalDeleteSupplier(supplier.id)"><img src="/assets/icons/trash.svg" alt="borrar proveedor" width="25" height="25"></td>
-          <td class="pointer text-center" *ngIf="showDeleted" (click)="logicalActivateSupplier(supplier.id)"><span class="material-icons vertical-align"  style="font-size: 30px">restore_from_trash</span></td>
-          <td class="pointer text-center" (click)="getASupplier(supplier.id)" data-bs-toggle="modal" data-bs-target="#detalleProductoModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del proveedor" width="25" height="25"></td>
+          <td class="pointer text-center" (click)="editSupplier(supplier.id)"><img src="/assets/icons/pencil-square.svg" aria-label="Edit supplier" ngbTooltip="Edit supplier" placement="top" tooltipClass="custom-tooltip" [openDelay]="350"  alt="editar proveedor" width="25" height="25"></td>
+          <td class="pointer text-center" *ngIf="!showDeleted" (click)="logicalDeleteSupplier(supplier.id)"><img src="/assets/icons/trash.svg" aria-label="Inactivate Supplier" ngbTooltip="Inactivate supplier" placement="top" tooltipClass="custom-tooltip" [openDelay]="350" alt="Inactivate supplier" width="25" height="25"></td>
+          <td class="pointer text-center" *ngIf="showDeleted" (click)="logicalActivateSupplier(supplier.id)"><span class="material-icons vertical-align" aria-label="Activate supplier" ngbTooltip="Activate supplier" placement="top" tooltipClass="custom-tooltip" [openDelay]="350" style="font-size: 30px">restore_from_trash</span></td>
+          <td class="pointer text-center" (click)="getASupplier(supplier.id)" data-bs-toggle="modal" data-bs-target="#detalleProductoModal"><img src="/assets/icons/info-circle.svg" ngbTooltip="Supplier information" placement="top" tooltipClass="custom-tooltip" [openDelay]="350" alt="Supplier information" width="25" height="25"></td>
         </tr>
       </tbody>
     </table>
