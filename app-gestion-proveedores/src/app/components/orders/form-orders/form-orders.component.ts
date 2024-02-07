@@ -32,7 +32,7 @@ export class FormOrdersComponent implements OnInit{
       details: '',
       total: 0,
       supplier_id: 0,
-      status: 'Pending Approval',
+      status: '',
       deleted: false
     }
 
@@ -53,8 +53,8 @@ export class FormOrdersComponent implements OnInit{
   idProveedorArray : number[] = []
 
   totalMayorACeroValido : boolean = true;
-  fechaEmisionValida : boolean = true;
-  fechaEntregaValida : boolean = true;
+  issueDateValid : boolean = true;
+  deliveryDateValid : boolean = true;
 
   search : string = "";
 
@@ -68,7 +68,7 @@ export class FormOrdersComponent implements OnInit{
     forkJoin([
       this.orderFormService.getOrders(),
       this.orderFormService.getProducts(),
-      this.orderFormService.getSuppliers()
+      this.orderFormService.getSuppliers(),
     ]).subscribe(([orders, products, suppliers]) => {
       this.orders = orders;
       this.products = products;
@@ -176,21 +176,21 @@ export class FormOrdersComponent implements OnInit{
 
   validacionFormulario(){
     this.totalMayorACeroValido = this.order.total>0
-    this.fechaEmisionValida =  this.validateStringDatesOnlyForward(this.order.issue_date, this.getDate(0))
-    this.fechaEntregaValida =  this.validateStringDatesOnlyForward(this.order.delivery_date, this.order.issue_date)
-    return this.totalMayorACeroValido && this.fechaEmisionValida && this.fechaEntregaValida
+    this.issueDateValid =  this.validateStringDatesOnlyForward(this.order.issue_date, this.getDate(0))
+    this.deliveryDateValid =  this.validateStringDatesOnlyForward(this.order.delivery_date, this.order.issue_date)
+    return this.totalMayorACeroValido && this.issueDateValid && this.deliveryDateValid
   }
 
   validateTotal(){
     this.totalMayorACeroValido = this.order.total>0
   }
 
-  validateDateFechaEmision(){
-    this.fechaEmisionValida =  this.validateStringDatesOnlyForward(this.order.issue_date, this.getDate(0))
+  validateIssueDate(){
+    this.issueDateValid =  this.validateStringDatesOnlyForward(this.order.issue_date, this.getDate(0))
   }
 
-  validateDateFechaEntrega(){
-    this.fechaEntregaValida =  this.validateStringDatesOnlyForward(this.order.delivery_date, this.order.issue_date)
+  validateDeliveryDate(){
+    this.deliveryDateValid =  this.validateStringDatesOnlyForward(this.order.delivery_date, this.order.issue_date)
   }
 
   validateStringDatesOnlyForward(date :string , currentDate : string){
@@ -225,7 +225,7 @@ export class FormOrdersComponent implements OnInit{
       details: '',
       total: 0,
       supplier_id: 0,
-      status: 'Pending Approval',
+      status: '',
       deleted: false
     }
   }

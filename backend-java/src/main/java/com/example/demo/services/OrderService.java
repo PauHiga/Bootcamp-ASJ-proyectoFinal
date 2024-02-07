@@ -27,7 +27,7 @@ public class OrderService {
 	SupplierRepository supplierRepository;
 	
 	@Autowired
-	StatusRepository statusRepository;
+	StatusService statusService;
 	
 	@Autowired
 	OrderDetailService orderDetailService;
@@ -82,13 +82,7 @@ public class OrderService {
 	    	supplier = optionalSupplier.get();
 	    }
 	    
-	    Status status;
-		Optional<Status> optionalStatus = statusRepository.findByName(orderCreateDTO.getStatus());
-	    if (optionalStatus.isEmpty()) {
-	        throw new RuntimeException("Status not found");
-	    } else {
-	    	status = optionalStatus.get();
-	    }
+	    Status status = statusService.getDefaultStatus();
   
 		Boolean deleted = false;
 		
@@ -136,14 +130,10 @@ public class OrderService {
 		    updatedOrder.setSupplier(supplier);	
 		}
 		if(orderUpdateDTO.getStatus() != null) {
-			Status status = statusRepository.findByName(orderUpdateDTO.getStatus())
-			.orElseGet(()->{
-				Status newStatus =  new Status();
-				newStatus.setName(orderUpdateDTO.getStatus());
-			return statusRepository.save(newStatus);
-		});
+		    Status status = statusService.getStatusByName(orderUpdateDTO.getStatus());
 			updatedOrder.setStatus(status);	
 		}
+		
 		if(orderUpdateDTO.getDeleted() != null) {
 			updatedOrder.setDeleted(orderUpdateDTO.getDeleted());		
 		}

@@ -15,16 +15,16 @@ INSERT INTO VAT_conditions (name) VALUES
 ('Pequeño Contribuyente Eventual Social');
 
 
-INSERT INTO status (name) VALUES
-('Draft'),
-('Pending Approval'),
-('Approved'),
-('Active'),
-('Partial Delivery'),
-('Complete Delivery'),
-('Pending Payment'),
-('Paid'),
-('Closed');
+INSERT INTO status (name, default_status) VALUES
+('Draft', false),
+('Pending Approval', true),
+('Approved', false),
+('Active', false),
+('Partial Delivery', false),
+('Complete Delivery', false),
+('Pending Payment', false),
+('Paid', false),
+('Closed', false);
 
 INSERT INTO users (name, email, password) VALUES
 ('Admin', 'admin@manager.com', 'Admin');

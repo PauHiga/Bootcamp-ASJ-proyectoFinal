@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.OrderCDTO;
 import com.example.demo.dto.SupplierDTO;
 import com.example.demo.dto.SupplierUpdateDTO;
 import com.example.demo.models.Order;
@@ -60,16 +59,6 @@ public class SupplierController {
         }
         return ResponseEntity.ok(count);
     }
-	
-//	@PostMapping()
-//	public ResponseEntity<Object> createSupplier(@RequestBody SupplierDTO supplierDTO){
-//		try {
-//			return ResponseEntity.ok(supplierService.createSupplier(supplierDTO));
-//		}
-//		catch(Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating supplier: " + e.getMessage());			
-//		}
-//	}
 
 	@PostMapping()
 	public ResponseEntity<Object> createSupplier(@RequestBody SupplierDTO supplierDTO){

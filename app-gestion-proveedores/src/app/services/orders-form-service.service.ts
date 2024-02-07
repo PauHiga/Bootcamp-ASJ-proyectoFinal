@@ -15,6 +15,7 @@ export class OrdersFormServiceService {
   private URL_API_SUPPLIERS = 'http://localhost:8080/suppliers'
   private URL_API_ORDERS = 'http://localhost:8080/orders'
   private URL_API_ORDERS_DETAILS = 'http://localhost:8080/order-details/batch'
+  private URL_API_ORDERS_STATUS = 'http://localhost:8080/status'
 
   getProducts() : Observable<any>{
     return this.http.get(this.URL_API_PRODUCTS);
@@ -28,24 +29,16 @@ export class OrdersFormServiceService {
     return this.http.get(this.URL_API_ORDERS);
   }
 
-  saveDetails(orderDetails : OrderDetailCreate[]) : Observable<any>{  
-      return this.http.post(this.URL_API_ORDERS_DETAILS +1, orderDetails)
+  getStatus() : Observable<any>{
+    return this.http.get(this.URL_API_ORDERS_STATUS);
   }
 
+  saveDetails(orderDetails : OrderDetailCreate[]) : Observable<any>{  
+      return this.http.post(this.URL_API_ORDERS_DETAILS, orderDetails)
+  }
 
   saveOrder(newOrder : OrderCreate, orderDetails : OrderDetailCreate[]) : Observable<any>{
     return this.http.post<OrderDisplay>(this.URL_API_ORDERS, {...newOrder, orderDetails: orderDetails})
   }
 
-  // saveOrder(newOrder : OrderCreate, orderDetails : OrderDetailCreate[]) : Observable<any>{  
-  //   return this.http.post<OrderDisplay>(this.URL_API_ORDERS, newOrder).pipe(
-  //     concatMap((response)=> {
-  //       const orderDetailsWithOrderId = orderDetails.map((orderDetail: OrderDetailCreate) => {
-  //         const orderDetailsWithOrderId = {...orderDetail, order_id:response.id}
-  //         return orderDetailsWithOrderId;
-  //       })
-  //       return this.saveDetails(orderDetailsWithOrderId);
-  //     })
-  //   )
-  // }
 }

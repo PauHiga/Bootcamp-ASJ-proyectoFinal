@@ -27,4 +27,8 @@ public class Status {
 	@Column(unique = true, length = 30, nullable = false)
 	@NotNull(message = "The status name cannot be null")
 	private String name;
+	
+	@Column(nullable = false)
+	@NotNull(message = "The default status cannot be null")
+	private Boolean default_status;
 }

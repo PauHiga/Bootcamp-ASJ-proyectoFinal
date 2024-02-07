@@ -7,31 +7,30 @@
         <li class="breadcrumb-item active" aria-current="page">Create new Order</li>
       </ol>
     </nav>
-    
     <h2>Create new Order</h2>  
   
 <!-- orden-form.component.html -->
 
 <div class="container mt-4">
   <form #ordenForm="ngForm" (ngSubmit)="onClickForm(ordenForm)">
-    <input type="hidden" class="form-control" id="numeroOrden" name="id" [(ngModel)]="order.id">
+    <input type="hidden" class="form-control" id="orderNumber" name="id" [(ngModel)]="order.id">
     <div class="row">
       <div class="col-sm-2">
         <div class="form-group">
-          <label for="numeroOrden">Order Number</label>
-          <input type="number" class="form-control" id="numeroOrden" name="numeroOrden" [(ngModel)]="order.order_number" disabled>
+          <label for="orderNumber">Order Number</label>
+          <input type="number" class="form-control" id="orderNumber" name="orderNumber" [(ngModel)]="order.order_number" disabled>
         </div>
       </div>
       <div class="col-sm-2">
         <div class="form-group">
-          <label for="fechaEmision">Issue Date</label>
-          <input type="date" (change)="validateDateFechaEmision()" min="{{ getDate(0) | date:'yyyy-MM-dd' }}" class="form-control" id="fechaEmision" name="fechaEmision" [(ngModel)]="order.issue_date" #FechaEmision="ngModel" required>
-          <div *ngIf="FechaEmision.errors?.['required']" class="col-auto">
+          <label for="issueDate">Issue Date</label>
+          <input type="date" (change)="validateIssueDate()" min="{{ getDate(0) | date:'yyyy-MM-dd' }}" class="form-control" id="issueDate" name="issueDate" [(ngModel)]="order.issue_date" #issueDate="ngModel" required>
+          <div *ngIf="issueDate.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
                 This field is required
             </span>
           </div>
-          <div *ngIf="!fechaEmisionValida" class="col-auto">
+          <div *ngIf="!issueDateValid" class="col-auto">
             <span class="form-text text-danger">
               Issue date must be today or later.
             </span>
@@ -40,14 +39,14 @@
       </div>
       <div class="col-sm-2">
         <div class="form-group">
-          <label for="fechaEntrega">Delivery Date</label>
-          <input type="date" (change)="validateDateFechaEntrega()" min="{{ getDate(0) | date:'yyyy-MM-dd' }}" class="form-control" id="fechaEntrega" name="fechaEntrega" [(ngModel)]="order.delivery_date" #FechaEntrega="ngModel" required>
-          <div *ngIf="FechaEntrega.errors?.['required']" class="col-auto">
+          <label for="deliveryDate">Delivery Date</label>
+          <input type="date" (change)="validateDeliveryDate()" min="{{ getDate(0) | date:'yyyy-MM-dd' }}" class="form-control" id="deliveryDate" name="deliveryDate" [(ngModel)]="order.delivery_date" #deliveryDate="ngModel" required>
+          <div *ngIf="deliveryDate.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
                 This field is required
             </span>
           </div>
-          <div *ngIf="!fechaEntregaValida" class="col-auto">
+          <div *ngIf="!deliveryDateValid" class="col-auto">
             <span class="form-text text-danger">
               Delivery date can't be before issue date.
             </span>
