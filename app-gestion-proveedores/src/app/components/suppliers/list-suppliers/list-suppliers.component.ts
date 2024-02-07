@@ -116,6 +116,11 @@ export class ListSuppliersComponent implements OnInit{
             this.getSuppliers()
             this.showDeleted = true;
             this.getActiveSuppliers();
+            Swal.fire({
+              title: "Supplier activated",
+              text: `The supplier has been activated`,
+              icon: "success"
+            })
           },
           (error)=>{
             console.log(error);

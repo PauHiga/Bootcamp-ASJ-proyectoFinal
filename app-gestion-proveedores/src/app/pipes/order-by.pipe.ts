@@ -8,10 +8,9 @@ export class OrderByPipe implements PipeTransform {
     if (!value || !propertyName || !activated) {
       return value;
     }
-    
     return value.slice().sort((a, b) => {
-      const numberA = parseInt(a[propertyName])
-      const numberB = parseInt(b[propertyName])
+      const numberA = parseFloat(a[propertyName])
+      const numberB = parseFloat(b[propertyName])
       if(isNaN(numberA)){
         const nameA = String(a[propertyName]).toLowerCase();
         const nameB = String(b[propertyName]).toLowerCase();
@@ -26,7 +25,7 @@ export class OrderByPipe implements PipeTransform {
         return descending ? comparison * -1 : comparison;
       }
       else{
-        return descending ? numberA- numberB * -1 : numberA- numberB;
+        return descending ? (numberA - numberB) * -1 : numberA - numberB;
       }
     })
   }

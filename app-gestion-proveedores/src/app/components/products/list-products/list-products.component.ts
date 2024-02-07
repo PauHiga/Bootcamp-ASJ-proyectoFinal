@@ -32,7 +32,7 @@ export class ListProductsComponent implements OnInit{
       this.showDeletedButtonMessage = "Show active products"
       this.title = "Products Eliminated"
     } else{
-      this.showDeletedButtonMessage = "Show deleted products"
+      this.showDeletedButtonMessage = "Show inactive products"
       this.title = "Products"
     }
   }
@@ -150,20 +150,25 @@ export class ListProductsComponent implements OnInit{
   activateSupplier(id:number, supplierName : string){
     Swal.fire({
       title: "Activate supplier",
-      html: `<p>Do you want to activate the supplier "${supplierName}"?</p> This will affect all of "${supplierName}"'s products`,
+      html: `<p>This product is inactive because the supplier "${supplierName}" has been inactivated.</p><p>Do you want to activate the supplier "${supplierName}"?</p> This will affect all of "${supplierName}"'s products`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Activate this supplier",
-      cancelButtonText: "Do not activate this supplier"
+      confirmButtonText: `Yes, activate the supplier "${supplierName}"`,
+      cancelButtonText: `Do not activate the supplier "${supplierName}"`
     }).then((result) => {
       if (result.isConfirmed) {
         this.productsService.activateSupplier(id).subscribe(
           (response) => {
             this.getProducts();
             this.getActiveProducts();
-            this.getActiveSuppliers()
+            this.getActiveSuppliers();
+            Swal.fire({
+              title: "Supplier activated",
+              text: `The supplier "${supplierName}" has been activated`,
+              icon: "success"
+            })
           },
           (error)=>{
             console.log(error);

@@ -50,7 +50,7 @@
               <img class="pointer float-start" (click)="changeStatus(order.id, order.status.name)"src="/assets/icons/pencil-square.svg" alt="change order status" width="25" height="25">
             </div>
           </td>
-          <td *ngIf="!showDeleted" class="text-center pointer" (click)="markCanceled(order.id, order.order_number)"><img src="/assets/icons/trash.svg" alt="mark as canceled" width="25" height="25" [ngClass]="(order.deleted==true)?'d-none':''"></td>
+          <td *ngIf="!showDeleted" class="text-center pointer" (click)="markCanceled(order.id, order.order_number)"><span class="material-icons-outlined"  style="font-size: 30px">disabled_by_default</span></td>
           <td class="text-center pointer" (click)="setOrderId(order)" data-bs-toggle="modal" data-bs-target="#detalleOrdenModal"><img src="/assets/icons/info-circle.svg" alt="ver detalle del proveedor" width="25" height="25"></td>
         </tr>
       </tbody>
@@ -102,10 +102,10 @@
                   <img src="{{currentOrder?.supplier?.url_logo}}" alt="{{currentOrder?.supplier?.business_name}}">
                 </div>
               </div>
-              <div class="col-sm-6">
+              <div class="col-sm-8">
                 <table class="table">
                   <tr>
-                    <td>
+                    <td class="w-25">
                       Supplier:
                     </td>
                     <td>
@@ -129,7 +129,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>
+                    <td class="align-top">
                       Delivery details:
                     </td>
                     <td>
