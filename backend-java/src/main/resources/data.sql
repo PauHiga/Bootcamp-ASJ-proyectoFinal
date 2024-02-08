@@ -16,15 +16,15 @@ INSERT INTO VAT_conditions (name) VALUES
 
 
 INSERT INTO status (name, default_status) VALUES
-('Draft', false),
-('Pending Approval', true),
-('Approved', false),
-('Active', false),
-('Partial Delivery', false),
-('Complete Delivery', false),
-('Pending Payment', false),
-('Paid', false),
-('Closed', false);
+('Draft', 0),
+('Pending Approval', 1),
+('Approved', 0),
+('Active', 0),
+('Partial Delivery', 0),
+('Complete Delivery', 0),
+('Pending Payment', 0),
+('Paid', 0),
+('Closed', 0);
 
 INSERT INTO users (name, email, password) VALUES
 ('Admin', 'admin@manager.com', 'Admin');
