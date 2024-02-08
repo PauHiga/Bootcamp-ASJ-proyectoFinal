@@ -87,26 +87,27 @@ export class FormProductsComponent implements OnInit{
     this.saveButtonPressed = true
     if(formularioProveedores.valid && !this.skuRepetido){
       if(this.parametroURL){
-        this.productsService.editProduct(this.parametroURL).subscribe((response)=> {
+        this.productsService.editProduct(this.parametroURL).subscribe( {
+          next:(data) =>{
           this.productsService.clearProductData()
           this.router.navigate(["products"])
           Swal.fire("The product data was edited successfully");
         },
-        (error)=>{
-          console.log(error);
+        error: (error) =>{
           Swal.fire({
             title: "Product not edited",
             text: "There was an error! The product data could not be edited",
             icon: "error"
           })
-        })
+        }})
       } else {
-        this.productsService.saveProduct().subscribe((response)=> {
+        this.productsService.saveProduct().subscribe( {
+          next:(data) =>{
           this.productsService.clearProductData()
           this.router.navigate(["products"])
           Swal.fire("The product data was saved successfully");
         },
-        (error)=>{
+        error: (error) =>{
           console.log(error);
           Swal.fire({
             title: "Product not saved",
@@ -114,7 +115,7 @@ export class FormProductsComponent implements OnInit{
             icon: "error"
           })
         }
-        )
+      })
       }
 
     } else {
@@ -168,21 +169,22 @@ export class FormProductsComponent implements OnInit{
     }).then((result) => {
       const exists = this.categories.some(item => item.name === result.value);
       if (result.isConfirmed && !exists) {
-        this.categoryService.saveCategory(result.value).subscribe((result)=> {
+        this.categoryService.saveCategory(result.value).subscribe( {
+          next:(data) =>{
           Swal.fire({
-            text: `The Category "${result.name}" has been saved`,
+            text: `The Category "${data.name}" has been saved`,
           });
-          this.productsService.product.category.name = result.name;
+          this.productsService.product.category.name = data.name;
           this.getCategories();
         },
-        (error)=>{
+        error: (error) =>{
           console.log(error);
           Swal.fire({
             title: "Category not created",
             text: "There was an error! The category could not be created",
             icon: "error"
           })
-        })
+        }})
       }
     });
   }
@@ -231,7 +233,8 @@ export class FormProductsComponent implements OnInit{
           },
         }).then((result) => {
           if (result.isConfirmed) {
-            this.categoryService.changeCategoryName(chosenOptionId, result.value).subscribe((result)=> 
+            this.categoryService.changeCategoryName(chosenOptionId, result.value).subscribe( {
+              next:(data) => 
             {
               console.log(result);
               Swal.fire({
@@ -241,14 +244,14 @@ export class FormProductsComponent implements OnInit{
               });
               this.getCategories();
             },
-            (error)=>{
+            error: (error) =>{
               console.log(error);
               Swal.fire({
                 title: "Category not edited",
                 text: "There was an error! The category could not be edited",
                 icon: "error"
               })
-          })
+          }})
           }
         });
       }
@@ -262,21 +265,22 @@ export class FormProductsComponent implements OnInit{
           confirmButtonText: "Yes, delete it!",
         }).then((result) => {
           if (result.isConfirmed) {
-            this.categoryService.logicalDeleteCategory(chosenOptionId).subscribe((result)=> 
+            this.categoryService.logicalDeleteCategory(chosenOptionId).subscribe( {
+              next:(data) =>
             {
               Swal.fire({
-                text: `Category "${result.name}" has been deleted`,
+                text: `Category "${data.name}" has been deleted`,
               });
               this.getCategories();
             },
-            (error)=>{
+            error: (error) =>{
               console.log(error);
               Swal.fire({
                 title: "Category not deleted",
                 text: "There was an error! The category could not be deleted",
                 icon: "error"
               })
-          })
+          }})
           }
         })
       };

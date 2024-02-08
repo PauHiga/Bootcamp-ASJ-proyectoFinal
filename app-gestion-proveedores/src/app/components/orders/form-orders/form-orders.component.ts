@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OrdersFormServiceService } from '../../../services/orders-form-service.service';
-import { concatMap, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2'
 import { ProductDisplay } from '../../../models/productDisplay';
@@ -88,7 +88,6 @@ export class FormOrdersComponent implements OnInit{
       }, this.orders[0].order_number);
       this.order.order_number = currentLastOrder + 1;
     }
-    console.log("order number: " + this.order.order_number);
   }
 
   getSuppliersWithProducts(){
@@ -110,7 +109,6 @@ export class FormOrdersComponent implements OnInit{
   addProductToOrder(event : Event, data: ProductDisplay){
     const cantidad = (event.target as HTMLSelectElement).value;
     const newProductForOrden : OrderDetailDisplay = {
-      // id: data.id,
       product: data,
       unit_price: data.price,
       quantity: Number(cantidad)
@@ -200,19 +198,20 @@ export class FormOrdersComponent implements OnInit{
   }
 
   confirmarNuevaOrden(){
-    this.orderFormService.saveOrder(this.order, this.orderDetails).subscribe((response)=>{
+    this.orderFormService.saveOrder(this.order, this.orderDetails).subscribe( {
+      next:(data) =>{
       this.clearData()
       this.router.navigate(["orders"])
       Swal.fire("Order successfully placed");
     },
-    (error)=>{
+    error: (error) => {
       Swal.fire({
         title: "Order not created",
         text: "There was an error! The order could not be created",
         icon: "error"
       })
     }
-    )
+  })
   }
 
   clearData(){

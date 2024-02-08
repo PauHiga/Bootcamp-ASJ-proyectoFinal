@@ -64,8 +64,6 @@ export class ListSuppliersComponent implements OnInit{
     }
   }
 
-
-
   getSuppliers(){
     this.supplierService.getSuppliers().subscribe( (response) => {
       this.suppliers = response
@@ -92,20 +90,29 @@ export class ListSuppliersComponent implements OnInit{
       cancelButtonText: "No, do not eliminate this supplier"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.supplierService.logicalDeleteSupplier(id).subscribe((response)=>{
-          console.log(response)
-          this.getSuppliers()
-          this.getActiveSuppliers();
-        },
-        (error)=>{
-          console.log(error);
-          Swal.fire({
-            title: "Supplier not eliminated",
-            text: "There was an error! The supplier could not be eliminated",
-            icon: "error"
-          })
-      })
-    }});
+        this.supplierService.logicalDeleteSupplier(id).subscribe( {
+          next:(data) => 
+                { 
+                this.getSuppliers()
+                this.getActiveSuppliers();
+                Swal.fire({
+                  title: "Supplier eliminated",
+                  text: `The supplier "${data.business_name}" was eliminated`,
+                  icon: "success"
+                })
+              },
+          error: (error) => 
+          {
+            console.log(error);
+            Swal.fire({
+              title: "Supplier not eliminated",
+              text: "There was an error! The supplier could not be eliminated",
+              icon: "error"
+            })
+          }
+        });
+      }
+    });
   }
 
   logicalActivateSupplier(id?:number){
@@ -119,25 +126,25 @@ export class ListSuppliersComponent implements OnInit{
         cancelButtonText: "Do not activate supplier"
       }).then((result) => {
         if (result.isConfirmed) {
-          this.supplierService.logicalActivateSupplier(id).subscribe((response)=>{
-            console.log(response)
+          this.supplierService.logicalActivateSupplier(id).subscribe( {
+            next:(data)=>{
             this.getSuppliers()
             this.showDeleted = true;
             this.getActiveSuppliers();
             Swal.fire({
               title: "Supplier activated",
-              text: `The supplier has been activated`,
+              text: `The supplier "${data.business_name}" has been activated`,
               icon: "success"
             })
           },
-          (error)=>{
+          error: (error)=>{
             console.log(error);
             Swal.fire({
               title: "Supplier not activated",
               text: "There was an error! The supplier could not be activated",
               icon: "error"
             })
-          })
+        }})
         }
       });
     }

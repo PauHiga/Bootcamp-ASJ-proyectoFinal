@@ -132,18 +132,24 @@ export class ListOrdersComponent implements OnInit{
         cancelButtonText: "Do not cancel this order"
       }).then((result) => {
         if (result.isConfirmed) {
-          this.ordersService.markAsCanceled(id).subscribe((response)=>{
+          this.ordersService.markAsCanceled(id).subscribe( {
+            next:(data) => {
             this.getData();
             this.getActiveOrders();
+            Swal.fire({
+              title: "Order cancelled",
+              text: `The order has been cancelled`,
+              icon: "success"
+            })
           },
-          (error)=>{
+          error: (error) =>{
             console.log(error);
             Swal.fire({
               title: "Order not eliminated",
               text: "There was an error! The order could not be eliminated",
               icon: "error"
             })
-        });
+        }});
         }
       });
     }
@@ -179,23 +185,23 @@ export class ListOrdersComponent implements OnInit{
         console.log(result.value);
         console.log(status);
         if(result.value != '' && result.value != status){
-          this.ordersService.saveNewStatus(orderId, result.value).subscribe((response)=>{
-            console.log(response);
+          this.ordersService.saveNewStatus(orderId, result.value).subscribe( {
+            next:(data) => {
             Swal.fire({
               title: "Status changed",
-              text: `The status was successfully changed to ${response.status.name}`,
+              text: `The status was successfully changed to ${data.status.name}`,
               icon: "info"
             })
             this.getData();
           },
-          (error)=>{
+          error: (error) =>{
             console.log(error);
             Swal.fire({
               title: "Status not changed",
               text: "There was an error! The status could not be changed",
               icon: "error"
             })
-        });
+        }});
         }
       }
     });

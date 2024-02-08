@@ -124,21 +124,23 @@ export class FormSuppliersComponent implements OnInit{
     this.validarFormulario();
     if(supplierForm.valid && this.validarFormulario()){
       if(this.parametroURL){
-        this.supplierService.editSupplier(this.supplier, this.parametroURL).subscribe((response)=>{
+        this.supplierService.editSupplier(this.supplier, this.parametroURL).subscribe( {
+          next:(data)=>{
           this.clearSupplierData()
           Swal.fire("The supplier's data was successfully loaded.");
           this.router.navigate(["suppliers"])
         },
-        (error)=>{
+        error: (error)=>{
           console.log(error);
           Swal.fire({
             title: "Supplier not saved",
             text: "There was an error! The supplier could not be saved",
             icon: "info"
           }
-        )})
+        )}})
       } else {
-        this.supplierService.saveSupplier(this.supplier).subscribe((response)=> {
+        this.supplierService.saveSupplier(this.supplier).subscribe( {
+          next:(data)=> {
           this.clearSupplierData()
           Swal.fire({
             text: "The supplier's data was successfully loaded",
@@ -146,8 +148,8 @@ export class FormSuppliersComponent implements OnInit{
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#3085d6",
-            confirmButtonText: "Create a product",
-            cancelButtonText: "Return to suppliers list"
+            cancelButtonText: "Return to suppliers list",
+            confirmButtonText: "Create a product"
           }).then((result) => {
             console.log(result);
             if (result.isConfirmed) {
@@ -159,15 +161,14 @@ export class FormSuppliersComponent implements OnInit{
 
           this.router.navigate(["suppliers"])
         },
-        (error)=>{
-          console.log(error);
+        error: (error)=>{
           Swal.fire({
             title: "Supplier not saved",
             text: "There was an error! The supplier could not be saved",
             icon: "error"
           }
         )}
-      )}
+        })}
     } else{
       Swal.fire({
         text: "There are incomplete or incorrect fields. Please check the form.",
@@ -316,21 +317,22 @@ export class FormSuppliersComponent implements OnInit{
     }).then((result) => {
       const exists = this.sectors.some(item => item.name === result.value);
       if (result.isConfirmed && !exists) {
-        this.sectorService.saveSector(result.value).subscribe((response)=> {
+        this.sectorService.saveSector(result.value).subscribe( {
+          next:(data)=> {
           this.getSectors();
-          this.supplier.sector = result.value;
+          this.supplier.sector = data.value;
           Swal.fire({
-            text: `The sector "${result.value}" has been saved`,
+            text: `The sector "${data.value}" has been saved`,
           });
         }, 
-        (error)=>{
+        error: (error)=>{
           console.log(error);
           Swal.fire({
             title: "Sector not saved",
             text: "There was an error! The sector could not be saved",
             icon: "error"
           });
-        })
+        }})
       }
     });
   }
@@ -379,9 +381,9 @@ export class FormSuppliersComponent implements OnInit{
             },
           }).then((result) => {
             if (result.isConfirmed) {
-              this.sectorService.changeSectorName(chosenOptionId, result.value).subscribe((response)=> 
+              this.sectorService.changeSectorName(chosenOptionId, result.value).subscribe( {
+                next:(data)=> 
               {
-                console.log(response);
                 Swal.fire({
                   title: "Sector edited",
                   text: "The sector has been edited",
@@ -389,14 +391,14 @@ export class FormSuppliersComponent implements OnInit{
                 });
                 this.getSectors();
               }, 
-              (error)=> {
+              error: (error)=> {
                 console.log(error);
                 Swal.fire({
                   title: "Sector not edited",
                   text: "There was an error! The sector could not be edited",
                   icon: "error"
                 });
-              })
+              }})
             }
           });
         }
@@ -410,21 +412,22 @@ export class FormSuppliersComponent implements OnInit{
             confirmButtonText: "Yes, delete it!",
           }).then((result) => {
             if (result.isConfirmed) {
-              this.sectorService.logicalDeleteSector(chosenOptionId).subscribe((result)=> 
+              this.sectorService.logicalDeleteSector(chosenOptionId).subscribe( {
+                next:(data)=> 
               {
                 Swal.fire({
-                  text: `Category "${result.name}" has been deleted`,
+                  text: `Category "${data.name}" has been deleted`,
                 });
                 this.getSectors();
               },
-              (error)=> {
+              error: (error) =>{
                 Swal.fire({
                   title: "Sector not deleted",
                   text: "There was an error! The sector could not be deleted.",
                   icon: "error"
                 });
               }
-              )
+            })
             }
           })
         };

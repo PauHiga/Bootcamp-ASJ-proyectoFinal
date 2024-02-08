@@ -110,19 +110,24 @@ export class ListProductsComponent implements OnInit{
       cancelButtonText: "Do not eliminate this product"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.productsService.deleteProduct(id).subscribe(
-          (response) => {
+        this.productsService.deleteProduct(id).subscribe( {
+          next:(data) =>{
             this.getProducts();
             this.getActiveProducts();
+            Swal.fire({
+              title: "Product eliminated",
+              text: `The product has been eliminated`,
+              icon: "success"
+            })
           },
-          (error)=>{
+          error: (error) =>{
             console.log(error);
             Swal.fire({
               title: "Product not eliminated",
               text: "There was an error! The product could not be eliminated",
               icon: "error"
             })
-        })
+        }})
       }
     });
   }
@@ -138,19 +143,24 @@ export class ListProductsComponent implements OnInit{
       cancelButtonText: "Do not activate this product"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.productsService.activateProduct(id).subscribe(
-          (response) => {
+        this.productsService.activateProduct(id).subscribe( {
+          next:(data) =>{
             this.getProducts();
             this.getActiveProducts();
+            Swal.fire({
+              title: "Product activated",
+              text: `The product has been activated`,
+              icon: "success"
+            })
           },
-          (error)=>{
+          error: (error) =>{
             console.log(error);
             Swal.fire({
               title: "Product not activated",
               text: "There was an error! The product could not be activated",
               icon: "error"
             })
-        })
+        }})
       }
     });
   }
@@ -167,8 +177,8 @@ export class ListProductsComponent implements OnInit{
       cancelButtonText: `Do not activate the supplier "${supplierName}"`
     }).then((result) => {
       if (result.isConfirmed) {
-        this.productsService.activateSupplier(id).subscribe(
-          (response) => {
+        this.productsService.activateSupplier(id).subscribe( {
+          next:(data) =>{
             this.getProducts();
             this.getActiveProducts();
             this.getActiveSuppliers();
@@ -178,14 +188,14 @@ export class ListProductsComponent implements OnInit{
               icon: "success"
             })
           },
-          (error)=>{
+          error: (error) =>{
             console.log(error);
             Swal.fire({
               title: "Supplier not activated",
               text: "There was an error! The supplier could not be activated",
               icon: "error"
             })
-        })
+        }})
       }
     });
   }
