@@ -4,7 +4,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
             <ul class="navbar-nav">
             <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0"> -->
                 <li [ngClass]="currentRoute == 1 ? 'nav-item p-2 option-nav-selected': 'nav-item p-2 option-nav'">
@@ -17,6 +17,11 @@
                 <a class="nav-link active" aria-current="page" routerLink="orders">Orders</a>
                 </li>
             </ul>
+            <div class="d-flex align-items-center px-5">
+                <button (click)="logout()" class="btn btn-outline-secondary btn-sm mx-3">Logout</button>
+                <p class="my-3">Welcome {{username}}</p>
+                <img class="mx-2" src="/assets/icons/person-circle.svg" alt="user" width="30" height="30">
+            </div>
         </div>
     </div>
 </nav>
