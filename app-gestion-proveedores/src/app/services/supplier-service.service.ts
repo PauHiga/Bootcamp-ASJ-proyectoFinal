@@ -44,8 +44,9 @@ export class SupplierServiceService {
     );
   }
 
-  editSupplier(supplierToEdit : Supplier, id: string){
-    return this.http.put(this.URL_API + "/" + id, supplierToEdit).pipe(
+  editSupplier(supplierToEdit : Supplier, id: string) : Observable<Supplier> {
+    console.log(supplierToEdit);
+    return this.http.put<Supplier>(this.URL_API + "/" + id, supplierToEdit).pipe(
       catchError((error: any) => {
         throw error; 
       })

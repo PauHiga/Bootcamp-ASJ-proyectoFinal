@@ -122,62 +122,24 @@ public class SupplierService {
 		return newSupplier;
 	}	
 	
-	public Supplier editSupplier(int id, SupplierDTO supplierDTO) {
-		Optional<Supplier> editedSupplier = supplierRepository.findById(id);
-	    if (editedSupplier.isEmpty()) {
-	        throw new RuntimeException("Supplier to edit not found with id: " + id);
-	    } 
-	    
-		String code = supplierDTO.getCode();
-		String business_name = supplierDTO.getBusiness_name();
-		String url_logo = supplierDTO.getUrl_logo();
-		String cuit = supplierDTO.getCuit();
-		String email = supplierDTO.getEmail();
-		String phone = supplierDTO.getPhone();
-		String web = supplierDTO.getWeb();
-		boolean deleted = supplierDTO.getDeleted();
-		LocalDate createdAt = LocalDate.now();
-		LocalDate updatedAt = null;
-		
-		Sector sector = sectorRepository.findActiveSectorByName(supplierDTO.getSector())
-				.orElseGet(()->{
-					Sector newSector =  new Sector();
-					newSector.setName(supplierDTO.getSector());
-					newSector.setCreatedAt(LocalDate.now());
-					newSector.setDeleted(false);
-					return sectorRepository.save(newSector);
-				});
-		
-		Vat_condition vatCondition = vatConditionRepository.findByName(supplierDTO.getVat_condition())
-				.orElseGet(()->{
-					Vat_condition newVatCondition =  new Vat_condition();
-					newVatCondition.setName(supplierDTO.getVat_condition());
-					return vatConditionRepository.save(newVatCondition);
-				});
-		
-		Address address = addressService.createAddress(supplierDTO.getAddress());
-		
-		Contact contact = contactService.createContact(supplierDTO.getContact());
-		
-		Supplier newSupplier = new Supplier(null, code, business_name, url_logo, cuit, email, phone, web, deleted, createdAt, updatedAt, sector, vatCondition, address, contact);
-		supplierRepository.save(newSupplier);
-		return newSupplier;
-	}	
-	
-// create supplier with empty constructor:	
-//	public Supplier createSupplier(SupplierDTO supplierDTO) {
-//		Supplier newSupplier = new Supplier();
-//		newSupplier.setCode(supplierDTO.getCode());		
-//		newSupplier.setBusiness_name(supplierDTO.getBusiness_name());
-//		newSupplier.setUrl_logo(supplierDTO.getUrlLogo());
-//		newSupplier.setCuit(supplierDTO.getCuit());
-//		newSupplier.setEmail(supplierDTO.getEmail());
-//		newSupplier.setPhone(supplierDTO.getPhone());
-//		newSupplier.setWeb(supplierDTO.getWeb());
-//		newSupplier.setDeleted(supplierDTO.isDeleted());
-//		newSupplier.setCreatedAt(LocalDate.now());
+//	public Supplier editSupplier(int id, SupplierDTO supplierDTO) {
+//		Optional<Supplier> editedSupplier = supplierRepository.findById(id);
+//	    if (editedSupplier.isEmpty()) {
+//	        throw new RuntimeException("Supplier to edit not found with id: " + id);
+//	    } 
+//	    
+//		String code = supplierDTO.getCode();
+//		String business_name = supplierDTO.getBusiness_name();
+//		String url_logo = supplierDTO.getUrl_logo();
+//		String cuit = supplierDTO.getCuit();
+//		String email = supplierDTO.getEmail();
+//		String phone = supplierDTO.getPhone();
+//		String web = supplierDTO.getWeb();
+//		boolean deleted = supplierDTO.getDeleted();
+//		LocalDate createdAt = LocalDate.now();
+//		LocalDate updatedAt = null;
 //		
-//		Sector sector = sectorRepository.findByName(supplierDTO.getSector())
+//		Sector sector = sectorRepository.findActiveSectorByName(supplierDTO.getSector())
 //				.orElseGet(()->{
 //					Sector newSector =  new Sector();
 //					newSector.setName(supplierDTO.getSector());
@@ -186,27 +148,22 @@ public class SupplierService {
 //					return sectorRepository.save(newSector);
 //				});
 //		
-//		newSupplier.setSector(sector);
-//		
-//		VATCondition vatCondition = vatConditionRepository.findByName(supplierDTO.getVatCondition())
+//		Vat_condition vatCondition = vatConditionRepository.findByName(supplierDTO.getVat_condition())
 //				.orElseGet(()->{
-//					VATCondition newVatCondition =  new VATCondition();
-//					newVatCondition.setName(supplierDTO.getVatCondition());
+//					Vat_condition newVatCondition =  new Vat_condition();
+//					newVatCondition.setName(supplierDTO.getVat_condition());
 //					return vatConditionRepository.save(newVatCondition);
 //				});
 //		
-//		newSupplier.setVATCondition(vatCondition);
-//
 //		Address address = addressService.createAddress(supplierDTO.getAddress());
-//		newSupplier.setAddress(address);
 //		
 //		Contact contact = contactService.createContact(supplierDTO.getContact());
-//		newSupplier.setContact(contact);
 //		
+//		Supplier newSupplier = new Supplier(null, code, business_name, url_logo, cuit, email, phone, web, deleted, createdAt, updatedAt, sector, vatCondition, address, contact);
 //		supplierRepository.save(newSupplier);
 //		return newSupplier;
-//	}
-	
+//	}	
+		
     public Supplier updateSupplier(Integer id, SupplierUpdateDTO supplierUpdateDTO) {
         Optional<Supplier> existingSupplier = supplierRepository.findById(id);
         	if(existingSupplier.isEmpty()) {

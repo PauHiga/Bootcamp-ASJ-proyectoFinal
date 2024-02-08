@@ -34,7 +34,7 @@ public class ProvinceService {
 					return countryRepository.save(newCountry);
 				});
 		System.out.println(country.getName());
-		Province province = provinceRepository.findByName(provinceDTO.getProvince())
+		Province province = provinceRepository.findByNameAndCountry_id(provinceDTO.getProvince(), country.getId())
 				.orElseGet(()->{
 					Province newProvince =  new Province();
 					newProvince.setName(provinceDTO.getProvince());

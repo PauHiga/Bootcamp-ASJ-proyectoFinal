@@ -1,140 +1,3 @@
-CREATE DATABASE suppliers_manager;
-
-GO 
-USE suppliers_manager;
-
-
-CREATE TABLE countries (
-	id INT PRIMARY KEY IDENTITY,
-	name VARCHAR(30) NOT NULL
-);
-
-CREATE TABLE provinces(
-	id INT PRIMARY KEY IDENTITY,
-	name VARCHAR(30) NOT NULL,
-	country_id INT NOT NULL,
-	FOREIGN KEY (country_id) REFERENCES countries(id)
-);
-
-
-CREATE TABLE localities(
-	id INT PRIMARY KEY IDENTITY,
-	name VARCHAR(30) NOT NULL,
-	province_id INT NOT NULL,
-	FOREIGN KEY (province_id) REFERENCES provinces(id)
-);
-
-CREATE TABLE addresses(
-	id INT PRIMARY KEY IDENTITY,
-	street VARCHAR(50) NOT NULL,
-	number VARCHAR(10) NOT NULL,
-	postal_code VARCHAR(15) NOT NULL,
-	locality_id INT NOT NULL,
-	created_at DATETIME NOT NULL,
-	updated_at DATETIME
-	FOREIGN KEY (locality_id) REFERENCES localities(id)
-);
-
-CREATE TABLE VATconditions(
-	id INT PRIMARY KEY IDENTITY,
-	name VARCHAR(50) NOT NULL
-);
-
-CREATE TABLE sectors (
-	id INT PRIMARY KEY IDENTITY,
-	name VARCHAR(50) NOT NULL,
-	created_at DATETIME NOT NULL,
-	updated_at DATETIME,
-deleted BIT NOT NULL DEFAULT 0,
-);
-
-CREATE TABLE contacts (
-	id INT PRIMARY KEY IDENTITY,
-	first_name VARCHAR(50) NOT NULL,
-	last_name VARCHAR(50) NOT NULL,
-	email VARCHAR(50) NOT NULL,
-	phone VARCHAR(20) NOT NULL,
-	role VARCHAR(50) NOT NULL,
-	created_at DATETIME NOT NULL,
-	updated_at DATETIME
-);
-
-CREATE TABLE suppliers (
-	id INT PRIMARY KEY IDENTITY,
-	code VARCHAR(50) NOT NULL UNIQUE,
-	business_name VARCHAR(50) NOT NULL,
-	sector_id INT NOT NULL,
-	url_logo VARCHAR(50),
-	cuit VARCHAR(13) NOT NULL,
-	VATcondition_id INT NOT NULL,
-	email VARCHAR(50) NOT NULL,
-	phone VARCHAR(20) NOT NULL,
-	web VARCHAR(50),
-	address_id INT NOT NULL,
-	contact_id INT NOT NULL,
-	deleted BIT NOT NULL DEFAULT 0,
-	created_at DATETIME NOT NULL,
-	updated_at DATETIME,
-	FOREIGN KEY (sector_id) REFERENCES sectors(id),
-	FOREIGN KEY (VATcondition_id) REFERENCES VATconditions(id),
-	FOREIGN KEY (address_id) REFERENCES addresses(id),
-	FOREIGN KEY (contact_id) REFERENCES contacts(id),
-);
-
-CREATE TABLE categories (
-	id INT PRIMARY KEY IDENTITY,
-	name VARCHAR(30) NOT NULL,
-	created_at DATETIME NOT NULL,
-	updated_at DATETIME,
-	deleted BIT NOT NULL DEFAULT 0,
-);
-
-CREATE TABLE products (
-	id INT PRIMARY KEY IDENTITY,
-	SKU VARCHAR(20) NOT NULL UNIQUE,
-	name VARCHAR(50) NOT NULL,
-	supplier_id INT NOT NULL,
-	category_id INT NOT NULL,
-	description VARCHAR(1000),
-	price DECIMAL NOT NULL,
-	URLimage VARCHAR(200),
-	deleted BIT NOT NULL DEFAULT 0,
-	created_at DATETIME NOT NULL,
-	updated_at DATETIME,
-	FOREIGN KEY (supplier_id) REFERENCES suppliers(id),
-	FOREIGN KEY (category_id) REFERENCES categories(id),
-);
-
-CREATE TABLE status(
-	id INT PRIMARY KEY IDENTITY,
-	name VARCHAR(30) NOT NULL,
-);
-
-CREATE TABLE orders(
-	id INT PRIMARY KEY IDENTITY,
-	order_number INT NOT NULL UNIQUE,
-    issue_date DATE NOT NULL,
-	delivery_date DATE NOT NULL,
-	details VARCHAR(500),
-	supplier_id INT NOT NULL,
-	status_id INT NOT NULL,
-	created_at DATETIME NOT NULL,
-	updated_at DATETIME,
-	FOREIGN KEY (supplier_id) REFERENCES suppliers(id),
-	FOREIGN KEY (status_id) REFERENCES status(id)
-);
-
-CREATE TABLE order_details(
-	id INT PRIMARY KEY IDENTITY,
-	product_id INT NOT NULL,
-	quantity INT NOT NULL,
-	order_id INT NOT NULL,
-	unit_price DECIMAL NOT NULL,
-	FOREIGN KEY (product_id) REFERENCES products(id),
-	FOREIGN KEY (order_id) REFERENCES orders(id),
-);
-
-
 INSERT INTO countries (name) VALUES 
 	('Argentina'), 
 	('Uruguay'), 
@@ -146,8 +9,8 @@ INSERT INTO provinces (name, country_id) VALUES
 	('Córdoba Province', 1),
 	('Mendoza', 1),
 	('San Luis Province', 1),
-	('Durazno', 2),
-	('Montevideo', 2);
+	('Durazno Department', 2),
+	('Montevideo Department', 2);
 
 
 INSERT INTO localities (name, province_id) VALUES
@@ -162,8 +25,8 @@ VALUES
 	('Azcuenaga', '456', '2002', 1, '2020-02-10', NULL),
 	('San Martin', '45', '2002', 2, '2020-02-10', NULL),
 	('Rosas', '789', '3003', 3, '2020-03-15', NULL),
-	('Belgrano', '101', '4004', 4, '2020-04-20', NULL),
-	('Lima', '202', '5005', 5, '2020-05-25', NULL);
+	('Belgrano', '101', '4004', 1, '2020-04-20', NULL),
+	('Lima', '202', '5005', 1, '2020-05-25', NULL);
 
 INSERT INTO VAT_conditions (name) VALUES
 ('IVA Responsable Inscripto'),
@@ -201,7 +64,7 @@ INSERT INTO suppliers (code, business_name, sector_id, url_logo, cuit, VATcondit
 	('A002', 'LG', 2, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTlUrg4HC-VjdJH_p8PHfg1NgjQHgc5-SBPdkT4ygQ_A&s', '30-78901234-7', 1, 'info@mylg.com.ar', '+54 351 78901234', null, 2, 2, '2023-01-15', '2023-01-16', 0),
 	('A003', 'Arcor', 3, 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Arcor_logo.svg/581px-Arcor_logo.svg.png', '30-78901234-5', 1, 'info@arcor.com', '+54 341 56789012', 'https://www.arcor.com/ar/', 3, 3, '2023-01-15', null, 0),
 	('A004', 'Colombraro', 4, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-IF7mYPcWC5qSyoENNNo9ZiIYFteoV7ART5-zeWHQtg&s', '30-67890123-6', 1, 'info@colombraro.com', '+54 261 67890123', 'https://www.colombraro.com.ar/', 4, 4, '2023-01-15', null, 0),
-	('SAM001', 'Samsung', 2, null, '30-98765432-9', 2, 'samsung_v@samsung.com', '+598 2 98765432', 'https://www.samsung.com/ar/', 1, 5, '2023-01-15', null, 0);
+	('SAM001', 'Samsung', 2, 'https://seeklogo.com/images/S/samsung-logo-7FCC326D74-seeklogo.com.png', '30-98765432-9', 2, 'samsung_v@samsung.com', '+598 2 98765432', 'https://www.samsung.com/ar/', 5, 5, '2023-01-15', null, 0);
 
 INSERT INTO categories (name, created_at, updated_at, deleted) VALUES
 	('Sports', '2023-01-15', NULL, 0),
@@ -237,19 +100,20 @@ INSERT INTO status (name, default_status) VALUES
 	('Closed', 0);
 
 INSERT INTO orders (order_number, issue_date, delivery_date, details, supplier_id, status_id, created_at, updated_at, deleted, total) VALUES
-	(101, '2023-10-15', '2024-01-16', 'Received by Maria', 1, 1, '2023-10-15', null, 0, 100),
-	(102, '2023-11-15', '2023-11-16', '', 2, 2, '2023-11-15', null, 0, 100),
-	(103, '2023-11-20', '2023-11-21', 'Reception 9AM-3PM', 3, 3, '2023-11-20', '2023-11-20', 0, 100),
-	(104, '2023-11-23', '2023-11-25', '', 4, 2, '2023-11-15', null, 0, 100),
-	(105, '2023-12-29', '2024-01-13', '', 5, 1, '2023-11-15', null, 0, 100);
+	(101, '2023-10-15', '2024-01-16', 'Received by Maria', 1, 1, '2023-10-15', null, 0, 2537960.00),
+	(102, '2023-11-15', '2023-11-16', '', 2, 2, '2023-11-15', null, 0, 4244950),
+	(103, '2023-11-20', '2023-11-21', 'Reception 9AM-3PM', 3, 3, '2023-11-20', '2023-11-20', 0, 169245.00),
+	(104, '2023-11-23', '2023-11-25', '', 4, 2, '2023-11-15', null, 0, 10675);
 
 INSERT INTO order_details (product_id, quantity, order_id, unit_price) VALUES
-	(1, 100, 1, 180.00),
-	(6, 10, 1, 6264.00),
-	(2, 50, 2, 1140.00),
-	(3, 100, 3, 824.99),
-	(4, 50, 4, 499.99),
-	(5, 5, 5, 130000.00);
+	(1, 20, 1, 84899.00),
+	(2, 10, 1, 41999.00),
+	(3, 10, 1, 41999.00),
+	(4, 5, 2, 848990.00),
+	(6, 20, 3, 4262.25),
+	(8, 20, 3, 2100.00),
+	(9, 20, 3, 2100.00),
+	(11, 5, 4, 2135.00);
 
 INSERT INTO users (name, email, password) VALUES
 ('Admin', 'admin@manager.com', 'Admin');

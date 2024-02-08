@@ -52,7 +52,7 @@ public class AddressService {
 					return countryRepository.save(newCountry);
 				});
 		
-		Province province = provinceRepository.findByName(addressDTO.getProvince())
+		Province province = provinceRepository.findByNameAndCountry_id(addressDTO.getProvince(), country.getId())
 				.orElseGet(()->{
 					Province newProvince =  new Province();
 					newProvince.setName(addressDTO.getProvince());
@@ -60,13 +60,14 @@ public class AddressService {
 					return provinceRepository.save(newProvince);
 				});
 		
-		Locality locality = localityRepository.findByName(addressDTO.getLocality())
+		Locality locality = localityRepository.findByNameAndProvince_id(addressDTO.getLocality(), province.getId())
 				.orElseGet(()->{
 					Locality newLocality =  new Locality();
 					newLocality.setName(addressDTO.getLocality());
 					newLocality.setProvince(province);
 					return localityRepository.save(newLocality);
 				});
+		System.out.println(locality.toString());
 		newAddress.setLocality(locality);
 		
 		newAddress.setCreatedAt(LocalDate.now());
@@ -99,26 +100,24 @@ public class AddressService {
     					newCountry.setName(addressDTO.getCountry());
     					return countryRepository.save(newCountry);
     				});
-		
-		System.out.println(addressDTO.getProvince());
-		Province province = provinceRepository.findByName(addressDTO.getProvince())			
-				.orElseGet(()->{
-					Province newProvince =  new Province();
-					newProvince.setName(addressDTO.getProvince());
-					newProvince.setCountry(country);
-					System.out.println(newProvince.getName());
-					System.out.println(newProvince.getCountry().getName());
-					return provinceRepository.save(newProvince);
-				});
+			Province province = provinceRepository.findByNameAndCountry_id(addressDTO.getProvince(), country.getId())			
+					.orElseGet(()->{
+						Province newProvince =  new Province();
+						newProvince.setName(addressDTO.getProvince());
+						newProvince.setCountry(country);
+						System.out.println(newProvince.getName());
+						System.out.println(newProvince.getCountry().getName());
+						return provinceRepository.save(newProvince);
+					});
 
 		
-		Locality locality = localityRepository.findByName(addressDTO.getLocality())
-				.orElseGet(()->{
-					Locality newLocality =  new Locality();
-					newLocality.setName(addressDTO.getLocality());
-					newLocality.setProvince(province);
-					return localityRepository.save(newLocality);
-				});
+			Locality locality = localityRepository.findByNameAndProvince_id(addressDTO.getLocality(), province.getId())
+					.orElseGet(()->{
+						Locality newLocality =  new Locality();
+						newLocality.setName(addressDTO.getLocality());
+						newLocality.setProvince(province);
+						return localityRepository.save(newLocality);
+					});
 		
 		province.setCountry(country);
 		locality.setProvince(province);
