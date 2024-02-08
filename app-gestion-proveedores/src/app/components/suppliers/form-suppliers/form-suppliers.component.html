@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col-md-2">
           <label for="codigo"  class="form-label">Supplier code:</label>
-          <input type="text" id="codigo" (keyup)="supplierCodeIsUnique($event)" class="form-control form-control-sm" name="codigo" [(ngModel)]="supplier.code" #codigo="ngModel" minlength="4" maxlength="50">  
+          <input type="text" id="codigo" (keyup)="supplierCodeIsUnique($event)" class="form-control form-control-sm" name="codigo" [(ngModel)]="supplier.code" #codigo="ngModel" minlength="4" maxlength="50" required>  
           <div *ngIf="(!validCode  || codigo.errors?.['minlength']) && !codigo.errors?.['required']" class="col-auto">
             <span class="form-text text-danger">
                 The code needs at least 4 alphanumeric characters

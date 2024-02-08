@@ -30,6 +30,8 @@ export class FormProductsComponent implements OnInit{
 
   skuRepetido = false;
 
+  saveButtonPressed : boolean = false
+
   categorias : string[] = []
 
   ngOnInit(): void {
@@ -82,6 +84,7 @@ export class FormProductsComponent implements OnInit{
 
   //Create product clicked
   onClickForm(formularioProveedores:NgForm){
+    this.saveButtonPressed = true
     if(formularioProveedores.valid && !this.skuRepetido){
       if(this.parametroURL){
         this.productsService.editProduct(this.parametroURL).subscribe((response)=> {

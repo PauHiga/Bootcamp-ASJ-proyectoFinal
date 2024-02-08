@@ -56,14 +56,14 @@
 </section>
 
   <!-- Modal -->
-  <div class="modal fade" id="detalleProductoModal" tabindex="-1" role="dialog" aria-labelledby="detalleProductoModalLabel" aria-hidden="true">
+  <div class="modal fade" id="detalleProductoModal" tabindex="-1" role="dialog" aria-labelledby="supplierDetailsModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div [ngClass]="showDeleted ? 'modal-content bg-secondary text-light' : 'modal-content'">
         <div class="modal-header">
-          <h5 class="modal-title w-100 text-center" id="detalleProductoModalLabel">{{selectedSupplier?.business_name}}</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h5 class="modal-title w-100 text-center" id="supplierDetailsModal">{{selectedSupplier?.business_name}}</h5>
+          <div type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span class="material-icons vertical-align" aria-label="close product details" style="font-size: 30px">cancel</span>
+          </div>
         </div>
         <div class="modal-body">
           <div class="container">

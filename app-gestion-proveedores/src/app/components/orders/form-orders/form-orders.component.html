@@ -73,7 +73,7 @@
             <option *ngFor="let supplier of suppliers" value="{{supplier.id}}">{{supplier.business_name}}</option>
           </select>
           <div *ngIf="Supplier.errors?.['required']" class="col-auto">
-            <span class="form-text text-danger">
+            <span class="form-text text-primary">
                 This field is required
             </span>
           </div>

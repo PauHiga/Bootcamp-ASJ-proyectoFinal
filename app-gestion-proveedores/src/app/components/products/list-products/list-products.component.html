@@ -48,7 +48,7 @@
     </table>
   </div>
     
-  <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="!showDeleted">
+  <div class="container d-flex flex-column justify-content-center align-items-center" *ngIf="!showDeleted">
     <div class="container d-flex flex-column justify-content-center align-items-center empty-table" *ngIf="activeSuppliers>0 && activeProducts==0">
       <p>There are no registered active products</p>
       <p>Start <b class="pointer" routerLink="product-form">creating a new Product</b></p>
@@ -65,14 +65,14 @@
 </section>
 
   <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="productDetailModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div [ngClass]="showDeleted ? 'modal-content bg-secondary text-light' : 'modal-content'">
       <div class="modal-header">
-        <h5 class="modal-title w-100 text-center" id="exampleModalLabel">{{productsService.product.name}}</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title w-100 text-center" id="productDetailModal">{{productsService.product.name}}</h5>
+        <div type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span class="material-icons vertical-align" aria-label="close product details" style="font-size: 30px">cancel</span>
+        </div>
       </div>
       <div class="modal-body">
         <div class="container">
@@ -146,10 +146,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" *ngIf="productsService.product.supplier.deleted == false" (click)="editProduct(productsService.product.id)" [ngClass]="productsService.product.deleted ? 'btn btn-secondary' : 'btn btn-primary'" data-bs-dismiss="modal">Editar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" *ngIf="productsService.product.supplier.deleted == false" (click)="editProduct(productsService.product.id)" [ngClass]="productsService.product.deleted ? 'btn btn-secondary' : 'btn btn-primary'" data-bs-dismiss="modal">Edit</button>
         <button type="button" *ngIf="productsService.product.deleted == true" (click)="activateProduct(productsService.product.id, productsService.product.name)" class="btn btn-primary" data-bs-dismiss="modal">Activate product</button>
-        <button type="button" *ngIf="productsService.product.supplier.deleted == true" (click)="activateSupplier(productsService.product.supplier.id, productsService.product.supplier.business_name)" class="btn btn-primary" data-bs-dismiss="modal">Activate supplier "{{productsService.product.supplier.business_name}}"</button>
+        <button type="button" *ngIf="productsService.product.supplier.deleted == true" (click)="activateSupplier(productsService.product.supplier.id, productsService.product.supplier.business_name)" class="btn btn-primary" data-bs-dismiss="modal">Activate supplier"{{productsService.product.supplier.business_name}}"</button>
       </div>
     </div>
   </div>
