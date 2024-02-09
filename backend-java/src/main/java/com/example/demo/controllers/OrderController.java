@@ -1,12 +1,15 @@
 package com.example.demo.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +24,8 @@ import com.example.demo.dto.OrderCreateDTO;
 import com.example.demo.dto.OrderUpdateDTO;
 import com.example.demo.models.Order;
 import com.example.demo.services.OrderService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -60,7 +65,17 @@ public class OrderController {
     }
 	
 	@PostMapping()
-	public ResponseEntity<Object> createOrder(@RequestBody OrderCreateDTO orderCreateDTO){
+	public ResponseEntity<Object> createOrder(@Valid @RequestBody OrderCreateDTO orderCreateDTO, BindingResult bindingResult){
+		if(bindingResult.hasErrors()) {
+			Map<String, String> errors = new HashMap<>();
+			bindingResult.getFieldErrors().forEach((error)->{
+				String campo = error.getField();
+				String errMsj = error.getDefaultMessage();
+				errors.put(campo, errMsj);
+			});
+			System.out.println(errors);
+			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+		}
 		List<OrderCreateDTO> orderCreateDTOList = List.of(orderCreateDTO);
 		try {
 			Order createdOrder = orderService.createOrders(orderCreateDTOList).get(0);

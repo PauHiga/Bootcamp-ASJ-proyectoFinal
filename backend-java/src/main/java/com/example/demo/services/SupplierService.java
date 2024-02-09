@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dto.SupplierDTO;
+import com.example.demo.dto.SupplierCreateDTO;
 import com.example.demo.dto.SupplierUpdateDTO;
 import com.example.demo.models.Address;
 import com.example.demo.models.Contact;
@@ -62,14 +62,14 @@ public class SupplierService {
 		return supplierRepository.countByDeletedFalse();
 	}
 	
-	public SupplierDTO returnSupplier(SupplierDTO supplierDTO) {
+	public SupplierCreateDTO returnSupplier(SupplierCreateDTO supplierDTO) {
 		return supplierDTO;
 	}
 	
-    public List<Supplier> createSuppliers(List<SupplierDTO> supplierCreateDTOList) {
+    public List<Supplier> createSuppliers(List<SupplierCreateDTO> supplierCreateDTOList) {
     	batchSupplierList.clear();
         List<Supplier> createdSuppliers = new ArrayList<>();
-        for (SupplierDTO supplierDTO : supplierCreateDTOList) {
+        for (SupplierCreateDTO supplierDTO : supplierCreateDTOList) {
             Supplier createdSupplier = createSupplier(supplierDTO);
             createdSuppliers.add(createdSupplier);
         }
@@ -85,7 +85,7 @@ public class SupplierService {
         batchSupplierList.clear();
     }
     
-	public Supplier createSupplier(SupplierDTO supplierDTO) {
+	public Supplier createSupplier(SupplierCreateDTO supplierDTO) {
 		String code = supplierDTO.getCode();
 		String business_name = supplierDTO.getBusiness_name();
 		String url_logo = supplierDTO.getUrl_logo();

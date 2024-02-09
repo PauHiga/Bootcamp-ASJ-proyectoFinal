@@ -3,8 +3,6 @@
 Desarrollo de un *Sistema de Gestión Compras* para manejar información de Proveedores, Productos y Órdenes de compra.
 
 
-
-
 ## Ejecutar localmente
 
 Pasos necesarios para correr el proyecto localmente
@@ -14,16 +12,6 @@ Pasos necesarios para correr el proyecto localmente
   CREATE DATABASE suppliersmanager;
 ```
 
-El proyecto está configurado con la opción spring.jpa.hibernate.ddl-auto=update para ser probado fácilmente. La información modelo se carga con los datos contenidos en el archivo data.sql
-
-Este modo elimina los cambios que hubiera si se reinicia el backend de la aplicación.
-Modificaciones a applications.properties en caso de querer conservar los cambios:
-
-```
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.defer-datasource-initialization=false 
-spring.sql.init.mode=never
-```
 
 ### Inicio sin datos
 

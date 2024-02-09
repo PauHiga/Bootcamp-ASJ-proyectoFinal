@@ -2,7 +2,10 @@ package com.example.demo.dto;
 
 import java.util.List;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,31 +18,34 @@ import lombok.Setter;
 public class OrderCreateDTO {
 
 	private Integer id;
-
-	@NotNull(message = "The order number cannot be null")
+	
+	@Positive(message = "The order number can't be negative")
+	@NotNull(message = "The order number can't be null")
 	private Integer order_number;
 
+	@Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Invalid date format. Use yyyy-MM-dd")
 	@NotNull(message = "The issue date cannot be null")
 	private String issue_date;
 
+	@Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Invalid date format. Use yyyy-MM-dd")
 	@NotNull(message = "The delivery date cannot be null")
 	private String delivery_date;
 	
 	private String details;
 	
-	@NotNull(message = "The total cannot be null")
+	@Positive(message = "The total can't be negative")
+	@NotNull(message = "The total can't be null")
 	private Float total;
     
-	@NotNull(message = "The supplier cannot be null")
+	@Positive(message = "The supplier id can't be negative")
+	@NotNull(message = "The supplier id can't be null")
 	private Integer supplier_id;
   
-	@NotNull(message = "The status cannot be null")
 	private String status;
 
-	@NotNull(message = "The deletion field cannot be null")
 	private Boolean deleted;
 	
-	@NotNull(message = "The details list cannot be null")
+	@NotNull(message = "The details list can't be null")
 	private List<OrderDetailDTO> orderDetails;
 
 }

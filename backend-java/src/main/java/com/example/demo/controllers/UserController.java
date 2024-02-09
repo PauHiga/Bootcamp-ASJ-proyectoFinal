@@ -32,16 +32,6 @@ public class UserController {
 		return ResponseEntity.ok(userService.getUsers());
 	}
 	
-//	@GetMapping("/{id}")
-//	public ResponseEntity<Category> getCategoryById(@PathVariable Integer id){
-//		Optional<Category> optionalCategory = categoryService.getCategoryById(id);
-//		if (optionalCategory.isPresent()) {
-//			return ResponseEntity.ok(optionalCategory.get());
-//		} else {
-//			return ResponseEntity.notFound().build();
-//		}
-//	}
-	
 	@PostMapping()
 	public ResponseEntity<Object> createUser(@RequestBody UserDTO userDTO){
 		try {

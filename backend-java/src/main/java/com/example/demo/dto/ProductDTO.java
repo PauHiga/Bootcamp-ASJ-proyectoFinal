@@ -1,5 +1,7 @@
 package com.example.demo.dto;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,18 +13,17 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ProductDTO {
     private Integer id;
-	@NotNull(message = "The supplier cannot be null")
+    @Positive(message = "The supplier id can't be null or negative")
     private Integer supplier_id;
-	@NotNull(message = "The SKU cannot be null")
+    @NotBlank(message = "The sku can't be null or empty")
     private String sku;
-	@NotNull(message = "The category cannot be null")
+    @NotBlank(message = "The category can't be null or empty")
     private String category;
-	@NotNull(message = "The name cannot be null")
+    @NotBlank(message = "The name can't be null or empty")
     private String name;
     private String description;
-	@NotNull(message = "The price cannot be null")
+    @Positive(message = "The price id can't be null or negative")
     private float price;
     private String url_image;
-	@NotNull(message = "The deletion field cannot be null")
     private Boolean deleted;
 }

@@ -84,6 +84,7 @@ export class FormProductsComponent implements OnInit{
 
   //Create product clicked
   onClickForm(formularioProveedores:NgForm){
+    console.log(formularioProveedores);
     this.saveButtonPressed = true
     if(formularioProveedores.valid && !this.skuRepetido){
       if(this.parametroURL){
@@ -108,7 +109,6 @@ export class FormProductsComponent implements OnInit{
           Swal.fire("The product data was saved successfully");
         },
         error: (error) =>{
-          console.log(error);
           Swal.fire({
             title: "Product not saved",
             text: "There was an error! The product could not be saved",

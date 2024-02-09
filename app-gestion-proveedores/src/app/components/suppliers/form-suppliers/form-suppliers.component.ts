@@ -188,13 +188,13 @@ export class FormSuppliersComponent implements OnInit{
   }
 
   validarCodigo(stringToValidate : string){
-    const regexCode = new RegExp('^[a-zA-Z0-9]+$');
+    const regexCode = new RegExp('^[a-zA-Z0-9]{4,}$');
     this.validCode = regexCode.test(stringToValidate)
     return regexCode.test(stringToValidate)
   }
 
   validarCUIT(stringToValidate : string){
-    const regexCode = new RegExp('^[0-9-]{13}$');
+    const regexCode = new RegExp('^\\d{2}-\\d{8}-\\d{1}$');
     this.validCUIT = regexCode.test(stringToValidate)
     return regexCode.test(stringToValidate)
   }
@@ -212,13 +212,13 @@ export class FormSuppliersComponent implements OnInit{
   }
 
   validarTelefono(stringToValidate: string): boolean {
-    const regexCode = /^[0-9()+\s-]{5,}$/;
+    const regexCode = /^\+?[0-9()\s-]{5,}$/;
     this.validTelefono = regexCode.test(stringToValidate);
     return this.validTelefono;
   }
 
   validarTelefonoContacto(stringToValidate: string): boolean {
-    const regexCode = /^[0-9()+\s-]{5,}$/;
+    const regexCode = /^\+?[0-9()\s-]{5,}$/;
     this.validTelefonoContacto = regexCode.test(stringToValidate);
     return this.validTelefonoContacto;
   }
@@ -319,10 +319,11 @@ export class FormSuppliersComponent implements OnInit{
       if (result.isConfirmed && !exists) {
         this.sectorService.saveSector(result.value).subscribe( {
           next:(data)=> {
+            console.log(data);
           this.getSectors();
-          this.supplier.sector = data.value;
+          this.supplier.sector = data.name;
           Swal.fire({
-            text: `The sector "${data.value}" has been saved`,
+            text: `The sector "${data.name}" has been saved`,
           });
         }, 
         error: (error)=>{

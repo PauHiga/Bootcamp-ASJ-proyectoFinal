@@ -1,6 +1,6 @@
 package com.example.demo.dto;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,12 +12,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OrderDetailDTO {
     private Integer id;
-	@NotNull(message = "The quantity cannot be null")
+    @Positive(message = "The quantity can't be null or negative")
     private Integer quantity;
-	@NotNull(message = "The unit price cannot be null")
+	@Positive(message="The unit proce can't be null or negative")
     private Float unit_price;
-	@NotNull(message = "The product_id cannot be null")
+	@Positive(message = "The product_id can't be null or negative")
     private Integer product_id;
-	@NotNull(message = "The order_id cannot be null")
+	@Positive(message = "The order_id can't be null or negative")
     private Integer order_id;
 }
