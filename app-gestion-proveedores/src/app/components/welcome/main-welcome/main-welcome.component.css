@@ -3,8 +3,7 @@
 }
 
 .img-container {
-    height: 100%;
-    overflow: hidden;
+    width: 100px;
 }
 .img-container img {
     height: 100%;
